@@ -31,21 +31,27 @@ void FrameTimeApp::setup()
 	_particles.setup();
 	_particles.registerTouchEvents( getWindow() );
 
-	_frame_texture = gl::Texture::create( loadImage( loadAsset( "water.png" ) ) );
-
-	/*
 	try {
 		_capture = Capture::create( 320, 240 );
 		_capture->start();
 	} catch ( ci::Exception &exc ) {
 		CI_LOG_E( "Error setting up capture: " << exc.what() );
 	}
-	*/
 }
 
 void FrameTimeApp::update()
 {
 	_particles.step();
+
+	if( _capture && _capture->checkNewFrame() ) {
+		if( ! _frame_texture ) {
+			// Capture images come back as top-down, and it's more efficient to keep them that way
+			_frame_texture = gl::Texture::create( *_capture->getSurface(), gl::Texture::Format().loadTopDown() );
+		}
+		else {
+			_frame_texture->update( *_capture->getSurface() );
+		}
+	}
 }
 
 void FrameTimeApp::draw()
@@ -55,8 +61,10 @@ void FrameTimeApp::draw()
 	gl::ScopedMatrices matrices;
 	gl::setMatricesWindowPersp( app::getWindowSize() );
 
-	gl::ScopedTextureBind tex( _frame_texture, 0 );
-	_particles.draw();
+	if( _frame_texture ) {
+		gl::ScopedTextureBind tex( _frame_texture, 0 );
+		_particles.draw();
+	}
 }
 
 CINDER_APP( FrameTimeApp, RendererGl )

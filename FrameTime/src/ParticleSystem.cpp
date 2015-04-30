@@ -71,7 +71,7 @@ void ParticleSystem::setup()
 			v.position = vec3( xy, z );
 			v.velocity = glm::sphericalRand( 120.0f );
 			v.size = glm::linearRand( 3.0f, 6.0f );
-			v.uv = vec2( x / (w - 1.0f), 1.0f - y / (h - 1.0f) );
+			v.uv = vec2( x / (w - 1.0f), y / (h - 1.0f) );
 
 			auto p = Particle( v );
 			p.targets[0].position = vec3( app::getWindowWidth(), app::getWindowHeight(), 0 ) * vec3( x, y, 0 ) / vec3( w, h, 1 );
