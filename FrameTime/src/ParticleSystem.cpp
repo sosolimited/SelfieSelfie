@@ -10,15 +10,35 @@
 
 using namespace soso;
 using namespace cinder;
+using namespace cinder::signals;
 using namespace std;
 
-Particle::Particle( const Vertex &v )
-: vertex( v )
+Target::Target( const ci::vec2 &iPosition, float iWeight )
+: position( vec3( iPosition, 0.0f ) ),
+	weight( iWeight )
 {}
+
+Particle::Particle( const Vertex &v )
+: vertex( v ),
+	homeliness( glm::linearRand( 0.1f, 0.9f ) )
+{}
+
+void ParticleSystem::registerTouchEvents( const ci::app::WindowRef &iWindow )
+{
+	signalConnections.push_back(
+		make_shared<ScopedConnection>( iWindow->getSignalTouchesBegan().connect( [this] (app::TouchEvent &e) { touchesBegan(e); } ) )
+	);
+	signalConnections.push_back(
+		make_shared<ScopedConnection>( iWindow->getSignalTouchesMoved().connect( [this] (app::TouchEvent &e) { touchesMoved(e); } ) )
+	);
+	signalConnections.push_back(
+		make_shared<ScopedConnection>( iWindow->getSignalTouchesEnded().connect( [this] (app::TouchEvent &e) { touchesEnded(e); } ) )
+	);
+}
 
 void ParticleSystem::setup()
 {
-	// Enough to fill a 320x240 grid.
+	// A healthy number of vertices.
 	std::vector<Vertex> vertices;
 	vertices.resize( 270 * 180 );
 
@@ -62,12 +82,30 @@ void ParticleSystem::setup()
 
 void ParticleSystem::step()
 {
+	// Copy touch target map into a vector.
+	// This saves us at least 1ms when 5 touches are down.
+	vector<Target> touch_targets;
+	for( auto &t : touchTargets ) {
+		touch_targets.push_back( t.second );
+	}
+
 	// Update our positions on the CPU.
+	auto dt2 = fixedStep * fixedStep;
 	for( auto &p : particles )
 	{
 		auto &v = p.vertex;
+
+		auto acc = vec3( 0 );
+		for( auto &target : touch_targets ) {
+			acc += (target.position - v.position) * target.weight * 32.0f * p.homeliness;
+		}
+		for( auto &target : p.targets ) {
+			acc += (target.position - v.position) * target.weight * 32.0f * p.homeliness;
+		}
+
+		v.velocity -= v.velocity * friction;
+		v.velocity += acc * dt2;
 		v.position += v.velocity * fixedStep;
-		v.velocity *= 0.99f;
 	}
 
 	// Send new positions to the GPU.
@@ -84,5 +122,32 @@ void ParticleSystem::draw() const
 	gl::ScopedAlphaBlend blend( true );
 	if( batch ) {
 		batch->draw();
+	}
+
+	gl::ScopedColor c( Color( CM_HSV, 0.16f, 1.0f, 1.0f ) );
+	for( auto &touch : touchTargets ) {
+		auto pos = vec2( touch.second.position.x, touch.second.position.y );
+		gl::drawStrokedCircle( pos, 40.0f );
+	}
+}
+
+void ParticleSystem::touchesBegan( ci::app::TouchEvent &iEvent )
+{
+	for( auto &touch : iEvent.getTouches() ) {
+		touchTargets[touch.getId()] = Target( touch.getPos(), 0.5f );
+	}
+}
+
+void ParticleSystem::touchesMoved( ci::app::TouchEvent &iEvent )
+{
+	for( auto &touch : iEvent.getTouches() ) {
+		touchTargets[touch.getId()].position = vec3( touch.getPos(), 0.0f );
+	}
+}
+
+void ParticleSystem::touchesEnded( ci::app::TouchEvent &iEvent )
+{
+	for( auto &touch : iEvent.getTouches() ) {
+		touchTargets.erase( touch.getId() );
 	}
 }

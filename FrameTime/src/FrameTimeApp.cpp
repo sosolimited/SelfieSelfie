@@ -16,6 +16,7 @@ class FrameTimeApp : public App {
 public:
 	void setup() override;
 	void update() override;
+
 	void draw() override;
 private:
 	CaptureRef			_capture;
@@ -28,6 +29,7 @@ void FrameTimeApp::setup()
 	console() << getWindowSize() << endl;
 
 	_particles.setup();
+	_particles.registerTouchEvents( getWindow() );
 
 	/*
 	try {
@@ -46,7 +48,7 @@ void FrameTimeApp::update()
 
 void FrameTimeApp::draw()
 {
-	gl::clear( Color( 0, 1, 1 ) );
+	gl::clear( Color( 0, 0.5f, 0.5f ) );
 
 	gl::ScopedMatrices matrices;
 	gl::setMatricesWindowPersp( app::getWindowSize() );
