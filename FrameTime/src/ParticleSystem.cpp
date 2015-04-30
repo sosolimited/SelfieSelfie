@@ -18,7 +18,9 @@ Particle::Particle( const Vertex &v )
 
 void ParticleSystem::setup()
 {
-	std::array<Vertex, 1000> vertices;
+	// Enough to fill a 320x240 grid.
+	std::vector<Vertex> vertices;
+	vertices.resize( 270 * 180 );
 
 	for( auto &v : vertices )
 	{
@@ -27,22 +29,22 @@ void ParticleSystem::setup()
 
 		v.position = vec3( xy, z );
 		v.velocity = glm::sphericalRand( 120.0f );
-		v.size = glm::linearRand( 5.0f, 30.0f );
+		v.size = glm::linearRand( 3.0f, 9.0f );
 		v.uv = vec2( 0.5f );
 
 		particles.push_back( Particle( v ) );
 	}
 
-	/// Upload our vertices to the GPU.
+	// Upload our vertices to the GPU.
 	vertexBuffer = gl::Vbo::create( GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), vertices.data(), GL_DYNAMIC_DRAW );
-	/// Describe our vertex data layout.
+	// Describe our vertex data layout.
 	auto layout = geom::BufferLayout();
 	layout.append( geom::Attrib::POSITION, 3, sizeof(Vertex), offsetof(Vertex, position) );
 	layout.append( geom::Attrib::CUSTOM_0, 3, sizeof(Vertex), offsetof(Vertex, velocity) );
 	layout.append( geom::Attrib::CUSTOM_1, 1, sizeof(Vertex), offsetof(Vertex, size) );
 	layout.append( geom::Attrib::TEX_COORD_0, 2, sizeof(Vertex), offsetof(Vertex, uv) );
 
-	/// Create a VboMesh that correlates our layout description to our data.
+	// Create a VboMesh that correlates our layout description to our data.
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_POINTS, {{layout, vertexBuffer}} );
 
 	try {
@@ -60,6 +62,7 @@ void ParticleSystem::setup()
 
 void ParticleSystem::step()
 {
+	// Update our positions on the CPU.
 	for( auto &p : particles )
 	{
 		auto &v = p.vertex;
@@ -67,6 +70,7 @@ void ParticleSystem::step()
 		v.velocity *= 0.99f;
 	}
 
+	// Send new positions to the GPU.
 	auto *gpu_vertex = static_cast<Vertex*>( vertexBuffer->mapWriteOnly( true ) );
 	for( auto &p : particles ) {
 		*gpu_vertex = p.vertex;
