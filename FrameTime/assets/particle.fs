@@ -10,5 +10,5 @@ void main()
 	float r2 = dot(circle_pos, circle_pos);
 	float a = 1.0 - smoothstep(0.249, 0.25, r2);
 
-	gl_FragColor = vec4(a);
+	gl_FragColor = vec4( vTexCoord, 1.0, 1.0 ) * a;
 }

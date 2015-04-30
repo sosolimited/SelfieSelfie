@@ -20,7 +20,7 @@ Target::Target( const ci::vec2 &iPosition, float iWeight )
 
 Particle::Particle( const Vertex &v )
 : vertex( v ),
-	homeliness( glm::linearRand( 0.1f, 0.9f ) )
+	homeliness( glm::linearRand( 0.3f, 0.9f ) )
 {}
 
 void ParticleSystem::registerTouchEvents( const ci::app::WindowRef &iWindow )
@@ -40,19 +40,31 @@ void ParticleSystem::setup()
 {
 	// A healthy number of vertices.
 	std::vector<Vertex> vertices;
-	vertices.resize( 270 * 180 );
+	const auto w = 270;
+	const auto h = 180;
+	vertices.reserve( w * h );
+	particles.reserve( w * h );
 
-	for( auto &v : vertices )
+	for( auto x = 0; x < w; x += 1 )
 	{
-		auto xy = vec2(250, 160) + glm::diskRand( 50.0f );
-		auto z = 0.0f;
+		for( auto y = 0; y < h; y += 1 )
+		{
+			auto xy = vec2(250, 160) + glm::diskRand( 50.0f );
+			auto z = 0.0f;
 
-		v.position = vec3( xy, z );
-		v.velocity = glm::sphericalRand( 120.0f );
-		v.size = glm::linearRand( 3.0f, 9.0f );
-		v.uv = vec2( 0.5f );
+			auto v = Vertex();
+			v.position = vec3( xy, z );
+			v.velocity = glm::sphericalRand( 120.0f );
+			v.size = glm::linearRand( 3.0f, 6.0f );
+			v.uv = vec2( x / (w - 1.0f), y / (h - 1.0f) );
 
-		particles.push_back( Particle( v ) );
+			auto p = Particle( v );
+			p.targets[0].position = vec3( app::getWindowWidth(), app::getWindowHeight(), 0 ) * vec3( x, y, 0 ) / vec3( w, h, 1 );
+			p.targets[0].weight = 0.9f;
+
+			vertices.push_back( v );
+			particles.push_back( p );
+		}
 	}
 
 	// Upload our vertices to the GPU.
@@ -65,7 +77,7 @@ void ParticleSystem::setup()
 	layout.append( geom::Attrib::TEX_COORD_0, 2, sizeof(Vertex), offsetof(Vertex, uv) );
 
 	// Create a VboMesh that correlates our layout description to our data.
-	auto mesh = gl::VboMesh::create( vertices.size(), GL_POINTS, {{layout, vertexBuffer}} );
+	auto mesh = gl::VboMesh::create( static_cast<uint32_t>(vertices.size()), GL_POINTS, {{layout, vertexBuffer}} );
 
 	try {
 		auto shader_format = gl::GlslProg::Format()
@@ -96,7 +108,7 @@ void ParticleSystem::step()
 
 		auto acc = vec3( 0 );
 		for( auto &target : touch_targets ) {
-			acc += (target.position - v.position) * target.weight * p.homeliness;
+			acc += (target.position - v.position) * target.weight;
 		}
 		for( auto &target : p.targets ) {
 			acc += (target.position - v.position) * target.weight * p.homeliness;
@@ -133,7 +145,7 @@ void ParticleSystem::draw() const
 void ParticleSystem::touchesBegan( ci::app::TouchEvent &iEvent )
 {
 	for( auto &touch : iEvent.getTouches() ) {
-		touchTargets[touch.getId()] = Target( touch.getPos(), 0.5f );
+		touchTargets[touch.getId()] = Target( touch.getPos(), 1.0f );
 	}
 }
 

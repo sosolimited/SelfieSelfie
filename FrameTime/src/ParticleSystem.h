@@ -65,7 +65,7 @@ private:
 	std::vector<Target>		targets;
 	std::vector<Particle>	particles;
 	float									fixedStep = 1.0f / 60.0f;
-	float									friction = 0.001f;
+	float									friction = 0.05f;
 	ci::gl::VboRef				vertexBuffer;
 	ci::gl::BatchRef			batch;
 
