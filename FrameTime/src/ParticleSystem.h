@@ -41,8 +41,8 @@ struct Particle
 	Particle( const Vertex &v );
 
 	Vertex								vertex;
-	float									homeliness = 0.2f;
-	std::array<Target, 2>	targets;
+	float									homeliness = 1.0f;
+	std::array<Target, 1>	targets;
 };
 
 ///

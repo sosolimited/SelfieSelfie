@@ -90,21 +90,20 @@ void ParticleSystem::step()
 	}
 
 	// Update our positions on the CPU.
-	auto dt2 = fixedStep * fixedStep;
 	for( auto &p : particles )
 	{
 		auto &v = p.vertex;
 
 		auto acc = vec3( 0 );
 		for( auto &target : touch_targets ) {
-			acc += (target.position - v.position) * target.weight * 32.0f * p.homeliness;
+			acc += (target.position - v.position) * target.weight * p.homeliness;
 		}
 		for( auto &target : p.targets ) {
-			acc += (target.position - v.position) * target.weight * 32.0f * p.homeliness;
+			acc += (target.position - v.position) * target.weight * p.homeliness;
 		}
 
 		v.velocity -= v.velocity * friction;
-		v.velocity += acc * dt2;
+		v.velocity += acc * fixedStep;
 		v.position += v.velocity * fixedStep;
 	}
 
