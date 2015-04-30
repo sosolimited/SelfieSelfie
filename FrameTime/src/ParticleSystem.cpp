@@ -105,7 +105,7 @@ void ParticleSystem::step()
 		touch_targets.push_back( t.second );
 	}
 
-	auto max_distance = app::getWindowWidth() * app::getWindowWidth();
+	auto max_distance = 200.0f * 200.0f;
 	// Update our positions on the CPU.
 	for( auto &p : particles )
 	{
@@ -117,7 +117,7 @@ void ParticleSystem::step()
 			auto d2 = glm::dot( delta, delta );
 			d2 = glm::clamp<float>( d2, 1.0f, max_distance ) / max_distance;
 //			delta *= d2; // make farther away things move more
-			delta *= mix( 2.0f, 0.0f, d2 ); // closer = faster
+			delta *= mix( 2.0f, 0.01f, d2 ); // closer = faster
 			acc += delta * target.weight * p.wanderliness;
 		}
 		for( auto &target : p.targets ) {
