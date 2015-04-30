@@ -48,9 +48,10 @@ void FrameTimeApp::draw()
 {
 	gl::clear( Color( 0, 1, 1 ) );
 
-	_particles.draw();
+	gl::ScopedMatrices matrices;
+	gl::setMatricesWindowPersp( app::getWindowSize() );
 
-	gl::drawSolidRect( Rectf( 0, 0, 10, 10 ) );
+	_particles.draw();
 }
 
 CINDER_APP( FrameTimeApp, RendererGl )

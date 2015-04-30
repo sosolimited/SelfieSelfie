@@ -15,7 +15,7 @@ namespace soso {
 struct Vertex
 {
 	ci::vec3	position;
-	ci::vec3	previousPosition;
+	ci::vec3	velocity;
 	float			size;
 	ci::vec2	uv;
 };
