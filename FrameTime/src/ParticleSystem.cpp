@@ -115,7 +115,7 @@ void ParticleSystem::step()
 		}
 
 		v.velocity -= v.velocity * friction;
-		v.velocity += acc * fixedStep;
+		v.velocity += acc;
 		v.position += v.velocity * fixedStep;
 	}
 
