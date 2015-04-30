@@ -50,7 +50,7 @@ void FrameTimeApp::update()
 
 void FrameTimeApp::draw()
 {
-	gl::clear( Color( 0, 0.5f, 0.5f ) );
+	gl::clear( Color( 0, 0, 0 ) );
 
 	gl::ScopedMatrices matrices;
 	gl::setMatricesWindowPersp( app::getWindowSize() );

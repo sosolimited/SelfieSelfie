@@ -42,6 +42,7 @@ struct Particle
 
 	Vertex								vertex;
 	float									homeliness = 1.0f;
+	float									wanderliness = 1.0f;
 	std::array<Target, 1>	targets;
 };
 

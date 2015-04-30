@@ -20,7 +20,8 @@ Target::Target( const ci::vec2 &iPosition, float iWeight )
 
 Particle::Particle( const Vertex &v )
 : vertex( v ),
-	homeliness( glm::linearRand( 0.3f, 0.9f ) )
+	homeliness( glm::linearRand( 0.3f, 0.9f ) ),
+	wanderliness( glm::linearRand( 0.3f, 0.9f ) )
 {}
 
 void ParticleSystem::registerTouchEvents( const ci::app::WindowRef &iWindow )
@@ -104,6 +105,7 @@ void ParticleSystem::step()
 		touch_targets.push_back( t.second );
 	}
 
+	auto max_distance = app::getWindowWidth() * app::getWindowWidth();
 	// Update our positions on the CPU.
 	for( auto &p : particles )
 	{
@@ -111,7 +113,12 @@ void ParticleSystem::step()
 
 		auto acc = vec3( 0 );
 		for( auto &target : touch_targets ) {
-			acc += (target.position - v.position) * target.weight;
+			auto delta = (target.position - v.position);
+			auto d2 = glm::dot( delta, delta );
+			d2 = glm::clamp<float>( d2, 1.0f, max_distance ) / max_distance;
+//			delta *= d2; // make farther away things move more
+			delta *= mix( 2.0f, 0.0f, d2 ); // closer = faster
+			acc += delta * target.weight * p.wanderliness;
 		}
 		for( auto &target : p.targets ) {
 			acc += (target.position - v.position) * target.weight * p.homeliness;
