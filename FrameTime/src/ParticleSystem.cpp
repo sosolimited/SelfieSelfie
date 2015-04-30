@@ -38,6 +38,20 @@ void ParticleSystem::registerTouchEvents( const ci::app::WindowRef &iWindow )
 
 void ParticleSystem::setup()
 {
+	auto shader = ([] () {
+		try {
+			auto shader_format = gl::GlslProg::Format()
+				.vertex( app::loadAsset("particle.vs") )
+				.fragment( app::loadAsset("particle.fs") );
+			return gl::GlslProg::create( shader_format );
+		}
+		catch( ci::Exception &exc ) {
+			app::console() << "Error loading shader: " << exc.what() << endl;
+		}
+		return gl::GlslProgRef();
+	}());
+	shader->uniform( "uVideo", 0 );
+
 	// A healthy number of vertices.
 	std::vector<Vertex> vertices;
 	const auto w = 270;
@@ -56,7 +70,7 @@ void ParticleSystem::setup()
 			v.position = vec3( xy, z );
 			v.velocity = glm::sphericalRand( 120.0f );
 			v.size = glm::linearRand( 3.0f, 6.0f );
-			v.uv = vec2( x / (w - 1.0f), y / (h - 1.0f) );
+			v.uv = vec2( x / (w - 1.0f), 1.0f - y / (h - 1.0f) );
 
 			auto p = Particle( v );
 			p.targets[0].position = vec3( app::getWindowWidth(), app::getWindowHeight(), 0 ) * vec3( x, y, 0 ) / vec3( w, h, 1 );
@@ -78,18 +92,7 @@ void ParticleSystem::setup()
 
 	// Create a VboMesh that correlates our layout description to our data.
 	auto mesh = gl::VboMesh::create( static_cast<uint32_t>(vertices.size()), GL_POINTS, {{layout, vertexBuffer}} );
-
-	try {
-		auto shader_format = gl::GlslProg::Format()
-													.vertex( app::loadAsset("particle.vs") )
-													.fragment( app::loadAsset("particle.fs") );
-		auto shader = gl::GlslProg::create( shader_format );
-		batch = gl::Batch::create( mesh, shader, {{geom::Attrib::CUSTOM_0, "Velocity"}, {geom::Attrib::CUSTOM_1, "Size"}} );
-	}
-	catch( ci::Exception &exc ) {
-		app::console() << "Error loading shader: " << exc.what() << endl;
-	}
-
+	batch = gl::Batch::create( mesh, shader, {{geom::Attrib::CUSTOM_0, "Velocity"}, {geom::Attrib::CUSTOM_1, "Size"}} );
 }
 
 void ParticleSystem::step()
@@ -133,12 +136,6 @@ void ParticleSystem::draw() const
 	gl::ScopedAlphaBlend blend( true );
 	if( batch ) {
 		batch->draw();
-	}
-
-	gl::ScopedColor c( Color( CM_HSV, 0.16f, 1.0f, 1.0f ) );
-	for( auto &touch : touchTargets ) {
-		auto pos = vec2( touch.second.position.x, touch.second.position.y );
-		gl::drawStrokedCircle( pos, 40.0f );
 	}
 }
 

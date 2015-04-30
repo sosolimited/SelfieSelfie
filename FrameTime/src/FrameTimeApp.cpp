@@ -31,6 +31,8 @@ void FrameTimeApp::setup()
 	_particles.setup();
 	_particles.registerTouchEvents( getWindow() );
 
+	_frame_texture = gl::Texture::create( loadImage( loadAsset( "water.png" ) ) );
+
 	/*
 	try {
 		_capture = Capture::create( 320, 240 );
@@ -53,6 +55,7 @@ void FrameTimeApp::draw()
 	gl::ScopedMatrices matrices;
 	gl::setMatricesWindowPersp( app::getWindowSize() );
 
+	gl::ScopedTextureBind tex( _frame_texture, 0 );
 	_particles.draw();
 }
 
