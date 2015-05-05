@@ -55,8 +55,9 @@ void ParticleSystem::setup()
 
 	// A healthy number of vertices.
 	std::vector<Vertex> vertices;
-	const auto w = 270;
-	const auto h = 180;
+	const auto w = 1920 / 7;
+	const auto h = 1080 / 7;
+  const auto center = vec2(app::getWindowCenter());
 	vertices.reserve( w * h );
 	particles.reserve( w * h );
 
@@ -64,7 +65,7 @@ void ParticleSystem::setup()
 	{
 		for( auto y = 0; y < h; y += 1 )
 		{
-			auto xy = vec2(250, 160) + glm::diskRand( 50.0f );
+			auto xy = center + glm::diskRand( 50.0f );
 			auto z = 0.0f;
 
 			auto v = Vertex();
