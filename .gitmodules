@@ -1,0 +1,4 @@
+[submodule "Cinder"]
+	path = lib/Cinder
+	url = git@github.com:sosolimited/Cinder.git
+	branch = glNext
