@@ -31,8 +31,19 @@ void FrameTimeApp::setup()
 	_particles.setup();
 	_particles.registerTouchEvents( getWindow() );
 
+  auto camera = ([] {
+    auto &devices = Capture::getDevices();
+    auto first_device = devices.front();
+    for( auto device : devices ) {
+      if( device->isFrontFacing() ) {
+        return device;
+      }
+    }
+    return first_device;
+  }());
+
 	try {
-		_capture = Capture::create( 320, 240 );
+		_capture = Capture::create( 1920 / 2, 1080 / 2, camera );
 		_capture->start();
 	} catch ( ci::Exception &exc ) {
 		CI_LOG_E( "Error setting up capture: " << exc.what() );
