@@ -20,6 +20,7 @@ public:
 private:
 	GridMesh		mesh;
 	CameraPersp	camera;
+	ci::quat		rotationCorrection;
 };
 
 void GridSpaceApp::setup()
@@ -46,6 +47,7 @@ void GridSpaceApp::draw()
 	gl::enableDepthWrite();
 
 	gl::setMatrices( camera );
+	gl::rotate( MotionManager::getRotation() );
 
 	mesh.draw();
 }
