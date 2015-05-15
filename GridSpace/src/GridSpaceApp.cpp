@@ -18,9 +18,9 @@ public:
 	void update() override;
 	void draw() override;
 private:
-	GridMesh		mesh;
-	CameraPersp	camera;
-	ci::quat		rotationCorrection;
+	GridMesh				mesh;
+	CameraPersp			camera;
+	const ci::vec3	target = vec3( 50, 5, 50 );
 };
 
 void GridSpaceApp::setup()
@@ -28,7 +28,7 @@ void GridSpaceApp::setup()
 	mesh.setup();
 	MotionManager::enable();
 
-	camera.lookAt( vec3( 0 ), vec3( 50, 5, 50 ), vec3( 0, 1, 0 ) );
+	camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
 	camera.setPerspective( 35, getWindowAspectRatio(), 0.1f, 1000 );
 }
 
@@ -38,6 +38,10 @@ void GridSpaceApp::mouseDown( MouseEvent event )
 
 void GridSpaceApp::update()
 {
+	if( MotionManager::isDataAvailable() ) {
+		auto rotated_target = MotionManager::getRotationMatrix() * vec4( target, 0 );
+		camera.lookAt( vec3( 0 ), vec3( rotated_target ), vec3( 0, 1, 0 ) );
+	}
 }
 
 void GridSpaceApp::draw()
@@ -47,9 +51,13 @@ void GridSpaceApp::draw()
 	gl::enableDepthWrite();
 
 	gl::setMatrices( camera );
-	gl::rotate( MotionManager::getRotation() );
-
 	mesh.draw();
+
+	gl::setMatricesWindowPersp( getWindowSize() );
+	gl::translate( vec3( getWindowCenter(), 0 ) );
+	gl::rotate( MotionManager::getRotation() );
+	gl::scale( vec3( 40 ) );
+	gl::drawCoordinateFrame();
 }
 
 CINDER_APP( GridSpaceApp, RendererGl )
