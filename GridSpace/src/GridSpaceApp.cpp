@@ -29,7 +29,7 @@ void GridSpaceApp::setup()
 	MotionManager::enable();
 
 	camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
-	camera.setPerspective( 35, getWindowAspectRatio(), 0.1f, 1000 );
+	camera.setPerspective( 60, getWindowAspectRatio(), 0.1f, 1000 );
 }
 
 void GridSpaceApp::mouseDown( MouseEvent event )
@@ -56,7 +56,9 @@ void GridSpaceApp::draw()
 	gl::setMatricesWindowPersp( getWindowSize() );
 	gl::translate( vec3( getWindowCenter(), 0 ) );
 	gl::rotate( MotionManager::getRotation() );
-	gl::scale( vec3( 40 ) );
+
+	gl::drawVector( vec3( 0 ), target );
+	gl::scale( vec3( 50 ) );
 	gl::drawCoordinateFrame();
 }
 
