@@ -19,6 +19,7 @@
 		37DB7608CAC6488C971B3D7E /* MotionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01144090EF425E9E78531D /* MotionManager.cpp */; };
 		43B7E4B7454B42B796FB9E57 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C9BF045B60402AB90885F9 /* CoreMotion.framework */; };
 		7065E9A8191E42818203CD0E /* GridSpaceApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 606606D1D24C48E6944FC9F1 /* GridSpaceApp.cpp */; };
+		9C820DF21B0A608900C1F43D /* CameraLandscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C820DF01B0A608900C1F43D /* CameraLandscape.cpp */; };
 		9CDDA1451B063ACC00027D3A /* GridMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDDA1431B063ACC00027D3A /* GridMesh.cpp */; };
 		A583104BACFF42E7AF2D679F /* CinderApp_ios.png in Resources */ = {isa = PBXBuildFile; fileRef = E123327ABB0A4B56AFD211AB /* CinderApp_ios.png */; };
 		C725DFFE121DAC7F00FA186B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C727C02B121B400300192073 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -49,6 +50,8 @@
 		4F5FD2796BD3495C912C82C1 /* MotionImplCoreMotion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MotionImplCoreMotion.h; path = ../../lib/Cinder/blocks/MotionManager/src/cinder/MotionImplCoreMotion.h; sourceTree = "<group>"; };
 		606606D1D24C48E6944FC9F1 /* GridSpaceApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = GridSpaceApp.cpp; path = ../src/GridSpaceApp.cpp; sourceTree = "<group>"; };
 		801BB82C13D54665BE862EF4 /* GridSpace_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = GridSpace_Prefix.pch; sourceTree = "<group>"; };
+		9C820DF01B0A608900C1F43D /* CameraLandscape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraLandscape.cpp; path = ../src/CameraLandscape.cpp; sourceTree = "<group>"; };
+		9C820DF11B0A608900C1F43D /* CameraLandscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraLandscape.h; path = ../src/CameraLandscape.h; sourceTree = "<group>"; };
 		9CDDA1431B063ACC00027D3A /* GridMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GridMesh.cpp; path = ../src/GridMesh.cpp; sourceTree = "<group>"; };
 		9CDDA1441B063ACC00027D3A /* GridMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridMesh.h; path = ../src/GridMesh.h; sourceTree = "<group>"; };
 		B74C152B00F04D138802C8E9 /* MotionImplCoreMotion.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = MotionImplCoreMotion.mm; path = ../../lib/Cinder/blocks/MotionManager/src/cinder/MotionImplCoreMotion.mm; sourceTree = "<group>"; };
@@ -133,6 +136,8 @@
 				606606D1D24C48E6944FC9F1 /* GridSpaceApp.cpp */,
 				9CDDA1431B063ACC00027D3A /* GridMesh.cpp */,
 				9CDDA1441B063ACC00027D3A /* GridMesh.h */,
+				9C820DF01B0A608900C1F43D /* CameraLandscape.cpp */,
+				9C820DF11B0A608900C1F43D /* CameraLandscape.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -219,6 +224,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0630;
+				TargetAttributes = {
+					00692BCE14FF149000D0A05E = {
+						DevelopmentTeam = DATFA672RV;
+					};
+				};
 			};
 			buildConfigurationList = 00692BC914FF149000D0A05E /* Build configuration list for PBXProject "GridSpace" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -255,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C820DF21B0A608900C1F43D /* CameraLandscape.cpp in Sources */,
 				9CDDA1451B063ACC00027D3A /* GridMesh.cpp in Sources */,
 				7065E9A8191E42818203CD0E /* GridSpaceApp.cpp in Sources */,
 				37DB7608CAC6488C971B3D7E /* MotionManager.cpp in Sources */,
@@ -356,10 +367,12 @@
 		00692BF614FF149000D0A05E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = GridSpace_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				"OTHER_LDFLAGS[sdk=iphoneos*][arch=*]" = (
 					"\"$(CINDER_PATH)/lib/libcinder-iphone_d.a\"",
 					"-lz",
@@ -369,6 +382,7 @@
 					"-lz",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -376,10 +390,12 @@
 		00692BF714FF149000D0A05E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = GridSpace_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				"OTHER_LDFLAGS[sdk=iphoneos*][arch=*]" = (
 					"\"$(CINDER_PATH)/lib/libcinder-iphone.a\"",
 					"-lz",
@@ -389,6 +405,7 @@
 					"-lz",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

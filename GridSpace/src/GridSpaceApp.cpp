@@ -3,7 +3,10 @@
 #include "cinder/gl/gl.h"
 
 #include "GridMesh.h"
+#include "CameraLandscape.h"
 #include "cinder/MotionManager.h"
+#include "cinder/Capture.h"
+#include "cinder/Log.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -19,17 +22,40 @@ public:
 	void draw() override;
 private:
 	GridMesh				mesh;
+	CameraLandscape landscape;
+	CaptureRef			capture;
 	CameraPersp			camera;
-	const ci::vec3	target = vec3( 50, 5, 50 );
 };
 
 void GridSpaceApp::setup()
 {
 	mesh.setup();
+	landscape.setup();
 	MotionManager::enable();
 
+	auto target = vec3( 50, 5, 50 );
 	camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
 	camera.setPerspective( 60, getWindowAspectRatio(), 0.1f, 1000 );
+
+
+	try {
+		auto front_facing_camera = ([] {
+			auto &devices = Capture::getDevices();
+			auto first_device = devices.front();
+			for( auto device : devices ) {
+				if( device->isFrontFacing() ) {
+					return device;
+				}
+			}
+			return first_device;
+		}());
+
+		capture = Capture::create( 1920 / 2, 1080 / 2, front_facing_camera );
+		capture->start();
+	}
+	catch( ci::Exception &exc ) {
+		CI_LOG_E( "Error using device camera: " << exc.what() );
+	}
 }
 
 void GridSpaceApp::mouseDown( MouseEvent event )
@@ -42,6 +68,10 @@ void GridSpaceApp::update()
 		auto r = MotionManager::getRotation();
 		camera.setOrientation( r );
 	}
+
+	if( capture->checkNewFrame() ) {
+		landscape.updateTexture( *capture->getSurface() );
+	}
 }
 
 void GridSpaceApp::draw()
@@ -51,6 +81,7 @@ void GridSpaceApp::draw()
 	gl::enableDepthWrite();
 
 	gl::setMatrices( camera );
+	landscape.draw();
 	mesh.draw();
 
 	/*
