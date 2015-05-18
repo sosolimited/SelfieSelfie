@@ -39,8 +39,8 @@ void GridSpaceApp::mouseDown( MouseEvent event )
 void GridSpaceApp::update()
 {
 	if( MotionManager::isDataAvailable() ) {
-		auto rotated_target = MotionManager::getRotationMatrix() * vec4( target, 0 );
-		camera.lookAt( vec3( 0 ), vec3( rotated_target ), vec3( 0, 1, 0 ) );
+		auto r = MotionManager::getRotation();
+		camera.setOrientation( r );
 	}
 }
 
@@ -56,8 +56,8 @@ void GridSpaceApp::draw()
 	gl::setMatricesWindowPersp( getWindowSize() );
 	gl::translate( vec3( getWindowCenter(), 0 ) );
 	gl::rotate( MotionManager::getRotation() );
+	gl::drawCube( vec3( 0 ), vec3( 50, 100, 5 ) );
 
-	gl::drawVector( vec3( 0 ), target );
 	gl::scale( vec3( 50 ) );
 	gl::drawCoordinateFrame();
 }
