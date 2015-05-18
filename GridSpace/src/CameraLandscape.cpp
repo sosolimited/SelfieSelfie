@@ -26,10 +26,10 @@ void CameraLandscape::setup()
 
 	vector<Vertex> vertices;
 	const auto r_min = 1;
-	const auto r_max = 20;
+	const auto r_max = 21;
 	const auto r_step = 1;
 	const auto rings = r_max - r_min;
-	const auto segments = 16;
+	const auto segments = 64;
 
 	// vertices from inside to outside edge
 	for( auto r = r_min; r <= r_max; r += r_step )
@@ -39,7 +39,7 @@ void CameraLandscape::setup()
 			auto t = (float) s / segments;
 			auto x = cos( t * TAU ) * r;
 			auto y = sin( t * TAU ) * r;
-			auto pos = vec3( x, y, -20.0f );
+			auto pos = vec3( x, -5.0f, y );
 			auto tc = vec2( 0.5 );
 
 			// Mirror texture at halfway point
@@ -51,22 +51,20 @@ void CameraLandscape::setup()
 	}
 
 	vector<uint32_t> indices;
-	// return a safe index in a row and segment
+	// return a wrapped index in a row and segment
 	auto index = [segments, rings] (int s, int r) {
-		r = r * segments;
+		r *= segments;
 		s %= segments;
-		return glm::clamp( r + s, 0, (segments * rings) );
+		return r + s;
 	};
-	// index triangles from their inside vertices
-	for( auto r = 0; r < rings; r += r_step )
+	for( auto r = 0; r < rings; r += 1 )
 	{
 		for( auto s = 0; s < segments; s += 1 )
 		{
-/*
 			indices.push_back( index( s, r ) );
-			indices.push_back( index( s + 1, r + 1 ) );
 			indices.push_back( index( s + 1, r ) );
-*/
+			indices.push_back( index( s + 1, r + 1 ) );
+
 			indices.push_back( index( s, r ) );
 			indices.push_back( index( s, r + 1 ) );
 			indices.push_back( index( s + 1, r + 1 ) );
