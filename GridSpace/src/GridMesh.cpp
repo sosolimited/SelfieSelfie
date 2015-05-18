@@ -61,7 +61,7 @@ void GridMesh::setup()
 	batch = gl::Batch::create( mesh, shader );
 }
 
-void GridMesh::draw()
+void GridMesh::draw() const
 {
 	batch->draw();
 };

@@ -13,7 +13,7 @@ class GridMesh
 {
 public:
 	void setup();
-	void draw();
+	void draw() const;
 
 private:
 
