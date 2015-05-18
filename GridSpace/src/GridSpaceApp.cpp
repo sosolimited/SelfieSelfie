@@ -53,6 +53,7 @@ void GridSpaceApp::draw()
 	gl::setMatrices( camera );
 	mesh.draw();
 
+	/*
 	gl::setMatricesWindowPersp( getWindowSize() );
 	gl::translate( vec3( getWindowCenter(), 0 ) );
 	gl::rotate( MotionManager::getRotation() );
@@ -60,6 +61,7 @@ void GridSpaceApp::draw()
 
 	gl::scale( vec3( 50 ) );
 	gl::drawCoordinateFrame();
+	*/
 }
 
 CINDER_APP( GridSpaceApp, RendererGl )
