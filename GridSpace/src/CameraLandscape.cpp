@@ -17,10 +17,24 @@ void CameraLandscape::setup()
 {
 	struct Vertex {
 		vec3 pos;
+		vec3 normal;
 		vec2 tc;
 	};
 
-	auto shader = gl::getStockShader( gl::ShaderDef().texture( GL_TEXTURE_2D ).color() );
+	auto shader = ([] () {
+		try {
+			auto shader_format = gl::GlslProg::Format()
+				.vertex( app::loadAsset("deform.vs") )
+				.fragment( app::loadAsset("deform.fs") );
+			return gl::GlslProg::create( shader_format );
+		}
+		catch( ci::Exception &exc ) {
+			app::console() << "Error loading shader: " << exc.what() << endl;
+		}
+		return gl::GlslProgRef();
+	}());
+
+	shader->uniform( "uVideo", 0 );
 	auto mat = glm::translate( vec3( 20, 0, 20 ) ) * glm::scale( vec3( 20 ) ) * glm::rotate<float>( M_PI / 4, vec3( 0, 1, 0 ) );
 	batch = gl::Batch::create( geom::Teapot().subdivisions( 8 ) >> geom::Transform( mat ), shader );
 
@@ -42,12 +56,13 @@ void CameraLandscape::setup()
 			auto y = sin( t * TAU ) * radius;
 			auto pos = vec3( x, -4.0f, y );
 			auto tc = vec2( 0.5 );
+			auto normal = vec3( 0, 1, 0 );
 
 			// Mirror texture at halfway point
 			tc.y = abs( t - 0.5f ) * 2.0f;
 			tc.x = lmap<float>( r, 0, rings, 1.0f, 0.0f );
 
-			vertices.push_back( { pos, tc } );
+			vertices.push_back( { pos, normal, tc } );
 		}
 	}
 
@@ -78,6 +93,7 @@ void CameraLandscape::setup()
 	auto vertex_layout = geom::BufferLayout();
 	vertex_layout.append( geom::Attrib::POSITION, 3, sizeof(Vertex), offsetof(Vertex, pos) );
 	vertex_layout.append( geom::Attrib::TEX_COORD_0, 2, sizeof(Vertex), offsetof(Vertex, tc) );
+	vertex_layout.append( geom::Attrib::NORMAL, 3, sizeof(Vertex), offsetof(Vertex, normal) );
 
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ vertex_layout, vertex_vbo }}, indices.size(), GL_UNSIGNED_INT, index_vbo );
 	batch = gl::Batch::create( mesh, shader );
