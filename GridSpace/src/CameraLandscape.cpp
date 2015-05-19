@@ -105,7 +105,17 @@ void CameraLandscape::updateTexture( const ci::Surface &iImage )
 		texture = gl::Texture::create( iImage, gl::Texture::Format().loadTopDown() );
 	}
 	else {
-		texture->update( iImage );
+//		texture->update( iImage, 0, ivec2( 0, line ) );
+		gl::ScopedTextureBind tex( texture );
+		auto x_offset = 0;
+		auto y_offset = line;
+		GLint dataFormat;
+		GLenum type;
+		gl::Texture2d::SurfaceChannelOrderToDataFormatAndType<uint8_t>( iImage.getChannelOrder(), &dataFormat, &type );
+		auto *data_ptr = iImage.getData() + iImage.getRowBytes() * line;
+
+		glTexSubImage2D( texture->getTarget(), 0, x_offset, y_offset, iImage.getWidth(), 1, dataFormat, type, data_ptr );
+		line = (line + 1) % texture->getHeight();
 	}
 }
 

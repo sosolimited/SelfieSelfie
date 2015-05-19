@@ -19,6 +19,7 @@ private:
 
 	ci::gl::BatchRef		batch;
 	ci::gl::TextureRef	texture;
+	int									line = 0;
 };
 
 } // namespace soso
