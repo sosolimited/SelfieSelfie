@@ -7,6 +7,7 @@
 #include "cinder/MotionManager.h"
 #include "cinder/Capture.h"
 #include "cinder/Log.h"
+#include "GridTexture.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -25,13 +26,18 @@ private:
 	CameraLandscape landscape;
 	CaptureRef			capture;
 	CameraPersp			camera;
+	GridTextureRef	gridTexture;
 };
 
 void GridSpaceApp::setup()
 {
 	mesh.setup();
-	landscape.setup();
+
 	MotionManager::enable();
+
+	GLint size;
+	glGetIntegerv( GL_MAX_TEXTURE_SIZE, &size );
+	CI_LOG_I( "Max texture size: " << size );
 
 	auto target = vec3( 50, 5, 50 );
 	camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
@@ -42,19 +48,24 @@ void GridSpaceApp::setup()
 			auto &devices = Capture::getDevices();
 			auto first_device = devices.front();
 			for( auto device : devices ) {
-				if( device->isFrontFacing() ) {
+				if( ! device->isFrontFacing() ) {
 					return device;
 				}
 			}
 			return first_device;
 		}());
 
-		capture = Capture::create( 1920 / 2, 1080 / 2, front_facing_camera );
+		capture = Capture::create( 480, 360, front_facing_camera );
 		capture->start();
+		const auto divisions = 8;
+		const auto size = divisions * capture->getSize();
+		gridTexture = make_shared<GridTexture>( size.x, size.y, divisions );
 	}
 	catch( ci::Exception &exc ) {
 		CI_LOG_E( "Error using device camera: " << exc.what() );
 	}
+
+	landscape.setup( gridTexture->getTexture() );
 }
 
 void GridSpaceApp::mouseDown( MouseEvent event )
@@ -69,7 +80,7 @@ void GridSpaceApp::update()
 	}
 
 	if( capture->checkNewFrame() ) {
-		landscape.updateTexture( *capture->getSurface() );
+		gridTexture->update( *capture->getSurface() );
 	}
 }
 

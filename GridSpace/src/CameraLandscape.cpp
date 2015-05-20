@@ -13,8 +13,10 @@ using namespace std;
 
 const double TAU = 6.28318530718;
 
-void CameraLandscape::setup()
+void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 {
+	texture = iTexture;
+
 	struct Vertex {
 		vec3 pos;
 		vec3 normal;
@@ -99,34 +101,18 @@ void CameraLandscape::setup()
 	batch = gl::Batch::create( mesh, shader );
 }
 
-void CameraLandscape::updateTexture( const ci::Surface &iImage )
-{
-	if( ! texture ) {
-		texture = gl::Texture::create( iImage, gl::Texture::Format().loadTopDown() );
-	}
-	else {
-		// TODO: store all frames in texture, but offset them as we go.
-		texture->update( iImage, 0, ivec2( 0, line ) );
-		/*
-		gl::ScopedTextureBind tex( texture );
-		auto x_offset = 0;
-		auto y_offset = line;
-		GLint dataFormat;
-		GLenum type;
-		gl::Texture2d::SurfaceChannelOrderToDataFormatAndType<uint8_t>( iImage.getChannelOrder(), &dataFormat, &type );
-		auto *data_ptr = iImage.getData() + iImage.getRowBytes() * line;
-
-		glTexSubImage2D( texture->getTarget(), 0, x_offset, y_offset, iImage.getWidth(), 1, dataFormat, type, data_ptr );
-		line = (line + 1) % texture->getHeight();
-		*/
-	}
-}
-
 void CameraLandscape::draw() const
 {
 	if( texture && batch )
 	{
 		gl::ScopedTextureBind tex0( texture, 0 );
 		batch->draw();
+	}
+
+	if( texture )
+	{
+		gl::ScopedMatrices mat;
+		gl::setMatricesWindow( app::getWindowSize() );
+		gl::draw( texture, Rectf( 0, 0, 192, 108 ) );
 	}
 }

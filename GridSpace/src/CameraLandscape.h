@@ -12,14 +12,13 @@ namespace soso {
 class CameraLandscape
 {
 public:
-	void setup();
-	void updateTexture( const ci::Surface &iImage );
+	void setup( const ci::gl::TextureRef &iTexture );
+	ci::ivec2 positionOffset( int iPosition ) const;
 	void draw() const;
 private:
 
 	ci::gl::BatchRef		batch;
 	ci::gl::TextureRef	texture;
-	int									line = 0;
 };
 
 } // namespace soso
