@@ -89,6 +89,20 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 		}
 	}
 
+	auto normal = vec3( 0, 0, 1 );
+	auto n = vertices.size();
+	vertices.push_back( { vec3(-1, -1, -4), normal, vec2(0, 0) } );
+	vertices.push_back( { vec3( 1, -1, -4), normal, vec2(1, 0) } );
+	vertices.push_back( { vec3( 1,  1, -4), normal, vec2(1, 1) } );
+	vertices.push_back( { vec3(-1,  1, -4), normal, vec2(0, 1) } );
+
+	indices.push_back( n );
+	indices.push_back( n + 1 );
+	indices.push_back( n + 2 );
+	indices.push_back( n + 2 );
+	indices.push_back( n + 3 );
+	indices.push_back( n );
+
 	auto vertex_vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
 	auto index_vbo = gl::Vbo::create( GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW );
 
