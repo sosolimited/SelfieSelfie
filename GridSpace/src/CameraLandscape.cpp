@@ -21,6 +21,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 		vec3 pos;
 		vec3 normal;
 		vec2 tc;
+		vec2 color_tc;
 	};
 
 	auto shader = ([] () {
@@ -64,8 +65,9 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 			// Mirror texture at halfway point
 			tc.y = abs( t - 0.5f ) * 2.0f;
 			tc.x = lmap<float>( r, 0, rings, 1.0f, 0.0f );
+			auto color_tc = vec2( 0.5 );
 
-			vertices.push_back( { pos, normal, tc } );
+			vertices.push_back( { pos, normal, tc, color_tc } );
 		}
 	}
 
@@ -114,6 +116,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	vertex_layout.append( geom::Attrib::POSITION, 3, sizeof(Vertex), offsetof(Vertex, pos) );
 	vertex_layout.append( geom::Attrib::TEX_COORD_0, 2, sizeof(Vertex), offsetof(Vertex, tc) );
 	vertex_layout.append( geom::Attrib::NORMAL, 3, sizeof(Vertex), offsetof(Vertex, normal) );
+	vertex_layout.append( geom::Attrib::TEX_COORD_1, 2, sizeof(Vertex), offsetof(Vertex, color_tc) );
 
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ vertex_layout, vertex_vbo }}, indices.size(), GL_UNSIGNED_INT, index_vbo );
 	batch = gl::Batch::create( mesh, shader );

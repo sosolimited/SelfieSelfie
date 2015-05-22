@@ -73,8 +73,6 @@ void TimeGrid::setup( const ci::gl::TextureRef &iTexture )
 			auto d_norm = floor( glm::length( pos ) ) / max_dist;
 
 			addRectangle( vertices, vec3( pos.x, -8.0f, pos.y ), 1.0f, 1.0f, d_norm );
-
-			app::console() << "Distance: " << d_norm << ", at: " << pos << endl;
 		}
 	}
 
