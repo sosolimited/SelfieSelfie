@@ -67,7 +67,7 @@ void GridSpaceApp::setup()
 
 		auto color_format = gl::Texture::Format();
 		auto fbo_format = gl::Fbo::Format().disableDepth().colorTexture( color_format );
-		blurredBuffer = gl::Fbo::create( size.x / (divisions * 2), size.y / (divisions * 2), fbo_format );
+		blurredBuffer = gl::Fbo::create( size.x / (divisions), size.y / (divisions), fbo_format );
 	}
 	catch( ci::Exception &exc ) {
 		CI_LOG_E( "Error using device camera: " << exc.what() );
