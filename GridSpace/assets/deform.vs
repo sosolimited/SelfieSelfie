@@ -16,7 +16,7 @@ void main()
 {
 	vec2 tc = offsetTextureCoordinate( ciTexCoord0, uFrameIndex );
 	float offset = clamp( length(texture2D( uVideo, tc ).rgb), 0.0, 1.0 );
-	offset = 0.0; // mix( -4.0, 1.0, offset );
+	offset = mix( -4.0, 1.0, offset );
 	gl_Position = ciModelViewProjection * vec4(ciPosition + ciNormal * offset, 1.0);
 	vTexCoord = tc;
 }

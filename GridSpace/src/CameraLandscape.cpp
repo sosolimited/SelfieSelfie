@@ -89,7 +89,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 		}
 	}
 
-//	/*
+	/*
 	// Add a rectangle
 	auto normal = vec3( 0, 0, 1 );
 	auto n = vertices.size();
