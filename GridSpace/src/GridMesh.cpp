@@ -42,8 +42,8 @@ void GridMesh::setup()
 	auto offset = vec3( -dims ) * vec3( 0.5f, 0.0f, 0.5f );
 
 	for( auto y = 0; y < dims.y; y += 1 ) {
-		auto hue = (float)y / dims.y;
-		auto color = Color( CM_HSV, hue, 1.0f, 0.8f );
+		auto a = (float)y / dims.y;
+		auto color = Color( CM_HSV, 0.0f, 0.0f, glm::mix( 1.0f, 0.1f, a ) );
 		for( auto x = 0; x < dims.x; x += 1 ) {
 			for( auto z = 0; z < dims.z; z += 1 ) {
 				appendCross( vertices, vec3( x, y, z ) + offset, color );
