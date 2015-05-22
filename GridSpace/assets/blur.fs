@@ -31,8 +31,7 @@ void main( void )
 	sum += texture2D( uSampler, vTexCoord +  10.0 * texelSize ) * 0.009167927656011385;
 
 	gl_FragColor = sum;
-	// * vec4( vTexCoord, 1.0, 1.0 );
-	gl_FragColor = texture2D( uSampler, vTexCoord );
+//	gl_FragColor = texture2D( uSampler, vTexCoord );
 //	gl_FragColor = vec4( vTexCoord, 1.0, 1.0 );
 
 //	gl_FragColor = vec4( 1.0, 0.0, 1.0, 1.0 );

@@ -10,5 +10,5 @@ varying vec2 vTexCoord;
 void main()
 {
 	gl_Position = ciPosition; // we specify position in NDC
-	vTexCoord = ciTexCoord0;  // offsetTextureCoordinate( ciTexCoord0, uTextureIndex );
+	vTexCoord = offsetTextureCoordinate( ciTexCoord0, uTextureIndex );
 }

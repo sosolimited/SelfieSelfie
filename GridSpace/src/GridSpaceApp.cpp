@@ -102,13 +102,13 @@ void GridSpaceApp::blurInput()
 	gl::ScopedMatrices matrices;
 	gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
 	gl::ScopedGlslProg prog( downsampleProg );
-	gl::ScopedScissor scissor( gridTexture->getIndexOffset( size, index ), size );
+	gl::ScopedViewport view( gridTexture->getIndexOffset( size, index ), size );
 	gl::ScopedFramebuffer fbo( blurredBuffer );
 
 	downsampleProg->uniform( "uSampler", 0 );
 	downsampleProg->uniform( "uTextureIndex", (float)index );
 
-	gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) / vec2(8) );
+	gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) );
 }
 
 void GridSpaceApp::draw()
