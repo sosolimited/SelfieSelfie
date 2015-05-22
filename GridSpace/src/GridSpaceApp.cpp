@@ -22,15 +22,12 @@ public:
 	void update() override;
 	void draw() override;
 
-	void blurInput();
 private:
 	GridMesh				mesh;
 	CameraLandscape landscape;
 	CaptureRef			capture;
 	CameraPersp			camera;
 	GridTextureRef	gridTexture;
-	gl::FboRef			blurredBuffer;
-	gl::GlslProgRef	downsampleProg;
 };
 
 void GridSpaceApp::setup()
@@ -64,18 +61,12 @@ void GridSpaceApp::setup()
 		const auto divisions = 8;
 		const auto size = divisions * capture->getSize();
 		gridTexture = make_shared<GridTexture>( size.x, size.y, divisions );
-
-		auto color_format = gl::Texture::Format();
-		auto fbo_format = gl::Fbo::Format().disableDepth().colorTexture( color_format );
-		blurredBuffer = gl::Fbo::create( size.x / (divisions), size.y / (divisions), fbo_format );
 	}
 	catch( ci::Exception &exc ) {
 		CI_LOG_E( "Error using device camera: " << exc.what() );
 	}
 
-	downsampleProg = gl::GlslProg::create( loadAsset( "blur.vs" ), loadAsset( "blur.fs" ) );
-//	landscape.setup( gridTexture->getTexture() );
-	landscape.setup( blurredBuffer->getColorTexture() );
+	landscape.setup( gridTexture->getBlurredTexture() );
 }
 
 void GridSpaceApp::mouseDown( MouseEvent event )
@@ -91,25 +82,7 @@ void GridSpaceApp::update()
 
 	if( capture->checkNewFrame() ) {
 		gridTexture->update( *capture->getSurface() );
-		blurInput();
 	}
-}
-
-void GridSpaceApp::blurInput()
-{
-	auto index = gridTexture->getCurrentIndex();
-	auto size = blurredBuffer->getSize() / 8;
-
-	gl::ScopedMatrices matrices;
-	gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
-	gl::ScopedGlslProg prog( downsampleProg );
-	gl::ScopedViewport view( gridTexture->getIndexOffset( size, index ), size );
-	gl::ScopedFramebuffer fbo( blurredBuffer );
-
-	downsampleProg->uniform( "uSampler", 0 );
-	downsampleProg->uniform( "uFrameIndex", (float)index );
-
-	gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) );
 }
 
 void GridSpaceApp::draw()
@@ -129,7 +102,7 @@ void GridSpaceApp::draw()
 		gl::draw( gridTexture->getTexture(), Rectf( vec2(0), size ) );
 
 		gl::translate( size * vec2(1, 0) );
-		gl::draw( blurredBuffer->getColorTexture(), Rectf( vec2(0), size ) );
+		gl::draw( gridTexture->getBlurredTexture(), Rectf( vec2(0), size ) );
 	}
 }
 

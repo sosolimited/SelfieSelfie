@@ -25,17 +25,25 @@ public:
 	void update( const ci::Surface &iSurface );
 	/// Returns the underlying texture.
 	ci::gl::TextureRef getTexture() const { return texture; }
+	/// Returns a blurred version of the underlying texture.
+	ci::gl::TextureRef getBlurredTexture() const { return blurredBuffer->getColorTexture(); }
+
 	/// Returns the index of the most recent texture in the grid.
 	int		getCurrentIndex() const { return index; }
 	ci::ivec2 getIndexOffset( const ci::ivec2 &iCellDimensions, int iIndex ) const;
 	/// Returns the pixel dimensions of a single cell.
 	const ci::ivec2& getCellDimensions() const { return cellDimensions; }
 private:
+	ci::gl::FboRef			blurredBuffer;
 	ci::gl::TextureRef	texture;
+	ci::gl::GlslProgRef	downsampleProg;
+
 	int									index = 0;
 	int									cells = 1;
 	int									columns = 1;
 	ci::ivec2						cellDimensions;
+
+	void downsampleAndBlur();
 };
 
 } // namespace soso
