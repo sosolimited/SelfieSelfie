@@ -14,7 +14,7 @@ class CameraLandscape
 public:
 	void setup( const ci::gl::TextureRef &iTexture );
 	ci::ivec2 positionOffset( int iPosition ) const;
-	void draw() const;
+	void draw( float iCurrentFrame ) const;
 private:
 
 	ci::gl::BatchRef		batch;

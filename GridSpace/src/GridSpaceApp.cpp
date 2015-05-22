@@ -65,8 +65,9 @@ void GridSpaceApp::setup()
 		const auto size = divisions * capture->getSize();
 		gridTexture = make_shared<GridTexture>( size.x, size.y, divisions );
 
-		auto fbo_format = gl::Fbo::Format().disableDepth();
-		blurredBuffer = gl::Fbo::create( size.x / divisions, size.y / divisions, fbo_format );
+		auto color_format = gl::Texture::Format();
+		auto fbo_format = gl::Fbo::Format().disableDepth().colorTexture( color_format );
+		blurredBuffer = gl::Fbo::create( size.x / (divisions * 2), size.y / (divisions * 2), fbo_format );
 	}
 	catch( ci::Exception &exc ) {
 		CI_LOG_E( "Error using device camera: " << exc.what() );
@@ -106,7 +107,7 @@ void GridSpaceApp::blurInput()
 	gl::ScopedFramebuffer fbo( blurredBuffer );
 
 	downsampleProg->uniform( "uSampler", 0 );
-	downsampleProg->uniform( "uTextureIndex", (float)index );
+	downsampleProg->uniform( "uFrameIndex", (float)index );
 
 	gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) );
 }
@@ -118,7 +119,7 @@ void GridSpaceApp::draw()
 	gl::enableDepthWrite();
 
 	gl::setMatrices( camera );
-	landscape.draw();
+	landscape.draw( gridTexture->getCurrentIndex() );
 	mesh.draw();
 
 	if( gridTexture->getTexture() ) {
