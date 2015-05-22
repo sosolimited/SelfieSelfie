@@ -41,7 +41,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	batch = gl::Batch::create( geom::Teapot().subdivisions( 8 ) >> geom::Transform( mat ), shader );
 
 	vector<Vertex> vertices;
-	const auto inner_radius = 1.0f;
+	const auto inner_radius = 3.0f;
 	const auto outer_radius = 50.0f;
 	const auto rings = 20;
 	const auto segments = 64;
@@ -49,7 +49,8 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	// vertices from inside to outside edge
 	for( auto r = 0; r <= rings; r += 1 )
 	{
-		auto radius = lmap<float>( r, 0, rings, inner_radius, outer_radius );
+		auto distance = (float)r / rings;
+		auto radius = mix( inner_radius, outer_radius, distance );
 
 		for( auto s = 0; s < segments; s += 1 )
 		{
@@ -58,7 +59,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 			auto y = sin( t * TAU ) * radius;
 			auto pos = vec3( x, -4.0f, y );
 			auto tc = vec2( 0.5 );
-			auto normal = vec3( 0, 1, 0 );
+			auto normal = vec3( 0, mix( 0.0f, 4.0f, distance ), 0 );
 
 			// Mirror texture at halfway point
 			tc.y = abs( t - 0.5f ) * 2.0f;
@@ -89,6 +90,8 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 		}
 	}
 
+	/*
+	// Add a rectangle
 	auto normal = vec3( 0, 0, 1 );
 	auto n = vertices.size();
 	vertices.push_back( { vec3(-1, -1, -4), normal, vec2(0, 0) } );
@@ -102,6 +105,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	indices.push_back( n + 2 );
 	indices.push_back( n + 3 );
 	indices.push_back( n );
+//	*/
 
 	auto vertex_vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
 	auto index_vbo = gl::Vbo::create( GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW );
@@ -115,18 +119,12 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	batch = gl::Batch::create( mesh, shader );
 }
 
-void CameraLandscape::draw() const
+void CameraLandscape::draw( float iCurrentFrame ) const
 {
 	if( texture && batch )
 	{
 		gl::ScopedTextureBind tex0( texture, 0 );
+		batch->getGlslProg()->uniform( "uFrameIndex", iCurrentFrame );
 		batch->draw();
-	}
-
-	if( texture )
-	{
-		gl::ScopedMatrices mat;
-		gl::setMatricesWindow( app::getWindowSize() );
-		gl::draw( texture, Rectf( 0, 0, 192, 108 ) );
 	}
 }

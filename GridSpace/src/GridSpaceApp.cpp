@@ -18,15 +18,18 @@ using namespace soso;
 class GridSpaceApp : public App {
 public:
 	void setup() override;
-	void mouseDown( MouseEvent event ) override;
+	void touchesBegan( TouchEvent event ) override;
 	void update() override;
 	void draw() override;
+
 private:
 	GridMesh				mesh;
 	CameraLandscape landscape;
 	CaptureRef			capture;
 	CameraPersp			camera;
 	GridTextureRef	gridTexture;
+
+	bool						doDrawDebug = false;
 };
 
 void GridSpaceApp::setup()
@@ -48,7 +51,7 @@ void GridSpaceApp::setup()
 			auto &devices = Capture::getDevices();
 			auto first_device = devices.front();
 			for( auto device : devices ) {
-				if( ! device->isFrontFacing() ) {
+				if( device->isFrontFacing() ) {
 					return device;
 				}
 			}
@@ -65,11 +68,12 @@ void GridSpaceApp::setup()
 		CI_LOG_E( "Error using device camera: " << exc.what() );
 	}
 
-	landscape.setup( gridTexture->getTexture() );
+	landscape.setup( gridTexture->getBlurredTexture() );
 }
 
-void GridSpaceApp::mouseDown( MouseEvent event )
+void GridSpaceApp::touchesBegan( TouchEvent event )
 {
+	doDrawDebug = ! doDrawDebug;
 }
 
 void GridSpaceApp::update()
@@ -91,18 +95,23 @@ void GridSpaceApp::draw()
 	gl::enableDepthWrite();
 
 	gl::setMatrices( camera );
-	landscape.draw();
+	landscape.draw( gridTexture->getCurrentIndex() );
 	mesh.draw();
 
-	/*
-	gl::setMatricesWindowPersp( getWindowSize() );
-	gl::translate( vec3( getWindowCenter(), 0 ) );
-	gl::rotate( MotionManager::getRotation() );
-	gl::drawCube( vec3( 0 ), vec3( 50, 100, 5 ) );
+	if( doDrawDebug )
+	{
+		if( gridTexture->getTexture() )
+		{
+			auto size = vec2(192, 108) * 0.8f;
+			gl::ScopedMatrices mat;
+			gl::setMatricesWindow( app::getWindowSize() );
+			gl::draw( gridTexture->getTexture(), Rectf( vec2(0), size ) );
 
-	gl::scale( vec3( 50 ) );
-	gl::drawCoordinateFrame();
-	*/
+			gl::translate( size * vec2(1, 0) );
+			gl::draw( gridTexture->getBlurredTexture(), Rectf( vec2(0), size ) );
+		}
+	}
+
 }
 
 CINDER_APP( GridSpaceApp, RendererGl )
