@@ -48,7 +48,7 @@ void GridSpaceApp::setup()
 			auto &devices = Capture::getDevices();
 			auto first_device = devices.front();
 			for( auto device : devices ) {
-				if( ! device->isFrontFacing() ) {
+				if( device->isFrontFacing() ) {
 					return device;
 				}
 			}
