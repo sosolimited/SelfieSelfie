@@ -17,5 +17,5 @@ void main()
 	offset = 0.0; // mix( -4.0, 0.0, offset );
 	gl_Position = ciModelViewProjection * vec4(ciPosition + ciNormal * offset, 1.0);
 
-	vTexCoord = (ciTexCoord0 / gridSize) + getTextureOffset( 13.0 );
+	vTexCoord = offsetTextureCoordinate( ciTexCoord0, 13.0 ); // arbitrary frame offset for now
 }

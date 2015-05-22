@@ -9,3 +9,8 @@ vec2 getTextureOffset( float index )
 
 	return vec2(column, row) / gridSize;
 }
+
+vec2 offsetTextureCoordinate( vec2 coord, float index )
+{
+	return (coord / gridSize) + getTextureOffset( index );
+}
