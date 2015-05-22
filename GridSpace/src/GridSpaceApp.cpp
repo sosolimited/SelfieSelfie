@@ -21,12 +21,16 @@ public:
 	void mouseDown( MouseEvent event ) override;
 	void update() override;
 	void draw() override;
+
+	void blurInput();
 private:
 	GridMesh				mesh;
 	CameraLandscape landscape;
 	CaptureRef			capture;
 	CameraPersp			camera;
 	GridTextureRef	gridTexture;
+	gl::FboRef			blurredBuffer;
+	gl::GlslProgRef	downsampleProg;
 };
 
 void GridSpaceApp::setup()
@@ -60,12 +64,17 @@ void GridSpaceApp::setup()
 		const auto divisions = 8;
 		const auto size = divisions * capture->getSize();
 		gridTexture = make_shared<GridTexture>( size.x, size.y, divisions );
+
+		auto fbo_format = gl::Fbo::Format().disableDepth();
+		blurredBuffer = gl::Fbo::create( size.x / divisions, size.y / divisions, fbo_format );
 	}
 	catch( ci::Exception &exc ) {
 		CI_LOG_E( "Error using device camera: " << exc.what() );
 	}
 
-	landscape.setup( gridTexture->getTexture() );
+	downsampleProg = gl::GlslProg::create( loadAsset( "blur.vs" ), loadAsset( "blur.fs" ) );
+//	landscape.setup( gridTexture->getTexture() );
+	landscape.setup( blurredBuffer->getColorTexture() );
 }
 
 void GridSpaceApp::mouseDown( MouseEvent event )
@@ -81,7 +90,25 @@ void GridSpaceApp::update()
 
 	if( capture->checkNewFrame() ) {
 		gridTexture->update( *capture->getSurface() );
+		blurInput();
 	}
+}
+
+void GridSpaceApp::blurInput()
+{
+	auto index = gridTexture->getCurrentIndex();
+	auto size = blurredBuffer->getSize() / 8;
+
+	gl::ScopedMatrices matrices;
+	gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
+	gl::ScopedGlslProg prog( downsampleProg );
+	gl::ScopedScissor scissor( gridTexture->getIndexOffset( size, index ), size );
+	gl::ScopedFramebuffer fbo( blurredBuffer );
+
+	downsampleProg->uniform( "uSampler", 0 );
+	downsampleProg->uniform( "uTextureIndex", (float)index );
+
+	gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) );
 }
 
 void GridSpaceApp::draw()
@@ -98,17 +125,10 @@ void GridSpaceApp::draw()
 		gl::ScopedMatrices mat;
 		gl::setMatricesWindow( app::getWindowSize() );
 		gl::draw( gridTexture->getTexture(), Rectf( vec2(0), vec2(192, 108) * 0.66f ) );
+
+		gl::translate( vec2(192, 0) * 0.66f );
+		gl::draw( blurredBuffer->getColorTexture(), Rectf( vec2(0), vec2(192, 108) * 0.66f ) );
 	}
-
-	/*
-	gl::setMatricesWindowPersp( getWindowSize() );
-	gl::translate( vec3( getWindowCenter(), 0 ) );
-	gl::rotate( MotionManager::getRotation() );
-	gl::drawCube( vec3( 0 ), vec3( 50, 100, 5 ) );
-
-	gl::scale( vec3( 50 ) );
-	gl::drawCoordinateFrame();
-	*/
 }
 
 CINDER_APP( GridSpaceApp, RendererGl )

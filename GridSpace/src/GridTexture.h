@@ -27,7 +27,9 @@ public:
 	ci::gl::TextureRef getTexture() const { return texture; }
 	/// Returns the index of the most recent texture in the grid.
 	int		getCurrentIndex() const { return index; }
-	ci::ivec2 getIndexOffset( int iIndex ) const;
+	ci::ivec2 getIndexOffset( const ci::ivec2 &iCellDimensions, int iIndex ) const;
+	/// Returns the pixel dimensions of a single cell.
+	const ci::ivec2& getCellDimensions() const { return cellDimensions; }
 private:
 	ci::gl::TextureRef	texture;
 	int									index = 0;

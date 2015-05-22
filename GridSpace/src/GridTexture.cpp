@@ -23,15 +23,15 @@ GridTexture::GridTexture( int iWidth, int iHeight, int iSubdivisions )
 
 void GridTexture::update( const ci::Surface &iSurface )
 {
-	auto offset = getIndexOffset( index );
+	auto offset = getIndexOffset( cellDimensions, index );
 	texture->update( iSurface, 0, offset );
 	index = (index + 1) % cells;
 }
 
-ivec2 GridTexture::getIndexOffset( int iIndex ) const
+ivec2 GridTexture::getIndexOffset( const ci::ivec2 &iCellDimensions, int iIndex ) const
 {
 	auto column = iIndex % columns;
 	auto row = iIndex / columns;
 
-	return ivec2( column, row ) * cellDimensions;
+	return ivec2( column, row ) * iCellDimensions;
 }
