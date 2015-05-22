@@ -94,6 +94,12 @@ void GridSpaceApp::draw()
 	landscape.draw();
 	mesh.draw();
 
+	if( gridTexture->getTexture() ) {
+		gl::ScopedMatrices mat;
+		gl::setMatricesWindow( app::getWindowSize() );
+		gl::draw( gridTexture->getTexture(), Rectf( vec2(0), vec2(192, 108) * 0.66f ) );
+	}
+
 	/*
 	gl::setMatricesWindowPersp( getWindowSize() );
 	gl::translate( vec3( getWindowCenter(), 0 ) );

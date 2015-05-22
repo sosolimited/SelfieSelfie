@@ -122,11 +122,4 @@ void CameraLandscape::draw() const
 		gl::ScopedTextureBind tex0( texture, 0 );
 		batch->draw();
 	}
-
-	if( texture )
-	{
-		gl::ScopedMatrices mat;
-		gl::setMatricesWindow( app::getWindowSize() );
-		gl::draw( texture, Rectf( 0, 0, 192, 108 ) );
-	}
 }
