@@ -63,7 +63,7 @@ void TimeGrid::setup( const ci::gl::TextureRef &iTexture )
 	}());
 
 	vector<Vertex> vertices;
-	auto dims = ivec2( 12 );
+	auto dims = ivec2( 15 );
 	auto offset = - vec2(dims) * vec2(0.5f);
 	auto max_dist = length(vec2(dims)) * 0.5f;
 
@@ -72,7 +72,7 @@ void TimeGrid::setup( const ci::gl::TextureRef &iTexture )
 			auto pos = offset + vec2(x ,y);
 			auto d_norm = floor( glm::length( pos ) ) / max_dist;
 
-			addRectangle( vertices, vec3( pos.x, -4.0f, pos.y ), 1.0f, 1.0f, d_norm );
+			addRectangle( vertices, vec3( pos.x, -8.0f, pos.y ), 1.0f, 1.0f, d_norm );
 
 			app::console() << "Distance: " << d_norm << ", at: " << pos << endl;
 		}
