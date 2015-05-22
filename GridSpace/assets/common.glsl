@@ -1,5 +1,5 @@
 
-precision mediump float;
+precision highp float;
 
 const vec2 cellDimensions = vec2( 480, 320 );
 const vec2 gridSize = vec2( 8, 8 );

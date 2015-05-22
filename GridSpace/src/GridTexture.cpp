@@ -23,9 +23,9 @@ GridTexture::GridTexture( int iWidth, int iHeight, int iSubdivisions )
 
 void GridTexture::update( const ci::Surface &iSurface )
 {
+	index = (index + 1) % cells;
 	auto offset = getIndexOffset( cellDimensions, index );
 	texture->update( iSurface, 0, offset );
-	index = (index + 1) % cells;
 }
 
 ivec2 GridTexture::getIndexOffset( const ci::ivec2 &iCellDimensions, int iIndex ) const

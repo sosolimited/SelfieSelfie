@@ -108,7 +108,7 @@ void GridSpaceApp::blurInput()
 	downsampleProg->uniform( "uSampler", 0 );
 	downsampleProg->uniform( "uTextureIndex", (float)index );
 
-	gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) );
+	gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) / vec2(8) );
 }
 
 void GridSpaceApp::draw()
@@ -122,12 +122,13 @@ void GridSpaceApp::draw()
 	mesh.draw();
 
 	if( gridTexture->getTexture() ) {
+		auto size = vec2(192, 108) * 0.8f;
 		gl::ScopedMatrices mat;
 		gl::setMatricesWindow( app::getWindowSize() );
-		gl::draw( gridTexture->getTexture(), Rectf( vec2(0), vec2(192, 108) * 0.66f ) );
+		gl::draw( gridTexture->getTexture(), Rectf( vec2(0), size ) );
 
-		gl::translate( vec2(192, 0) * 0.66f );
-		gl::draw( blurredBuffer->getColorTexture(), Rectf( vec2(0), vec2(192, 108) * 0.66f ) );
+		gl::translate( size * vec2(1, 0) );
+		gl::draw( blurredBuffer->getColorTexture(), Rectf( vec2(0), size ) );
 	}
 }
 
