@@ -18,7 +18,7 @@ using namespace soso;
 class GridSpaceApp : public App {
 public:
 	void setup() override;
-	void mouseDown( MouseEvent event ) override;
+	void touchesBegan( TouchEvent event ) override;
 	void update() override;
 	void draw() override;
 
@@ -28,6 +28,8 @@ private:
 	CaptureRef			capture;
 	CameraPersp			camera;
 	GridTextureRef	gridTexture;
+
+	bool						doDrawDebug = false;
 };
 
 void GridSpaceApp::setup()
@@ -69,8 +71,9 @@ void GridSpaceApp::setup()
 	landscape.setup( gridTexture->getBlurredTexture() );
 }
 
-void GridSpaceApp::mouseDown( MouseEvent event )
+void GridSpaceApp::touchesBegan( TouchEvent event )
 {
+	doDrawDebug = ! doDrawDebug;
 }
 
 void GridSpaceApp::update()
@@ -95,15 +98,20 @@ void GridSpaceApp::draw()
 	landscape.draw( gridTexture->getCurrentIndex() );
 	mesh.draw();
 
-	if( gridTexture->getTexture() ) {
-		auto size = vec2(192, 108) * 0.8f;
-		gl::ScopedMatrices mat;
-		gl::setMatricesWindow( app::getWindowSize() );
-		gl::draw( gridTexture->getTexture(), Rectf( vec2(0), size ) );
+	if( doDrawDebug )
+	{
+		if( gridTexture->getTexture() )
+		{
+			auto size = vec2(192, 108) * 0.8f;
+			gl::ScopedMatrices mat;
+			gl::setMatricesWindow( app::getWindowSize() );
+			gl::draw( gridTexture->getTexture(), Rectf( vec2(0), size ) );
 
-		gl::translate( size * vec2(1, 0) );
-		gl::draw( gridTexture->getBlurredTexture(), Rectf( vec2(0), size ) );
+			gl::translate( size * vec2(1, 0) );
+			gl::draw( gridTexture->getBlurredTexture(), Rectf( vec2(0), size ) );
+		}
 	}
+
 }
 
 CINDER_APP( GridSpaceApp, RendererGl )
