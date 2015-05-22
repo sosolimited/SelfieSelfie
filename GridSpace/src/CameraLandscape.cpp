@@ -6,6 +6,7 @@
 //
 
 #include "CameraLandscape.h"
+#include "cinder/Rand.h"
 
 using namespace soso;
 using namespace cinder;
@@ -47,70 +48,54 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	const auto rings = 20;
 	const auto segments = 64;
 
-	// vertices from inside to outside edge
-	for( auto r = 0; r <= rings; r += 1 )
-	{
+	// Generate cartesian position.
+	auto calc_pos = [=] (int r, int s) {
 		auto distance = (float)r / rings;
 		auto radius = mix( inner_radius, outer_radius, distance );
-
-		for( auto s = 0; s < segments; s += 1 )
-		{
-			auto t = (float) s / segments;
-			auto x = cos( t * TAU ) * radius;
-			auto y = sin( t * TAU ) * radius;
-			auto pos = vec3( x, -4.0f, y );
-			auto tc = vec2( 0.5 );
-			auto normal = vec3( 0, mix( 0.0f, 4.0f, distance ), 0 );
-
-			// Mirror texture at halfway point
-			tc.y = abs( t - 0.5f ) * 2.0f;
-			tc.x = lmap<float>( r, 0, rings, 1.0f, 0.0f );
-			auto color_tc = vec2( 0.5 );
-
-			vertices.push_back( { pos, normal, tc, color_tc } );
-		}
-	}
-
-	vector<uint32_t> indices;
-	// return a wrapped index in a row and segment
-	auto index = [segments, rings] (int s, int r) {
-		r *= segments;
-		s %= segments;
-		return r + s;
+		auto t = (float) s / segments;
+		auto x = cos( t * TAU ) * radius;
+		auto y = sin( t * TAU ) * radius;
+		return vec3( x, -4.0f, y );
 	};
-	for( auto r = 0; r < rings; r += 1 )
+
+	// Generate texture coordinate mirrored at halfway point.
+	auto calc_tc = [=] (int r, int s) {
+		auto t = (float) s / segments;
+		auto tc = vec2(0);
+		tc.y = abs( t - 0.5f ) * 2.0f;
+		tc.x = lmap<float>( r, 0, rings, 1.0f, 0.0f );
+		return tc;
+	};
+
+	// Add a vertex to texture (color_tc parameter allows us to do flat shading in ES2)
+	auto add_vert = [=,&vertices] (int r, int s, const vec2 &color_tc) {
+		auto distance = (float)r / rings;
+		auto normal = vec3( 0, mix( 0.0f, 4.0f, distance ), 0 );
+		auto pos = calc_pos(r, s);
+		auto tc = calc_tc(r, s);
+		vertices.push_back( Vertex{ pos, normal, tc, color_tc } );
+	};
+
+	// Create triangles for flat shading
+	for( auto r = 0; r <= rings; r += 1 )
 	{
 		for( auto s = 0; s < segments; s += 1 )
 		{
-			indices.push_back( index( s, r ) );
-			indices.push_back( index( s + 1, r ) );
-			indices.push_back( index( s + 1, r + 1 ) );
+			auto color_tc = calc_tc( r, s );
+			add_vert( r, s, color_tc );
+			add_vert( r, s + 1, color_tc );
+			add_vert( r + 1, s + 1, color_tc );
 
-			indices.push_back( index( s, r ) );
-			indices.push_back( index( s, r + 1 ) );
-			indices.push_back( index( s + 1, r + 1 ) );
+			if( randFloat() < 0.5f ) {
+				color_tc = calc_tc( r + 1, s );
+			}
+			add_vert( r, s, color_tc );
+			add_vert( r + 1, s, color_tc );
+			add_vert( r + 1, s + 1, color_tc );
 		}
 	}
 
-	/*
-	// Add a rectangle
-	auto normal = vec3( 0, 0, 1 );
-	auto n = vertices.size();
-	vertices.push_back( { vec3(-1, -1, -4), normal, vec2(0, 0) } );
-	vertices.push_back( { vec3( 1, -1, -4), normal, vec2(1, 0) } );
-	vertices.push_back( { vec3( 1,  1, -4), normal, vec2(1, 1) } );
-	vertices.push_back( { vec3(-1,  1, -4), normal, vec2(0, 1) } );
-
-	indices.push_back( n );
-	indices.push_back( n + 1 );
-	indices.push_back( n + 2 );
-	indices.push_back( n + 2 );
-	indices.push_back( n + 3 );
-	indices.push_back( n );
-//	*/
-
 	auto vertex_vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
-	auto index_vbo = gl::Vbo::create( GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW );
 
 	auto vertex_layout = geom::BufferLayout();
 	vertex_layout.append( geom::Attrib::POSITION, 3, sizeof(Vertex), offsetof(Vertex, pos) );
@@ -118,7 +103,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	vertex_layout.append( geom::Attrib::NORMAL, 3, sizeof(Vertex), offsetof(Vertex, normal) );
 	vertex_layout.append( geom::Attrib::TEX_COORD_1, 2, sizeof(Vertex), offsetof(Vertex, color_tc) );
 
-	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ vertex_layout, vertex_vbo }}, indices.size(), GL_UNSIGNED_INT, index_vbo );
+	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ vertex_layout, vertex_vbo }} );
 	batch = gl::Batch::create( mesh, shader );
 }
 
