@@ -8,6 +8,7 @@
 #include "cinder/Capture.h"
 #include "cinder/Log.h"
 #include "GridTexture.h"
+#include "TimeGrid.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -28,6 +29,7 @@ private:
 	CaptureRef			capture;
 	CameraPersp			camera;
 	GridTextureRef	gridTexture;
+	TimeGrid				timeGrid;
 
 	bool						doDrawDebug = false;
 };
@@ -69,6 +71,7 @@ void GridSpaceApp::setup()
 	}
 
 	landscape.setup( gridTexture->getBlurredTexture() );
+	timeGrid.setup( gridTexture->getTexture() );
 }
 
 void GridSpaceApp::touchesBegan( TouchEvent event )
@@ -95,6 +98,8 @@ void GridSpaceApp::draw()
 	gl::enableDepthWrite();
 
 	gl::setMatrices( camera );
+
+	timeGrid.draw( gridTexture->getCurrentIndex() );
 	landscape.draw( gridTexture->getCurrentIndex() );
 	mesh.draw();
 
