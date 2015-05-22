@@ -45,8 +45,8 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	vector<Vertex> vertices;
 	const auto inner_radius = 3.0f;
 	const auto outer_radius = 50.0f;
-	const auto rings = 20;
-	const auto segments = 64;
+	const auto rings = 64;
+	const auto segments = 128;
 
 	// Generate cartesian position.
 	auto calc_pos = [=] (int r, int s) {
@@ -86,9 +86,6 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 			add_vert( r, s + 1, color_tc );
 			add_vert( r + 1, s + 1, color_tc );
 
-			if( randFloat() < 0.5f ) {
-				color_tc = calc_tc( r + 1, s );
-			}
 			add_vert( r, s, color_tc );
 			add_vert( r + 1, s, color_tc );
 			add_vert( r + 1, s + 1, color_tc );
