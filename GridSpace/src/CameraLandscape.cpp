@@ -49,7 +49,8 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	// vertices from inside to outside edge
 	for( auto r = 0; r <= rings; r += 1 )
 	{
-		auto radius = lmap<float>( r, 0, rings, inner_radius, outer_radius );
+		auto distance = (float)r / rings;
+		auto radius = mix( inner_radius, outer_radius, distance );
 
 		for( auto s = 0; s < segments; s += 1 )
 		{
@@ -58,7 +59,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 			auto y = sin( t * TAU ) * radius;
 			auto pos = vec3( x, -4.0f, y );
 			auto tc = vec2( 0.5 );
-			auto normal = vec3( 0, 1, 0 );
+			auto normal = vec3( 0, mix( 0.0f, 4.0f, distance ), 0 );
 
 			// Mirror texture at halfway point
 			tc.y = abs( t - 0.5f ) * 2.0f;
