@@ -98,8 +98,9 @@ void GridSpaceApp::draw()
 	gl::enableDepthWrite();
 
 	gl::setMatrices( camera );
-	// TODO: bind both blurred and normal texture
+	// TODO: bind both blurred and normal texture and avoid rebinding textures elsewhere.
 	gl::ScopedTextureBind tex0( gridTexture->getBlurredTexture(), 0 );
+	gl::ScopedTextureBind tex1( gridTexture->getTexture(), 1 );
 
 	timeGrid.draw( gridTexture->getCurrentIndex() );
 	landscape.draw( gridTexture->getCurrentIndex() );
@@ -109,12 +110,12 @@ void GridSpaceApp::draw()
 	{
 		if( gridTexture->getTexture() )
 		{
-			auto size = vec2(192, 108) * 0.8f;
+			auto size = vec2(getWindowSize()) * vec2(1.0, 0.5);
 			gl::ScopedMatrices mat;
 			gl::setMatricesWindow( app::getWindowSize() );
 			gl::draw( gridTexture->getTexture(), Rectf( vec2(0), size ) );
 
-			gl::translate( size * vec2(1, 0) );
+			gl::translate( size * vec2(0, 1) );
 			gl::draw( gridTexture->getBlurredTexture(), Rectf( vec2(0), size ) );
 		}
 	}
