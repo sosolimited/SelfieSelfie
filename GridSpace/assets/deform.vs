@@ -45,7 +45,7 @@ void main()
 	// irregularity of grid causes incorrect normals due to squash and stretch.
 	// visually, they produce good enough results
 	float texture_step = 1.0 / 64.0;
-	float spatial_step = mix( 0.8, 2.0, FrameIndex );
+	float spatial_step = mix( 0.5, 2.0, FrameIndex );
 	vec3 a = spatial_step * vec3(-1, 0, 0 ) + calcOffset( offsetTextureCoordinate( ciTexCoord1 - vec2( texture_step, 0 ), index ) );
 	vec3 c = spatial_step * vec3( 1, 0, 0 ) + calcOffset( offsetTextureCoordinate( ciTexCoord1 + vec2( texture_step, 0 ), index ) );
 	vec3 b = spatial_step * vec3( 0, 0, 1 ) + calcOffset( offsetTextureCoordinate( ciTexCoord1 + vec2( 0, texture_step ), index ) );
@@ -54,5 +54,6 @@ void main()
 	vec3 bd = d - b;
 	vec3 normal = normalize( cross( ac, bd ) );
 
-	vColor.rgb *= vec3(hemisphereMix( normal ));
+	float shading = hemisphereMix(normal);
+	vColor.rgb *= vec3(shading);
 }
