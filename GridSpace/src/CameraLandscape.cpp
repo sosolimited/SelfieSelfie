@@ -99,8 +99,9 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 
 	// Deform vertices into a bowl
 	auto max_distance = outer_radius;
+	auto min_distance = inner_radius;
 	for( auto &v : vertices ) {
-		auto distance = length( v.pos ) / max_distance;
+		auto distance = lmap<float>( length( v.pos ), min_distance, max_distance, 0.0f, 1.0f );
 		// pos is on a radial axis, rotate it 90 degrees to bend along length
 		auto axis = glm::rotate( glm::angleAxis( (float)TAU / 4.0f, vec3(0, 1, 0) ), normalize(v.pos) );
 		auto theta = mix( 0.0f, -(float)TAU / 18.0f, distance );
