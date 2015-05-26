@@ -17,3 +17,8 @@ vec2 offsetTextureCoordinate( vec2 coord, float index )
 {
 	return (coord / gridSize) + getTextureOffset( index );
 }
+
+float wrappedIndex( float baseIndex, float offset )
+{
+	return floor(mod(baseIndex - (offset * 64.0), 64.0));
+}
