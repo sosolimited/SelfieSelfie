@@ -98,10 +98,12 @@ void GridSpaceApp::draw()
 	gl::enableDepthWrite();
 
 	gl::setMatrices( camera );
+	// TODO: bind both blurred and normal texture
+	gl::ScopedTextureBind tex0( gridTexture->getBlurredTexture(), 0 );
 
 	timeGrid.draw( gridTexture->getCurrentIndex() );
 	landscape.draw( gridTexture->getCurrentIndex() );
-	mesh.draw();
+	mesh.draw( gridTexture->getCurrentIndex() );
 
 	if( doDrawDebug )
 	{

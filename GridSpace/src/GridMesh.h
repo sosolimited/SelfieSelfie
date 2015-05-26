@@ -13,7 +13,7 @@ class GridMesh
 {
 public:
 	void setup();
-	void draw() const;
+	void draw( float iCurrentFrame ) const;
 
 private:
 
