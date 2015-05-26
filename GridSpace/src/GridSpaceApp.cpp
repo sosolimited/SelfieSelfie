@@ -20,6 +20,8 @@ class GridSpaceApp : public App {
 public:
 	void setup() override;
 	void touchesBegan( TouchEvent event ) override;
+	void touchesMoved( TouchEvent event ) override;
+	void touchesEnded( TouchEvent event ) override;
 	void update() override;
 	void draw() override;
 
@@ -32,6 +34,10 @@ private:
 	TimeGrid				timeGrid;
 
 	bool						doDrawDebug = false;
+
+	ci::vec2				touchStart;
+	ci::vec2				previousOffset;
+	ci::vec2				cameraOffset;
 };
 
 void GridSpaceApp::setup()
@@ -76,11 +82,37 @@ void GridSpaceApp::setup()
 
 void GridSpaceApp::touchesBegan( TouchEvent event )
 {
-	doDrawDebug = ! doDrawDebug;
+	previousOffset = cameraOffset;
+
+	const auto &touches = event.getTouches();
+	if( touches.size() == 1 ) {
+		touchStart = touches.front().getPos();
+	}
+	else {
+		doDrawDebug = ! doDrawDebug;
+	}
+}
+
+void GridSpaceApp::touchesMoved( TouchEvent event )
+{
+	const auto &touches = event.getTouches();
+	if( touches.size() == 1 ) {
+		cameraOffset = previousOffset + touches.front().getPos() - touchStart;
+	}
+}
+
+void GridSpaceApp::touchesEnded( TouchEvent event )
+{
+	const auto &touches = event.getTouches();
+	if( touches.size() == 1 ) {
+		cameraOffset = previousOffset + touches.front().getPos() - touchStart;
+	}
 }
 
 void GridSpaceApp::update()
 {
+	camera.setEyePoint( vec3( 0, cameraOffset.y * 0.1, 0 ) );
+
 	if( MotionManager::isDataAvailable() ) {
 		auto r = MotionManager::getRotation();
 		camera.setOrientation( r );
