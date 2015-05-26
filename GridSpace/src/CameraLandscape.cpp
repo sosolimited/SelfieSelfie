@@ -7,6 +7,7 @@
 
 #include "CameraLandscape.h"
 #include "cinder/Rand.h"
+#include "cinder/Log.h"
 
 using namespace soso;
 using namespace cinder;
@@ -16,6 +17,7 @@ const double TAU = 6.28318530718;
 
 void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 {
+	CI_LOG_I("Building CameraLandscape");
 	texture = iTexture;
 
 	struct Vertex {

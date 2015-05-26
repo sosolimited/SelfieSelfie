@@ -6,6 +6,7 @@
 //
 
 #include "TimeGrid.h"
+#include "cinder/Log.h"
 
 using namespace soso;
 using namespace cinder;
@@ -47,6 +48,7 @@ void addRectangle( vector<Vertex> &vertices, const ci::vec3 &iCenter, float iWid
 
 void TimeGrid::setup( const ci::gl::TextureRef &iTexture )
 {
+	CI_LOG_I("Building TimeGrid");
 	texture = iTexture;
 
 	auto shader = ([] () {

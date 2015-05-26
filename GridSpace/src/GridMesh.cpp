@@ -7,6 +7,7 @@
 
 #include "GridMesh.h"
 #include "cinder/gl/gl.h"
+#include "cinder/Log.h"
 
 using namespace cinder;
 using namespace soso;
@@ -36,6 +37,7 @@ namespace {
 
 void GridMesh::setup()
 {
+	CI_LOG_I("Building GridMesh");
 	std::vector<Vertex> vertices;
 
 	const auto dims = ivec3( 50, 6, 50 );
