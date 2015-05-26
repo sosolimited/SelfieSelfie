@@ -14,7 +14,7 @@ varying vec2 vTexCoord;
 
 void main()
 {
-	float index = floor( mod(uFrameIndex + ((1.0 - FrameIndex) * 64.0), 64.0) );
+	float index = wrappedIndex(uFrameIndex, FrameIndex);
 	vTexCoord = offsetTextureCoordinate( ciTexCoord0, index );
 	gl_Position = ciModelViewProjection * vec4(ciPosition, 1.0);
 }

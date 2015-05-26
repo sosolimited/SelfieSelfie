@@ -8,6 +8,7 @@ attribute vec3  ciPosition;
 attribute vec3	ciNormal;
 attribute vec2  ciTexCoord0; // coord for vertex offset
 attribute vec2	ciTexCoord1; // coord for vertex color
+attribute float FrameIndex;
 
 varying vec2 vTexCoord;
 varying vec4 vColor;
@@ -16,11 +17,12 @@ varying vec4 vColor;
 
 void main()
 {
-	vec2 offset_coord = offsetTextureCoordinate( ciTexCoord0, uFrameIndex );
-	vec2 color_coord = offsetTextureCoordinate( ciTexCoord1, uFrameIndex );
-	float offset = clamp( length(texture2D(uVideo, offset_coord).rgb), 0.0, 1.0 );
-	offset = mix( -4.0, 1.0, offset ); // note that normal can be > 1.0.
+	float index = wrappedIndex(uFrameIndex, FrameIndex);
+	vec2 offset_coord = offsetTextureCoordinate( ciTexCoord0, index );
+	vec2 color_coord = offsetTextureCoordinate( ciTexCoord1, index );
+	float t = clamp( length(texture2D(uVideo, offset_coord).rgb), 0.0, 1.0 );
+	float offset = mix( -5.0, 0.0, t ); // note that normal can be > 1.0.
 
 	gl_Position = ciModelViewProjection * vec4(ciPosition + ciNormal * offset, 1.0);
-	vColor = texture2D( uVideo, color_coord );
+	vColor = vec4( clamp( texture2D( uVideo, color_coord ).rgb * 1.3, 0.0, 1.0 ), 1.0 );
 }

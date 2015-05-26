@@ -7,6 +7,7 @@
 
 #include "CameraLandscape.h"
 #include "cinder/Rand.h"
+#include "cinder/Log.h"
 
 using namespace soso;
 using namespace cinder;
@@ -16,6 +17,7 @@ const double TAU = 6.28318530718;
 
 void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 {
+	CI_LOG_I("Building CameraLandscape");
 	texture = iTexture;
 
 	struct Vertex {
@@ -23,6 +25,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 		vec3 normal;
 		vec2 tc;
 		vec2 color_tc;
+		float time_offset;
 	};
 
 	auto shader = ([] () {
@@ -62,8 +65,9 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	auto calc_tc = [=] (int r, int s) {
 		auto t = (float) s / segments;
 		auto tc = vec2(0);
-		tc.y = abs( t - 0.5f ) * 2.0f;
-		tc.x = lmap<float>( r, 0, rings, 1.0f, 0.0f );
+		// insetting the texture coordinates minimizes edge color flashing.
+		tc.y = mix( 0.05f, 0.95f, abs( t - 0.5f ) * 2.0f );
+		tc.x = lmap<float>( r, 0, rings, 0.9125f, 0.0875f );
 		return tc;
 	};
 
@@ -71,9 +75,10 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	auto add_vert = [=,&vertices] (int r, int s, const vec2 &color_tc) {
 		auto distance = (float)r / rings;
 		auto normal = vec3( 0, mix( 0.0f, 4.0f, distance ), 0 );
+		auto time_offset = distance;
 		auto pos = calc_pos(r, s);
 		auto tc = calc_tc(r, s);
-		vertices.push_back( Vertex{ pos, normal, tc, color_tc } );
+		vertices.push_back( Vertex{ pos, normal, tc, color_tc, time_offset } );
 	};
 
 	// Create triangles for flat shading
@@ -99,9 +104,10 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	vertex_layout.append( geom::Attrib::TEX_COORD_0, 2, sizeof(Vertex), offsetof(Vertex, tc) );
 	vertex_layout.append( geom::Attrib::NORMAL, 3, sizeof(Vertex), offsetof(Vertex, normal) );
 	vertex_layout.append( geom::Attrib::TEX_COORD_1, 2, sizeof(Vertex), offsetof(Vertex, color_tc) );
+	vertex_layout.append( geom::Attrib::CUSTOM_0, 1, sizeof(Vertex), offsetof(Vertex, time_offset) );
 
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ vertex_layout, vertex_vbo }} );
-	batch = gl::Batch::create( mesh, shader );
+	batch = gl::Batch::create( mesh, shader, {{ geom::Attrib::CUSTOM_0, "FrameIndex" }} );
 }
 
 void CameraLandscape::draw( float iCurrentFrame ) const
