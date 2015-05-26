@@ -103,7 +103,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 		auto distance = length( v.pos ) / max_distance;
 		// pos is on a radial axis, rotate it 90 degrees to bend along length
 		auto axis = glm::rotate( glm::angleAxis( (float)TAU / 4.0f, vec3(0, 1, 0) ), normalize(v.pos) );
-		auto theta = mix( 0.0f, -(float)TAU / 16.0f, distance );
+		auto theta = mix( 0.0f, -(float)TAU / 18.0f, distance );
 		auto xf = glm::rotate( theta, axis );
 		v.normal = vec3(xf * vec4(v.normal, 0.0f));
 		v.normal *= mix( 0.0f, 4.0f, distance );
