@@ -4,7 +4,7 @@ precision highp float;
 const vec2 cellDimensions = vec2( 480, 320 );
 const vec2 gridSize = vec2( 8, 8 );
 // Size of a single texel in an input camera image.
-const vec2 texelSize = vec2( 1.0 ) / (cellDimensions);
+const vec2 texelSize = vec2( 1.0 ) / (cellDimensions * vec2(2));
 
 vec2 getTextureOffset( float index )
 {
