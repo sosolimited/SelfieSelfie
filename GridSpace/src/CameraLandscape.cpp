@@ -74,7 +74,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	// Add a vertex to texture (color_tc parameter allows us to do flat shading in ES2)
 	auto add_vert = [=,&vertices] (int r, int s, const vec2 &color_tc) {
 		auto distance = (float)r / rings;
-		auto normal = vec3( 0, mix( 0.0f, 4.0f, distance ), 0 );
+		auto normal = vec3( 0, 1.0f, 0 ); // mix( 0.0f, 4.0f, distance )
 		auto time_offset = distance;
 		auto pos = calc_pos(r, s);
 		auto tc = calc_tc(r, s);
@@ -95,6 +95,19 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 			add_vert( r + 1, s, color_tc );
 			add_vert( r + 1, s + 1, color_tc );
 		}
+	}
+
+	// Deform vertices into a bowl
+	auto max_distance = outer_radius;
+	for( auto &v : vertices ) {
+		auto distance = length( v.pos ) / max_distance;
+		// pos is on a radial axis, rotate it 90 degrees to bend along length
+		auto axis = glm::rotate( glm::angleAxis( (float)TAU / 4.0f, vec3(0, 1, 0) ), normalize(v.pos) );
+		auto theta = mix( 0.0f, -(float)TAU / 18.0f, distance );
+		auto xf = glm::rotate( theta, axis );
+		v.normal = vec3(xf * vec4(v.normal, 0.0f));
+		v.normal *= mix( 0.0f, 4.0f, distance );
+		v.pos = vec3(xf * vec4(v.pos, 1.0f));
 	}
 
 	auto vertex_vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
