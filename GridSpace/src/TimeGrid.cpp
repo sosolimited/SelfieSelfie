@@ -65,7 +65,7 @@ void TimeGrid::setup( const ci::gl::TextureRef &iTexture )
 	}());
 
 	vector<Vertex> vertices;
-	auto dims = ivec2( 7 );
+	auto dims = ivec2( 15 );
 	auto offset = - vec2(dims - 1) * vec2(0.5f);
 	auto max_dist = length(vec2(dims)) * 0.5f;
 
