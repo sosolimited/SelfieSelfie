@@ -46,7 +46,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	batch = gl::Batch::create( geom::Teapot().subdivisions( 8 ) >> geom::Transform( mat ), shader );
 
 	vector<Vertex> vertices;
-	const auto inner_radius = 3.0f;
+	const auto inner_radius = 8.0f;
 	const auto outer_radius = 50.0f;
 	const auto rings = 64;
 	const auto segments = 128;
