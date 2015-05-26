@@ -42,7 +42,7 @@ void GridMesh::setup()
 	std::vector<Vertex> vertices;
 
 	const auto dims = ivec3( 50, 8, 50 );
-	auto offset = vec3( -dims ) * vec3( 0.5f, 0.025f, 0.5f );
+	auto offset = vec3( -dims ) * vec3( 0.5f, -0.025f, 0.5f );
 
 	for( auto y = 0; y < dims.y; y += 1 ) {
 		auto time_offset = (float) y / dims.y;
