@@ -15,7 +15,8 @@ using namespace soso;
 namespace {
   struct Vertex
 	{
-		ci::vec3	position;
+		ci::vec3	center;
+		ci::vec3	offset;
 		ci::vec2	tex_coord;
 		float			time_offset;
 	};
@@ -24,14 +25,14 @@ namespace {
 	// On ES3 hardware, we could use a single cross shape and instance it.
 	void appendCross( std::vector<Vertex> &iVertices, const ci::vec3 &iCenter, const ci::vec2 &iTexCoord, float iTimeOffset )
 	{
-		iVertices.push_back( Vertex{ iCenter - vec3( 0.1, 0, 0 ), iTexCoord, iTimeOffset } );
-		iVertices.push_back( Vertex{ iCenter + vec3( 0.1, 0, 0 ), iTexCoord, iTimeOffset } );
+		iVertices.push_back( Vertex{ iCenter, - vec3( 0.1, 0, 0 ), iTexCoord, iTimeOffset } );
+		iVertices.push_back( Vertex{ iCenter, vec3( 0.1, 0, 0 ), iTexCoord, iTimeOffset } );
 
-		iVertices.push_back( Vertex{ iCenter - vec3( 0, 0, 0.1 ), iTexCoord, iTimeOffset } );
-		iVertices.push_back( Vertex{ iCenter + vec3( 0, 0, 0.1 ), iTexCoord, iTimeOffset } );
+		iVertices.push_back( Vertex{ iCenter, - vec3( 0, 0, 0.1 ), iTexCoord, iTimeOffset } );
+		iVertices.push_back( Vertex{ iCenter, vec3( 0, 0, 0.1 ), iTexCoord, iTimeOffset } );
 
-		iVertices.push_back( Vertex{ iCenter - vec3( 0, 0.1, 0 ), iTexCoord, iTimeOffset } );
-		iVertices.push_back( Vertex{ iCenter + vec3( 0, 0.1, 0 ), iTexCoord, iTimeOffset } );
+		iVertices.push_back( Vertex{ iCenter, - vec3( 0, 0.1, 0 ), iTexCoord, iTimeOffset } );
+		iVertices.push_back( Vertex{ iCenter, vec3( 0, 0.1, 0 ), iTexCoord, iTimeOffset } );
 	}
 } // namespace
 
@@ -56,13 +57,14 @@ void GridMesh::setup()
 
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices );
 	auto layout = geom::BufferLayout();
-	layout.append( geom::Attrib::POSITION, 3, sizeof(Vertex), offsetof(Vertex, position) );
+	layout.append( geom::Attrib::POSITION, 3, sizeof(Vertex), offsetof(Vertex, center) );
 	layout.append( geom::Attrib::TEX_COORD_0, 2, sizeof(Vertex), offsetof(Vertex, tex_coord) );
 	layout.append( geom::Attrib::CUSTOM_0, 1, sizeof(Vertex), offsetof(Vertex, time_offset) );
+	layout.append( geom::Attrib::CUSTOM_1, 3, sizeof(Vertex), offsetof(Vertex, offset) );
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_LINES, {{ layout, vbo }} );
 	auto shader = gl::GlslProg::create( app::loadAsset("grid_mesh.vs"), app::loadAsset("grid_mesh.fs") );
 
-	batch = gl::Batch::create( mesh, shader, {{ geom::Attrib::CUSTOM_0, "FrameIndex" }} );
+	batch = gl::Batch::create( mesh, shader, {{ geom::Attrib::CUSTOM_0, "FrameIndex" }, { geom::Attrib::CUSTOM_1, "PositionOffset" }} );
 }
 
 void GridMesh::draw( float iCurrentFrame ) const
