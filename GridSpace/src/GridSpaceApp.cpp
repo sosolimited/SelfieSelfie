@@ -2,13 +2,15 @@
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 
-#include "GridMesh.h"
-#include "CameraLandscape.h"
 #include "cinder/MotionManager.h"
 #include "cinder/Capture.h"
 #include "cinder/Log.h"
+
+#include "GridMesh.h"
+#include "CameraLandscape.h"
 #include "GridTexture.h"
 #include "TimeGrid.h"
+#include "Landscape.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -38,11 +40,14 @@ public:
 
 private:
 	GridMesh				mesh;
-	CameraLandscape landscape;
+	/*
+	CameraLandscape cameraLandscape;
+	TimeGrid				timeGrid;
+	*/
 	CaptureRef			capture;
 	CameraPersp			camera;
 	GridTextureRef	gridTexture;
-	TimeGrid				timeGrid;
+	Landscape				landscape;
 
 	bool						doDrawDebug = false;
 
@@ -86,8 +91,11 @@ void GridSpaceApp::setup()
 		CI_LOG_E( "Error using device camera: " << exc.what() );
 	}
 
-	landscape.setup( gridTexture->getBlurredTexture() );
+	landscape.setup();
+	/*
+	cameraLandscape.setup( gridTexture->getBlurredTexture() );
 	timeGrid.setup( gridTexture->getTexture() );
+	*/
 }
 
 void GridSpaceApp::touchesBegan( TouchEvent event )
@@ -168,11 +176,14 @@ void GridSpaceApp::draw()
 
 	gl::setMatrices( camera );
 	// TODO: bind both blurred and normal texture and avoid rebinding textures elsewhere.
-	gl::ScopedTextureBind tex0( gridTexture->getBlurredTexture(), 0 );
-	gl::ScopedTextureBind tex1( gridTexture->getTexture(), 1 );
+	gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
+	gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
 
-	timeGrid.draw( gridTexture->getCurrentIndex() );
 	landscape.draw( gridTexture->getCurrentIndex() );
+	/*
+	timeGrid.draw( gridTexture->getCurrentIndex() );
+	cameraLandscape.draw( gridTexture->getCurrentIndex() );
+	*/
 	mesh.draw( gridTexture->getCurrentIndex() );
 
 	if( doDrawDebug )
