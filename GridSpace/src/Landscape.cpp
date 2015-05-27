@@ -80,10 +80,10 @@ void addQuad( std::vector<Vertex> &vertices, const vec3 &a, const vec3 &b, const
 }
 
 /// Add a ring of geometry containing a given number of time bands (slitscanning effect) and repeats around the donut.
-void addRing( std::vector<Vertex> &vertices, const vec3 &center, const vec3 &normal, float inner_radius, float outer_radius, float time_offset, int time_bands, int repeats )
+void addRing( std::vector<Vertex> &vertices, const vec3 &center, const vec3 &normal, float inner_radius, float outer_radius, float time_offset, int time_bands, int repeats, float color_weight )
 {
 	auto rings = time_bands;
-	auto segments = 32;
+	auto segments = 64;
 
 	// Generate cartesian position.
 	auto calc_pos = [=] (int r, int s) {
@@ -121,7 +121,7 @@ void addRing( std::vector<Vertex> &vertices, const vec3 &center, const vec3 &nor
 		if (time_bands > 1) {
 			time += lmap<float>( provoking.x, 0.0f, rings, 0.0f, time_bands );
 		}
-		vertices.push_back( Vertex{ pos, normal, tc, color_tc, deform_scaling, time, 0.0f } );
+		vertices.push_back( Vertex{ pos, normal, tc, color_tc, deform_scaling, time, color_weight } );
 	};
 
 	// Create triangles for flat shading
@@ -155,10 +155,10 @@ void Landscape::setup()
 	auto outer = 3.5f;
 	auto whole_frames = 8;
 	for( auto i = 0; i < whole_frames; i += 1 ) {
-		addRing( vertices, vec3( 0, -3, 0 ), normal, lmap<float>( i, 0, whole_frames, inner, outer ), lmap<float>( i + 1, 0, whole_frames, inner, outer ), i, 1, i + 1.0f );
+		addRing( vertices, vec3( 0, -3, 0 ), normal, lmap<float>( i, 0, whole_frames, inner, outer ), lmap<float>( i + 1, 0, whole_frames, inner, outer ), i, 1, i + 1.0f, 0.0f );
 	}
 
-	addRing( vertices, vec3( 0, -3, 0 ), normal, outer, outer + 1.0f, whole_frames, 16, 8 );
+	addRing( vertices, vec3( 0, -3, 0 ), normal, outer, outer + 1.0f, whole_frames, 32, 1, 1.0f );
 
 //	addRing( vertices, vec3( 0, -3, 0 ), normal, 1.0f, 2.0f, 0.0f, 1, 4 );
 //	addRing( vertices, vec3( 0, -3, 0 ), normal, 2.0f, 3.0f, 1.0f, 8, 3 );
@@ -176,7 +176,10 @@ void Landscape::setup()
 		v.normal = vec3(xf * vec4(v.normal, 0.0f));
 //		v.deform_scaling = mix( 0.0f, 4.0f, distance );
 		v.position = vec3(xf * vec4(v.position, 1.0f));
-		v.color_weight = 0.0f; // mix( 0.0f, 1.0f, distance * distance );
+//		v.color_weight = 0.0f; // mix( 0.0f, 1.0f, distance * distance );
+//		if( distance >= 1.0f ) {
+//			v.color_weight = 1.0f;
+//		}
 	}
 
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
