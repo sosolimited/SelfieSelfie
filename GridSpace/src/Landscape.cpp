@@ -152,7 +152,7 @@ void Landscape::setup()
 	auto normal = vec3( 0, 1, 0 );
 
 	auto inner = 0.28f;
-	auto outer = 3.0f;
+	auto outer = 2.4f;
 
 	struct Params {
 		float repeats;
@@ -167,11 +167,11 @@ void Landscape::setup()
 		{ 6, 1, 0.0f, vec2( 0.05, 0.0875f ) },
 		{ 8, 1, 0.0f, vec2( 0.05, 0.0875f ) },
 		{ 10, 1, 0.0f, vec2( 0.05, 0.0875f ) },
-		{ 12, 1, 0.0f, vec2( 0.05, 0.0875f ) },
-		{ 10, 1, 0.0f, vec2( 0.05, 0.0875f ) },
-		{ 8, 2, 0.1f, vec2( 0.05, 0.0875f ) },
-		{ 10, 4, 0.25f, vec2( 0.05, 0.0875f ) },
-		{ 8, 8, 0.5f, vec2( 0.05, 0.0875f ) }
+		{ 12, 2, 0.0f, vec2( 0.05, 0.0875f ) },
+		{ 10, 3, 0.1f, vec2( 0.05, 0.0875f ) },
+		{ 8, 6, 0.3f, vec2( 0.05, 0.0875f ) },
+		{ 10, 12, 0.5f, vec2( 0.05, 0.0875f ) },
+		{ 8, 24, 0.8f, vec2( 0.05, 0.0875f ) }
 	};
 
 	for( auto i = 0; i < params.size(); i += 1 )
@@ -187,7 +187,7 @@ void Landscape::setup()
 
 	auto last_frame = params.size() * 2 + 4.0f; // actually some overlap
 	auto remaining_frames = 64.0f - last_frame;
-	addRing( vertices, vec3( 0, -4, 0 ), normal, outer, outer + 3.0f, last_frame, remaining_frames, 1, 1.0f );
+	addRing( vertices, vec3( 0, -4, 0 ), normal, outer, outer + 1.6f, last_frame, remaining_frames, 1, 1.0f );
 
 	// Deform stuff
 //	/*
