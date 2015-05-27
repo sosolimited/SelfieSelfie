@@ -55,6 +55,23 @@ gl::GlslProgRef loadShader( const fs::path &iVertex, const fs::path &iFragment )
 	return nullptr;
 }
 
+void addQuad( std::vector<Vertex> &vertices, const vec3 &a, const vec3 &b, const vec3 &c, const vec3 &d, float time_top, float time_bottom )
+{
+	auto normal = vec3( 0, 1, 0 );
+	auto deform_scaling = 0.0f;
+
+	vertices.insert( vertices.end(), {
+		Vertex{ a, normal, vec2(0, 0), vec2(0, 0), deform_scaling, time_top },
+		Vertex{ b, normal, vec2(1, 0), vec2(1, 0), deform_scaling, time_top },
+		Vertex{ c, normal, vec2(1, 1), vec2(1, 1), deform_scaling, time_bottom },
+
+		Vertex{ a, normal, vec2(0, 0), vec2(0, 0), deform_scaling, time_top },
+		Vertex{ c, normal, vec2(1, 1), vec2(1, 1), deform_scaling, time_bottom },
+		Vertex{ d, normal, vec2(0, 1), vec2(0, 1), deform_scaling, time_bottom }
+	} );
+
+}
+
 void addRectangle( std::vector<Vertex> &vertices, const ci::vec3 &iCenter, float iWidth, float iHeight, float iFrameOffset )
 {
 	auto right = vec3( iWidth / 2.0f, 0, 0 );
@@ -66,19 +83,7 @@ void addRectangle( std::vector<Vertex> &vertices, const ci::vec3 &iCenter, float
 	auto ur = iCenter + (right + up);
 	auto br = iCenter + (right + down);
 	auto bl = iCenter + (left + down);
-
-	auto normal = vec3( 0, 1, 0 );
-	auto deform_scaling = 0.0f;
-
-	vertices.insert( vertices.end(), {
-		Vertex{ ul, normal, vec2(0, 0), vec2(0, 0), deform_scaling, iFrameOffset },
-		Vertex{ ur, normal, vec2(1, 0), vec2(1, 0), deform_scaling, iFrameOffset },
-		Vertex{ br, normal, vec2(1, 1), vec2(1, 1), deform_scaling, iFrameOffset },
-
-		Vertex{ ul, normal, vec2(0, 0), vec2(0, 0), deform_scaling, iFrameOffset },
-		Vertex{ br, normal, vec2(1, 1), vec2(1, 1), deform_scaling, iFrameOffset },
-		Vertex{ bl, normal, vec2(0, 1), vec2(0, 1), deform_scaling, iFrameOffset }
-	} );
+	addQuad( vertices, ul, ur, br, bl, iFrameOffset, iFrameOffset );
 }
 
 } // namespace
