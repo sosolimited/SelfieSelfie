@@ -224,8 +224,9 @@ void Landscape::setup()
 
 	auto normal = vec3( 0, 1, 0 );
 
-	addRing( vertices, vec3( 0, -3, 0 ), normal, 1.0f, 2.0f, 0.0f, 1, 2 );
-	addRing( vertices, vec3( 0, -3, 0 ), normal, 2.5f, 3.5f, 16.0f, 8, 4 );
+	addRing( vertices, vec3( 0, -3, 0 ), normal, 1.0f, 2.0f, 0.0f, 1, 4 );
+	addRing( vertices, vec3( 0, -3, 0 ), normal, 2.0f, 3.0f, 1.0f, 8, 3 );
+	addRing( vertices, vec3( 0, -3, 0 ), normal, 3.0f, 4.0f, 9.0f, 16, 2 );
 
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ kVertexLayout, vbo }} );
