@@ -151,14 +151,14 @@ void Landscape::setup()
 
 	auto normal = vec3( 0, 1, 0 );
 
-	auto inner = 0.5f;
-	auto outer = 3.5f;
-	auto whole_frames = 8;
+	auto inner = 0.1f;
+	auto outer = 3.0f;
+	auto whole_frames = 16;
 	for( auto i = 0; i < whole_frames; i += 1 ) {
-		addRing( vertices, vec3( 0, -3, 0 ), normal, lmap<float>( i, 0, whole_frames, inner, outer ), lmap<float>( i + 1, 0, whole_frames, inner, outer ), i, 1, i + 1.0f, lmap<float>( i, 0, whole_frames, 0.0f, 0.5f ) );
+		addRing( vertices, vec3( 0, -3, 0 ), normal, lmap<float>( i, 0, whole_frames, inner, outer ), lmap<float>( i + 1, 0, whole_frames, inner, outer ), i, i + 1, 2, 0.0f );
 	}
 
-	addRing( vertices, vec3( 0, -3, 0 ), normal, outer, outer + 1.0f, whole_frames, 32, 1, 1.0f );
+	addRing( vertices, vec3( 0, -3, 0 ), normal, outer, outer + 2.0f, whole_frames, 48, 1, 1.0f );
 
 //	addRing( vertices, vec3( 0, -3, 0 ), normal, 1.0f, 2.0f, 0.0f, 1, 4 );
 //	addRing( vertices, vec3( 0, -3, 0 ), normal, 2.0f, 3.0f, 1.0f, 8, 3 );
