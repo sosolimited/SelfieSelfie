@@ -174,6 +174,8 @@ void Landscape::setup()
 		{ 8, 24, 0.8f, vec2( 0.05, 0.0875f ) }
 	};
 
+	auto center = vec3( 0, -4.4f, 0 );
+
 	for( auto i = 0; i < params.size(); i += 1 )
 	{
 		auto &p = params.at( i );
@@ -182,22 +184,22 @@ void Landscape::setup()
 		auto t2 = (i + 1.0f) / params.size();
 		auto r1 = mix( inner, outer, t );
 		auto r2 = mix( inner, outer, t2 );
-		addRing( vertices, vec3( 0, -4, 0 ), normal, r1, r2, i * 2 + 1.0f, p.frames, copies, p.color_weight, p.insets );
+		addRing( vertices, center, normal, r1, r2, i * 2 + 1.0f, p.frames, copies, p.color_weight, p.insets );
 	}
 
 	auto last_frame = params.size() * 2 + 4.0f; // actually some overlap
 	auto remaining_frames = 64.0f - last_frame;
-	addRing( vertices, vec3( 0, -4, 0 ), normal, outer, outer + 1.6f, last_frame, remaining_frames, 1, 1.0f );
+	addRing( vertices, center, normal, outer, outer + 1.6f, last_frame, remaining_frames, 1, 1.0f );
 
 	// Deform stuff
 //	/*
 	auto min_distance = inner;
 	auto max_distance = outer + 4.0f;
 	for( auto &v : vertices ) {
-		auto distance = lmap<float>( length( v.position ), min_distance, max_distance, 0.0f, 1.0f );
+		auto distance = lmap<float>( glm::clamp( length( v.position ), min_distance, max_distance ), min_distance, max_distance, 0.0f, 1.0f );
 		// pos is on a radial axis, rotate it 90 degrees to bend along length
 		auto axis = glm::rotate( glm::angleAxis( (float)Tau / 4.0f, vec3(0, 1, 0) ), normalize(v.position) );
-		auto theta = mix( 0.0f, -(float)Tau / 18.0f, distance );
+		auto theta = mix( 0.0f, -(float)Tau / 4.0f, distance );
 		auto xf = glm::rotate( theta, axis );
 		v.normal = vec3(xf * vec4(v.normal, 0.0f));
 //		v.deform_scaling = mix( 0.0f, 4.0f, distance );
@@ -206,9 +208,22 @@ void Landscape::setup()
 //	*/
 
 	// Plug center
-	auto h = vec3( inner, 0, inner ) * 1.5f;
-	auto c = vec3( 0, -4.0f, 0 );
-	addQuad( vertices, c + (h * vec3(-1, 0, -1)), c + (h * vec3(1, 0, -1)), c + (h * vec3(1, 0, 1)), c + (h * vec3(-1, 0, 1)), 0.0f, Rectf( 0, 1, 1, 0 ) );
+	auto h = vec3( inner, 0, inner ) * 1.96f;
+	auto c = center;
+	addQuad( vertices, c + (h * vec3(-1, 0, -1)), c + (h * vec3(1, 0, -1)), c + (h * vec3(1, 0, 1)), c + (h * vec3(-1, 0, 1)), 0.0f, Rectf( 1, 1, 0, 0 ) );
+
+	auto rotation = glm::rotate<float>( Tau * 0.25f, vec3( 0, 0, 1 ) );
+	for( auto &v : vertices ) {
+		v.position = vec3( rotation * vec4(v.position, 1.0f) );
+	}
+
+	auto copy = vertices;
+	rotation = glm::rotate<float>( Tau * 0.5f, vec3( 0, 1, 0 ) );
+	for( auto &v : copy ) {
+		v.position = vec3( rotation * vec4(v.position, 1.0f) );
+	}
+
+	vertices.insert( vertices.end(), copy.begin(), copy.end() );
 
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ kVertexLayout, vbo }} );
