@@ -80,7 +80,7 @@ void addQuad( std::vector<Vertex> &vertices, const vec3 &a, const vec3 &b, const
 }
 
 /// Add a ring of geometry containing a given number of time bands (slitscanning effect) and repeats around the donut.
-void addRing( std::vector<Vertex> &vertices, const vec3 &center, const vec3 &normal, float inner_radius, float outer_radius, float time_offset, int time_bands, int repeats, float color_weight )
+void addRing( std::vector<Vertex> &vertices, const vec3 &center, const vec3 &normal, float inner_radius, float outer_radius, float time_offset, int time_bands, int repeats, float color_weight, const vec2 &texture_insets = vec2( 0.05, 0.0875f ) )
 {
 	auto rings = time_bands;
 	auto segments = 64;
@@ -106,8 +106,8 @@ void addRing( std::vector<Vertex> &vertices, const vec3 &center, const vec3 &nor
 		auto tc = vec2(0);
 		// Repeat t with mirroring
 		// insetting the texture coordinates minimizes edge color flashing.
-		tc.y = mix( 0.05f, 0.95f, t );
-		tc.x = lmap<float>( r, 0, rings, 0.9125f, 0.0875f );
+		tc.y = mix( texture_insets.y, 1.0f - texture_insets.y, t );
+		tc.x = lmap<float>( r, 0, rings, 1.0f - texture_insets.x, texture_insets.x );
 		return tc;
 	};
 
@@ -153,23 +153,42 @@ void Landscape::setup()
 
 	auto inner = 0.28f;
 	auto outer = 3.0f;
-	auto repeats = std::vector<float>{ 2, 4, 6, 8, 10, 12, 10, 8, 10, 8 };
-	auto frames =		std::vector<int> { 1, 1, 1, 1,	1,	1,	1, 2,	 3,	4 };
 
-	for( auto i = 0; i < repeats.size(); i += 1 )
+	struct Params {
+		float repeats;
+		float frames;
+		float color_weight;
+		vec2	insets;
+	};
+
+	auto params = std::vector<Params> {
+		{ 2, 1, 0.0f, vec2( 0.05, 0.0875f ) },
+		{ 4, 1, 0.0f, vec2( 0.05, 0.0875f ) },
+		{ 6, 1, 0.0f, vec2( 0.05, 0.0875f ) },
+		{ 8, 1, 0.0f, vec2( 0.05, 0.0875f ) },
+		{ 10, 1, 0.0f, vec2( 0.05, 0.0875f ) },
+		{ 12, 1, 0.0f, vec2( 0.05, 0.0875f ) },
+		{ 10, 1, 0.0f, vec2( 0.05, 0.0875f ) },
+		{ 8, 1, 0.1f, vec2( 0.075, 0.1 ) },
+		{ 10, 1, 0.25f, vec2( 0.1, 0.125 ) },
+		{ 8, 1, 0.5f, vec2( 0.25, 0.15 ) }
+	};
+
+	for( auto i = 0; i < params.size(); i += 1 )
 	{
-		auto copies = repeats.at( i );
-		auto t = (i + 0.0f) / repeats.size();
-		auto t2 = (i + 1.0f) / repeats.size();
+		auto &p = params.at( i );
+		auto copies = p.repeats;
+		auto t = (i + 0.0f) / params.size();
+		auto t2 = (i + 1.0f) / params.size();
 		auto r1 = mix( inner, outer, t );
 		auto r2 = mix( inner, outer, t2 );
-		addRing( vertices, vec3( 0, -4, 0 ), normal, r1, r2, i * 2 + 1.0f, 1, copies, 0.0f );
+		addRing( vertices, vec3( 0, -4, 0 ), normal, r1, r2, i * 2 + 1.0f, 1, copies, p.color_weight, p.insets );
 	}
 
-	addRing( vertices, vec3( 0, -4, 0 ), normal, outer, outer + 2.0f, repeats.size() * 2, 64 - (repeats.size() * 2), 1, 1.0f );
+	addRing( vertices, vec3( 0, -4, 0 ), normal, outer, outer + 2.0f, params.size() * 2, 64 - (params.size() * 2), 1, 1.0f );
 
 	// Deform stuff
-	/*
+//	/*
 	auto min_distance = inner;
 	auto max_distance = outer;
 	for( auto &v : vertices ) {
@@ -189,8 +208,8 @@ void Landscape::setup()
 //	*/
 
 	// Plug center
-	auto h = vec3( inner, 0, inner );
-	auto c = vec3( 0, -4.001, 0 );
+	auto h = vec3( inner, 0, inner ) * 1.5f;
+	auto c = vec3( 0, -4.0f, 0 );
 	addQuad( vertices, c + (h * vec3(-1, 0, -1)), c + (h * vec3(1, 0, -1)), c + (h * vec3(1, 0, 1)), c + (h * vec3(-1, 0, 1)), 0.0f, Rectf( 0, 1, 1, 0 ) );
 
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
