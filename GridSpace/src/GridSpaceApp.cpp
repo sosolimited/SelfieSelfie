@@ -68,7 +68,7 @@ void GridSpaceApp::setup()
 
 	auto target = vec3( 50, 5, 50 );
 	camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
-	camera.setPerspective( 60, getWindowAspectRatio(), 0.1f, 1000 );
+	camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 1000 );
 
 	try {
 		auto front_facing_camera = ([] {
