@@ -154,6 +154,7 @@ void Landscape::setup()
 	auto inner = 0.28f;
 	auto outer = 3.0f;
 	auto repeats = std::vector<float>{ 2, 4, 6, 8, 10, 12, 10, 8, 10, 8 };
+	auto frames =		std::vector<int> { 1, 1, 1, 1,	1,	1,	1, 2,	 3,	4 };
 
 	for( auto i = 0; i < repeats.size(); i += 1 )
 	{
@@ -167,14 +168,10 @@ void Landscape::setup()
 
 	addRing( vertices, vec3( 0, -4, 0 ), normal, outer, outer + 2.0f, repeats.size() * 2, 64 - (repeats.size() * 2), 1, 1.0f );
 
-	auto h = vec3( inner, 0, inner );
-	auto c = vec3( 0, -4.001, 0 );
-	addQuad( vertices, c + (h * vec3(-1, 0, -1)), c + (h * vec3(1, 0, -1)), c + (h * vec3(1, 0, 1)), c + (h * vec3(-1, 0, 1)), 0.0f, Rectf( 0, 1, 1, 0 ) );
-
 	// Deform stuff
 	/*
-	auto max_distance = outer;
 	auto min_distance = inner;
+	auto max_distance = outer;
 	for( auto &v : vertices ) {
 		auto distance = lmap<float>( length( v.position ), min_distance, max_distance, 0.0f, 1.0f );
 		// pos is on a radial axis, rotate it 90 degrees to bend along length
@@ -189,7 +186,12 @@ void Landscape::setup()
 //			v.color_weight = 1.0f;
 //		}
 	}
-	*/
+//	*/
+
+	// Plug center
+	auto h = vec3( inner, 0, inner );
+	auto c = vec3( 0, -4.001, 0 );
+	addQuad( vertices, c + (h * vec3(-1, 0, -1)), c + (h * vec3(1, 0, -1)), c + (h * vec3(1, 0, 1)), c + (h * vec3(-1, 0, 1)), 0.0f, Rectf( 0, 1, 1, 0 ) );
 
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ kVertexLayout, vbo }} );
