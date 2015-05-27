@@ -97,7 +97,7 @@ void addStrip( std::vector<Vertex> &vertices, const vec3 &base, const vec3 &ray,
 	const auto outer_radius = 64.0f;
 
 	auto total_things = 64;
-	auto inner_things = 1;
+	auto inner_things = 8;
 	auto outer_things = total_things - inner_things;
 	auto perp = glm::rotate<float>( ray, Tau * 0.25f, normal );
 
