@@ -31,5 +31,5 @@ void main()
 
 	gl_Position = ciModelViewProjection * vec4(ciPosition + calcOffset(offset_coord), 1.0);
 	vColor = vec4( clamp( texture2D( uBlurredTexture, color_coord ).rgb * 1.3, 0.0, 1.0 ), 1.0 );
-	vTexCoord = ciTexCoord0;
+	vTexCoord = offset_coord;
 }
