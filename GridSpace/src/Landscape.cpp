@@ -189,7 +189,7 @@ void Landscape::setup()
 
 	auto last_frame = params.size() * 2 + 4.0f; // actually some overlap
 	auto remaining_frames = 64.0f - last_frame;
-	addRing( vertices, center, normal, outer, outer + 1.6f, last_frame, remaining_frames, 1, 1.0f );
+	addRing( vertices, center, normal, outer, outer + 1.6f, last_frame, remaining_frames, 2, 1.0f );
 
 	// Deform stuff
 //	/*
@@ -218,7 +218,8 @@ void Landscape::setup()
 	}
 
 	auto copy = vertices;
-	rotation = glm::rotate<float>( Tau * 0.5f, vec3( 0, 1, 0 ) );
+	auto mirror = glm::angleAxis<float>( Tau * 0.5f, vec3( 0, 1, 0 ) ) * glm::angleAxis<float>( Tau * 0.25f, vec3( 1, 0, 0 ) );
+	rotation = glm::mat4( mirror ); // glm::rotate<float>( Tau * 0.5f, vec3( 0, 1, 0 ) );
 	for( auto &v : copy ) {
 		v.position = vec3( rotation * vec4(v.position, 1.0f) );
 	}
