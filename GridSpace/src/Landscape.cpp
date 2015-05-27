@@ -161,10 +161,12 @@ void addStrip( std::vector<Vertex> &vertices, const vec3 &base, const vec3 &ray,
 /// Add a ring of geometry containing a given number of time bands (slitscanning effect) and repeats around the donut.
 void addRing( std::vector<Vertex> &vertices, const vec3 &center, const vec3 &normal, float inner_radius, float outer_radius, float time_offset, int time_bands, int repeats )
 {
+	auto rings = time_bands;
 	auto segments = 32;
 
 	// Generate cartesian position.
-	auto calc_pos = [=] (float distance, int s) {
+	auto calc_pos = [=] (int r, int s) {
+		auto distance = lmap<float>( r, 0, rings, 0.0f, 1.0f );
 		auto radius = mix( inner_radius, outer_radius, distance );
 		auto t = (float) s / segments;
 		auto x = cos( t * Tau ) * radius;
@@ -178,29 +180,37 @@ void addRing( std::vector<Vertex> &vertices, const vec3 &center, const vec3 &nor
 		auto tc = vec2(0);
 		// insetting the texture coordinates minimizes edge color flashing.
 		tc.y = mix( 0.05f, 0.95f, std::abs( t - 0.5f ) * 2.0f );
-		tc.x = lmap<float>( r, 0, 1, 0.9125f, 0.0875f );
+		tc.x = lmap<float>( r, 0, rings, 0.9125f, 0.0875f );
 		return tc;
 	};
 
 	// Add a vertex to texture (color_tc parameter allows us to do flat shading in ES2)
-	auto add_vert = [=,&vertices] (int r, int s, const vec2 &color_tc) {
+	auto add_vert = [=,&vertices] (int r, int s, const ivec2 &provoking) {
 		auto deform_scaling = 0.0f;
 		auto pos = calc_pos(r, s);
 		auto tc = calc_tc(r, s);
-		vertices.push_back( Vertex{ pos, normal, tc, color_tc, deform_scaling, time_offset } );
+		auto color_tc = calc_tc( provoking.x, provoking.y );
+		auto time = time_offset; // + lmap<float>( r, 0, rings, 0.0f, 1.0f / 64.0f );
+		if (time_bands > 1) {
+			time += lmap<float>( provoking.x, 0.0f, rings, 0.0f, time_bands );
+		}
+		vertices.push_back( Vertex{ pos, normal, tc, color_tc, deform_scaling, time } );
 	};
 
 	// Create triangles for flat shading
-	for( auto s = 0; s < segments; s += 1 )
+	for( auto r = 0; r < rings; r += 1 )
 	{
-		auto color_tc = calc_tc( 0.0f, s );
-		add_vert( 0.0f, s, color_tc );
-		add_vert( 0.0f, s + 1, color_tc );
-		add_vert( 1.0f, s + 1, color_tc );
+		for( auto s = 0; s < segments; s += 1 )
+		{
+			auto provoking = ivec2(r, s);
+			add_vert( r, s, provoking );
+			add_vert( r, s + 1, provoking );
+			add_vert( r + 1, s + 1, provoking );
 
-		add_vert( 0.0f, s, color_tc );
-		add_vert( 1.0f, s, color_tc );
-		add_vert( 1.0f, s + 1, color_tc );
+			add_vert( r, s, provoking );
+			add_vert( r + 1, s, provoking );
+			add_vert( r + 1, s + 1, provoking );
+		}
 	}
 }
 
@@ -215,7 +225,7 @@ void Landscape::setup()
 	auto normal = vec3( 0, 1, 0 );
 
 	addRing( vertices, vec3( 0, -3, 0 ), normal, 1.0f, 2.0f, 0.0f, 1, 2 );
-//	addRing( vertices, vec3( 0, -3, 0 ), normal, 2.5f, 3.5f, 1.0f, 8, 4 );
+	addRing( vertices, vec3( 0, -3, 0 ), normal, 2.5f, 3.5f, 16.0f, 8, 4 );
 
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ kVertexLayout, vbo }} );
