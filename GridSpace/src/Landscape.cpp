@@ -169,9 +169,9 @@ void Landscape::setup()
 		{ 10, 1, 0.0f, vec2( 0.05, 0.0875f ) },
 		{ 12, 1, 0.0f, vec2( 0.05, 0.0875f ) },
 		{ 10, 1, 0.0f, vec2( 0.05, 0.0875f ) },
-		{ 8, 1, 0.1f, vec2( 0.075, 0.1 ) },
-		{ 10, 2, 0.25f, vec2( 0.1, 0.125 ) },
-		{ 8, 8, 0.5f, vec2( 0.25, 0.15 ) }
+		{ 8, 2, 0.1f, vec2( 0.05, 0.0875f ) },
+		{ 10, 4, 0.25f, vec2( 0.05, 0.0875f ) },
+		{ 8, 8, 0.5f, vec2( 0.05, 0.0875f ) }
 	};
 
 	for( auto i = 0; i < params.size(); i += 1 )
@@ -187,12 +187,12 @@ void Landscape::setup()
 
 	auto last_frame = params.size() * 2 + 4.0f; // actually some overlap
 	auto remaining_frames = 64.0f - last_frame;
-	addRing( vertices, vec3( 0, -4, 0 ), normal, outer, outer + 2.0f, last_frame, remaining_frames, 1, 1.0f );
+	addRing( vertices, vec3( 0, -4, 0 ), normal, outer, outer + 3.0f, last_frame, remaining_frames, 1, 1.0f );
 
 	// Deform stuff
 //	/*
 	auto min_distance = inner;
-	auto max_distance = outer;
+	auto max_distance = outer + 4.0f;
 	for( auto &v : vertices ) {
 		auto distance = lmap<float>( length( v.position ), min_distance, max_distance, 0.0f, 1.0f );
 		// pos is on a radial axis, rotate it 90 degrees to bend along length
@@ -202,10 +202,6 @@ void Landscape::setup()
 		v.normal = vec3(xf * vec4(v.normal, 0.0f));
 //		v.deform_scaling = mix( 0.0f, 4.0f, distance );
 		v.position = vec3(xf * vec4(v.position, 1.0f));
-//		v.color_weight = 0.0f; // mix( 0.0f, 1.0f, distance * distance );
-//		if( distance >= 1.0f ) {
-//			v.color_weight = 1.0f;
-//		}
 	}
 //	*/
 
