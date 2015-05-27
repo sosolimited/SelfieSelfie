@@ -22,6 +22,7 @@ struct alignas(16) Vertex {
 	vec2	color_tex_coord;
 	float deform_scaling;
 	float frame_offset;
+	float color_weight;
 };
 
 const auto kVertexLayout = ([] {
@@ -32,11 +33,12 @@ const auto kVertexLayout = ([] {
 		layout.append( geom::Attrib::TEX_COORD_1, 2, sizeof(Vertex), offsetof(Vertex, color_tex_coord) );
 		layout.append( geom::Attrib::CUSTOM_0, 1, sizeof(Vertex), offsetof(Vertex, deform_scaling) );
 		layout.append( geom::Attrib::CUSTOM_1, 1, sizeof(Vertex), offsetof(Vertex, frame_offset) );
+		layout.append( geom::Attrib::CUSTOM_2, 1, sizeof(Vertex), offsetof(Vertex, color_weight) );
 		return layout;
 	} ());
 
 const auto kVertexMapping = ([] {
-		return gl::Batch::AttributeMapping{ { geom::Attrib::CUSTOM_0, "DeformScaling" }, { geom::Attrib::CUSTOM_1, "FrameOffset" } };
+		return gl::Batch::AttributeMapping{ { geom::Attrib::CUSTOM_0, "DeformScaling" }, { geom::Attrib::CUSTOM_1, "FrameOffset" }, { geom::Attrib::CUSTOM_2, "ColorWeight" } };
 	} ());
 
 // Load a shader and handle exceptions. Return nullptr on failure.
@@ -66,13 +68,13 @@ void addQuad( std::vector<Vertex> &vertices, const vec3 &a, const vec3 &b, const
 	auto deform_scaling = 0.0f;
 
 	vertices.insert( vertices.end(), {
-		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), deform_scaling, time },
-		Vertex{ b, normal, slice.getUpperRight(), slice.getUpperRight(), deform_scaling, time },
-		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), deform_scaling, time },
+		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), deform_scaling, time, 0.0f },
+		Vertex{ b, normal, slice.getUpperRight(), slice.getUpperRight(), deform_scaling, time, 0.0f },
+		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), deform_scaling, time, 0.0f },
 
-		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), deform_scaling, time },
-		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), deform_scaling, time },
-		Vertex{ d, normal, slice.getLowerLeft(), slice.getLowerLeft(), deform_scaling, time }
+		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), deform_scaling, time, 0.0f },
+		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), deform_scaling, time, 0.0f },
+		Vertex{ d, normal, slice.getLowerLeft(), slice.getLowerLeft(), deform_scaling, time, 0.0f }
 	} );
 
 }
@@ -96,9 +98,15 @@ void addRing( std::vector<Vertex> &vertices, const vec3 &center, const vec3 &nor
 	// Generate texture coordinate mirrored at halfway point.
 	auto calc_tc = [=] (int r, int s) {
 		auto t = (float) s / segments;
+		if( t < 1 ) {
+			t = glm::fract( t * repeats );
+		}
+		// mirror copies
+		t = std::abs( t - 0.5f ) * 2.0f;
 		auto tc = vec2(0);
+		// Repeat t with mirroring
 		// insetting the texture coordinates minimizes edge color flashing.
-		tc.y = mix( 0.05f, 0.95f, std::abs( t - 0.5f ) * 2.0f );
+		tc.y = mix( 0.05f, 0.95f, t );
 		tc.x = lmap<float>( r, 0, rings, 0.9125f, 0.0875f );
 		return tc;
 	};
@@ -113,7 +121,7 @@ void addRing( std::vector<Vertex> &vertices, const vec3 &center, const vec3 &nor
 		if (time_bands > 1) {
 			time += lmap<float>( provoking.x, 0.0f, rings, 0.0f, time_bands );
 		}
-		vertices.push_back( Vertex{ pos, normal, tc, color_tc, deform_scaling, time } );
+		vertices.push_back( Vertex{ pos, normal, tc, color_tc, deform_scaling, time, 0.0f } );
 	};
 
 	// Create triangles for flat shading
@@ -143,9 +151,33 @@ void Landscape::setup()
 
 	auto normal = vec3( 0, 1, 0 );
 
-	addRing( vertices, vec3( 0, -3, 0 ), normal, 1.0f, 2.0f, 0.0f, 1, 4 );
-	addRing( vertices, vec3( 0, -3, 0 ), normal, 2.0f, 3.0f, 1.0f, 8, 3 );
-	addRing( vertices, vec3( 0, -3, 0 ), normal, 3.0f, 4.0f, 9.0f, 16, 2 );
+	auto inner = 0.5f;
+	auto outer = 3.5f;
+	auto whole_frames = 8;
+	for( auto i = 0; i < whole_frames; i += 1 ) {
+		addRing( vertices, vec3( 0, -3, 0 ), normal, lmap<float>( i, 0, whole_frames, inner, outer ), lmap<float>( i + 1, 0, whole_frames, inner, outer ), i, 1, i + 1.0f );
+	}
+
+	addRing( vertices, vec3( 0, -3, 0 ), normal, outer, outer + 1.0f, whole_frames, 16, 8 );
+
+//	addRing( vertices, vec3( 0, -3, 0 ), normal, 1.0f, 2.0f, 0.0f, 1, 4 );
+//	addRing( vertices, vec3( 0, -3, 0 ), normal, 2.0f, 3.0f, 1.0f, 8, 3 );
+//	addRing( vertices, vec3( 0, -3, 0 ), normal, 3.0f, 4.0f, 9.0f, 16, 5 );
+
+	// Deform stuff
+	auto max_distance = outer;
+	auto min_distance = inner;
+	for( auto &v : vertices ) {
+		auto distance = lmap<float>( length( v.position ), min_distance, max_distance, 0.0f, 1.0f );
+		// pos is on a radial axis, rotate it 90 degrees to bend along length
+		auto axis = glm::rotate( glm::angleAxis( (float)Tau / 4.0f, vec3(0, 1, 0) ), normalize(v.position) );
+		auto theta = mix( 0.0f, -(float)Tau / 18.0f, distance );
+		auto xf = glm::rotate( theta, axis );
+		v.normal = vec3(xf * vec4(v.normal, 0.0f));
+//		v.deform_scaling = mix( 0.0f, 4.0f, distance );
+		v.position = vec3(xf * vec4(v.position, 1.0f));
+		v.color_weight = 0.0f; // mix( 0.0f, 1.0f, distance * distance );
+	}
 
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ kVertexLayout, vbo }} );

@@ -4,10 +4,11 @@ uniform lowp sampler2D uClearTexture;
 
 varying vec2 vTexCoord;
 varying vec4 vColor;
+varying float vColorWeight;
 
 void main()
 {
 	vec4 tex_color = texture2D( uClearTexture, vTexCoord ).rgba;
 
-	gl_FragColor = tex_color;
+	gl_FragColor = mix( tex_color, vColor, vColorWeight );
 }
