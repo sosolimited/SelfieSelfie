@@ -92,7 +92,7 @@ void addRing( std::vector<Vertex> &vertices, const vec3 &center, const vec3 &nor
 		auto t = (float) s / segments;
 		auto x = cos( t * Tau ) * radius;
 		auto y = sin( t * Tau ) * radius;
-		return vec3( x, -4.0f, y );
+		return vec3( x, 0, y ) + center;
 	};
 
 	// Generate texture coordinate mirrored at halfway point.
@@ -151,20 +151,28 @@ void Landscape::setup()
 
 	auto normal = vec3( 0, 1, 0 );
 
-	auto inner = 0.1f;
+	auto inner = 0.28f;
 	auto outer = 3.0f;
-	auto whole_frames = 16;
-	for( auto i = 0; i < whole_frames; i += 1 ) {
-		addRing( vertices, vec3( 0, -3, 0 ), normal, lmap<float>( i, 0, whole_frames, inner, outer ), lmap<float>( i + 1, 0, whole_frames, inner, outer ), i, i + 1, 2, 0.0f );
+	auto repeats = std::vector<float>{ 2, 4, 6, 8, 10, 12, 10, 8, 10, 8 };
+
+	for( auto i = 0; i < repeats.size(); i += 1 )
+	{
+		auto copies = repeats.at( i );
+		auto t = (i + 0.0f) / repeats.size();
+		auto t2 = (i + 1.0f) / repeats.size();
+		auto r1 = mix( inner, outer, t );
+		auto r2 = mix( inner, outer, t2 );
+		addRing( vertices, vec3( 0, -4, 0 ), normal, r1, r2, i * 2 + 1.0f, 1, copies, 0.0f );
 	}
 
-	addRing( vertices, vec3( 0, -3, 0 ), normal, outer, outer + 2.0f, whole_frames, 48, 1, 1.0f );
+	addRing( vertices, vec3( 0, -4, 0 ), normal, outer, outer + 2.0f, repeats.size() * 2, 64 - (repeats.size() * 2), 1, 1.0f );
 
-//	addRing( vertices, vec3( 0, -3, 0 ), normal, 1.0f, 2.0f, 0.0f, 1, 4 );
-//	addRing( vertices, vec3( 0, -3, 0 ), normal, 2.0f, 3.0f, 1.0f, 8, 3 );
-//	addRing( vertices, vec3( 0, -3, 0 ), normal, 3.0f, 4.0f, 9.0f, 16, 5 );
+	auto h = vec3( inner, 0, inner );
+	auto c = vec3( 0, -4.001, 0 );
+	addQuad( vertices, c + (h * vec3(-1, 0, -1)), c + (h * vec3(1, 0, -1)), c + (h * vec3(1, 0, 1)), c + (h * vec3(-1, 0, 1)), 0.0f, Rectf( 0, 1, 1, 0 ) );
 
 	// Deform stuff
+	/*
 	auto max_distance = outer;
 	auto min_distance = inner;
 	for( auto &v : vertices ) {
@@ -181,6 +189,7 @@ void Landscape::setup()
 //			v.color_weight = 1.0f;
 //		}
 	}
+	*/
 
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ kVertexLayout, vbo }} );
