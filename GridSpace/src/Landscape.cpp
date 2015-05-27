@@ -158,6 +158,52 @@ void addStrip( std::vector<Vertex> &vertices, const vec3 &base, const vec3 &ray,
 	// Progressively deteriorating frames
 }
 
+/// Add a ring of geometry containing a given number of time bands (slitscanning effect) and repeats around the donut.
+void addRing( std::vector<Vertex> &vertices, const vec3 &center, const vec3 &normal, float inner_radius, float outer_radius, float time_offset, int time_bands, int repeats )
+{
+	auto segments = 32;
+
+	// Generate cartesian position.
+	auto calc_pos = [=] (float distance, int s) {
+		auto radius = mix( inner_radius, outer_radius, distance );
+		auto t = (float) s / segments;
+		auto x = cos( t * Tau ) * radius;
+		auto y = sin( t * Tau ) * radius;
+		return vec3( x, -4.0f, y );
+	};
+
+	// Generate texture coordinate mirrored at halfway point.
+	auto calc_tc = [=] (int r, int s) {
+		auto t = (float) s / segments;
+		auto tc = vec2(0);
+		// insetting the texture coordinates minimizes edge color flashing.
+		tc.y = mix( 0.05f, 0.95f, std::abs( t - 0.5f ) * 2.0f );
+		tc.x = lmap<float>( r, 0, 1, 0.9125f, 0.0875f );
+		return tc;
+	};
+
+	// Add a vertex to texture (color_tc parameter allows us to do flat shading in ES2)
+	auto add_vert = [=,&vertices] (int r, int s, const vec2 &color_tc) {
+		auto deform_scaling = 0.0f;
+		auto pos = calc_pos(r, s);
+		auto tc = calc_tc(r, s);
+		vertices.push_back( Vertex{ pos, normal, tc, color_tc, deform_scaling, time_offset } );
+	};
+
+	// Create triangles for flat shading
+	for( auto s = 0; s < segments; s += 1 )
+	{
+		auto color_tc = calc_tc( 0.0f, s );
+		add_vert( 0.0f, s, color_tc );
+		add_vert( 0.0f, s + 1, color_tc );
+		add_vert( 1.0f, s + 1, color_tc );
+
+		add_vert( 0.0f, s, color_tc );
+		add_vert( 1.0f, s, color_tc );
+		add_vert( 1.0f, s + 1, color_tc );
+	}
+}
+
 } // namespace
 
 void Landscape::setup()
@@ -166,29 +212,10 @@ void Landscape::setup()
 
 	std::vector<Vertex> vertices;
 
-	auto dims = ivec2( 15 );
-	auto offset = - vec2(dims - 1) * vec2(0.5f);
-	auto max_dist = length(vec2(dims)) * 0.5f;
-
 	auto normal = vec3( 0, 1, 0 );
-	auto rotation = glm::rotate<float>( Tau * 0.1f, normal );
-	auto ray = vec3( 0, 0, 1 );
 
-	for( auto i = 0; i < 4; i += 1 ) {
-		addStrip( vertices, vec3( 0, -2, 0 ), ray, normal, 1.0f, 1.0f );
-		ray = vec3(rotation * vec4(ray, 0));
-	}
-/*
-	for( auto y = 0; y < dims.y; y += 1 ) {
-		for( auto x = 0; x < dims.x; x += 1 ) {
-			auto pos = offset + vec2(x ,y);
-			auto d_norm = floor( glm::length( pos ) ) / max_dist;
-			auto time_offset = mix( 0.0f, (float)dims.x / 64.0f, d_norm );
-
-			addRectangle( vertices, vec3( pos.x, -8.0f, pos.y ), 1.0f, 1.0f, time_offset );
-		}
-	}
-*/
+	addRing( vertices, vec3( 0, -3, 0 ), normal, 1.0f, 2.0f, 0.0f, 1, 2 );
+//	addRing( vertices, vec3( 0, -3, 0 ), normal, 2.5f, 3.5f, 1.0f, 8, 4 );
 
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ kVertexLayout, vbo }} );
