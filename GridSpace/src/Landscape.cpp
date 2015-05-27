@@ -127,7 +127,8 @@ void addStrip( std::vector<Vertex> &vertices, const vec3 &base, const vec3 &ray,
 	{
 		auto outer_d1 = (i + 0.0f) / total_things;
 		auto outer_d2 = (i + 1.0f) / total_things;
-		auto slices = 5;
+		auto slices = 48;
+
 		for( auto s = 0; s < slices; s += 1 )
 		{
 			auto t1 = (s + 0.0f) / slices;
@@ -138,7 +139,7 @@ void addStrip( std::vector<Vertex> &vertices, const vec3 &base, const vec3 &ray,
 			auto r1 = mix( inner_radius, outer_radius, d1 );
 			auto r2 = mix( inner_radius, outer_radius, d2 );
 
-			auto time = (i + 0.0f) / total_things;
+			auto time = (i + 0.0f) / total_things + (s + 0.0f) / slices;
 			auto w1 = mix( inner_width, outer_width, d1 );
 			auto w2 = mix( inner_width, outer_width, d2 );
 
