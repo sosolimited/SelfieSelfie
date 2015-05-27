@@ -8,6 +8,7 @@
 #include "Landscape.h"
 
 #include "cinder/Log.h"
+#include "Constants.h"
 
 using namespace soso;
 using namespace cinder;
@@ -55,19 +56,23 @@ gl::GlslProgRef loadShader( const fs::path &iVertex, const fs::path &iFragment )
 	return nullptr;
 }
 
-void addQuad( std::vector<Vertex> &vertices, const vec3 &a, const vec3 &b, const vec3 &c, const vec3 &d, float time_top, float time_bottom )
+///
+/// Create a quadrilateral with clockwise vertices abcd.
+/// Maps to frame at time and a slice of the video frame.
+///
+void addQuad( std::vector<Vertex> &vertices, const vec3 &a, const vec3 &b, const vec3 &c, const vec3 &d, float time, const Rectf &slice )
 {
 	auto normal = vec3( 0, 1, 0 );
 	auto deform_scaling = 0.0f;
 
 	vertices.insert( vertices.end(), {
-		Vertex{ a, normal, vec2(0, 0), vec2(0, 0), deform_scaling, time_top },
-		Vertex{ b, normal, vec2(1, 0), vec2(1, 0), deform_scaling, time_top },
-		Vertex{ c, normal, vec2(1, 1), vec2(1, 1), deform_scaling, time_bottom },
+		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), deform_scaling, time },
+		Vertex{ b, normal, slice.getUpperRight(), slice.getUpperRight(), deform_scaling, time },
+		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), deform_scaling, time },
 
-		Vertex{ a, normal, vec2(0, 0), vec2(0, 0), deform_scaling, time_top },
-		Vertex{ c, normal, vec2(1, 1), vec2(1, 1), deform_scaling, time_bottom },
-		Vertex{ d, normal, vec2(0, 1), vec2(0, 1), deform_scaling, time_bottom }
+		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), deform_scaling, time },
+		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), deform_scaling, time },
+		Vertex{ d, normal, slice.getLowerLeft(), slice.getLowerLeft(), deform_scaling, time }
 	} );
 
 }
@@ -83,7 +88,33 @@ void addRectangle( std::vector<Vertex> &vertices, const ci::vec3 &iCenter, float
 	auto ur = iCenter + (right + up);
 	auto br = iCenter + (right + down);
 	auto bl = iCenter + (left + down);
-	addQuad( vertices, ul, ur, br, bl, iFrameOffset, iFrameOffset );
+	addQuad( vertices, ul, ur, br, bl, iFrameOffset, Rectf( 0.25, 0.4, 0.75, 0.6 ) );
+}
+
+void addStrip( std::vector<Vertex> &vertices, const vec3 &ray, float width )
+{
+	const auto inner_radius = 3.0f;
+	const auto outer_radius = 50.0f;
+
+	auto total_things = 64;
+	auto inner_things = 16;
+	auto outer_things = total_things - inner_things;
+	auto perp = glm::rotate<float>( ray, Tau * 0.25f, vec3( 0, 1, 0 ) );
+
+	for( auto i = 0; i < inner_things; i += 1 ) {
+		auto d1 = (i + 0.0f) / total_things;
+		auto d2 = (i + 1.0f) / total_things;
+		auto r1 = mix( inner_radius, outer_radius, d1 );
+		auto r2 = mix( inner_radius, outer_radius, d2 );
+		auto time = (i + 0.0f) / inner_things;
+
+		auto a = ray * r2;
+		auto b = ray * r2 + perp;
+		auto c = ray * r1 + perp;
+		auto d = ray * r1;
+
+		addQuad(vertices, a, b, c, d, time, Rectf(0, 0, 1, 1));
+	}
 }
 
 } // namespace
@@ -98,6 +129,8 @@ void Landscape::setup()
 	auto offset = - vec2(dims - 1) * vec2(0.5f);
 	auto max_dist = length(vec2(dims)) * 0.5f;
 
+	addStrip( vertices, vec3( 0, 0, 1 ), 1.0f );
+/*
 	for( auto y = 0; y < dims.y; y += 1 ) {
 		for( auto x = 0; x < dims.x; x += 1 ) {
 			auto pos = offset + vec2(x ,y);
@@ -107,6 +140,7 @@ void Landscape::setup()
 			addRectangle( vertices, vec3( pos.x, -8.0f, pos.y ), 1.0f, 1.0f, time_offset );
 		}
 	}
+*/
 
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ kVertexLayout, vbo }} );
