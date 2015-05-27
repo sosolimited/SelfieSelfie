@@ -16,9 +16,11 @@ class Landscape
 {
 public:
 	void setup();
+	void setTextureUnits( uint8_t iClearUnit, uint8_t iBlurredUnit );
 	void draw( float iFrameOffset );
 private:
-
+	
+	ci::gl::BatchRef	batch;
 };
 
 } // namespace soso

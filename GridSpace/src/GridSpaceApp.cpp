@@ -11,6 +11,7 @@
 #include "GridTexture.h"
 #include "TimeGrid.h"
 #include "Landscape.h"
+#include "Constants.h"
 
 using namespace ci;
 using namespace ci::app;

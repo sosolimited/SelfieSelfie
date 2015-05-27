@@ -22,6 +22,7 @@
 		9C0071C61B0FA3D40025452F /* TimeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C0071C41B0FA3D40025452F /* TimeGrid.cpp */; };
 		9C7E8F471B15165300818A95 /* Landscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C7E8F451B15165300818A95 /* Landscape.cpp */; };
 		9C820DF21B0A608900C1F43D /* CameraLandscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C820DF01B0A608900C1F43D /* CameraLandscape.cpp */; };
+		9CC496481B16094900D34199 /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CC496461B16094900D34199 /* Constants.cpp */; };
 		9CDDA1451B063ACC00027D3A /* GridMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CDDA1431B063ACC00027D3A /* GridMesh.cpp */; };
 		9CFF302A1B0D12EA001C1AE5 /* GridTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CFF30281B0D12EA001C1AE5 /* GridTexture.cpp */; };
 		A583104BACFF42E7AF2D679F /* CinderApp_ios.png in Resources */ = {isa = PBXBuildFile; fileRef = E123327ABB0A4B56AFD211AB /* CinderApp_ios.png */; };
@@ -59,6 +60,8 @@
 		9C7E8F461B15165300818A95 /* Landscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Landscape.h; path = ../src/Landscape.h; sourceTree = "<group>"; };
 		9C820DF01B0A608900C1F43D /* CameraLandscape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CameraLandscape.cpp; path = ../src/CameraLandscape.cpp; sourceTree = "<group>"; };
 		9C820DF11B0A608900C1F43D /* CameraLandscape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraLandscape.h; path = ../src/CameraLandscape.h; sourceTree = "<group>"; };
+		9CC496461B16094900D34199 /* Constants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Constants.cpp; path = ../src/Constants.cpp; sourceTree = "<group>"; };
+		9CC496471B16094900D34199 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../src/Constants.h; sourceTree = "<group>"; };
 		9CDDA1431B063ACC00027D3A /* GridMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GridMesh.cpp; path = ../src/GridMesh.cpp; sourceTree = "<group>"; };
 		9CDDA1441B063ACC00027D3A /* GridMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridMesh.h; path = ../src/GridMesh.h; sourceTree = "<group>"; };
 		9CFF30281B0D12EA001C1AE5 /* GridTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GridTexture.cpp; path = ../src/GridTexture.cpp; sourceTree = "<group>"; };
@@ -153,6 +156,8 @@
 				9C0071C51B0FA3D40025452F /* TimeGrid.h */,
 				9C7E8F451B15165300818A95 /* Landscape.cpp */,
 				9C7E8F461B15165300818A95 /* Landscape.h */,
+				9CC496461B16094900D34199 /* Constants.cpp */,
+				9CC496471B16094900D34199 /* Constants.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -281,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C7E8F471B15165300818A95 /* Landscape.cpp in Sources */,
+				9CC496481B16094900D34199 /* Constants.cpp in Sources */,
 				9C820DF21B0A608900C1F43D /* CameraLandscape.cpp in Sources */,
 				9CDDA1451B063ACC00027D3A /* GridMesh.cpp in Sources */,
 				7065E9A8191E42818203CD0E /* GridSpaceApp.cpp in Sources */,

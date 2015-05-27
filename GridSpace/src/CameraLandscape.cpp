@@ -8,12 +8,11 @@
 #include "CameraLandscape.h"
 #include "cinder/Rand.h"
 #include "cinder/Log.h"
+#include "Constants.h"
 
 using namespace soso;
 using namespace cinder;
 using namespace std;
-
-const double TAU = 6.28318530718;
 
 void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 {
@@ -56,8 +55,8 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 		auto distance = (float)r / rings;
 		auto radius = mix( inner_radius, outer_radius, distance );
 		auto t = (float) s / segments;
-		auto x = cos( t * TAU ) * radius;
-		auto y = sin( t * TAU ) * radius;
+		auto x = cos( t * Tau ) * radius;
+		auto y = sin( t * Tau ) * radius;
 		return vec3( x, -4.0f, y );
 	};
 
@@ -103,8 +102,8 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	for( auto &v : vertices ) {
 		auto distance = lmap<float>( length( v.pos ), min_distance, max_distance, 0.0f, 1.0f );
 		// pos is on a radial axis, rotate it 90 degrees to bend along length
-		auto axis = glm::rotate( glm::angleAxis( (float)TAU / 4.0f, vec3(0, 1, 0) ), normalize(v.pos) );
-		auto theta = mix( 0.0f, -(float)TAU / 18.0f, distance );
+		auto axis = glm::rotate( glm::angleAxis( (float)Tau / 4.0f, vec3(0, 1, 0) ), normalize(v.pos) );
+		auto theta = mix( 0.0f, -(float)Tau / 18.0f, distance );
 		auto xf = glm::rotate( theta, axis );
 		v.normal = vec3(xf * vec4(v.normal, 0.0f));
 		v.normal *= mix( 0.0f, 4.0f, distance );
