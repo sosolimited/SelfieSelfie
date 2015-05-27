@@ -170,8 +170,8 @@ void Landscape::setup()
 		{ 12, 1, 0.0f, vec2( 0.05, 0.0875f ) },
 		{ 10, 1, 0.0f, vec2( 0.05, 0.0875f ) },
 		{ 8, 1, 0.1f, vec2( 0.075, 0.1 ) },
-		{ 10, 1, 0.25f, vec2( 0.1, 0.125 ) },
-		{ 8, 1, 0.5f, vec2( 0.25, 0.15 ) }
+		{ 10, 2, 0.25f, vec2( 0.1, 0.125 ) },
+		{ 8, 8, 0.5f, vec2( 0.25, 0.15 ) }
 	};
 
 	for( auto i = 0; i < params.size(); i += 1 )
@@ -182,10 +182,12 @@ void Landscape::setup()
 		auto t2 = (i + 1.0f) / params.size();
 		auto r1 = mix( inner, outer, t );
 		auto r2 = mix( inner, outer, t2 );
-		addRing( vertices, vec3( 0, -4, 0 ), normal, r1, r2, i * 2 + 1.0f, 1, copies, p.color_weight, p.insets );
+		addRing( vertices, vec3( 0, -4, 0 ), normal, r1, r2, i * 2 + 1.0f, p.frames, copies, p.color_weight, p.insets );
 	}
 
-	addRing( vertices, vec3( 0, -4, 0 ), normal, outer, outer + 2.0f, params.size() * 2, 64 - (params.size() * 2), 1, 1.0f );
+	auto last_frame = params.size() * 2 + 4.0f; // actually some overlap
+	auto remaining_frames = 64.0f - last_frame;
+	addRing( vertices, vec3( 0, -4, 0 ), normal, outer, outer + 2.0f, last_frame, remaining_frames, 1, 1.0f );
 
 	// Deform stuff
 //	/*
