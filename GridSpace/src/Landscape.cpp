@@ -91,7 +91,7 @@ void addRectangle( std::vector<Vertex> &vertices, const ci::vec3 &iCenter, float
 	addQuad( vertices, ul, ur, br, bl, iFrameOffset, Rectf( 0.25, 0.4, 0.75, 0.6 ) );
 }
 
-void addStrip( std::vector<Vertex> &vertices, const vec3 &ray, float width )
+void addStrip( std::vector<Vertex> &vertices, const vec3 &base, const vec3 &ray, const vec3 &normal, float width )
 {
 	const auto inner_radius = 3.0f;
 	const auto outer_radius = 50.0f;
@@ -99,8 +99,11 @@ void addStrip( std::vector<Vertex> &vertices, const vec3 &ray, float width )
 	auto total_things = 64;
 	auto inner_things = 16;
 	auto outer_things = total_things - inner_things;
-	auto perp = glm::rotate<float>( ray, Tau * 0.25f, vec3( 0, 1, 0 ) );
+	auto perp = glm::rotate<float>( ray, Tau * 0.25f, normal );
+	auto r = perp * width / 2.0f;
+	auto l = - r;
 
+	// Add full frames
 	for( auto i = 0; i < inner_things; i += 1 ) {
 		auto d1 = (i + 0.0f) / total_things;
 		auto d2 = (i + 1.0f) / total_things;
@@ -108,13 +111,15 @@ void addStrip( std::vector<Vertex> &vertices, const vec3 &ray, float width )
 		auto r2 = mix( inner_radius, outer_radius, d2 );
 		auto time = (i + 0.0f) / inner_things;
 
-		auto a = ray * r2;
-		auto b = ray * r2 + perp;
-		auto c = ray * r1 + perp;
-		auto d = ray * r1;
+		auto a = base + ray * r2 + l;
+		auto b = base + ray * r2 + r;
+		auto c = base + ray * r1 + r;
+		auto d = base + ray * r1 + l;
 
 		addQuad(vertices, a, b, c, d, time, Rectf(0, 0, 1, 1));
 	}
+
+	// Progressively deteriorating frames
 }
 
 } // namespace
@@ -129,7 +134,14 @@ void Landscape::setup()
 	auto offset = - vec2(dims - 1) * vec2(0.5f);
 	auto max_dist = length(vec2(dims)) * 0.5f;
 
-	addStrip( vertices, vec3( 0, 0, 1 ), 1.0f );
+	auto normal = vec3( 0, 1, 0 );
+	auto rotation = glm::rotate<float>( Tau * 0.1875f, normal );
+	auto ray = vec3( 0, 0, 1 );
+
+	for( auto i = 0; i < 12; i += 1 ) {
+		addStrip( vertices, vec3( 0, -2, 0 ), ray, normal, 1.0f );
+		ray = vec3(rotation * vec4(ray, 0));
+	}
 /*
 	for( auto y = 0; y < dims.y; y += 1 ) {
 		for( auto x = 0; x < dims.x; x += 1 ) {
