@@ -58,7 +58,6 @@ private:
 
 void GridSpaceApp::setup()
 {
-	mesh.setup();
 
 	MotionManager::enable();
 
@@ -96,6 +95,7 @@ void GridSpaceApp::setup()
 	/*
 	cameraLandscape.setup( gridTexture->getBlurredTexture() );
 	timeGrid.setup( gridTexture->getTexture() );
+	mesh.setup();
 	*/
 }
 
@@ -189,8 +189,8 @@ void GridSpaceApp::draw()
 	/*
 	timeGrid.draw( gridTexture->getCurrentIndex() );
 	cameraLandscape.draw( gridTexture->getCurrentIndex() );
-	*/
 	mesh.draw( gridTexture->getCurrentIndex() );
+	*/
 
 	if( doDrawDebug )
 	{
