@@ -164,10 +164,8 @@ void Landscape::setup()
 	auto center = vec3( 0, -4.0f, 0 );
 
 	// Plug center
-	/*
-	auto h = vec3( 0.25f, 0.0f, 0.25f );
+	auto h = vec3( offset.x * 1.5f, 0.0f, offset.x * 1.5f );
 	addQuad( vertices, (h * vec3(-1, 0, -1)), (h * vec3(1, 0, -1)), (h * vec3(1, 0, 1)), (h * vec3(-1, 0, 1)), 0.0f, Rectf( 1, 1, 0, 0 ) );
-	*/
 
 	// Flip up
 	auto xf = glm::rotate<float>( Tau * 0.25f, vec3( 0, 0, 1 ) ) * glm::translate( center ) * glm::scale( vec3( 4.0f ) );
