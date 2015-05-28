@@ -13,7 +13,7 @@ using namespace std;
 
 inline std::string to_string(const ci::vec2 &vector)
 {
-	return "[" + to_string(vector.x) + "," + to_string(vector.y) + "]";
+	return "[" + toString(vector.x) + "," + toString(vector.y) + "]";
 }
 
 namespace cinder{
@@ -259,7 +259,7 @@ void ShapeToolApp::load(const fs::path &path)
 void ShapeToolApp::save() const
 {
 	auto json = JsonTree::makeObject();
-	auto scale = 1.0f / 250.0f;
+	auto scale = 1.0f / 1000.0f;
 
 	auto bars = JsonTree::makeArray("bars");
 	for (auto &s : _sections)
