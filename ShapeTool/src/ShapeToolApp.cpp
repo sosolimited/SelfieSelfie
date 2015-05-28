@@ -64,13 +64,15 @@ void ShapeToolApp::setup()
 
 	// Build a decent starting curve.
 
-	addSection( 0.1f, 1, 2, 1, 4 );
-	addSection( 0.1f, 3, 2, 1, 6 );
-	addSection( 0.1f, 3, 2, 1, 8 );
-	addSection( 0.1f, 3, 2, 1, 10 );
-	addSection( 0.1f, 3, 2, 1, 12 );
+	addSection( 0.12f, 1, 2, 1, 2 );
+	addSection( 0.12f, 3, 2, 1, 5 );
+	addSection( 0.11f, 3, 2, 1, 8 );
+	addSection( 0.095f, 3, 2, 1, 11 );
+	addSection( 0.085f, 3, 2, 1, 12 );
+	addSection( 0.070f, 3, 2, 1, 9 );
+	addSection( 0.050f, 3, 2, 1, 7 );
 
-	addSection( 0.5f, 0, 32, 32, 2 );
+	addSection( -1.0f, 0, 32, 32, 2 );
 }
 
 void ShapeToolApp::addSection(float length, int time_offset, int subdivisions, int temporal_steps, int repeats)
@@ -83,6 +85,10 @@ void ShapeToolApp::addSection(float length, int time_offset, int subdivisions, i
 		auto last = _sections.back();
 		curve_begin = last.curve_end;
 		time = last.time_begin + last.temporal_steps + time_offset;
+	}
+
+	if (length == -1.0f) {
+		length = 1.0f - curve_begin;
 	}
 
 	auto curve_end = curve_begin + length;
