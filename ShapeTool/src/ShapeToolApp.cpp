@@ -22,7 +22,7 @@ using namespace soso;
 class ShapeToolApp : public App {
 public:
 	void setup() override;
-	void mouseDown(MouseEvent event) override;
+	void keyDown(KeyEvent event) override;
 	void fileDrop(FileDropEvent event) override;
 	void update() override;
 	void draw() override;
@@ -137,13 +137,16 @@ void ShapeToolApp::save() const
 	json.pushBack(sections);
 	json.pushBack(bars);
 
-	auto p = getAssetPath("") / "profile.json";
+	auto p = getAssetPath("") / "../../GridSpace/assets/profile.json";
 	json.write(p);
 }
 
-void ShapeToolApp::mouseDown(MouseEvent event)
+void ShapeToolApp::keyDown(KeyEvent event)
 {
-	save();
+	if (event.getCode() == KeyEvent::KEY_s)
+	{
+		save();
+	}
 }
 
 void ShapeToolApp::fileDrop(cinder::app::FileDropEvent event)
