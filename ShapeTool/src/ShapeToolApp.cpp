@@ -20,6 +20,20 @@ struct Bar
 	float		 texture_end;
 };
 
+inline std::string to_string(const ci::vec2 &vector)
+{
+	return "[" + to_string(vector.x) + "," + to_string(vector.y) + "]";
+}
+
+inline ci::vec2 vec2_from_string(const std::string &string)
+{
+	auto parts = split(string, ",");
+	auto x = fromString<float>(parts.at(0).substr(1, parts.at(0).size()));
+	auto y = fromString<float>(parts.at(1).substr(0, parts.at(1).size() - 1));
+
+	return vec2(x, y);
+}
+
 struct Section
 {
 	float							curve_begin;
@@ -113,6 +127,26 @@ void ShapeToolApp::save() const
 {
 	auto json = JsonTree::makeObject();
 	json.pushBack(JsonTree("steps", _steps));
+	auto scale = 1.0f / 250.0f;
+
+	auto bars = JsonTree::makeArray("bars");
+	for (auto &s : _sections)
+	{
+		auto section_bars = s.getBars(*_path_cache);
+		for (auto &b : section_bars)
+		{
+			auto bar = JsonTree();
+			bar.addChild(JsonTree("begin", to_string(b.begin * scale)));
+			bar.addChild(JsonTree("end", to_string(b.end * scale)));
+			bar.addChild(JsonTree("texture_begin", b.texture_begin));
+			bar.addChild(JsonTree("texture_end", b.texture_end));
+			bar.addChild(JsonTree("time", b.time));
+
+			bars.pushBack(bar);
+		}
+	}
+
+	json.pushBack(bars);
 
 	auto p = getAssetPath("") / "profile.json";
 	json.write(p);
@@ -120,6 +154,7 @@ void ShapeToolApp::save() const
 
 void ShapeToolApp::mouseDown(MouseEvent event)
 {
+	save();
 }
 
 void ShapeToolApp::fileDrop(cinder::app::FileDropEvent event)
@@ -157,7 +192,7 @@ void ShapeToolApp::drawTemporalFrames()
 {
 	for (auto &s : _sections)
 	{
-		auto bars = s.getBars(_path);
+		auto bars = s.getBars(*_path_cache);
 		for (auto &b : bars) {
 			gl::color(Color(CM_HSV, b.time / _last_frame, 1.0f, 1.0f));
 			gl::drawLine( b.begin, b.end );
@@ -169,7 +204,7 @@ void ShapeToolApp::drawSpatialFrames()
 {
 	for (auto &s : _sections)
 	{
-		auto bars = s.getBars(_path);
+		auto bars = s.getBars(*_path_cache);
 		gl::begin(GL_LINES);
 		for (auto &b : bars) {
 			gl::color(Color(b.texture_begin, 0.0f, 0.5f));
