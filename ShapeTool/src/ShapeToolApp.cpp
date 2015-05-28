@@ -33,7 +33,7 @@ vec2 fromString<vec2>(const std::string &string)
 struct Bar
 {
 	Bar() = default;
-	Bar(const ci::vec2 &begin, const ci::vec2 &end, int time, float texture_begin, float texture_end);
+	Bar(const ci::vec2 &begin, const ci::vec2 &end, int time, float texture_begin, float texture_end, int repeats);
 	explicit Bar(const ci::JsonTree &json);
 
 	/// Physical coordinates of bar in profile
@@ -44,16 +44,19 @@ struct Bar
 	/// What section of the texture this bar reads from, normalized.
 	float		 texture_begin = 0.0f;
 	float		 texture_end = 1.0f;
+	/// How many horizontal repeats of the texture to do (used by main app; not meaningful in 2d).
+	int			 repeats = 1;
 
 	ci::JsonTree toJson(float scale) const;
 };
 
-Bar::Bar(const ci::vec2 &begin, const ci::vec2 &end, int time, float texture_begin, float texture_end)
+Bar::Bar(const ci::vec2 &begin, const ci::vec2 &end, int time, float texture_begin, float texture_end, int repeats)
 : begin(begin),
 	end(end),
 	time(time),
 	texture_begin(texture_begin),
-	texture_end(texture_end)
+	texture_end(texture_end),
+	repeats(repeats)
 {}
 
 Bar::Bar(const ci::JsonTree &json)
@@ -72,6 +75,7 @@ ci::JsonTree Bar::toJson(float scale) const
 	bar.addChild(JsonTree("time", time));
 	bar.addChild(JsonTree("texture_begin", texture_begin));
 	bar.addChild(JsonTree("texture_end", texture_end));
+	bar.addChild(JsonTree("repeats", repeats));
 
 	return bar;
 }
@@ -79,7 +83,7 @@ ci::JsonTree Bar::toJson(float scale) const
 struct Section
 {
 	Section() = default;
-	Section(float curve_begin, float curve_end, int time_begin, int spatial_subdivisions, int temporal_steps);
+	Section(float curve_begin, float curve_end, int time_begin, int spatial_subdivisions, int temporal_steps, int spatial_repeats);
 	explicit Section(const ci::JsonTree &json);
 
 	/// Normalized curve times.
@@ -91,18 +95,21 @@ struct Section
 	int								spatial_subdivisions;
 	/// How many frames this section spans (steps > 1 yields slit-scanning effects)
 	int								temporal_steps;
+	/// How many horizontal repeats of the texture to do (used by main app; not meaningful in 2d).
+	int								spatial_repeats;
 
 	std::vector<Bar>	getBars(const Path2dCalcCache &path) const;
 
 	ci::JsonTree	toJson() const;
 };
 
-Section::Section(float curve_begin, float curve_end, int time_begin, int spatial_subdivisions, int temporal_steps)
+Section::Section(float curve_begin, float curve_end, int time_begin, int spatial_subdivisions, int temporal_steps, int spatial_repeats)
 : curve_begin(curve_begin),
 	curve_end(curve_end),
 	time_begin(time_begin),
 	spatial_subdivisions(spatial_subdivisions),
-	temporal_steps(temporal_steps)
+	temporal_steps(temporal_steps),
+	spatial_repeats(spatial_repeats)
 {}
 
 Section::Section(const ci::JsonTree &json)
@@ -110,7 +117,8 @@ Section::Section(const ci::JsonTree &json)
 	curve_end(json.getValueForKey<float>("curve_end")),
 	time_begin(json.getValueForKey<int>("time_begin")),
 	spatial_subdivisions(json.getValueForKey<int>("spatial_subdivisions")),
-	temporal_steps(json.getValueForKey<int>("temporal_steps"))
+	temporal_steps(json.getValueForKey<int>("temporal_steps")),
+	spatial_repeats(json.getValueForKey<int>("spatial_repeats"))
 {}
 
 ci::JsonTree Section::toJson() const
@@ -121,6 +129,7 @@ ci::JsonTree Section::toJson() const
 	section.addChild(JsonTree("time_begin", time_begin));
 	section.addChild(JsonTree("spatial_subdivisions", spatial_subdivisions));
 	section.addChild(JsonTree("temporal_steps", temporal_steps));
+	section.addChild(JsonTree("spatial_repeats", spatial_repeats));
 
 	return section;
 }
@@ -143,7 +152,7 @@ std::vector<Bar> Section::getBars(const Path2dCalcCache &path) const
 
 		auto a = path.getPosition(c1);
 		auto b = path.getPosition(c2);
-		bars.push_back( Bar{ a, b, time, t1, t2 } );
+		bars.push_back( Bar{ a, b, time, t1, t2, spatial_repeats } );
 	}
 
 	return bars;
@@ -167,6 +176,9 @@ public:
 	void load(const fs::path &path);
 	void save() const;
 
+	/// Add a section taking up curve length, offset from the end of the previous section in time
+	void addSection( float length, int time_offset, int subdivisions, int temporal_steps, int repeats );
+
 private:
 	Path2d											_path;
 	unique_ptr<Path2dCalcCache> _path_cache;
@@ -187,10 +199,35 @@ void ShapeToolApp::setup()
 	auto p = getAssetPath("profile.json");
 	load(p);
 	*/
+	/*
+	_sections = {Section {0.0f, 0.5f, 0, 8, 4, 4},
+								{0.5f, 0.75f, 4, 4, 1, 4},
+								{0.75f, 1.0f, 5, 2, 1, 2} };
+	*/
 
-	_sections = {Section {0.0f, 0.5f, 0, 8, 4},
-								{0.5f, 0.75f, 4, 4, 1},
-								{0.75f, 1.0f, 5, 2, 1} };
+	addSection( 0.1f, 1, 2, 1, 4 );
+	addSection( 0.1f, 3, 2, 1, 4 );
+	addSection( 0.1f, 3, 2, 1, 4 );
+	addSection( 0.1f, 3, 2, 1, 4 );
+	addSection( 0.1f, 3, 2, 1, 4 );
+	addSection( 0.1f, 3, 2, 1, 4 );
+	addSection( 0.1f, 3, 2, 1, 4 );
+}
+
+void ShapeToolApp::addSection(float length, int time_offset, int subdivisions, int temporal_steps, int repeats)
+{
+	auto time = time_offset;
+	auto curve_begin = 0.0f;
+
+	if (! _sections.empty())
+	{
+		auto last = _sections.back();
+		curve_begin = last.curve_end;
+		time = last.time_begin + last.temporal_steps + time_offset;
+	}
+
+	auto curve_end = curve_begin + length;
+	_sections.push_back(Section(curve_begin, curve_end, time, subdivisions, temporal_steps, repeats));
 }
 
 void ShapeToolApp::load(const fs::path &path)
