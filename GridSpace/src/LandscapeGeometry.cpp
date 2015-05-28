@@ -49,7 +49,8 @@ Bar::Bar(const ci::JsonTree &json)
 	end(fromString<vec2>(json["end"].getValue())),
 	time(fromString<int>(json["time"].getValue())),
 	texture_begin(fromString<float>(json["texture_begin"].getValue())),
-	texture_end(fromString<float>(json["texture_end"].getValue()))
+	texture_end(fromString<float>(json["texture_end"].getValue())),
+	repeats(fromString<int>(json["repeats"].getValue()))
 {}
 
 ci::JsonTree Bar::toJson(float scale) const
