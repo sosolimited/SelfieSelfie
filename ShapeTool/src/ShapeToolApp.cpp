@@ -205,13 +205,21 @@ void ShapeToolApp::setup()
 								{0.75f, 1.0f, 5, 2, 1, 2} };
 	*/
 
-	addSection( 0.1f, 1, 2, 1, 4 );
-	addSection( 0.1f, 3, 2, 1, 4 );
-	addSection( 0.1f, 3, 2, 1, 4 );
-	addSection( 0.1f, 3, 2, 1, 4 );
-	addSection( 0.1f, 3, 2, 1, 4 );
-	addSection( 0.1f, 3, 2, 1, 4 );
-	addSection( 0.1f, 3, 2, 1, 4 );
+	// Build a decent starting curve.
+
+	addSection( 0.05f, 1, 2, 1, 4 );
+	addSection( 0.05f, 3, 2, 1, 8 );
+	addSection( 0.05f, 3, 2, 1, 8 );
+	addSection( 0.05f, 3, 2, 1, 8 );
+	addSection( 0.05f, 3, 2, 1, 8 );
+	addSection( 0.05f, 3, 2, 1, 8 );
+	addSection( 0.05f, 3, 2, 1, 4 );
+	addSection( 0.05f, 1, 2, 1, 4 );
+	addSection( 0.05f, 3, 2, 2, 8 );
+	addSection( 0.05f, 3, 2, 2, 8 );
+	addSection( 0.05f, 3, 8, 8, 4 );
+
+	addSection( 0.45f, 0, 32, 32, 2 );
 }
 
 void ShapeToolApp::addSection(float length, int time_offset, int subdivisions, int temporal_steps, int repeats)
