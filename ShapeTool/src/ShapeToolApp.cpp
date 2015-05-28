@@ -197,7 +197,17 @@ void ShapeToolApp::load(const fs::path &path)
 {
 	if(fs::exists(path) && fs::is_regular_file(path)) {
 
-		auto json = JsonTree(loadString (loadFile (path)));
+		try {
+			auto json = JsonTree(loadString (loadFile (path)));
+			auto sections = json["sections"];
+			_sections.clear();
+			for (auto &s : sections.getChildren()) {
+				_sections.emplace_back( Section(s) );
+			}
+		}
+		catch (ci::Exception &exc) {
+			CI_LOG_E("Error reading file: " << exc.what());
+		}
 	}
 }
 
