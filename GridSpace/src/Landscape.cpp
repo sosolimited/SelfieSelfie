@@ -117,7 +117,8 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, const ci::vec2 &cen
 		// Repeat t with mirroring
 		// insetting the texture coordinates minimizes edge color flashing.
 		tc.y = mix( texture_insets.y, 1.0f - texture_insets.y, t );
-		tc.x = mix( 1.0f - texture_insets.x, texture_insets.x, (float)r );
+		auto x = mix( bar.texture_begin, bar.texture_end, (float) r );
+		tc.x = mix( 1.0f - texture_insets.x, texture_insets.x, x );
 		return tc;
 	};
 
