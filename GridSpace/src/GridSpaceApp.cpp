@@ -18,7 +18,7 @@ using namespace soso;
 
 struct TouchInfo {
 	uint32_t  id;
-	vec2			start;
+	vec2			previous;
 	vec2			position;
 };
 
@@ -47,9 +47,7 @@ private:
 	bool						doDrawDebug = false;
 
 	vector<TouchInfo> touches;
-
-	ci::vec3				previousOffset;
-	ci::vec3				cameraOffset;
+	ci::vec3					cameraOffset;
 };
 
 void GridSpaceApp::setup()
@@ -108,6 +106,7 @@ void GridSpaceApp::touchesMoved( TouchEvent event )
 	for( auto &t : event.getTouches() ) {
 		for( auto &s : touches ) {
 			if( s.id == t.getId() ) {
+				s.previous = s.position;
 				s.position = t.getPos();
 			}
 		}
@@ -132,19 +131,18 @@ void GridSpaceApp::touchesEnded( TouchEvent event )
 
 void GridSpaceApp::pinchStart()
 {
-	previousOffset = cameraOffset;
 }
 
 void GridSpaceApp::pinchUpdate()
 {
-	auto base = distance(touches.at( 0 ).start, touches.at( 1 ).start);
+	auto base = distance(touches.at( 0 ).previous, touches.at( 1 ).previous);
 	auto current = distance(touches.at( 0 ).position, touches.at( 1 ).position);
 
 	auto delta = current - base;
 	if( isfinite( delta ) )
 	{
 		auto ray = camera.getViewDirection();
-		cameraOffset = previousOffset + delta * ray;
+		cameraOffset += delta * ray;
 	}
 }
 
