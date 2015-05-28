@@ -11,21 +11,15 @@ using namespace ci;
 using namespace ci::app;
 using namespace std;
 
-struct Bar
-{
-	ci::vec2 begin;			// where in physical space this bar begins
-	ci::vec2 end;
-	float		 time;			// frame time offset where this bar is played
-	float		 texture_begin;	// where in the texture this bar begins
-	float		 texture_end;
-};
-
 inline std::string to_string(const ci::vec2 &vector)
 {
 	return "[" + to_string(vector.x) + "," + to_string(vector.y) + "]";
 }
 
-inline ci::vec2 vec2_from_string(const std::string &string)
+namespace cinder{
+
+template<>
+vec2 fromString<vec2>(const std::string &string)
 {
 	auto parts = split(string, ",");
 	auto x = fromString<float>(parts.at(0).substr(1, parts.at(0).size()));
@@ -34,16 +28,102 @@ inline ci::vec2 vec2_from_string(const std::string &string)
 	return vec2(x, y);
 }
 
+} // namespace cinder
+
+struct Bar
+{
+	Bar() = default;
+	Bar(const ci::vec2 &begin, const ci::vec2 &end, int time, float texture_begin, float texture_end);
+	explicit Bar(const ci::JsonTree &json);
+
+	/// Physical coordinates of bar in profile
+	ci::vec2 begin;
+	ci::vec2 end;
+	/// What frame time offset this bar is played at, in frames.
+	int			 time = 0;
+	/// What section of the texture this bar reads from, normalized.
+	float		 texture_begin = 0.0f;
+	float		 texture_end = 1.0f;
+
+	ci::JsonTree toJson(float scale) const;
+};
+
+Bar::Bar(const ci::vec2 &begin, const ci::vec2 &end, int time, float texture_begin, float texture_end)
+: begin(begin),
+	end(end),
+	time(time),
+	texture_begin(texture_begin),
+	texture_end(texture_end)
+{}
+
+Bar::Bar(const ci::JsonTree &json)
+: begin(fromString<vec2>(json["begin"].getValue())),
+	end(fromString<vec2>(json["end"].getValue())),
+	time(fromString<int>(json["time"].getValue())),
+	texture_begin(fromString<float>(json["texture_begin"].getValue())),
+	texture_end(fromString<float>(json["texture_end"].getValue()))
+{}
+
+ci::JsonTree Bar::toJson(float scale) const
+{
+	auto bar = JsonTree();
+	bar.addChild(JsonTree("begin", to_string(begin * scale)));
+	bar.addChild(JsonTree("end", to_string(end * scale)));
+	bar.addChild(JsonTree("time", time));
+	bar.addChild(JsonTree("texture_begin", texture_begin));
+	bar.addChild(JsonTree("texture_end", texture_end));
+
+	return bar;
+}
+
 struct Section
 {
-	float							curve_begin;
-	float							curve_end;
-	float							time_begin;
+	Section() = default;
+	Section(float curve_begin, float curve_end, int time_begin, int spatial_subdivisions, int temporal_steps);
+	explicit Section(const ci::JsonTree &json);
+
+	/// Normalized curve times.
+	float							curve_begin = 0.0f;
+	float							curve_end = 1.0f;
+	/// Frame time offset, in frames.
+	int								time_begin;
+	/// How many bars within this section.
 	int								spatial_subdivisions;
-	int								temporal_steps; // 1 = no divisions
+	/// How many frames this section spans (steps > 1 yields slit-scanning effects)
+	int								temporal_steps;
 
 	std::vector<Bar>	getBars(const Path2dCalcCache &path) const;
+
+	ci::JsonTree	toJson() const;
 };
+
+Section::Section(float curve_begin, float curve_end, int time_begin, int spatial_subdivisions, int temporal_steps)
+: curve_begin(curve_begin),
+	curve_end(curve_end),
+	time_begin(time_begin),
+	spatial_subdivisions(spatial_subdivisions),
+	temporal_steps(temporal_steps)
+{}
+
+Section::Section(const ci::JsonTree &json)
+: curve_begin(json.getValueForKey<float>("curve_begin")),
+	curve_end(json.getValueForKey<float>("curve_end")),
+	time_begin(json.getValueForKey<int>("time_begin")),
+	spatial_subdivisions(json.getValueForKey<int>("spatial_subdivisions")),
+	temporal_steps(json.getValueForKey<int>("temporal_steps"))
+{}
+
+ci::JsonTree Section::toJson() const
+{
+	auto section = JsonTree();
+	section.addChild(JsonTree("curve_begin", curve_begin));
+	section.addChild(JsonTree("curve_end", curve_end));
+	section.addChild(JsonTree("time_begin", time_begin));
+	section.addChild(JsonTree("spatial_subdivisions", spatial_subdivisions));
+	section.addChild(JsonTree("temporal_steps", temporal_steps));
+
+	return section;
+}
 
 std::vector<Bar> Section::getBars(const Path2dCalcCache &path) const
 {
@@ -56,7 +136,7 @@ std::vector<Bar> Section::getBars(const Path2dCalcCache &path) const
 	for (auto i = 0; i < spatial_subdivisions; i += 1) {
 		auto t1 = (i + 0.0f) / spatial_subdivisions;
 		auto t2 = (i + 1.0f) / spatial_subdivisions;
-		auto time = time_begin + floor(t1 * temporal_steps);
+		auto time = time_begin + (int)floor(t1 * temporal_steps);
 
 		auto c1 = path.calcNormalizedTime(mix(curve_begin, curve_end, t1), false);
 		auto c2 = path.calcNormalizedTime(mix(curve_begin, curve_end, t2), false);
@@ -110,9 +190,9 @@ void ShapeToolApp::setup()
 	load(p);
 	*/
 
-	_sections = {Section {0.0f, 0.5f, 0.0f, 8, 4},
-								{0.5f, 0.75f, 4.0f, 4, 1},
-								{0.75f, 1.0f, 5.0f, 2, 1} };
+	_sections = {Section {0.0f, 0.5f, 0, 8, 4},
+								{0.5f, 0.75f, 4, 4, 1},
+								{0.75f, 1.0f, 5, 2, 1} };
 }
 
 void ShapeToolApp::load(const fs::path &path)
@@ -135,17 +215,17 @@ void ShapeToolApp::save() const
 		auto section_bars = s.getBars(*_path_cache);
 		for (auto &b : section_bars)
 		{
-			auto bar = JsonTree();
-			bar.addChild(JsonTree("begin", to_string(b.begin * scale)));
-			bar.addChild(JsonTree("end", to_string(b.end * scale)));
-			bar.addChild(JsonTree("texture_begin", b.texture_begin));
-			bar.addChild(JsonTree("texture_end", b.texture_end));
-			bar.addChild(JsonTree("time", b.time));
-
-			bars.pushBack(bar);
+			bars.pushBack(b.toJson(scale));
 		}
 	}
 
+	auto sections = JsonTree::makeArray("sections");
+	for (auto &s : _sections)
+	{
+		sections.pushBack(s.toJson());
+	}
+
+	json.pushBack(sections);
 	json.pushBack(bars);
 
 	auto p = getAssetPath("") / "profile.json";
@@ -194,7 +274,7 @@ void ShapeToolApp::drawTemporalFrames()
 	{
 		auto bars = s.getBars(*_path_cache);
 		for (auto &b : bars) {
-			gl::color(Color(CM_HSV, b.time / _last_frame, 1.0f, 1.0f));
+			gl::color(Color(CM_HSV, (b.time + 0.0f) / _last_frame, 1.0f, 1.0f));
 			gl::drawLine( b.begin, b.end );
 		}
 	}
