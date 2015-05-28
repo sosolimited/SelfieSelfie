@@ -171,10 +171,8 @@ private:
 	Path2d											_path;
 	unique_ptr<Path2dCalcCache> _path_cache;
 
-	int													_steps = 12;
-	int													_last_frame = 64;
-
 	vector<Section>							_sections;
+	int													_last_frame = 64; // for debug visualization
 };
 
 void ShapeToolApp::setup()
@@ -198,15 +196,14 @@ void ShapeToolApp::setup()
 void ShapeToolApp::load(const fs::path &path)
 {
 	if(fs::exists(path) && fs::is_regular_file(path)) {
+
 		auto json = JsonTree(loadString (loadFile (path)));
-		_steps = json["steps"].getValue<int>();
 	}
 }
 
 void ShapeToolApp::save() const
 {
 	auto json = JsonTree::makeObject();
-	json.pushBack(JsonTree("steps", _steps));
 	auto scale = 1.0f / 250.0f;
 
 	auto bars = JsonTree::makeArray("bars");
