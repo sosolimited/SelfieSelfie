@@ -5,10 +5,53 @@
 #include "cinder/Path2d.h"
 #include "cinder/Shape2d.h"
 #include "cinder/Json.h"
+#include "cinder/Log.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
+
+struct Bar
+{
+	ci::vec2 begin;
+	ci::vec2 end;
+	float		 time;
+};
+
+struct Section
+{
+	float							curve_begin;
+	float							curve_end;
+	float							time_begin;
+	int								spatial_subdivisions;
+	int								temporal_steps; // 1 = no divisions
+
+	std::vector<Bar>	getBars(const Path2dCalcCache &path) const;
+};
+
+std::vector<Bar> Section::getBars(const Path2dCalcCache &path) const
+{
+	if (temporal_steps > spatial_subdivisions) {
+		CI_LOG_W("Temporal subdivisions must be less than spatial subdivisions for all to register");
+	}
+
+	vector<Bar> bars;
+
+	for (auto i = 0; i < spatial_subdivisions; i += 1) {
+		auto t1 = (i + 0.0f) / spatial_subdivisions;
+		auto t2 = (i + 1.0f) / spatial_subdivisions;
+		auto time = time_begin + floor(t1 * temporal_steps);
+
+		auto c1 = path.calcNormalizedTime(mix(curve_begin, curve_end, t1), false);
+		auto c2 = path.calcNormalizedTime(mix(curve_begin, curve_end, t2), false);
+
+		auto a = path.getPosition(c1);
+		auto b = path.getPosition(c2);
+		bars.push_back( Bar{ a, b, time } );
+	}
+
+	return bars;
+}
 
 ///
 /// ShapeTool loads a curve from SVG and allows you to decimate it for
@@ -18,10 +61,11 @@ class ShapeToolApp : public App {
 public:
 	void setup() override;
 	void mouseDown(MouseEvent event) override;
+	void fileDrop(FileDropEvent event) override;
 	void update() override;
 	void draw() override;
 
-	void load();
+	void load(const fs::path &path);
 	void save() const;
 
 private:
@@ -29,6 +73,9 @@ private:
 	unique_ptr<Path2dCalcCache> _path_cache;
 
 	int													_steps = 12;
+	int													_total_frames = 64;
+
+	vector<Section>							_sections;
 };
 
 void ShapeToolApp::setup()
@@ -39,20 +86,19 @@ void ShapeToolApp::setup()
 	_path = shape.getContour(0);
 	_path_cache = unique_ptr<Path2dCalcCache>(new Path2dCalcCache(_path));
 
-	load();
+	/*
+	auto p = getAssetPath("profile.json");
+	load(p);
+	*/
+
+	_sections = {Section {0.0f, 0.5f, 0.0f, 4, 4} };
 }
 
-void ShapeToolApp::load()
+void ShapeToolApp::load(const fs::path &path)
 {
-	auto p = getAssetPath( "profile.json" );
-	if( fs::exists( p ) ) {
-		console() << "Loading configuration" << endl;
-
-		auto json = JsonTree(loadString (loadFile (p)));
+	if(fs::exists(path) && fs::is_regular_file(path)) {
+		auto json = JsonTree(loadString (loadFile (path)));
 		_steps = json["steps"].getValue<int>();
-	}
-	else {
-		save();
 	}
 }
 
@@ -69,9 +115,18 @@ void ShapeToolApp::mouseDown(MouseEvent event)
 {
 }
 
+void ShapeToolApp::fileDrop(cinder::app::FileDropEvent event)
+{
+	load(event.getFile(0));
+}
+
 void ShapeToolApp::update()
 {
-
+	_total_frames = 0;
+	for (auto &s : _sections)
+	{
+		_total_frames += s.temporal_steps;
+	}
 }
 
 void ShapeToolApp::draw()
@@ -81,12 +136,13 @@ void ShapeToolApp::draw()
 
 	gl::draw(_path);
 
-	for (auto i = 0; i < _steps; i += 1)
+	for (auto &s : _sections)
 	{
-		auto t = i / (_steps - 1.0f);
-		t = _path_cache->calcNormalizedTime(t, false);
-		auto pos = _path_cache->getPosition(t);
-		gl::drawStrokedCircle(pos, 8.0f);
+		auto bars = s.getBars(_path);
+		for (auto &b : bars) {
+			gl::color(Color(CM_HSV, b.time / _total_frames, 1.0f, 1.0f));
+			gl::drawLine( b.begin, b.end );
+		}
 	}
 }
 
