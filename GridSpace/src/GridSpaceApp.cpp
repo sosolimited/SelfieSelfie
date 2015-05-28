@@ -151,13 +151,18 @@ void GridSpaceApp::pinchUpdate()
 	if( isfinite( delta ) )
 	{
 		auto ray = camera.getViewDirection();
-		cameraOffset += delta * ray;
+		cameraOffset += delta * ray * 0.01f;
 	}
 }
 
 void GridSpaceApp::update()
 {
-	camera.setEyePoint( cameraOffset * 0.1f );
+	auto l = length(cameraOffset);
+	auto maximum = 3.0f;
+	if( l > maximum ) {
+		cameraOffset *= (maximum / l);
+	}
+	camera.setEyePoint( cameraOffset );
 
 	if( MotionManager::isDataAvailable() ) {
 		auto r = MotionManager::getRotation();
