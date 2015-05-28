@@ -184,7 +184,7 @@ void Landscape::setup()
 		auto t2 = (i + 1.0f) / params.size();
 		auto r1 = mix( inner, outer, t );
 		auto r2 = mix( inner, outer, t2 );
-		addRing( vertices, center, normal, r1, r2, i * 2 + 1.0f, p.frames, copies, p.color_weight, p.insets );
+		addRing( vertices, center, normal, r1, r2, i * 4 + 1.0f, p.frames, copies, p.color_weight, p.insets );
 	}
 
 	auto last_frame = params.size() * 2 + 4.0f; // actually some overlap
