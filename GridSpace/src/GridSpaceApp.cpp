@@ -16,12 +16,23 @@ using namespace std;
 
 using namespace soso;
 
+struct TouchInfo {
+	uint32_t  id;
+	vec2			start;
+	vec2			position;
+};
+
 class GridSpaceApp : public App {
 public:
 	void setup() override;
 	void touchesBegan( TouchEvent event ) override;
 	void touchesMoved( TouchEvent event ) override;
 	void touchesEnded( TouchEvent event ) override;
+
+	void pinchStart();
+	void pinchUpdate();
+	void pinchEnd();
+
 	void update() override;
 	void draw() override;
 
@@ -35,9 +46,10 @@ private:
 
 	bool						doDrawDebug = false;
 
-	ci::vec2				touchStart;
-	ci::vec2				previousOffset;
-	ci::vec2				cameraOffset;
+	vector<TouchInfo> touches;
+
+	ci::vec3				previousOffset;
+	ci::vec3				cameraOffset;
 };
 
 void GridSpaceApp::setup()
@@ -82,36 +94,63 @@ void GridSpaceApp::setup()
 
 void GridSpaceApp::touchesBegan( TouchEvent event )
 {
-	previousOffset = cameraOffset;
-
-	const auto &touches = event.getTouches();
-	if( touches.size() == 1 ) {
-		touchStart = touches.front().getPos();
+	for( auto &t : event.getTouches() ) {
+		touches.push_back( { t.getId(), t.getPos(), t.getPos() } );
 	}
-	else {
-		doDrawDebug = ! doDrawDebug;
+
+	if( touches.size() == 2 ) {
+		pinchStart();
 	}
 }
 
 void GridSpaceApp::touchesMoved( TouchEvent event )
 {
-	const auto &touches = event.getTouches();
-	if( touches.size() == 1 ) {
-		cameraOffset = previousOffset + touches.front().getPos() - touchStart;
+	for( auto &t : event.getTouches() ) {
+		for( auto &s : touches ) {
+			if( s.id == t.getId() ) {
+				s.position = t.getPos();
+			}
+		}
+	}
+
+	if( touches.size() == 2 ) {
+		pinchUpdate();
 	}
 }
 
 void GridSpaceApp::touchesEnded( TouchEvent event )
 {
-	const auto &touches = event.getTouches();
-	if( touches.size() == 1 ) {
-		cameraOffset = previousOffset + touches.front().getPos() - touchStart;
+	touches.erase( std::remove_if( touches.begin(), touches.end(), [&event] (const TouchInfo &s) {
+		for( auto &t : event.getTouches() ) {
+			if (t.getId() == s.id) {
+				return true;
+			}
+		}
+		return false;
+	}), touches.end() );
+}
+
+void GridSpaceApp::pinchStart()
+{
+	previousOffset = cameraOffset;
+}
+
+void GridSpaceApp::pinchUpdate()
+{
+	auto base = distance(touches.at( 0 ).start, touches.at( 1 ).start);
+	auto current = distance(touches.at( 0 ).position, touches.at( 1 ).position);
+
+	auto delta = current - base;
+	if( isfinite( delta ) )
+	{
+		auto ray = camera.getViewDirection();
+		cameraOffset = previousOffset + delta * ray;
 	}
 }
 
 void GridSpaceApp::update()
 {
-	camera.setEyePoint( vec3( 0, cameraOffset.y * 0.1, 0 ) );
+	camera.setEyePoint( cameraOffset * 0.1f );
 
 	if( MotionManager::isDataAvailable() ) {
 		auto r = MotionManager::getRotation();
