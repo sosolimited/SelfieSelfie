@@ -100,6 +100,7 @@ void ShapeToolApp::addSection(float length, int time_offset, int subdivisions, i
 
 void ShapeToolApp::load(const fs::path &path)
 {
+	/*
 	if(fs::exists(path) && fs::is_regular_file(path)) {
 
 		try {
@@ -114,11 +115,12 @@ void ShapeToolApp::load(const fs::path &path)
 			CI_LOG_E("Error reading file: " << exc.what());
 		}
 	}
+	*/
 }
 
 void ShapeToolApp::save() const
 {
-	saveJson();
+//	saveJson();
 	saveXml();
 }
 

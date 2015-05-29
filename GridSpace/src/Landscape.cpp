@@ -11,6 +11,7 @@
 #include "Constants.h"
 #include "LandscapeGeometry.h"
 #include "cinder/Json.h"
+#include "cinder/Xml.h"
 
 #include "cinder/gl/GlslProg.h"
 #include "cinder/app/App.h"
@@ -159,9 +160,11 @@ void Landscape::setup()
 	std::vector<Vertex> vertices;
 
 	auto offset = vec2( 0.05f, 0.0f );
-	auto json = JsonTree( app::loadAsset("profile.json") );
-	for( auto &child : json["bars"].getChildren() ) {
-		Bar bar( child );
+
+	auto xml = XmlTree( app::loadAsset("profile.xml") );
+	CI_LOG_V( "Xml: " << xml );
+	for( auto &child : xml.getChild("shape").getChild("bars").getChildren() ) {
+		Bar bar( *child );
 		addRing( vertices, bar, offset );
 	}
 

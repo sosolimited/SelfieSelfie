@@ -11,6 +11,8 @@
 #include "cinder/Xml.h"
 #include "cinder/Log.h"
 
+#define SOSO_HAS_JSON_SUPPORT 0
+
 using namespace std;
 using namespace cinder;
 using namespace soso;
@@ -45,6 +47,7 @@ Bar::Bar(const ci::vec2 &begin, const ci::vec2 &end, int time, float texture_beg
 	repeats(repeats)
 {}
 
+#if SOSO_HAS_JSON_SUPPORT
 Bar::Bar(const ci::JsonTree &json)
 : begin(fromString<vec2>(json["begin"].getValue())),
 	end(fromString<vec2>(json["end"].getValue())),
@@ -52,15 +55,6 @@ Bar::Bar(const ci::JsonTree &json)
 	texture_begin(fromString<float>(json["texture_begin"].getValue())),
 	texture_end(fromString<float>(json["texture_end"].getValue())),
 	repeats(fromString<int>(json["repeats"].getValue()))
-{}
-
-Bar::Bar(const ci::XmlTree &xml)
-: begin(fromString<vec2>(xml["begin"].getValue())),
-	end(fromString<vec2>(xml["end"].getValue())),
-	time(fromString<int>(xml["time"].getValue())),
-	texture_begin(fromString<float>(xml["texture_begin"].getValue())),
-	texture_end(fromString<float>(xml["texture_end"].getValue())),
-	repeats(fromString<int>(xml["repeats"].getValue()))
 {}
 
 ci::JsonTree Bar::toJson(float scale) const
@@ -75,6 +69,16 @@ ci::JsonTree Bar::toJson(float scale) const
 
 	return bar;
 }
+#endif
+
+Bar::Bar(const ci::XmlTree &xml)
+: begin(fromString<vec2>(xml.getChild("begin").getValue())),
+	end(fromString<vec2>(xml.getChild("end").getValue())),
+	time(fromString<int>(xml.getChild("time").getValue())),
+	texture_begin(fromString<float>(xml.getChild("texture_begin").getValue())),
+	texture_end(fromString<float>(xml.getChild("texture_end").getValue())),
+	repeats(fromString<int>(xml.getChild("repeats").getValue()))
+{}
 
 ci::XmlTree Bar::toXml(float scale) const
 {
@@ -100,6 +104,7 @@ Section::Section(float curve_begin, float curve_end, int time_begin, int spatial
 	spatial_repeats(spatial_repeats)
 {}
 
+#if SOSO_HAS_JSON_SUPPORT
 Section::Section(const ci::JsonTree &json)
 : curve_begin(json.getValueForKey<float>("curve_begin")),
 	curve_end(json.getValueForKey<float>("curve_end")),
@@ -121,6 +126,7 @@ ci::JsonTree Section::toJson() const
 
 	return section;
 }
+#endif
 
 std::vector<Bar> Section::getBars(const Path2dCalcCache &path) const
 {
@@ -146,5 +152,4 @@ std::vector<Bar> Section::getBars(const Path2dCalcCache &path) const
 	return bars;
 }
 
-
-
+#undef SOSO_HAS_JSON_SUPPORT
