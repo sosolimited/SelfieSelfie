@@ -73,8 +73,9 @@ void TimeGrid::setup( const ci::gl::TextureRef &iTexture )
 		for( auto x = 0; x < dims.x; x += 1 ) {
 			auto pos = offset + vec2(x ,y);
 			auto d_norm = floor( glm::length( pos ) ) / max_dist;
+			auto time_offset = mix( 0.0f, 32.0f, d_norm );
 
-			addRectangle( vertices, vec3( pos.x, -8.0f, pos.y ), 1.0f, 1.0f, d_norm );
+			addRectangle( vertices, vec3( pos.x, -8.0f, pos.y ), 1.0f, 1.0f, time_offset );
 		}
 	}
 

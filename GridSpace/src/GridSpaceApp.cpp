@@ -2,13 +2,13 @@
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 
-#include "GridMesh.h"
-#include "CameraLandscape.h"
 #include "cinder/MotionManager.h"
 #include "cinder/Capture.h"
 #include "cinder/Log.h"
+
 #include "GridTexture.h"
-#include "TimeGrid.h"
+#include "Landscape.h"
+#include "Constants.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -37,12 +37,11 @@ public:
 	void draw() override;
 
 private:
-	GridMesh				mesh;
-	CameraLandscape landscape;
 	CaptureRef			capture;
 	CameraPersp			camera;
+
 	GridTextureRef	gridTexture;
-	TimeGrid				timeGrid;
+	Landscape				landscape;
 
 	bool						doDrawDebug = false;
 
@@ -52,7 +51,6 @@ private:
 
 void GridSpaceApp::setup()
 {
-	mesh.setup();
 
 	MotionManager::enable();
 
@@ -62,7 +60,7 @@ void GridSpaceApp::setup()
 
 	auto target = vec3( 50, 5, 50 );
 	camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
-	camera.setPerspective( 60, getWindowAspectRatio(), 0.1f, 1000 );
+	camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 1000 );
 
 	try {
 		auto front_facing_camera = ([] {
@@ -86,8 +84,7 @@ void GridSpaceApp::setup()
 		CI_LOG_E( "Error using device camera: " << exc.what() );
 	}
 
-	landscape.setup( gridTexture->getBlurredTexture() );
-	timeGrid.setup( gridTexture->getTexture() );
+	landscape.setup();
 }
 
 void GridSpaceApp::touchesBegan( TouchEvent event )
@@ -142,13 +139,18 @@ void GridSpaceApp::pinchUpdate()
 	if( isfinite( delta ) )
 	{
 		auto ray = camera.getViewDirection();
-		cameraOffset += delta * ray;
+		cameraOffset += delta * ray * 0.01f;
 	}
 }
 
 void GridSpaceApp::update()
 {
-	camera.setEyePoint( cameraOffset * 0.1f );
+	auto l = length(cameraOffset);
+	auto maximum = 3.0f;
+	if( l > maximum ) {
+		cameraOffset *= (maximum / l);
+	}
+	camera.setEyePoint( cameraOffset );
 
 	if( MotionManager::isDataAvailable() ) {
 		auto r = MotionManager::getRotation();
@@ -168,12 +170,10 @@ void GridSpaceApp::draw()
 
 	gl::setMatrices( camera );
 	// TODO: bind both blurred and normal texture and avoid rebinding textures elsewhere.
-	gl::ScopedTextureBind tex0( gridTexture->getBlurredTexture(), 0 );
-	gl::ScopedTextureBind tex1( gridTexture->getTexture(), 1 );
+	gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
+	gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
 
-	timeGrid.draw( gridTexture->getCurrentIndex() );
 	landscape.draw( gridTexture->getCurrentIndex() );
-	mesh.draw( gridTexture->getCurrentIndex() );
 
 	if( doDrawDebug )
 	{

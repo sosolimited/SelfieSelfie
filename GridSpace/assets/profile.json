@@ -1,0 +1,438 @@
+{
+   "bars" : [
+      {
+         "begin" : "[0,0]",
+         "end" : "[0.0858765841,0.000463450764]",
+         "repeats" : 2,
+         "texture_begin" : 0,
+         "texture_end" : 0.5,
+         "time" : 1
+      },
+      {
+         "begin" : "[0.0858765841,0.000463450764]",
+         "end" : "[0.171645597,0.00454411563]",
+         "repeats" : 2,
+         "texture_begin" : 0.5,
+         "texture_end" : 1,
+         "time" : 1
+      },
+      {
+         "begin" : "[0.171645597,0.00454411563]",
+         "end" : "[0.256738842,0.0158289671]",
+         "repeats" : 5,
+         "texture_begin" : 0,
+         "texture_end" : 0.5,
+         "time" : 5
+      },
+      {
+         "begin" : "[0.256738842,0.0158289671]",
+         "end" : "[0.339600116,0.0380677693]",
+         "repeats" : 5,
+         "texture_begin" : 0.5,
+         "texture_end" : 1,
+         "time" : 5
+      },
+      {
+         "begin" : "[0.339600116,0.0380677693]",
+         "end" : "[0.410994411,0.0709773526]",
+         "repeats" : 8,
+         "texture_begin" : 0,
+         "texture_end" : 0.5,
+         "time" : 9
+      },
+      {
+         "begin" : "[0.410994411,0.0709773526]",
+         "end" : "[0.474672943,0.117032968]",
+         "repeats" : 8,
+         "texture_begin" : 0.5,
+         "texture_end" : 1,
+         "time" : 9
+      },
+      {
+         "begin" : "[0.474672943,0.117032968]",
+         "end" : "[0.521303773,0.166397348]",
+         "repeats" : 11,
+         "texture_begin" : 0,
+         "texture_end" : 0.5,
+         "time" : 13
+      },
+      {
+         "begin" : "[0.521303773,0.166397348]",
+         "end" : "[0.559458375,0.222591832]",
+         "repeats" : 11,
+         "texture_begin" : 0.5,
+         "texture_end" : 1,
+         "time" : 13
+      },
+      {
+         "begin" : "[0.559458375,0.222591832]",
+         "end" : "[0.585757196,0.277391255]",
+         "repeats" : 12,
+         "texture_begin" : 0,
+         "texture_end" : 0.5,
+         "time" : 17
+      },
+      {
+         "begin" : "[0.585757196,0.277391255]",
+         "end" : "[0.605186343,0.335005134]",
+         "repeats" : 12,
+         "texture_begin" : 0.5,
+         "texture_end" : 1,
+         "time" : 17
+      },
+      {
+         "begin" : "[0.605186343,0.335005134]",
+         "end" : "[0.61691004,0.383699298]",
+         "repeats" : 9,
+         "texture_begin" : 0,
+         "texture_end" : 0.5,
+         "time" : 21
+      },
+      {
+         "begin" : "[0.61691004,0.383699298]",
+         "end" : "[0.625401735,0.43306312]",
+         "repeats" : 9,
+         "texture_begin" : 0.5,
+         "texture_end" : 1,
+         "time" : 21
+      },
+      {
+         "begin" : "[0.625401735,0.43306312]",
+         "end" : "[0.629754663,0.468578458]",
+         "repeats" : 7,
+         "texture_begin" : 0,
+         "texture_end" : 0.5,
+         "time" : 25
+      },
+      {
+         "begin" : "[0.629754663,0.468578458]",
+         "end" : "[0.632843673,0.504226267]",
+         "repeats" : 7,
+         "texture_begin" : 0.5,
+         "texture_end" : 1,
+         "time" : 25
+      },
+      {
+         "begin" : "[0.632843673,0.504226267]",
+         "end" : "[0.633828938,0.519850314]",
+         "repeats" : 2,
+         "texture_begin" : 0,
+         "texture_end" : 0.03125,
+         "time" : 26
+      },
+      {
+         "begin" : "[0.633828938,0.519850314]",
+         "end" : "[0.634604335,0.535486162]",
+         "repeats" : 2,
+         "texture_begin" : 0.03125,
+         "texture_end" : 0.0625,
+         "time" : 27
+      },
+      {
+         "begin" : "[0.634604335,0.535486162]",
+         "end" : "[0.63517797,0.551130652]",
+         "repeats" : 2,
+         "texture_begin" : 0.0625,
+         "texture_end" : 0.09375,
+         "time" : 28
+      },
+      {
+         "begin" : "[0.63517797,0.551130652]",
+         "end" : "[0.635557473,0.566781044]",
+         "repeats" : 2,
+         "texture_begin" : 0.09375,
+         "texture_end" : 0.125,
+         "time" : 29
+      },
+      {
+         "begin" : "[0.635557473,0.566781044]",
+         "end" : "[0.635749757,0.582434773]",
+         "repeats" : 2,
+         "texture_begin" : 0.125,
+         "texture_end" : 0.15625,
+         "time" : 30
+      },
+      {
+         "begin" : "[0.635749757,0.582434773]",
+         "end" : "[0.635761619,0.598089755]",
+         "repeats" : 2,
+         "texture_begin" : 0.15625,
+         "texture_end" : 0.1875,
+         "time" : 31
+      },
+      {
+         "begin" : "[0.635761619,0.598089755]",
+         "end" : "[0.635598838,0.613743782]",
+         "repeats" : 2,
+         "texture_begin" : 0.1875,
+         "texture_end" : 0.21875,
+         "time" : 32
+      },
+      {
+         "begin" : "[0.635598838,0.613743782]",
+         "end" : "[0.63526696,0.629395008]",
+         "repeats" : 2,
+         "texture_begin" : 0.21875,
+         "texture_end" : 0.25,
+         "time" : 33
+      },
+      {
+         "begin" : "[0.63526696,0.629395008]",
+         "end" : "[0.63477087,0.645042896]",
+         "repeats" : 2,
+         "texture_begin" : 0.25,
+         "texture_end" : 0.28125,
+         "time" : 34
+      },
+      {
+         "begin" : "[0.63477087,0.645042896]",
+         "end" : "[0.634115338,0.660684347]",
+         "repeats" : 2,
+         "texture_begin" : 0.28125,
+         "texture_end" : 0.3125,
+         "time" : 35
+      },
+      {
+         "begin" : "[0.634115338,0.660684347]",
+         "end" : "[0.633304536,0.676318407]",
+         "repeats" : 2,
+         "texture_begin" : 0.3125,
+         "texture_end" : 0.34375,
+         "time" : 36
+      },
+      {
+         "begin" : "[0.633304536,0.676318407]",
+         "end" : "[0.632342339,0.691943705]",
+         "repeats" : 2,
+         "texture_begin" : 0.34375,
+         "texture_end" : 0.375,
+         "time" : 37
+      },
+      {
+         "begin" : "[0.632342339,0.691943705]",
+         "end" : "[0.631231964,0.707559347]",
+         "repeats" : 2,
+         "texture_begin" : 0.375,
+         "texture_end" : 0.40625,
+         "time" : 38
+      },
+      {
+         "begin" : "[0.631231964,0.707559347]",
+         "end" : "[0.629976332,0.723164082]",
+         "repeats" : 2,
+         "texture_begin" : 0.40625,
+         "texture_end" : 0.4375,
+         "time" : 39
+      },
+      {
+         "begin" : "[0.629976332,0.723164082]",
+         "end" : "[0.628578067,0.738756478]",
+         "repeats" : 2,
+         "texture_begin" : 0.4375,
+         "texture_end" : 0.46875,
+         "time" : 40
+      },
+      {
+         "begin" : "[0.628578067,0.738756478]",
+         "end" : "[0.627039135,0.754335999]",
+         "repeats" : 2,
+         "texture_begin" : 0.46875,
+         "texture_end" : 0.5,
+         "time" : 41
+      },
+      {
+         "begin" : "[0.627039135,0.754335999]",
+         "end" : "[0.625361383,0.769900858]",
+         "repeats" : 2,
+         "texture_begin" : 0.5,
+         "texture_end" : 0.53125,
+         "time" : 42
+      },
+      {
+         "begin" : "[0.625361383,0.769900858]",
+         "end" : "[0.623545766,0.785450161]",
+         "repeats" : 2,
+         "texture_begin" : 0.53125,
+         "texture_end" : 0.5625,
+         "time" : 43
+      },
+      {
+         "begin" : "[0.623545766,0.785450161]",
+         "end" : "[0.62159282,0.800983012]",
+         "repeats" : 2,
+         "texture_begin" : 0.5625,
+         "texture_end" : 0.59375,
+         "time" : 44
+      },
+      {
+         "begin" : "[0.62159282,0.800983012]",
+         "end" : "[0.619502604,0.816497862]",
+         "repeats" : 2,
+         "texture_begin" : 0.59375,
+         "texture_end" : 0.625,
+         "time" : 45
+      },
+      {
+         "begin" : "[0.619502604,0.816497862]",
+         "end" : "[0.617274225,0.83199358]",
+         "repeats" : 2,
+         "texture_begin" : 0.625,
+         "texture_end" : 0.65625,
+         "time" : 46
+      },
+      {
+         "begin" : "[0.617274225,0.83199358]",
+         "end" : "[0.614905953,0.847468436]",
+         "repeats" : 2,
+         "texture_begin" : 0.65625,
+         "texture_end" : 0.6875,
+         "time" : 47
+      },
+      {
+         "begin" : "[0.614905953,0.847468436]",
+         "end" : "[0.612394989,0.862920702]",
+         "repeats" : 2,
+         "texture_begin" : 0.6875,
+         "texture_end" : 0.71875,
+         "time" : 48
+      },
+      {
+         "begin" : "[0.612394989,0.862920702]",
+         "end" : "[0.609736979,0.878348649]",
+         "repeats" : 2,
+         "texture_begin" : 0.71875,
+         "texture_end" : 0.75,
+         "time" : 49
+      },
+      {
+         "begin" : "[0.609736979,0.878348649]",
+         "end" : "[0.606925547,0.893749058]",
+         "repeats" : 2,
+         "texture_begin" : 0.75,
+         "texture_end" : 0.78125,
+         "time" : 50
+      },
+      {
+         "begin" : "[0.606925547,0.893749058]",
+         "end" : "[0.603951454,0.90911895]",
+         "repeats" : 2,
+         "texture_begin" : 0.78125,
+         "texture_end" : 0.8125,
+         "time" : 51
+      },
+      {
+         "begin" : "[0.603951454,0.90911895]",
+         "end" : "[0.60080117,0.924453795]",
+         "repeats" : 2,
+         "texture_begin" : 0.8125,
+         "texture_end" : 0.84375,
+         "time" : 52
+      },
+      {
+         "begin" : "[0.60080117,0.924453795]",
+         "end" : "[0.597454071,0.939746737]",
+         "repeats" : 2,
+         "texture_begin" : 0.84375,
+         "texture_end" : 0.875,
+         "time" : 53
+      },
+      {
+         "begin" : "[0.597454071,0.939746737]",
+         "end" : "[0.593876719,0.954987466]",
+         "repeats" : 2,
+         "texture_begin" : 0.875,
+         "texture_end" : 0.90625,
+         "time" : 54
+      },
+      {
+         "begin" : "[0.593876719,0.954987466]",
+         "end" : "[0.590010047,0.970157146]",
+         "repeats" : 2,
+         "texture_begin" : 0.90625,
+         "texture_end" : 0.9375,
+         "time" : 55
+      },
+      {
+         "begin" : "[0.590010047,0.970157146]",
+         "end" : "[0.585726321,0.985214293]",
+         "repeats" : 2,
+         "texture_begin" : 0.9375,
+         "texture_end" : 0.96875,
+         "time" : 56
+      },
+      {
+         "begin" : "[0.585726321,0.985214293]",
+         "end" : "[0.580600023,1]",
+         "repeats" : 2,
+         "texture_begin" : 0.96875,
+         "texture_end" : 1,
+         "time" : 57
+      }
+   ],
+   "sections" : [
+      {
+         "curve_begin" : 0,
+         "curve_end" : 0.11999999731779099,
+         "spatial_repeats" : 2,
+         "spatial_subdivisions" : 2,
+         "temporal_steps" : 1,
+         "time_begin" : 1
+      },
+      {
+         "curve_begin" : 0.11999999731779099,
+         "curve_end" : 0.23999999463558197,
+         "spatial_repeats" : 5,
+         "spatial_subdivisions" : 2,
+         "temporal_steps" : 1,
+         "time_begin" : 5
+      },
+      {
+         "curve_begin" : 0.23999999463558197,
+         "curve_end" : 0.34999999403953552,
+         "spatial_repeats" : 8,
+         "spatial_subdivisions" : 2,
+         "temporal_steps" : 1,
+         "time_begin" : 9
+      },
+      {
+         "curve_begin" : 0.34999999403953552,
+         "curve_end" : 0.44499999284744263,
+         "spatial_repeats" : 11,
+         "spatial_subdivisions" : 2,
+         "temporal_steps" : 1,
+         "time_begin" : 13
+      },
+      {
+         "curve_begin" : 0.44499999284744263,
+         "curve_end" : 0.52999997138977051,
+         "spatial_repeats" : 12,
+         "spatial_subdivisions" : 2,
+         "temporal_steps" : 1,
+         "time_begin" : 17
+      },
+      {
+         "curve_begin" : 0.52999997138977051,
+         "curve_end" : 0.59999996423721313,
+         "spatial_repeats" : 9,
+         "spatial_subdivisions" : 2,
+         "temporal_steps" : 1,
+         "time_begin" : 21
+      },
+      {
+         "curve_begin" : 0.59999996423721313,
+         "curve_end" : 0.64999997615814209,
+         "spatial_repeats" : 7,
+         "spatial_subdivisions" : 2,
+         "temporal_steps" : 1,
+         "time_begin" : 25
+      },
+      {
+         "curve_begin" : 0.64999997615814209,
+         "curve_end" : 1,
+         "spatial_repeats" : 2,
+         "spatial_subdivisions" : 32,
+         "temporal_steps" : 32,
+         "time_begin" : 26
+      }
+   ]
+}

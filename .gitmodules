@@ -2,3 +2,6 @@
 	path = lib/Cinder
 	url = git@github.com:sosolimited/Cinder.git
 	branch = glNext
+[submodule "lib/ImGui"]
+	path = lib/ImGui
+	url = git@github.com:sosolimited/Cinder-ImGui.git
