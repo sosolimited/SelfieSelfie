@@ -74,7 +74,7 @@ void CameraLandscape::setup( const ci::gl::TextureRef &iTexture )
 	auto add_vert = [=,&vertices] (int r, int s, const vec2 &color_tc) {
 		auto distance = (float)r / rings;
 		auto normal = vec3( 0, 1.0f, 0 ); // mix( 0.0f, 4.0f, distance )
-		auto time_offset = lmap<float>( distance, 0.0f, 1.0f, 15.0f / 64.0f, 1.0f );
+		auto time_offset = lmap<float>( distance, 0.0f, 1.0f, 15.0f, 64.0f );
 		auto pos = calc_pos(r, s);
 		auto tc = calc_tc(r, s);
 		vertices.push_back( Vertex{ pos, normal, tc, color_tc, time_offset } );
