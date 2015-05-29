@@ -63,10 +63,10 @@ void GridSpaceApp::setup()
 	glGetIntegerv( GL_MAX_TEXTURE_SIZE, &size );
 	CI_LOG_I( "Max texture size: " << size );
 
-	auto target = vec3( 50, 5, 50 );
+	auto target = vec3( 5, 0, 0 );
 	camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
 	camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 1000 );
-
+/*
 	try {
 		auto front_facing_camera = ([] {
 			auto &devices = Capture::getDevices();
@@ -90,6 +90,7 @@ void GridSpaceApp::setup()
 	}
 
 	landscape.setup();
+*/
 }
 
 void GridSpaceApp::touchesBegan( TouchEvent event )
@@ -162,9 +163,11 @@ void GridSpaceApp::update()
 			camera.setOrientation( r );
 		}
 	#endif
+	/*
 	if( capture->checkNewFrame() ) {
 		gridTexture->update( *capture->getSurface() );
 	}
+	*/
 }
 
 void GridSpaceApp::draw()
@@ -174,6 +177,14 @@ void GridSpaceApp::draw()
 	gl::enableDepthWrite();
 
 	gl::setMatrices( camera );
+
+	gl::color( 1.0f, 0.0f, 1.0f );
+	gl::drawSphere( vec3( 5, 0, 0 ), 1.0f, -1 );
+
+	gl::setMatricesWindow( getWindowSize() );
+	gl::color( 1.0f, 1.0f, 0.0f );
+	gl::drawSolidCircle( vec2( 100.0f, 100.0f ), 20.0f );
+	/*
 	// TODO: bind both blurred and normal texture and avoid rebinding textures elsewhere.
 	gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
 	gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
@@ -193,7 +204,7 @@ void GridSpaceApp::draw()
 			gl::draw( gridTexture->getBlurredTexture(), Rectf( vec2(0), size ) );
 		}
 	}
-
+	*/
 }
 
 CINDER_APP( GridSpaceApp, RendererGl )
