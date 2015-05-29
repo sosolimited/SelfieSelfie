@@ -8,13 +8,14 @@
 #include "LandscapeGeometry.h"
 #include "cinder/Path2d.h"
 #include "cinder/Json.h"
+#include "cinder/Xml.h"
 #include "cinder/Log.h"
 
 using namespace std;
 using namespace cinder;
 using namespace soso;
 
-inline std::string to_string(const ci::vec2 &vector)
+inline std::string toString(const ci::vec2 &vector)
 {
 	return "[" + toString(vector.x) + "," + toString(vector.y) + "]";
 }
@@ -53,15 +54,37 @@ Bar::Bar(const ci::JsonTree &json)
 	repeats(fromString<int>(json["repeats"].getValue()))
 {}
 
+Bar::Bar(const ci::XmlTree &xml)
+: begin(fromString<vec2>(xml["begin"].getValue())),
+	end(fromString<vec2>(xml["end"].getValue())),
+	time(fromString<int>(xml["time"].getValue())),
+	texture_begin(fromString<float>(xml["texture_begin"].getValue())),
+	texture_end(fromString<float>(xml["texture_end"].getValue())),
+	repeats(fromString<int>(xml["repeats"].getValue()))
+{}
+
 ci::JsonTree Bar::toJson(float scale) const
 {
 	auto bar = JsonTree();
-	bar.addChild(JsonTree("begin", to_string(begin * scale)));
-	bar.addChild(JsonTree("end", to_string(end * scale)));
+	bar.addChild(JsonTree("begin", toString(begin * scale)));
+	bar.addChild(JsonTree("end", toString(end * scale)));
 	bar.addChild(JsonTree("time", time));
 	bar.addChild(JsonTree("texture_begin", texture_begin));
 	bar.addChild(JsonTree("texture_end", texture_end));
 	bar.addChild(JsonTree("repeats", repeats));
+
+	return bar;
+}
+
+ci::XmlTree Bar::toXml(float scale) const
+{
+	auto bar = XmlTree("b", "");
+	bar.push_back(XmlTree("begin", toString(begin * scale)));
+	bar.push_back(XmlTree("end", toString(end * scale)));
+	bar.push_back(XmlTree("time", toString(time)));
+	bar.push_back(XmlTree("texture_begin", toString(texture_begin)));
+	bar.push_back(XmlTree("texture_end", toString(texture_end)));
+	bar.push_back(XmlTree("repeats", toString(repeats)));
 
 	return bar;
 }

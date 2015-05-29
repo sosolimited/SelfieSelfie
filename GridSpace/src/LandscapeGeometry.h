@@ -15,6 +15,7 @@
 #include <vector>
 
 namespace cinder {
+	class XmlTree;
   class JsonTree;
 	class Path2dCalcCache;
 }
@@ -26,6 +27,7 @@ struct Bar
 	Bar() = default;
 	Bar(const ci::vec2 &begin, const ci::vec2 &end, int time, float texture_begin, float texture_end, int repeats);
 	explicit Bar(const ci::JsonTree &json);
+	explicit Bar(const ci::XmlTree &json);
 
 	/// Physical coordinates of bar in profile
 	ci::vec2 begin;
@@ -39,6 +41,7 @@ struct Bar
 	int			 repeats = 1;
 
 	ci::JsonTree toJson(float scale) const;
+	ci::XmlTree		toXml(float scale) const;
 };
 
 struct Section
