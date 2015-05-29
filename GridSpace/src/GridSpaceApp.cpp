@@ -54,6 +54,8 @@ private:
 
 void GridSpaceApp::setup()
 {
+	CI_LOG_I("Setting up selfie_x_selfie");
+
 	#ifdef CINDER_COCOA_TOUCH
 		MotionManager::enable();
 	#endif

@@ -162,7 +162,6 @@ void Landscape::setup()
 	auto offset = vec2( 0.05f, 0.0f );
 
 	auto xml = XmlTree( app::loadAsset("profile.xml") );
-	CI_LOG_V( "Xml: " << xml );
 	for( auto &child : xml.getChild("shape").getChild("bars").getChildren() ) {
 		Bar bar( *child );
 		addRing( vertices, bar, offset );
