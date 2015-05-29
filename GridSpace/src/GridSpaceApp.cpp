@@ -6,10 +6,7 @@
 #include "cinder/Capture.h"
 #include "cinder/Log.h"
 
-#include "GridMesh.h"
-#include "CameraLandscape.h"
 #include "GridTexture.h"
-#include "TimeGrid.h"
 #include "Landscape.h"
 #include "Constants.h"
 
@@ -40,13 +37,9 @@ public:
 	void draw() override;
 
 private:
-	GridMesh				mesh;
-	/*
-	CameraLandscape cameraLandscape;
-	TimeGrid				timeGrid;
-	*/
 	CaptureRef			capture;
 	CameraPersp			camera;
+
 	GridTextureRef	gridTexture;
 	Landscape				landscape;
 
@@ -92,11 +85,6 @@ void GridSpaceApp::setup()
 	}
 
 	landscape.setup();
-	/*
-	cameraLandscape.setup( gridTexture->getBlurredTexture() );
-	timeGrid.setup( gridTexture->getTexture() );
-	mesh.setup();
-	*/
 }
 
 void GridSpaceApp::touchesBegan( TouchEvent event )
@@ -186,11 +174,6 @@ void GridSpaceApp::draw()
 	gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
 
 	landscape.draw( gridTexture->getCurrentIndex() );
-	/*
-	timeGrid.draw( gridTexture->getCurrentIndex() );
-	cameraLandscape.draw( gridTexture->getCurrentIndex() );
-	mesh.draw( gridTexture->getCurrentIndex() );
-	*/
 
 	if( doDrawDebug )
 	{

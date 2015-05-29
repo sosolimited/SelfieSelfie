@@ -1,11 +1,11 @@
 //
-//  GridMesh.cpp
+//  Stars.cpp
 //
 //  Created by Soso Limited on 5/15/15.
 //
 //
 
-#include "GridMesh.h"
+#include "Stars.h"
 #include "cinder/gl/gl.h"
 #include "cinder/Log.h"
 
@@ -37,9 +37,9 @@ namespace {
 } // namespace
 
 
-void GridMesh::setup()
+void Stars::setup()
 {
-	CI_LOG_I("Building GridMesh");
+	CI_LOG_I("Building Stars");
 	std::vector<Vertex> vertices;
 
 	const auto dims = ivec3( 50, 8, 50 );
@@ -67,7 +67,7 @@ void GridMesh::setup()
 	batch = gl::Batch::create( mesh, shader, {{ geom::Attrib::CUSTOM_0, "FrameIndex" }, { geom::Attrib::CUSTOM_1, "PositionOffset" }} );
 }
 
-void GridMesh::draw( float iCurrentFrame ) const
+void Stars::draw( float iCurrentFrame ) const
 {
 	batch->getGlslProg()->uniform( "uFrameIndex", iCurrentFrame );
 	batch->draw();

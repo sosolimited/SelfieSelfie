@@ -10,7 +10,8 @@
 namespace soso {
 
 ///
-/// Patch between the landscape and time grid geometry.
+/// Landscape surface.
+/// A revolved curve.
 ///
 class Landscape
 {

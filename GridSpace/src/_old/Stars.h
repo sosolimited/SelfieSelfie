@@ -1,5 +1,5 @@
 //
-//  GridMesh.h
+//  Stars.h
 //
 //  Created by Soso Limited on 5/15/15.
 //
@@ -9,7 +9,7 @@
 
 namespace soso {
 
-class GridMesh
+class Stars
 {
 public:
 	void setup();

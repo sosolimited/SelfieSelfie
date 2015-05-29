@@ -7,6 +7,11 @@
 
 #pragma once
 
+///
+/// @file Descriptive geometry for the revolved landscape.
+///
+
+
 namespace cinder {
   class JsonTree;
 	class Path2dCalcCache;
