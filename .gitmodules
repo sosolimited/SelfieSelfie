@@ -5,3 +5,6 @@
 [submodule "lib/ImGui"]
 	path = lib/ImGui
 	url = git@github.com:sosolimited/Cinder-ImGui.git
+[submodule "AndroidCinder"]
+	path = lib/Cinder-Android
+	url = git@github.com:chaoticbob/Cinder.git

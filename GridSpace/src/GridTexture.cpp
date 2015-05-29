@@ -9,6 +9,10 @@
 
 #include "cinder/ip/Resize.h"
 #include "cinder/Log.h"
+#include "cinder/gl/gl.h"
+#include "cinder/gl/GlslProg.h"
+
+#include "cinder/app/App.h"
 
 using namespace soso;
 using namespace cinder;

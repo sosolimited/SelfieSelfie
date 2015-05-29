@@ -12,6 +12,9 @@
 #include "LandscapeGeometry.h"
 #include "cinder/Json.h"
 
+#include "cinder/gl/GlslProg.h"
+#include "cinder/app/App.h"
+
 using namespace soso;
 using namespace cinder;
 

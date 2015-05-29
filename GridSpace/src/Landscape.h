@@ -6,6 +6,7 @@
 //
 
 #pragma once
+#include "cinder/gl/Batch.h"
 
 namespace soso {
 

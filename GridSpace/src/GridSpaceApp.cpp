@@ -2,13 +2,16 @@
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 
-#include "cinder/MotionManager.h"
 #include "cinder/Capture.h"
 #include "cinder/Log.h"
 
 #include "GridTexture.h"
 #include "Landscape.h"
 #include "Constants.h"
+
+#ifdef CINDER_COCOA_TOUCH
+	#include "cinder/MotionManager.h"
+#endif
 
 using namespace ci;
 using namespace ci::app;
@@ -51,9 +54,9 @@ private:
 
 void GridSpaceApp::setup()
 {
-
-	MotionManager::enable();
-
+	#ifdef CINDER_COCOA_TOUCH
+		MotionManager::enable();
+	#endif
 	GLint size;
 	glGetIntegerv( GL_MAX_TEXTURE_SIZE, &size );
 	CI_LOG_I( "Max texture size: " << size );
@@ -151,12 +154,12 @@ void GridSpaceApp::update()
 		cameraOffset *= (maximum / l);
 	}
 	camera.setEyePoint( cameraOffset );
-
-	if( MotionManager::isDataAvailable() ) {
-		auto r = MotionManager::getRotation();
-		camera.setOrientation( r );
-	}
-
+	#ifdef CINDER_COCOA_TOUCH
+		if( MotionManager::isDataAvailable() ) {
+			auto r = MotionManager::getRotation();
+			camera.setOrientation( r );
+		}
+	#endif
 	if( capture->checkNewFrame() ) {
 		gridTexture->update( *capture->getSurface() );
 	}

@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include "cinder/gl/Fbo.h"
+
 namespace soso {
 
 class GridTexture;

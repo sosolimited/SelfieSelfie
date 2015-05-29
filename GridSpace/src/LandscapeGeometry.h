@@ -11,6 +11,8 @@
 /// @file Descriptive geometry for the revolved landscape.
 ///
 
+#include "cinder/Vector.h"
+#include <vector>
 
 namespace cinder {
   class JsonTree;
