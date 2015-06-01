@@ -93,10 +93,11 @@ void GridSpaceApp::setup()
 		CI_LOG_E( "Error using device camera: " << exc.what() );
 	}
 //*/
-
+/*
   auto tex_size = vec2( 640, 480 );
   gridTexture = make_shared<GridTexture>( tex_size.x, tex_size.y, 8 );
 	landscape.setup();
+  */
 }
 
 void GridSpaceApp::touchesBegan( TouchEvent event )
@@ -190,7 +191,12 @@ void GridSpaceApp::draw()
 
 	gl::setMatrices( camera );
 
+/*
+  gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
+  gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
   landscape.draw( gridTexture->getCurrentIndex() );
+  */
+
   drawSimpleAndroidTestStuff();
 
   /*
@@ -220,8 +226,6 @@ void GridSpaceApp::drawSimpleAndroidTestStuff() const
   gl::setMatricesWindow( getWindowSize() );
   gl::color( 1.0f, 1.0f, 0.0f );
   gl::drawSolidCircle( vec2( 100.0f, 100.0f ), 20.0f );
-  gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
-  gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
 }
 
 inline void prepareSettings(app::App::Settings *settings)
