@@ -155,12 +155,14 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, const ci::vec2 &cen
 
 void Landscape::setup()
 {
+  CI_LOG_I("Loading landscape shader");
 	auto shader = loadShader( "landscape.vs", "landscape.fs" );
 
 	std::vector<Vertex> vertices;
 
 	auto offset = vec2( 0.05f, 0.0f );
 
+  CI_LOG_I("Loading shape profile.");
 	auto xml = XmlTree( app::loadAsset("profile.xml") );
 	for( auto &child : xml.getChild("shape").getChild("bars").getChildren() ) {
 		Bar bar( *child );
@@ -190,6 +192,7 @@ void Landscape::setup()
 
 	vertices.insert( vertices.end(), copy.begin(), copy.end() );
 
+  CI_LOG_I("Uploading shape to GPU.");
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
 	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ kVertexLayout, vbo }} );
 	batch = gl::Batch::create( mesh, shader, kVertexMapping );
