@@ -39,6 +39,8 @@ public:
 	void update() override;
 	void draw() override;
 
+  void drawSimpleAndroidTestStuff() const;
+
 private:
 	CaptureRef			capture;
 	CameraPersp			camera;
@@ -66,8 +68,10 @@ void GridSpaceApp::setup()
 	auto target = vec3( 5, 0, 0 );
 	camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
 	camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 1000 );
+
 /*
 	try {
+		CI_LOG_I("Attempting to set up camera input.");
 		auto front_facing_camera = ([] {
 			auto &devices = Capture::getDevices();
 			auto first_device = devices.front();
@@ -88,13 +92,17 @@ void GridSpaceApp::setup()
 	catch( ci::Exception &exc ) {
 		CI_LOG_E( "Error using device camera: " << exc.what() );
 	}
+//*/
 
+  auto tex_size = vec2( 640, 480 );
+  gridTexture = make_shared<GridTexture>( tex_size.x, tex_size.y, 8 );
 	landscape.setup();
-*/
 }
 
 void GridSpaceApp::touchesBegan( TouchEvent event )
 {
+	CI_LOG_I("Touches began");
+	console() << "Touches began." << endl;
 	for( auto &t : event.getTouches() ) {
 		touches.push_back( { t.getId(), t.getPos(), t.getPos() } );
 	}
@@ -106,6 +114,8 @@ void GridSpaceApp::touchesBegan( TouchEvent event )
 
 void GridSpaceApp::touchesMoved( TouchEvent event )
 {
+	CI_LOG_I("Touches moved");
+	console() << "Touches moved." << endl;
 	for( auto &t : event.getTouches() ) {
 		for( auto &s : touches ) {
 			if( s.id == t.getId() ) {
@@ -122,6 +132,7 @@ void GridSpaceApp::touchesMoved( TouchEvent event )
 
 void GridSpaceApp::touchesEnded( TouchEvent event )
 {
+	console() << "Touches ended." << endl;
 	touches.erase( std::remove_if( touches.begin(), touches.end(), [&event] (const TouchInfo &s) {
 		for( auto &t : event.getTouches() ) {
 			if (t.getId() == s.id) {
@@ -138,6 +149,7 @@ void GridSpaceApp::pinchStart()
 
 void GridSpaceApp::pinchUpdate()
 {
+	console() << "Pinch update." << endl;
 	auto base = distance(touches.at( 0 ).previous, touches.at( 1 ).previous);
 	auto current = distance(touches.at( 0 ).position, touches.at( 1 ).position);
 
@@ -178,19 +190,10 @@ void GridSpaceApp::draw()
 
 	gl::setMatrices( camera );
 
-	gl::color( 1.0f, 0.0f, 1.0f );
-	gl::drawSphere( vec3( 5, 0, 0 ), 1.0f, -1 );
+  landscape.draw( gridTexture->getCurrentIndex() );
+  drawSimpleAndroidTestStuff();
 
-	gl::setMatricesWindow( getWindowSize() );
-	gl::color( 1.0f, 1.0f, 0.0f );
-	gl::drawSolidCircle( vec2( 100.0f, 100.0f ), 20.0f );
-	/*
-	// TODO: bind both blurred and normal texture and avoid rebinding textures elsewhere.
-	gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
-	gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
-
-	landscape.draw( gridTexture->getCurrentIndex() );
-
+  /*
 	if( doDrawDebug )
 	{
 		if( gridTexture->getTexture() )
@@ -207,4 +210,23 @@ void GridSpaceApp::draw()
 	*/
 }
 
-CINDER_APP( GridSpaceApp, RendererGl )
+void GridSpaceApp::drawSimpleAndroidTestStuff() const
+{
+  gl::ScopedColor color( Color( 1.0f, 0.0f, 1.0f ) );
+  gl::ScopedMatrices matrices;
+
+  gl::drawSphere( vec3( 5, 0, 0 ), 1.0f, -1 );
+
+  gl::setMatricesWindow( getWindowSize() );
+  gl::color( 1.0f, 1.0f, 0.0f );
+  gl::drawSolidCircle( vec2( 100.0f, 100.0f ), 20.0f );
+  gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
+  gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
+}
+
+inline void prepareSettings(app::App::Settings *settings)
+{
+  settings->setMultiTouchEnabled();
+}
+
+CINDER_APP( GridSpaceApp, RendererGl, &prepareSettings )
