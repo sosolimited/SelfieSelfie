@@ -39,8 +39,6 @@ public:
 	void update() override;
 	void draw() override;
 
-  void drawSimpleAndroidTestStuff() const;
-
 private:
 	CaptureRef			capture;
 	CameraPersp			camera;
@@ -69,7 +67,6 @@ void GridSpaceApp::setup()
 	camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
 	camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 1000 );
 
-/*
 	try {
 		CI_LOG_I("Attempting to set up camera input.");
 		auto front_facing_camera = ([] {
@@ -85,20 +82,17 @@ void GridSpaceApp::setup()
 
 		capture = Capture::create( 480, 360, front_facing_camera );
 		capture->start();
+
+    CI_LOG_I("Creating Grid Texture");
 		const auto divisions = 8;
 		const auto size = divisions * capture->getSize();
 		gridTexture = make_shared<GridTexture>( size.x, size.y, divisions );
+    CI_LOG_I("Setting up landscape geometry.");
+    landscape.setup();
 	}
 	catch( ci::Exception &exc ) {
 		CI_LOG_E( "Error using device camera: " << exc.what() );
 	}
-//*/
-
-  CI_LOG_I("Creating Grid Texture");
-  auto tex_size = vec2( 640, 480 );
-  gridTexture = make_shared<GridTexture>( tex_size.x, tex_size.y, 8 );
-  CI_LOG_I("Setting up landscape geometry.");
-	landscape.setup();
 }
 
 void GridSpaceApp::touchesBegan( TouchEvent event )
@@ -177,11 +171,10 @@ void GridSpaceApp::update()
 			camera.setOrientation( r );
 		}
 	#endif
-	/*
+
 	if( capture->checkNewFrame() ) {
 		gridTexture->update( *capture->getSurface() );
 	}
-	*/
 }
 
 void GridSpaceApp::draw()
@@ -195,8 +188,6 @@ void GridSpaceApp::draw()
   gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
   gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
   landscape.draw( gridTexture->getCurrentIndex() );
-
-  drawSimpleAndroidTestStuff();
 
   /*
 	if( doDrawDebug )
@@ -213,18 +204,6 @@ void GridSpaceApp::draw()
 		}
 	}
 	*/
-}
-
-void GridSpaceApp::drawSimpleAndroidTestStuff() const
-{
-  gl::ScopedColor color( Color( 1.0f, 0.0f, 1.0f ) );
-  gl::ScopedMatrices matrices;
-
-  gl::drawSphere( vec3( 5, 0, 0 ), 1.0f, -1 );
-
-  gl::setMatricesWindow( getWindowSize() );
-  gl::color( 1.0f, 1.0f, 0.0f );
-  gl::drawSolidCircle( vec2( 100.0f, 100.0f ), 20.0f );
 }
 
 inline void prepareSettings(app::App::Settings *settings)
