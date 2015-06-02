@@ -1,7 +1,14 @@
+#version 100
+#extension GL_OES_EGL_image_external : require
 
-#include "common.glsl"
+precision highp float;
 
-uniform sampler2D	uSampler;
+const vec2 cellDimensions = vec2( 640, 480 );
+const vec2 gridSize = vec2( 8, 8 );
+// Size of a single texel in an input camera image.
+const vec2 texelSize = vec2( 1.0 ) / (cellDimensions);
+
+uniform samplerExternalOES	uSampler;
 
 varying vec2 vTexCoord;
 
@@ -31,8 +38,5 @@ void main( void )
 	sum += texture2D( uSampler, vTexCoord +  10.0 * texelSize ) * 0.009167927656011385;
 
 	gl_FragColor = sum;
-//	gl_FragColor = texture2D( uSampler, vTexCoord );
-//	gl_FragColor = vec4( vTexCoord, 1.0, 1.0 );
-
-//	gl_FragColor = vec4( 1.0, 0.0, 1.0, 1.0 );
+//  gl_FragColor = vec4( vTexCoord, 0.5, 1.0 );
 }

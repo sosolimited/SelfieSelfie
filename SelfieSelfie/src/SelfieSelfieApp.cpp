@@ -4,6 +4,7 @@
 
 #include "cinder/Capture.h"
 #include "cinder/gl/Texture.h"
+#include "cinder/gl/GlslProg.h"
 #include "cinder/Log.h"
 
 using namespace ci;
@@ -19,10 +20,24 @@ private:
 
   CaptureRef			capture;
   gl::TextureRef	texture;
+  gl::GlslProgRef shader;
 };
 
 void SelfieSelfieApp::setup()
 {
+  auto err = gl::getError();
+  if( err ) {
+    CI_LOG_E( "Pre-Setup gl error: " << gl::getErrorString(err) );
+  }
+
+  try {
+    shader = gl::GlslProg::create( loadAsset("blur.vs"), loadAsset("blur.fs") );
+    CI_LOG_I("Loaded blur shader.");
+  }
+  catch ( ci::Exception &exc ) {
+    CI_LOG_E( "Error loading blur shader: " << exc.what() );
+  }
+
   try {
     CI_LOG_I("Setting up device camera.");
     auto front_facing_camera = ([] {
@@ -38,9 +53,15 @@ void SelfieSelfieApp::setup()
 
     capture = Capture::create( 640, 480, front_facing_camera );
     capture->start();
+    CI_LOG_I("Device Camera set up.");
   }
   catch( ci::Exception &exc ) {
     CI_LOG_E( "Error using device camera: " << exc.what() );
+  }
+
+  err = gl::getError();
+  if( err ) {
+    CI_LOG_E( "Post-Setup gl error: " << gl::getErrorString(err) );
   }
 }
 
@@ -57,16 +78,39 @@ void SelfieSelfieApp::update()
         texture->update( *(capture->getSurface()) );
       }
     #endif
+
+    auto err = gl::getError();
+    if( err ) {
+      CI_LOG_E( "Texture copy gl error: " << gl::getErrorString(err) );
+    }
   }
 }
 
 void SelfieSelfieApp::draw()
 {
 	gl::clear( Color( 0, 0, 0 ) );
-  gl::drawSolidCircle( getWindowCenter(), 20.0f );
+	gl::setMatricesWindow( getWindowSize() );
 
   if( texture ){
+    gl::ScopedGlslProg    prog( shader );
+    gl::ScopedTextureBind tex0( texture, 0 );
+
+    shader->uniform( "uSampler", 0 );
+
+    gl::drawSolidRect( Rectf( -1, -1, 1, 1 ) );
+  }
+
+  if( texture ) {
     gl::draw( texture );
+  }
+
+
+
+  gl::drawSolidCircle( getWindowCenter(), 20.0f );
+
+  auto err = gl::getError();
+  if( err ) {
+    CI_LOG_E( "Draw gl error: " << gl::getErrorString(err) );
   }
 }
 
