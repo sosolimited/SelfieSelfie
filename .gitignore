@@ -24,3 +24,6 @@ DerivedData
 .gradle
 local.properties
 .idea
+
+# Output files (Android)
+libSelfieSelfie.so
