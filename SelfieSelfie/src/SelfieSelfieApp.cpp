@@ -47,7 +47,16 @@ void SelfieSelfieApp::setup()
 void SelfieSelfieApp::update()
 {
   if( capture && capture->checkNewFrame() ) {
-    texture = capture->getTexture();
+    #if defined(CINDER_ANDROID)
+      texture = capture->getTexture();
+    #else
+      if( ! texture ) {
+        texture = gl::Texture::create( *capture->getSurface(), gl::Texture::Format().loadTopDown() );
+      }
+      else {
+        texture->update( *(capture->getSurface()) );
+      }
+    #endif
   }
 }
 
