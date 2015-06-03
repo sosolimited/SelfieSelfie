@@ -22,17 +22,31 @@ using namespace std;
 
 using namespace soso;
 
+struct TouchInfo {
+  uint32_t  id;
+  vec2			previous;
+  vec2			position;
+};
+
 class SelfieSelfieApp : public App {
 public:
 	void setup() override;
 	void update() override;
 	void draw() override;
 
+  void touchesBegan( TouchEvent event ) override;
+  void touchesMoved( TouchEvent event ) override;
+  void touchesEnded( TouchEvent event ) override;
+
+  void pinchUpdate();
 private:
 	CameraPersp			camera;
   CaptureRef			capture;
 
   GridTextureRef  gridTexture;
+
+  vector<TouchInfo> touches;
+  ci::vec3					cameraOffset;
 };
 
 void SelfieSelfieApp::setup()
@@ -83,6 +97,60 @@ void SelfieSelfieApp::setup()
   }
 }
 
+void SelfieSelfieApp::touchesBegan( TouchEvent event )
+{
+  for( auto &t : event.getTouches() ) {
+    touches.push_back( { t.getId(), t.getPos(), t.getPos() } );
+  }
+
+  if( touches.size() == 2 ) {
+    // pinch started.
+  }
+}
+
+void SelfieSelfieApp::touchesMoved( TouchEvent event )
+{
+  for( auto &t : event.getTouches() ) {
+    for( auto &s : touches ) {
+      if( s.id == t.getId() ) {
+        s.previous = s.position;
+        s.position = t.getPos();
+      }
+    }
+  }
+
+  if( touches.size() == 2 ) {
+    pinchUpdate();
+  }
+}
+
+void SelfieSelfieApp::touchesEnded( TouchEvent event )
+{
+  touches.erase( std::remove_if( touches.begin(), touches.end(), [&event] (const TouchInfo &s) {
+    for( auto &t : event.getTouches() ) {
+      if (t.getId() == s.id) {
+        return true;
+      }
+    }
+    return false;
+  }), touches.end() );
+}
+
+void SelfieSelfieApp::pinchUpdate()
+{
+  CI_LOG_I( "Pinch update." );
+
+  auto base = distance(touches.at( 0 ).previous, touches.at( 1 ).previous);
+  auto current = distance(touches.at( 0 ).position, touches.at( 1 ).position);
+
+  auto delta = current - base;
+  if( isfinite( delta ) )
+  {
+    auto ray = camera.getViewDirection();
+    cameraOffset += delta * ray * 0.01f;
+  }
+}
+
 void SelfieSelfieApp::update()
 {
   if( capture && capture->checkNewFrame() ) {
@@ -118,4 +186,9 @@ void SelfieSelfieApp::draw()
   }
 }
 
-CINDER_APP( SelfieSelfieApp, RendererGl )
+inline void prepareSettings( app::App::Settings *iSettings )
+{
+  iSettings->setMultiTouchEnabled();
+}
+
+CINDER_APP( SelfieSelfieApp, RendererGl, &prepareSettings )
