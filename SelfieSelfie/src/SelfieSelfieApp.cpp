@@ -9,6 +9,7 @@
 #include "cinder/gl/Fbo.h"
 
 #include "GridTexture.h"
+#include "Landscape.h"
 
 #define USE_GYRO 0
 
@@ -44,6 +45,7 @@ private:
   CaptureRef			capture;
 
   GridTextureRef  gridTexture;
+  Landscape       landscape;
 
   vector<TouchInfo> touches;
   ci::vec3					cameraOffset;
@@ -82,10 +84,10 @@ void SelfieSelfieApp::setup()
 
     CI_LOG_I( "Creating Grid Texture" );
     gridTexture = make_shared<GridTexture>( ivec2( 320, 240 ), 12 );
-    /*
+
     CI_LOG_I( "Setting up landscape geometry." );
     landscape.setup();
-    */
+    landscape.setTextureUnits( 0, 1 );
   }
   catch( ci::Exception &exc ) {
     CI_LOG_E( "Error using device camera: " << exc.what() );
@@ -138,8 +140,6 @@ void SelfieSelfieApp::touchesEnded( TouchEvent event )
 
 void SelfieSelfieApp::pinchUpdate()
 {
-  CI_LOG_I( "Pinch update." );
-
   auto base = distance(touches.at( 0 ).previous, touches.at( 1 ).previous);
   auto current = distance(touches.at( 0 ).position, touches.at( 1 ).position);
 
@@ -153,6 +153,19 @@ void SelfieSelfieApp::pinchUpdate()
 
 void SelfieSelfieApp::update()
 {
+  auto l = length(cameraOffset);
+  auto maximum = 3.0f;
+  if( l > maximum ) {
+    cameraOffset *= (maximum / l);
+  }
+  camera.setEyePoint( cameraOffset );
+  #if USE_GYRO
+    if( MotionManager::isDataAvailable() ) {
+      auto r = MotionManager::getRotation();
+      camera.setOrientation( r );
+    }
+  #endif
+
   if( capture && capture->checkNewFrame() ) {
     gridTexture->update( *capture->getSurface() );
 
@@ -166,9 +179,26 @@ void SelfieSelfieApp::update()
 void SelfieSelfieApp::draw()
 {
 	gl::clear( Color( 0, 0, 0 ) );
-	gl::setMatricesWindow( getWindowSize() );
 
-  if( gridTexture ) {
+  {
+    gl::enableDepthRead();
+    gl::enableDepthWrite();
+
+    gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
+    gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
+    gl::ScopedMatrices matrices;
+    gl::setMatrices( camera );
+
+    landscape.draw( gridTexture->getCurrentIndex() );
+
+  }
+
+  gl::disableDepthRead();
+
+  if( drawDebug && gridTexture )
+  {
+    gl::setMatricesWindow( getWindowSize() );
+
     auto rect = Rectf(gridTexture->getTexture()->getBounds());
     auto window_rect = Rectf(getWindowBounds());
     auto window_rect_a = window_rect.scaled( vec2( 0.5f ) );
@@ -177,8 +207,9 @@ void SelfieSelfieApp::draw()
     gl::draw( gridTexture->getBlurredTexture(), rect.getCenteredFit( window_rect_b, false ) );
   }
 
-  gl::ScopedColor color( Color( 0.0f, 1.0f, 0.0f ) );
-  gl::drawSolidCircle( getWindowCenter(), 20.0f );
+  // For confirming version changes, draw a different colored dot.
+  gl::ScopedColor color( Color( 1.0f, 1.0f, 0.0f ) );
+  gl::drawSolidCircle( vec2( 20.0f ), 10.0f );
 
   auto err = gl::getError();
   if( err ) {
