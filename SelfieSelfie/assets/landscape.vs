@@ -36,7 +36,7 @@ vec2 offsetTextureCoordinate( vec2 coord, float index )
 
 float wrappedIndex( float baseIndex, float offset )
 {
-  return floor(mod(baseIndex - offset, 64.0));
+  return floor(mod(baseIndex - offset, uGridSize.x * uGridSize.y));
 }
 ///
 /// end "common.glsl"

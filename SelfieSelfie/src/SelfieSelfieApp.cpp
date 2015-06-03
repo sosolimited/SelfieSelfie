@@ -85,7 +85,7 @@ void SelfieSelfieApp::setup()
     capture->start();
 
     CI_LOG_I( "Creating Grid Texture" );
-    gridTexture = make_shared<GridTexture>( ivec2( 320, 240 ), 8 );
+    gridTexture = make_shared<GridTexture>( ivec2( 320, 240 ), 12 );
 
     CI_LOG_I( "Setting up landscape geometry." );
     landscape.setup();
