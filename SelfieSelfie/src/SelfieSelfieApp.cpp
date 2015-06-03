@@ -96,7 +96,7 @@ void SelfieSelfieApp::draw()
     gl::draw( gridTexture->getBlurredTexture(), rect.getCenteredFit( window_rect_bottom, false ) );
   }
 
-  gl::ScopedColor color( Color( 0.0f, 0.0f, 1.0f ) );
+  gl::ScopedColor color( Color( 0.0f, 1.0f, 1.0f ) );
   gl::drawSolidCircle( getWindowCenter(), 20.0f );
 
   auto err = gl::getError();

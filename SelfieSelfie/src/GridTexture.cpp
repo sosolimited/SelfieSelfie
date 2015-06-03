@@ -35,6 +35,7 @@ GridTexture::GridTexture( const ci::ivec2 &iCellSize, int iRows )
 
 	blurredBuffer = gl::Fbo::create( total_blur_size.x, total_blur_size.y, fbo_format );
   focusedBuffer = gl::Fbo::create( total_focused_size.x, total_focused_size.y, fbo_format );
+  intermediateBlurBuffer = gl::Fbo::create( blurredCellDimensions.x, blurredCellDimensions.y, fbo_format );
 
 	try {
     CI_LOG_I("Loading Downsampling Shaders");
@@ -84,13 +85,22 @@ void GridTexture::renderClearTexture()
 
 void GridTexture::renderBlurredTexture()
 {
+  gl::ScopedGlslProg prog( blurProg );
+  blurProg->uniform( "uSampler", 0 );
+  { // First blur pass
+    gl::ScopedFramebuffer buffer( intermediateBlurBuffer );
+    gl::ScopedViewport    view( vec2(0), blurredCellDimensions );
+
+    blurProg->uniform( "uTexelSize", vec2(1, 0) / vec2(blurredCellDimensions) );
+    gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) );
+  }
+
+  // Second blur pass.
   gl::ScopedFramebuffer buffer( blurredBuffer );
 	gl::ScopedViewport view( getIndexOffset( blurredCellDimensions, index ), blurredCellDimensions );
-  gl::ScopedGlslProg prog( blurProg );
+  gl::ScopedTextureBind tex0( intermediateBlurBuffer->getColorTexture() );
 
-	blurProg->uniform( "uSampler", 0 );
-  blurProg->uniform( "uTexelSize", vec2(1) / vec2(blurredCellDimensions) );
-//  blurProg->uniform( "uTexelSize", vec2(0, 1) / vec2(blurredCellDimensions) );
+  blurProg->uniform( "uTexelSize", vec2(0, 1) / vec2(blurredCellDimensions) );
 
 	gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) );
 }
