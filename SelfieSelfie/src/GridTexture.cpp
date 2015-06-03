@@ -20,7 +20,7 @@ using namespace cinder;
 GridTexture::GridTexture( const ci::ivec2 &iCellSize, int iRows )
 {
   cellDimensions = iCellSize;
-  blurredCellDimensions = cellDimensions / 4;
+  blurredCellDimensions = cellDimensions / 6;
 
 	columns = iRows;
 	cells = columns * columns;
