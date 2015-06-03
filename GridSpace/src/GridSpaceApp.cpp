@@ -2,13 +2,16 @@
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 
-#include "cinder/MotionManager.h"
 #include "cinder/Capture.h"
 #include "cinder/Log.h"
 
 #include "GridTexture.h"
 #include "Landscape.h"
 #include "Constants.h"
+
+#ifdef CINDER_COCOA_TOUCH
+	#include "cinder/MotionManager.h"
+#endif
 
 using namespace ci;
 using namespace ci::app;
@@ -51,18 +54,21 @@ private:
 
 void GridSpaceApp::setup()
 {
+	CI_LOG_I("Setting up selfie_x_selfie");
 
-	MotionManager::enable();
-
+	#ifdef CINDER_COCOA_TOUCH
+		MotionManager::enable();
+	#endif
 	GLint size;
 	glGetIntegerv( GL_MAX_TEXTURE_SIZE, &size );
 	CI_LOG_I( "Max texture size: " << size );
 
-	auto target = vec3( 50, 5, 50 );
+	auto target = vec3( 5, 0, 0 );
 	camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
 	camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 1000 );
 
 	try {
+		CI_LOG_I("Attempting to set up camera input.");
 		auto front_facing_camera = ([] {
 			auto &devices = Capture::getDevices();
 			auto first_device = devices.front();
@@ -76,19 +82,23 @@ void GridSpaceApp::setup()
 
 		capture = Capture::create( 480, 360, front_facing_camera );
 		capture->start();
+
+    CI_LOG_I("Creating Grid Texture");
 		const auto divisions = 8;
 		const auto size = divisions * capture->getSize();
 		gridTexture = make_shared<GridTexture>( size.x, size.y, divisions );
+    CI_LOG_I("Setting up landscape geometry.");
+    landscape.setup();
 	}
 	catch( ci::Exception &exc ) {
 		CI_LOG_E( "Error using device camera: " << exc.what() );
 	}
-
-	landscape.setup();
 }
 
 void GridSpaceApp::touchesBegan( TouchEvent event )
 {
+	CI_LOG_I("Touches began");
+	console() << "Touches began." << endl;
 	for( auto &t : event.getTouches() ) {
 		touches.push_back( { t.getId(), t.getPos(), t.getPos() } );
 	}
@@ -100,6 +110,8 @@ void GridSpaceApp::touchesBegan( TouchEvent event )
 
 void GridSpaceApp::touchesMoved( TouchEvent event )
 {
+	CI_LOG_I("Touches moved");
+	console() << "Touches moved." << endl;
 	for( auto &t : event.getTouches() ) {
 		for( auto &s : touches ) {
 			if( s.id == t.getId() ) {
@@ -116,6 +128,7 @@ void GridSpaceApp::touchesMoved( TouchEvent event )
 
 void GridSpaceApp::touchesEnded( TouchEvent event )
 {
+	console() << "Touches ended." << endl;
 	touches.erase( std::remove_if( touches.begin(), touches.end(), [&event] (const TouchInfo &s) {
 		for( auto &t : event.getTouches() ) {
 			if (t.getId() == s.id) {
@@ -132,6 +145,7 @@ void GridSpaceApp::pinchStart()
 
 void GridSpaceApp::pinchUpdate()
 {
+	console() << "Pinch update." << endl;
 	auto base = distance(touches.at( 0 ).previous, touches.at( 1 ).previous);
 	auto current = distance(touches.at( 0 ).position, touches.at( 1 ).position);
 
@@ -151,11 +165,12 @@ void GridSpaceApp::update()
 		cameraOffset *= (maximum / l);
 	}
 	camera.setEyePoint( cameraOffset );
-
-	if( MotionManager::isDataAvailable() ) {
-		auto r = MotionManager::getRotation();
-		camera.setOrientation( r );
-	}
+	#ifdef CINDER_COCOA_TOUCH
+		if( MotionManager::isDataAvailable() ) {
+			auto r = MotionManager::getRotation();
+			camera.setOrientation( r );
+		}
+	#endif
 
 	if( capture->checkNewFrame() ) {
 		gridTexture->update( *capture->getSurface() );
@@ -169,12 +184,12 @@ void GridSpaceApp::draw()
 	gl::enableDepthWrite();
 
 	gl::setMatrices( camera );
-	// TODO: bind both blurred and normal texture and avoid rebinding textures elsewhere.
-	gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
-	gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
 
-	landscape.draw( gridTexture->getCurrentIndex() );
+  gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
+  gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
+  landscape.draw( gridTexture->getCurrentIndex() );
 
+  /*
 	if( doDrawDebug )
 	{
 		if( gridTexture->getTexture() )
@@ -188,7 +203,12 @@ void GridSpaceApp::draw()
 			gl::draw( gridTexture->getBlurredTexture(), Rectf( vec2(0), size ) );
 		}
 	}
-
+	*/
 }
 
-CINDER_APP( GridSpaceApp, RendererGl )
+inline void prepareSettings(app::App::Settings *settings)
+{
+  settings->setMultiTouchEnabled();
+}
+
+CINDER_APP( GridSpaceApp, RendererGl, &prepareSettings )

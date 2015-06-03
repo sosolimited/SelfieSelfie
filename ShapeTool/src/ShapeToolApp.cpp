@@ -33,6 +33,9 @@ public:
 	void load(const fs::path &path);
 	void save() const;
 
+	void saveJson() const;
+	void saveXml() const;
+
 	/// Add a section taking up curve length, offset from the end of the previous section in time
 	void addSection( float length, int time_offset, int subdivisions, int temporal_steps, int repeats );
 
@@ -97,6 +100,7 @@ void ShapeToolApp::addSection(float length, int time_offset, int subdivisions, i
 
 void ShapeToolApp::load(const fs::path &path)
 {
+	/*
 	if(fs::exists(path) && fs::is_regular_file(path)) {
 
 		try {
@@ -111,9 +115,16 @@ void ShapeToolApp::load(const fs::path &path)
 			CI_LOG_E("Error reading file: " << exc.what());
 		}
 	}
+	*/
 }
 
 void ShapeToolApp::save() const
+{
+//	saveJson();
+	saveXml();
+}
+
+void ShapeToolApp::saveJson() const
 {
 	auto json = JsonTree::makeObject();
 	auto scale = 1.0f / 1000.0f;
@@ -139,6 +150,26 @@ void ShapeToolApp::save() const
 
 	auto p = getAssetPath("") / "../../GridSpace/assets/profile.json";
 	json.write(p);
+}
+
+void ShapeToolApp::saveXml() const
+{
+	auto xml = XmlTree("shape", "");
+	auto scale = 1.0f / 1000.0f;
+
+	auto bars = XmlTree("bars", "");
+	for (auto &s : _sections)
+	{
+		auto section_bars = s.getBars(*_path_cache);
+		for (auto &b : section_bars)
+		{
+			bars.push_back(b.toXml(scale));
+		}
+	}
+	xml.push_back(bars);
+
+	auto p = getAssetPath("") / "../../GridSpace/assets/profile.xml";
+	xml.write(DataTargetPath::createRef(p));
 }
 
 void ShapeToolApp::keyDown(KeyEvent event)

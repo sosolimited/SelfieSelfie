@@ -9,6 +9,10 @@
 
 #include "cinder/ip/Resize.h"
 #include "cinder/Log.h"
+#include "cinder/gl/gl.h"
+#include "cinder/gl/GlslProg.h"
+
+#include "cinder/app/App.h"
 
 using namespace soso;
 using namespace cinder;
@@ -19,14 +23,17 @@ GridTexture::GridTexture( int iWidth, int iHeight, int iSubdivisions )
 	columns = iSubdivisions;
 	cells = iSubdivisions * iSubdivisions;
 
+  CI_LOG_I("Creating Texture");
 	texture = gl::Texture::create( iWidth, iHeight, gl::Texture::Format().wrapS( GL_CLAMP_TO_EDGE ).wrapT( GL_CLAMP_TO_EDGE ) );
 
+  CI_LOG_I("Creating FBO for blurring");
 	// TODO: ensure blurred buffer size is evenly divisible by the number of subdivisions.
 	auto color_format = gl::Texture::Format();
 	auto fbo_format = gl::Fbo::Format().disableDepth().colorTexture( color_format );
 	blurredBuffer = gl::Fbo::create( cellDimensions.x, cellDimensions.y, fbo_format );
 
 	try {
+    CI_LOG_I("Loading Downsampling Shader");
 		downsampleProg = gl::GlslProg::create( app::loadAsset( "blur.vs" ), app::loadAsset( "blur.fs" ) );
 	}
 	catch( ci::Exception &exc ) {

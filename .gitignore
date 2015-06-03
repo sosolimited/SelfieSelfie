@@ -19,3 +19,11 @@ DerivedData
 .DS_Store
 .AppleDouble
 .LSOverride
+
+# Android Studio
+.gradle
+local.properties
+.idea
+
+# Output files (Android)
+libSelfieSelfie.so
