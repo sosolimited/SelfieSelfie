@@ -16,7 +16,31 @@ varying vec2 vTexCoord;
 varying vec4 vColor;
 varying float vColorWeight;
 
-#include "common.glsl"
+///
+/// Formerly in "common.glsl"
+///
+const vec2 gridSize = vec2( 12, 12 );
+
+vec2 getTextureOffset( float index )
+{
+  float column = mod(index, gridSize.x);
+  float row = floor(index / gridSize.x);
+
+  return vec2(column, row) / gridSize;
+}
+
+vec2 offsetTextureCoordinate( vec2 coord, float index )
+{
+  return (coord / gridSize) + getTextureOffset( index );
+}
+
+float wrappedIndex( float baseIndex, float offset )
+{
+  return floor(mod(baseIndex - offset, 64.0));
+}
+///
+/// end "common.glsl"
+///
 
 vec3 calcOffset( vec2 tex_coord )
 {

@@ -10,6 +10,12 @@
 
 #include "GridTexture.h"
 
+#define USE_GYRO 0
+
+#if USE_GYRO
+  #include "cinder/MotionManager.h"
+#endif
+
 using namespace ci;
 using namespace ci::app;
 using namespace std;
@@ -21,8 +27,9 @@ public:
 	void setup() override;
 	void update() override;
 	void draw() override;
-private:
 
+private:
+	CameraPersp			camera;
   CaptureRef			capture;
 
   GridTextureRef  gridTexture;
@@ -30,21 +37,21 @@ private:
 
 void SelfieSelfieApp::setup()
 {
-  auto err = gl::getError();
-  if( err ) {
-    CI_LOG_E( "Pre-Setup gl error: " << gl::getErrorString(err) );
-  }
+  CI_LOG_I("Setting up selfie_x_selfie");
+
+  #if USE_GYRO
+      MotionManager::enable();
+  #endif
+  GLint size;
+  glGetIntegerv( GL_MAX_TEXTURE_SIZE, &size );
+  CI_LOG_I( "Max texture size: " << size );
+
+  auto target = vec3( 5, 0, 0 );
+  camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
+  camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 1000 );
 
   try {
-    CI_LOG_I("Creating Grid Texture");
-    gridTexture = make_shared<GridTexture>( ivec2(320, 240), 12 );
-  }
-  catch( ci::Exception &exc ) {
-    CI_LOG_E( "Error creating grid texture: " << exc.what() );
-  }
-
-  try {
-    CI_LOG_I("Setting up device camera.");
+    CI_LOG_I( "Initializing hardware camera." );
     auto front_facing_camera = ([] {
       auto &devices = Capture::getDevices();
       auto first_device = devices.front();
@@ -58,13 +65,19 @@ void SelfieSelfieApp::setup()
 
     capture = Capture::create( 320, 240, front_facing_camera );
     capture->start();
-    CI_LOG_I("Device Camera set up.");
+
+    CI_LOG_I( "Creating Grid Texture" );
+    gridTexture = make_shared<GridTexture>( ivec2( 320, 240 ), 12 );
+    /*
+    CI_LOG_I( "Setting up landscape geometry." );
+    landscape.setup();
+    */
   }
   catch( ci::Exception &exc ) {
     CI_LOG_E( "Error using device camera: " << exc.what() );
   }
 
-  err = gl::getError();
+  auto err = gl::getError();
   if( err ) {
     CI_LOG_E( "Post-Setup gl error: " << gl::getErrorString(err) );
   }
@@ -96,7 +109,7 @@ void SelfieSelfieApp::draw()
     gl::draw( gridTexture->getBlurredTexture(), rect.getCenteredFit( window_rect_bottom, false ) );
   }
 
-  gl::ScopedColor color( Color( 0.0f, 1.0f, 1.0f ) );
+  gl::ScopedColor color( Color( 0.0f, 1.0f, 0.0f ) );
   gl::drawSolidCircle( getWindowCenter(), 20.0f );
 
   auto err = gl::getError();
