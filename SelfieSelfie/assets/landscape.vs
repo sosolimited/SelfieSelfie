@@ -19,19 +19,19 @@ varying float vColorWeight;
 ///
 /// Formerly in "common.glsl"
 ///
-const vec2 gridSize = vec2( 12, 12 );
+uniform vec2 uGridSize;
 
 vec2 getTextureOffset( float index )
 {
-  float column = mod(index, gridSize.x);
-  float row = floor(index / gridSize.x);
+  float column = mod(index, uGridSize.x);
+  float row = floor(index / uGridSize.x);
 
-  return vec2(column, row) / gridSize;
+  return vec2(column, row) / uGridSize;
 }
 
 vec2 offsetTextureCoordinate( vec2 coord, float index )
 {
-  return (coord / gridSize) + getTextureOffset( index );
+  return (coord / uGridSize) + getTextureOffset( index );
 }
 
 float wrappedIndex( float baseIndex, float offset )

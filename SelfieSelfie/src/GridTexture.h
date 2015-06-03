@@ -36,6 +36,8 @@ public:
 	ci::ivec2 getIndexOffset( const ci::ivec2 &iCellDimensions, int iIndex ) const;
 	/// Returns the pixel dimensions of a single cell.
 	const ci::ivec2& getCellDimensions() const { return cellDimensions; }
+
+  ci::vec2 getGridDimensions() const { return ci::vec2( columns ); }
 private:
 	ci::gl::FboRef			blurredBuffer;
   ci::gl::FboRef			focusedBuffer;

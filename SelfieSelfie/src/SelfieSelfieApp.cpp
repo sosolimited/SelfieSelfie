@@ -49,6 +49,8 @@ private:
 
   vector<TouchInfo> touches;
   ci::vec3					cameraOffset;
+
+  bool drawDebug = false;
 };
 
 void SelfieSelfieApp::setup()
@@ -83,11 +85,12 @@ void SelfieSelfieApp::setup()
     capture->start();
 
     CI_LOG_I( "Creating Grid Texture" );
-    gridTexture = make_shared<GridTexture>( ivec2( 320, 240 ), 12 );
+    gridTexture = make_shared<GridTexture>( ivec2( 320, 240 ), 8 );
 
     CI_LOG_I( "Setting up landscape geometry." );
     landscape.setup();
     landscape.setTextureUnits( 0, 1 );
+    landscape.setGridSize( gridTexture->getGridDimensions() );
   }
   catch( ci::Exception &exc ) {
     CI_LOG_E( "Error using device camera: " << exc.what() );
@@ -107,6 +110,10 @@ void SelfieSelfieApp::touchesBegan( TouchEvent event )
 
   if( touches.size() == 2 ) {
     // pinch started.
+  }
+
+  if( touches.size() == 4 ) {
+    drawDebug = ! drawDebug;
   }
 }
 

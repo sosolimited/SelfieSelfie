@@ -205,6 +205,12 @@ void Landscape::setTextureUnits( uint8_t iClearUnit, uint8_t iBlurredUnit )
 	shader->uniform( "uBlurredTexture", iBlurredUnit );
 }
 
+void Landscape::setGridSize( const ci::vec2 &iSize )
+{
+  auto &shader = batch->getGlslProg();
+  shader->uniform( "uGridSize", iSize );
+}
+
 void Landscape::draw( float iFrameOffset )
 {
 	auto &shader = batch->getGlslProg();
