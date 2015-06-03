@@ -6,10 +6,15 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/Log.h"
+#include "cinder/gl/Fbo.h"
+
+#include "GridTexture.h"
 
 using namespace ci;
 using namespace ci::app;
 using namespace std;
+
+using namespace soso;
 
 class SelfieSelfieApp : public App {
 public:
@@ -19,8 +24,8 @@ public:
 private:
 
   CaptureRef			capture;
-  gl::TextureRef	texture;
-  gl::GlslProgRef shader;
+
+  GridTextureRef  gridTexture;
 };
 
 void SelfieSelfieApp::setup()
@@ -31,11 +36,11 @@ void SelfieSelfieApp::setup()
   }
 
   try {
-    shader = gl::GlslProg::create( loadAsset("blur.vs"), loadAsset("blur.fs") );
-    CI_LOG_I("Loaded blur shader.");
+    CI_LOG_I("Creating Grid Texture");
+    gridTexture = make_shared<GridTexture>( ivec2(320, 240), 12 );
   }
-  catch ( ci::Exception &exc ) {
-    CI_LOG_E( "Error loading blur shader: " << exc.what() );
+  catch( ci::Exception &exc ) {
+    CI_LOG_E( "Error creating grid texture: " << exc.what() );
   }
 
   try {
@@ -51,7 +56,7 @@ void SelfieSelfieApp::setup()
       return first_device;
     }());
 
-    capture = Capture::create( 640, 480, front_facing_camera );
+    capture = Capture::create( 320, 240, front_facing_camera );
     capture->start();
     CI_LOG_I("Device Camera set up.");
   }
@@ -68,16 +73,7 @@ void SelfieSelfieApp::setup()
 void SelfieSelfieApp::update()
 {
   if( capture && capture->checkNewFrame() ) {
-    #if defined(CINDER_ANDROID)
-      texture = capture->getTexture();
-    #else
-      if( ! texture ) {
-        texture = gl::Texture::create( *capture->getSurface(), gl::Texture::Format().loadTopDown() );
-      }
-      else {
-        texture->update( *(capture->getSurface()) );
-      }
-    #endif
+    gridTexture->update( *capture->getSurface() );
 
     auto err = gl::getError();
     if( err ) {
@@ -91,21 +87,16 @@ void SelfieSelfieApp::draw()
 	gl::clear( Color( 0, 0, 0 ) );
 	gl::setMatricesWindow( getWindowSize() );
 
-  if( texture ){
-    gl::ScopedGlslProg    prog( shader );
-    gl::ScopedTextureBind tex0( texture, 0 );
-
-    shader->uniform( "uSampler", 0 );
-
-    gl::drawSolidRect( Rectf( -1, -1, 1, 1 ) );
+  if( gridTexture ) {
+    auto rect = Rectf(gridTexture->getTexture()->getBounds());
+    auto window_rect = Rectf(getWindowBounds());
+    auto window_rect_top = window_rect.scaled( vec2( 1.0f, 0.5f ) );
+    auto window_rect_bottom = window_rect_top + vec2( 0, window_rect_top.getHeight() );
+    gl::draw( gridTexture->getTexture(), rect.getCenteredFit( window_rect_top, false ) );
+    gl::draw( gridTexture->getBlurredTexture(), rect.getCenteredFit( window_rect_bottom, false ) );
   }
 
-  if( texture ) {
-    gl::draw( texture );
-  }
-
-
-
+  gl::ScopedColor color( Color( 0.0f, 0.0f, 1.0f ) );
   gl::drawSolidCircle( getWindowCenter(), 20.0f );
 
   auto err = gl::getError();
