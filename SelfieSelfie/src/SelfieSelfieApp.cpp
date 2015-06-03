@@ -171,10 +171,10 @@ void SelfieSelfieApp::draw()
   if( gridTexture ) {
     auto rect = Rectf(gridTexture->getTexture()->getBounds());
     auto window_rect = Rectf(getWindowBounds());
-    auto window_rect_top = window_rect.scaled( vec2( 1.0f, 0.5f ) );
-    auto window_rect_bottom = window_rect_top + vec2( 0, window_rect_top.getHeight() );
-    gl::draw( gridTexture->getTexture(), rect.getCenteredFit( window_rect_top, false ) );
-    gl::draw( gridTexture->getBlurredTexture(), rect.getCenteredFit( window_rect_bottom, false ) );
+    auto window_rect_a = window_rect.scaled( vec2( 0.5f ) );
+    auto window_rect_b = window_rect_a + vec2( window_rect_a.getWidth(), 0 );
+    gl::draw( gridTexture->getTexture(), rect.getCenteredFit( window_rect_a, false ) );
+    gl::draw( gridTexture->getBlurredTexture(), rect.getCenteredFit( window_rect_b, false ) );
   }
 
   gl::ScopedColor color( Color( 0.0f, 1.0f, 0.0f ) );
