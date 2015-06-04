@@ -11,11 +11,7 @@
 #include "GridTexture.h"
 #include "Landscape.h"
 
-#define USE_GYRO 0
-
-#if USE_GYRO
-  #include "cinder/MotionManager.h"
-#endif
+#include "cinder/MotionManager.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -57,9 +53,8 @@ void SelfieSelfieApp::setup()
 {
   CI_LOG_I("Setting up selfie_x_selfie");
 
-  #if USE_GYRO
-      MotionManager::enable();
-  #endif
+  MotionManager::enable();
+
   GLint size;
   glGetIntegerv( GL_MAX_TEXTURE_SIZE, &size );
   CI_LOG_I( "Max texture size: " << size );
@@ -166,12 +161,11 @@ void SelfieSelfieApp::update()
     cameraOffset *= (maximum / l);
   }
   camera.setEyePoint( cameraOffset );
-  #if USE_GYRO
-    if( MotionManager::isDataAvailable() ) {
-      auto r = MotionManager::getRotation();
-      camera.setOrientation( r );
-    }
-  #endif
+
+  if( MotionManager::isDataAvailable() ) {
+    auto r = MotionManager::getRotation();
+    camera.setOrientation( r );
+  }
 
   if( capture && capture->checkNewFrame() ) {
     gridTexture->update( *capture->getSurface() );
@@ -215,7 +209,7 @@ void SelfieSelfieApp::draw()
   }
 
   // For confirming version changes, draw a different colored dot.
-  gl::ScopedColor color( Color( 1.0f, 1.0f, 0.0f ) );
+  gl::ScopedColor color( Color( 1.0f, 0.0f, 1.0f ) );
   gl::drawSolidCircle( vec2( 20.0f ), 10.0f );
 
   auto err = gl::getError();
