@@ -27,8 +27,8 @@ public:
 	void update() override;
 	void draw() override;
 
-	void drawTemporalFrames();
-	void drawSpatialFrames();
+	void drawTemporalFrames() const;
+	void drawSpatialFrames() const;
 
 	void load(const fs::path &path);
 	void save() const;
@@ -123,7 +123,7 @@ void ShapeToolApp::save() const
 //	saveJson();
 	saveXml();
 }
-
+/*
 void ShapeToolApp::saveJson() const
 {
 	auto json = JsonTree::makeObject();
@@ -151,7 +151,7 @@ void ShapeToolApp::saveJson() const
 	auto p = getAssetPath("") / "../../SelfieSelfie/assets/profile.json";
 	json.write(p);
 }
-
+*/
 void ShapeToolApp::saveXml() const
 {
 	auto xml = XmlTree("shape", "");
@@ -211,7 +211,7 @@ void ShapeToolApp::draw()
 	drawSpatialFrames();
 }
 
-void ShapeToolApp::drawTemporalFrames()
+void ShapeToolApp::drawTemporalFrames() const
 {
 	for (auto &s : _sections)
 	{
@@ -223,7 +223,7 @@ void ShapeToolApp::drawTemporalFrames()
 	}
 }
 
-void ShapeToolApp::drawSpatialFrames()
+void ShapeToolApp::drawSpatialFrames() const
 {
 	for (auto &s : _sections)
 	{
@@ -231,10 +231,10 @@ void ShapeToolApp::drawSpatialFrames()
 		gl::begin(GL_LINES);
 		for (auto &b : bars) {
       gl::color(Color(1.0f, 1.0f, 0.0f));
-      gl::vertex(b.begin + b.begin_normal * 8.0f);
+      gl::vertex(b.begin + b.normal_begin * 8.0f);
       gl::vertex(b.begin);
       gl::vertex(b.end);
-      gl::vertex(b.end + b.end_normal * 8.0f);
+      gl::vertex(b.end + b.normal_end * 8.0f);
 
       gl::color(Color(b.texture_begin, 0.0f, 0.5f));
 			gl::vertex(b.begin);
