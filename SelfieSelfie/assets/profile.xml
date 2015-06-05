@@ -9,6 +9,8 @@
 			<time>1</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
+			<curve_begin>0</curve_begin>
+			<curve_end>0.0599999987</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -19,6 +21,8 @@
 			<time>1</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
+			<curve_begin>0.0599999987</curve_begin>
+			<curve_end>0.119999997</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -29,6 +33,8 @@
 			<time>5</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
+			<curve_begin>0.119999997</curve_begin>
+			<curve_end>0.179999992</curve_end>
 			<repeats>5</repeats>
 		</b>
 		<b>
@@ -39,6 +45,8 @@
 			<time>5</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
+			<curve_begin>0.179999992</curve_begin>
+			<curve_end>0.239999995</curve_end>
 			<repeats>5</repeats>
 		</b>
 		<b>
@@ -49,6 +57,8 @@
 			<time>9</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
+			<curve_begin>0.239999995</curve_begin>
+			<curve_end>0.294999987</curve_end>
 			<repeats>8</repeats>
 		</b>
 		<b>
@@ -59,6 +69,8 @@
 			<time>9</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
+			<curve_begin>0.294999987</curve_begin>
+			<curve_end>0.349999994</curve_end>
 			<repeats>8</repeats>
 		</b>
 		<b>
@@ -69,6 +81,8 @@
 			<time>13</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
+			<curve_begin>0.349999994</curve_begin>
+			<curve_end>0.397499979</curve_end>
 			<repeats>11</repeats>
 		</b>
 		<b>
@@ -79,6 +93,8 @@
 			<time>13</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
+			<curve_begin>0.397499979</curve_begin>
+			<curve_end>0.444999993</curve_end>
 			<repeats>11</repeats>
 		</b>
 		<b>
@@ -89,6 +105,8 @@
 			<time>17</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
+			<curve_begin>0.444999993</curve_begin>
+			<curve_end>0.487499982</curve_end>
 			<repeats>12</repeats>
 		</b>
 		<b>
@@ -99,6 +117,8 @@
 			<time>17</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
+			<curve_begin>0.487499982</curve_begin>
+			<curve_end>0.529999971</curve_end>
 			<repeats>12</repeats>
 		</b>
 		<b>
@@ -109,6 +129,8 @@
 			<time>21</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
+			<curve_begin>0.529999971</curve_begin>
+			<curve_end>0.564999938</curve_end>
 			<repeats>9</repeats>
 		</b>
 		<b>
@@ -119,6 +141,8 @@
 			<time>21</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
+			<curve_begin>0.564999938</curve_begin>
+			<curve_end>0.599999964</curve_end>
 			<repeats>9</repeats>
 		</b>
 		<b>
@@ -129,6 +153,8 @@
 			<time>25</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
+			<curve_begin>0.599999964</curve_begin>
+			<curve_end>0.625</curve_end>
 			<repeats>7</repeats>
 		</b>
 		<b>
@@ -139,6 +165,8 @@
 			<time>25</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
+			<curve_begin>0.625</curve_begin>
+			<curve_end>0.649999976</curve_end>
 			<repeats>7</repeats>
 		</b>
 		<b>
@@ -149,6 +177,8 @@
 			<time>26</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.03125</texture_end>
+			<curve_begin>0.649999976</curve_begin>
+			<curve_end>0.660937488</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -159,6 +189,8 @@
 			<time>27</time>
 			<texture_begin>0.03125</texture_begin>
 			<texture_end>0.0625</texture_end>
+			<curve_begin>0.660937488</curve_begin>
+			<curve_end>0.671875</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -169,6 +201,8 @@
 			<time>28</time>
 			<texture_begin>0.0625</texture_begin>
 			<texture_end>0.09375</texture_end>
+			<curve_begin>0.671875</curve_begin>
+			<curve_end>0.682812452</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -179,6 +213,8 @@
 			<time>29</time>
 			<texture_begin>0.09375</texture_begin>
 			<texture_end>0.125</texture_end>
+			<curve_begin>0.682812452</curve_begin>
+			<curve_end>0.693749964</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -189,6 +225,8 @@
 			<time>30</time>
 			<texture_begin>0.125</texture_begin>
 			<texture_end>0.15625</texture_end>
+			<curve_begin>0.693749964</curve_begin>
+			<curve_end>0.704687476</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -199,6 +237,8 @@
 			<time>31</time>
 			<texture_begin>0.15625</texture_begin>
 			<texture_end>0.1875</texture_end>
+			<curve_begin>0.704687476</curve_begin>
+			<curve_end>0.715624988</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -209,6 +249,8 @@
 			<time>32</time>
 			<texture_begin>0.1875</texture_begin>
 			<texture_end>0.21875</texture_end>
+			<curve_begin>0.715624988</curve_begin>
+			<curve_end>0.7265625</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -219,6 +261,8 @@
 			<time>33</time>
 			<texture_begin>0.21875</texture_begin>
 			<texture_end>0.25</texture_end>
+			<curve_begin>0.7265625</curve_begin>
+			<curve_end>0.737499952</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -229,6 +273,8 @@
 			<time>34</time>
 			<texture_begin>0.25</texture_begin>
 			<texture_end>0.28125</texture_end>
+			<curve_begin>0.737499952</curve_begin>
+			<curve_end>0.748437464</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -239,6 +285,8 @@
 			<time>35</time>
 			<texture_begin>0.28125</texture_begin>
 			<texture_end>0.3125</texture_end>
+			<curve_begin>0.748437464</curve_begin>
+			<curve_end>0.759374976</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -249,6 +297,8 @@
 			<time>36</time>
 			<texture_begin>0.3125</texture_begin>
 			<texture_end>0.34375</texture_end>
+			<curve_begin>0.759374976</curve_begin>
+			<curve_end>0.770312488</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -259,6 +309,8 @@
 			<time>37</time>
 			<texture_begin>0.34375</texture_begin>
 			<texture_end>0.375</texture_end>
+			<curve_begin>0.770312488</curve_begin>
+			<curve_end>0.78125</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -269,6 +321,8 @@
 			<time>38</time>
 			<texture_begin>0.375</texture_begin>
 			<texture_end>0.40625</texture_end>
+			<curve_begin>0.78125</curve_begin>
+			<curve_end>0.792187452</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -279,6 +333,8 @@
 			<time>39</time>
 			<texture_begin>0.40625</texture_begin>
 			<texture_end>0.4375</texture_end>
+			<curve_begin>0.792187452</curve_begin>
+			<curve_end>0.803125024</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -289,6 +345,8 @@
 			<time>40</time>
 			<texture_begin>0.4375</texture_begin>
 			<texture_end>0.46875</texture_end>
+			<curve_begin>0.803125024</curve_begin>
+			<curve_end>0.814062476</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -299,6 +357,8 @@
 			<time>41</time>
 			<texture_begin>0.46875</texture_begin>
 			<texture_end>0.5</texture_end>
+			<curve_begin>0.814062476</curve_begin>
+			<curve_end>0.824999988</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -309,6 +369,8 @@
 			<time>42</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>0.53125</texture_end>
+			<curve_begin>0.824999988</curve_begin>
+			<curve_end>0.8359375</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -319,6 +381,8 @@
 			<time>43</time>
 			<texture_begin>0.53125</texture_begin>
 			<texture_end>0.5625</texture_end>
+			<curve_begin>0.8359375</curve_begin>
+			<curve_end>0.846874952</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -329,6 +393,8 @@
 			<time>44</time>
 			<texture_begin>0.5625</texture_begin>
 			<texture_end>0.59375</texture_end>
+			<curve_begin>0.846874952</curve_begin>
+			<curve_end>0.857812524</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -339,6 +405,8 @@
 			<time>45</time>
 			<texture_begin>0.59375</texture_begin>
 			<texture_end>0.625</texture_end>
+			<curve_begin>0.857812524</curve_begin>
+			<curve_end>0.868749976</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -349,6 +417,8 @@
 			<time>46</time>
 			<texture_begin>0.625</texture_begin>
 			<texture_end>0.65625</texture_end>
+			<curve_begin>0.868749976</curve_begin>
+			<curve_end>0.879687488</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -359,6 +429,8 @@
 			<time>47</time>
 			<texture_begin>0.65625</texture_begin>
 			<texture_end>0.6875</texture_end>
+			<curve_begin>0.879687488</curve_begin>
+			<curve_end>0.890625</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -369,6 +441,8 @@
 			<time>48</time>
 			<texture_begin>0.6875</texture_begin>
 			<texture_end>0.71875</texture_end>
+			<curve_begin>0.890625</curve_begin>
+			<curve_end>0.901562452</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -379,6 +453,8 @@
 			<time>49</time>
 			<texture_begin>0.71875</texture_begin>
 			<texture_end>0.75</texture_end>
+			<curve_begin>0.901562452</curve_begin>
+			<curve_end>0.912500024</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -389,6 +465,8 @@
 			<time>50</time>
 			<texture_begin>0.75</texture_begin>
 			<texture_end>0.78125</texture_end>
+			<curve_begin>0.912500024</curve_begin>
+			<curve_end>0.923437476</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -399,6 +477,8 @@
 			<time>51</time>
 			<texture_begin>0.78125</texture_begin>
 			<texture_end>0.8125</texture_end>
+			<curve_begin>0.923437476</curve_begin>
+			<curve_end>0.934374988</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -409,6 +489,8 @@
 			<time>52</time>
 			<texture_begin>0.8125</texture_begin>
 			<texture_end>0.84375</texture_end>
+			<curve_begin>0.934374988</curve_begin>
+			<curve_end>0.9453125</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -419,6 +501,8 @@
 			<time>53</time>
 			<texture_begin>0.84375</texture_begin>
 			<texture_end>0.875</texture_end>
+			<curve_begin>0.9453125</curve_begin>
+			<curve_end>0.956250012</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -429,6 +513,8 @@
 			<time>54</time>
 			<texture_begin>0.875</texture_begin>
 			<texture_end>0.90625</texture_end>
+			<curve_begin>0.956250012</curve_begin>
+			<curve_end>0.967187524</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -439,6 +525,8 @@
 			<time>55</time>
 			<texture_begin>0.90625</texture_begin>
 			<texture_end>0.9375</texture_end>
+			<curve_begin>0.967187524</curve_begin>
+			<curve_end>0.978124976</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -449,6 +537,8 @@
 			<time>56</time>
 			<texture_begin>0.9375</texture_begin>
 			<texture_end>0.96875</texture_end>
+			<curve_begin>0.978124976</curve_begin>
+			<curve_end>0.989062488</curve_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
@@ -459,6 +549,8 @@
 			<time>57</time>
 			<texture_begin>0.96875</texture_begin>
 			<texture_end>1</texture_end>
+			<curve_begin>0.989062488</curve_begin>
+			<curve_end>1</curve_end>
 			<repeats>2</repeats>
 		</b>
 	</bars>

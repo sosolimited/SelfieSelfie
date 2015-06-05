@@ -25,15 +25,14 @@ namespace soso {
 struct Bar
 {
 	Bar() = default;
-  Bar(const ci::vec2 &begin, const ci::vec2 &end, const ci::vec2 &begin_normal, const ci::vec2 &end_normal, int time, float texture_begin, float texture_end, int repeats);
-	explicit Bar(const ci::JsonTree &json);
+  Bar(const ci::vec2 &begin, const ci::vec2 &end, const ci::vec2 &begin_normal, const ci::vec2 &end_normal, int time, float texture_begin, float texture_end, int repeats, float curve_begin, float curve_end);
 	explicit Bar(const ci::XmlTree &json);
 
 	/// Physical coordinates of bar in profile
 	ci::vec2 begin;
 	ci::vec2 end;
-  ci::vec2 begin_normal;
-  ci::vec2 end_normal;
+  ci::vec2 normal_begin;
+  ci::vec2 normal_end;
 	/// What frame time offset this bar is played at, in frames.
 	int			 time = 0;
 	/// What section of the texture this bar reads from, normalized.
@@ -42,7 +41,10 @@ struct Bar
 	/// How many horizontal repeats of the texture to do (used by main app; not meaningful in 2d).
 	int			 repeats = 1;
 
-	ci::JsonTree toJson(float scale) const;
+  /// Time in smooth sweep.
+  float    curve_begin = 0.0f;
+  float    curve_end = 0.0f;
+
 	ci::XmlTree		toXml(float scale) const;
 };
 
@@ -50,7 +52,6 @@ struct Section
 {
 	Section() = default;
 	Section(float curve_begin, float curve_end, int time_begin, int spatial_subdivisions, int temporal_steps, int spatial_repeats);
-	explicit Section(const ci::JsonTree &json);
 
 	/// Normalized curve times.
 	float							curve_begin = 0.0f;
@@ -65,8 +66,6 @@ struct Section
 	int								spatial_repeats;
 
 	std::vector<Bar>	getBars(const ci::Path2dCalcCache &path) const;
-
-	ci::JsonTree	toJson() const;
 };
 
 } // namespace soso

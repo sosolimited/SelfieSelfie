@@ -15,6 +15,7 @@
 
 #include "cinder/gl/GlslProg.h"
 #include "cinder/app/App.h"
+#include "cinder/Easing.h"
 
 using namespace soso;
 using namespace cinder;
@@ -22,23 +23,28 @@ using namespace cinder;
 namespace {
 
 struct alignas(16) Vertex {
+  /// Position
 	vec3	position;
-	vec3	normal;
-	vec2	tex_coord;
-	vec2	color_tex_coord;      // shared within bands
-	float deform_scaling;
-	float frame_offset;
-  float deform_frame_offset;  // shared across seams
-	float color_weight;
+  float frame_offset;
+  /// Color
+	vec2	color_tex_coord;
+	vec2	flat_tex_coord;      // shared within bands
+  float color_weight;
+  /// Deformation
+  vec3	normal;
+  vec2  deform_tex_coord;    // shared across seams
+  float deform_frame_offset; // shared across seams
+  float deform_weight;
 };
 
 const auto kVertexLayout = ([] {
 		auto layout = geom::BufferLayout();
 		layout.append( geom::Attrib::POSITION, 3, sizeof(Vertex), offsetof(Vertex, position) );
 		layout.append( geom::Attrib::NORMAL, 3, sizeof(Vertex), offsetof(Vertex, normal) );
-		layout.append( geom::Attrib::TEX_COORD_0, 2, sizeof(Vertex), offsetof(Vertex, tex_coord) );
-		layout.append( geom::Attrib::TEX_COORD_1, 2, sizeof(Vertex), offsetof(Vertex, color_tex_coord) );
-		layout.append( geom::Attrib::CUSTOM_0, 1, sizeof(Vertex), offsetof(Vertex, deform_scaling) );
+		layout.append( geom::Attrib::TEX_COORD_0, 2, sizeof(Vertex), offsetof(Vertex, color_tex_coord) );
+		layout.append( geom::Attrib::TEX_COORD_1, 2, sizeof(Vertex), offsetof(Vertex, flat_tex_coord) );
+		layout.append( geom::Attrib::TEX_COORD_2, 2, sizeof(Vertex), offsetof(Vertex, deform_tex_coord) );
+		layout.append( geom::Attrib::CUSTOM_0, 1, sizeof(Vertex), offsetof(Vertex, deform_weight) );
 		layout.append( geom::Attrib::CUSTOM_1, 1, sizeof(Vertex), offsetof(Vertex, frame_offset) );
 		layout.append( geom::Attrib::CUSTOM_2, 1, sizeof(Vertex), offsetof(Vertex, color_weight) );
     layout.append( geom::Attrib::CUSTOM_3, 1, sizeof(Vertex), offsetof(Vertex, deform_frame_offset) );
@@ -77,24 +83,28 @@ void addQuad( std::vector<Vertex> &vertices, const vec3 &a, const vec3 &b, const
 {
 	auto normal = vec3( 0, 1, 0 );
 	auto deform_scaling = 0.0f;
-
+	auto deform_time = 0.0f;
+	auto deform_tc = vec2( 0.0f, 0.0f );
+	auto color_weight = 0.0f;
+/*
 	vertices.insert( vertices.end(), {
-		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), deform_scaling, time, 0.0f, 0.0f },
-		Vertex{ b, normal, slice.getUpperRight(), slice.getUpperRight(), deform_scaling, time, 0.0f, 0.0f },
-		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), deform_scaling, time, 0.0f, 0.0f },
+		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), time, deform_tc, deform_scaling, deform_time, color_weight },
+		Vertex{ b, normal, slice.getUpperRight(), slice.getUpperRight(), time, deform_tc, deform_scaling, deform_time, color_weight },
+		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), time, deform_tc, deform_scaling, deform_time, color_weight },
 
-		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), deform_scaling, time, 0.0f, 0.0f },
-		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), deform_scaling, time, 0.0f, 0.0f },
-		Vertex{ d, normal, slice.getLowerLeft(), slice.getLowerLeft(), deform_scaling, time, 0.0f, 0.0f }
+		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), time, deform_tc, deform_scaling, deform_time, color_weight },
+		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), time, deform_tc, deform_scaling, deform_time, color_weight },
+		Vertex{ d, normal, slice.getLowerLeft(), slice.getLowerLeft(), time, deform_tc, deform_scaling, deform_time, color_weight }
 	} );
+  */
 
 }
 
 /// Add a ring of geometry containing a given number of time bands (slitscanning effect) and repeats around the donut.
 void addRing( std::vector<Vertex> &vertices, const Bar &bar, const ci::vec2 &center_offset )
 {
-	auto segments = 64;
-	auto texture_insets = vec2( 0.05, 0.0875f );
+	const auto segments = 64;
+	const auto texture_insets = vec2( 0.05, 0.0875f );
 
 	// Generate cartesian position.
 	const auto calc_pos = [=] (int r, int s) {
@@ -107,7 +117,7 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, const ci::vec2 &cen
 	};
 
 	const auto calc_normal = [=] (int r, int s) {
-		auto normal = normalize( vec3(mix(bar.begin_normal, bar.end_normal, (float)r), 0.0f) );
+		auto normal = normalize( vec3(mix(bar.normal_begin, bar.normal_end, (float)r), 0.0f) );
 		auto t = (float) s / segments;
 		auto rotation = glm::rotate<float>( t * Tau, vec3(0, 1, 0) );
 		return vec3( rotation * vec4(normal, 0.0f) );
@@ -130,14 +140,37 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, const ci::vec2 &cen
 		return tc;
 	};
 
+  const auto calc_deform_tc = [=] (int r, int s) {
+    auto curve_time = mix( bar.curve_begin, bar.curve_end, (float)r );
+    auto t = (float) s / segments;
+    if( t < 1 ) {
+      t = glm::fract( t * 2 );
+    }
+    // mirror copies
+    t = std::abs( t - 0.5f ) * 2.0f;
+    auto tc = vec2(0);
+    // Repeat t with mirroring
+    // insetting the texture coordinates minimizes edge color flashing.
+    tc.y = mix( texture_insets.y, 1.0f - texture_insets.y, t );
+    tc.x = mix( 1.0f - texture_insets.x, texture_insets.x, curve_time );
+    return tc;
+  };
+
 	// Add a vertex to texture (color_tc parameter allows us to do flat shading in ES2)
 	const auto add_vert = [=,&vertices] (int r, int s, const ivec2 &provoking) {
-		auto deform_scaling = 0.0f;
 		auto pos = calc_pos(r, s);
-		auto tc = calc_tc(r, s);
+		auto color_tc = calc_tc(r, s);
+    auto flat_tc = calc_tc( provoking.x, provoking.y );
+    auto color_weight = 0.0f;
 		auto normal = calc_normal(r, s);
-		auto color_tc = calc_tc( provoking.x, provoking.y );
-		vertices.push_back( Vertex{ pos, normal, tc, color_tc, deform_scaling, (float)bar.time, 0.0f, 0.0f } );
+    auto curve_time = mix( bar.curve_begin, bar.curve_end, (float)r );
+    auto deform_frame = (72.0f * curve_time);
+    auto deform_scaling = easeInOutQuad(curve_time);
+    auto deform_tc = calc_deform_tc(r, s);
+
+    vertices.emplace_back( Vertex { pos, (float)bar.time,
+                                    color_tc, flat_tc, color_weight,
+                                    normal, deform_tc, deform_frame, deform_scaling } );
 	};
 
 	// Create triangles for flat shading

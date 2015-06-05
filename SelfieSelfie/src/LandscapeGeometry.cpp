@@ -11,8 +11,6 @@
 #include "cinder/Xml.h"
 #include "cinder/Log.h"
 
-#define SOSO_HAS_JSON_SUPPORT 0
-
 using namespace std;
 using namespace cinder;
 using namespace soso;
@@ -38,46 +36,26 @@ vec2 fromString<vec2>(const std::string &string)
 
 #pragma mark - Bar
 
-Bar::Bar(const ci::vec2 &begin, const ci::vec2 &end, const ci::vec2 &begin_normal, const ci::vec2 &end_normal, int time, float texture_begin, float texture_end, int repeats)
+Bar::Bar(const ci::vec2 &begin, const ci::vec2 &end, const ci::vec2 &begin_normal, const ci::vec2 &end_normal, int time, float texture_begin, float texture_end, int repeats, float curve_begin, float curve_end)
 : begin(begin),
 	end(end),
-  begin_normal(begin_normal),
-  end_normal(end_normal),
+  normal_begin(begin_normal),
+  normal_end(end_normal),
 	time(time),
 	texture_begin(texture_begin),
 	texture_end(texture_end),
-	repeats(repeats)
+	repeats(repeats),
+  curve_begin(curve_begin),
+  curve_end(curve_end)
 {}
-
-#if SOSO_HAS_JSON_SUPPORT
-Bar::Bar(const ci::JsonTree &json)
-: begin(fromString<vec2>(json["begin"].getValue())),
-	end(fromString<vec2>(json["end"].getValue())),
-	time(fromString<int>(json["time"].getValue())),
-	texture_begin(fromString<float>(json["texture_begin"].getValue())),
-	texture_end(fromString<float>(json["texture_end"].getValue())),
-	repeats(fromString<int>(json["repeats"].getValue()))
-{}
-
-ci::JsonTree Bar::toJson(float scale) const
-{
-	auto bar = JsonTree();
-	bar.addChild(JsonTree("begin", toString(begin * scale)));
-	bar.addChild(JsonTree("end", toString(end * scale)));
-	bar.addChild(JsonTree("time", time));
-	bar.addChild(JsonTree("texture_begin", texture_begin));
-	bar.addChild(JsonTree("texture_end", texture_end));
-	bar.addChild(JsonTree("repeats", repeats));
-
-	return bar;
-}
-#endif
 
 Bar::Bar(const ci::XmlTree &xml)
 : begin(fromString<vec2>(xml.getChild("begin").getValue())),
 	end(fromString<vec2>(xml.getChild("end").getValue())),
-  begin_normal(fromString<vec2>(xml.getChild("normal_begin").getValue())),
-  end_normal(fromString<vec2>(xml.getChild("normal_end").getValue())),
+  normal_begin(fromString<vec2>(xml.getChild("normal_begin").getValue())),
+  normal_end(fromString<vec2>(xml.getChild("normal_end").getValue())),
+  curve_begin(fromString<float>(xml.getChild("curve_begin").getValue())),
+  curve_end(fromString<float>(xml.getChild("curve_end").getValue())),
 	time(fromString<int>(xml.getChild("time").getValue())),
 	texture_begin(fromString<float>(xml.getChild("texture_begin").getValue())),
 	texture_end(fromString<float>(xml.getChild("texture_end").getValue())),
@@ -89,11 +67,13 @@ ci::XmlTree Bar::toXml(float scale) const
 	auto bar = XmlTree("b", "");
 	bar.push_back(XmlTree("begin", toString(begin * scale)));
 	bar.push_back(XmlTree("end", toString(end * scale)));
-  bar.push_back(XmlTree("normal_begin", toString(begin_normal)));
-  bar.push_back(XmlTree("normal_end", toString(end_normal)));
+  bar.push_back(XmlTree("normal_begin", toString(normal_begin)));
+  bar.push_back(XmlTree("normal_end", toString(normal_end)));
 	bar.push_back(XmlTree("time", toString(time)));
 	bar.push_back(XmlTree("texture_begin", toString(texture_begin)));
 	bar.push_back(XmlTree("texture_end", toString(texture_end)));
+  bar.push_back(XmlTree("curve_begin", toString(curve_begin)));
+  bar.push_back(XmlTree("curve_end", toString(curve_end)));
 	bar.push_back(XmlTree("repeats", toString(repeats)));
 
 	return bar;
@@ -110,30 +90,6 @@ Section::Section(float curve_begin, float curve_end, int time_begin, int spatial
 	spatial_repeats(spatial_repeats)
 {}
 
-#if SOSO_HAS_JSON_SUPPORT
-Section::Section(const ci::JsonTree &json)
-: curve_begin(json.getValueForKey<float>("curve_begin")),
-	curve_end(json.getValueForKey<float>("curve_end")),
-	time_begin(json.getValueForKey<int>("time_begin")),
-	spatial_subdivisions(json.getValueForKey<int>("spatial_subdivisions")),
-	temporal_steps(json.getValueForKey<int>("temporal_steps")),
-	spatial_repeats(json.getValueForKey<int>("spatial_repeats"))
-{}
-
-ci::JsonTree Section::toJson() const
-{
-	auto section = JsonTree();
-	section.addChild(JsonTree("curve_begin", curve_begin));
-	section.addChild(JsonTree("curve_end", curve_end));
-	section.addChild(JsonTree("time_begin", time_begin));
-	section.addChild(JsonTree("spatial_subdivisions", spatial_subdivisions));
-	section.addChild(JsonTree("temporal_steps", temporal_steps));
-	section.addChild(JsonTree("spatial_repeats", spatial_repeats));
-
-	return section;
-}
-#endif
-
 std::vector<Bar> Section::getBars(const Path2dCalcCache &path) const
 {
 	if (temporal_steps > spatial_subdivisions) {
@@ -143,9 +99,9 @@ std::vector<Bar> Section::getBars(const Path2dCalcCache &path) const
 	vector<Bar> bars;
 
 	for (auto i = 0; i < spatial_subdivisions; i += 1) {
-		auto t1 = (i + 0.0f) / spatial_subdivisions;
-		auto t2 = (i + 1.0f) / spatial_subdivisions;
-		auto time = time_begin + (int)floor(t1 * temporal_steps);
+		const auto t1 = (i + 0.0f) / spatial_subdivisions;
+		const auto t2 = (i + 1.0f) / spatial_subdivisions;
+		const auto time = time_begin + (int)floor(t1 * temporal_steps);
 
 		auto c1 = path.calcNormalizedTime(mix(curve_begin, curve_end, t1), false);
 		auto c2 = path.calcNormalizedTime(mix(curve_begin, curve_end, t2), false);
@@ -156,10 +112,8 @@ std::vector<Bar> Section::getBars(const Path2dCalcCache &path) const
 
 		auto a = path.getPosition(c1);
 		auto b = path.getPosition(c2);
-		bars.push_back( Bar{ a, b, n1, n2, time, t1, t2, spatial_repeats } );
+		bars.push_back( Bar{ a, b, n1, n2, time, t1, t2, spatial_repeats, mix(curve_begin, curve_end, t1), mix(curve_begin, curve_end, t2) } );
 	}
 
 	return bars;
 }
-
-#undef SOSO_HAS_JSON_SUPPORT
