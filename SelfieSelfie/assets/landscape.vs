@@ -57,9 +57,9 @@ vec3 calcOffset( vec2 tex_coord )
 
 void main()
 {
-	float index = wrappedIndex(uCurrentFrame, 0.0 );
-  float deform_index = wrappedIndex(uCurrentFrame, 0.0 );
-	vec2 offset_coord = offsetTextureCoordinate( ciTexCoord0, deform_index );
+	float index = wrappedIndex(uCurrentFrame, FrameOffset );
+  float deform_index = wrappedIndex(uCurrentFrame, DeformFrameOffset );
+	vec2 offset_coord = offsetTextureCoordinate( vec2(0.5), deform_index );
   vec2 frag_color_coord = offsetTextureCoordinate( ciTexCoord0, index );
 	vec2 color_coord = offsetTextureCoordinate( ciTexCoord1, index );
 
