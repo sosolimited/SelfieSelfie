@@ -11,6 +11,9 @@
 		0087D25512CD809F002CD69F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0087D25412CD809F002CD69F /* CoreText.framework */; };
 		00A66A361965AC8800B17EB3 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A66A351965AC8800B17EB3 /* Accelerate.framework */; };
 		00CFDF6B1138442D0091E310 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CFDF6A1138442D0091E310 /* CoreGraphics.framework */; };
+		15A3248D1B21E8F0003D5C01 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3248C1B21E8F0003D5C01 /* CoreMotion.framework */; };
+		15A324951B21E922003D5C01 /* MotionImplCoreMotion.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15A324921B21E922003D5C01 /* MotionImplCoreMotion.mm */; };
+		15A324961B21E922003D5C01 /* MotionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A324931B21E922003D5C01 /* MotionManager.cpp */; };
 		15C5E7501B1F4ABE006DDD4C /* GridTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C5E74F1B1F4ABE006DDD4C /* GridTexture.cpp */; };
 		15C5E7561B1F6661006DDD4C /* Landscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C5E7541B1F6661006DDD4C /* Landscape.cpp */; };
 		15C5E7571B1F6661006DDD4C /* LandscapeGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C5E7551B1F6661006DDD4C /* LandscapeGeometry.cpp */; };
@@ -37,6 +40,11 @@
 		00CFDF6A1138442D0091E310 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		00CFDF6A1138442D0091FFFF /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		116D4117D7BB4DF187954F09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		15A3248C1B21E8F0003D5C01 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		15A324911B21E922003D5C01 /* MotionImplCoreMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionImplCoreMotion.h; sourceTree = "<group>"; };
+		15A324921B21E922003D5C01 /* MotionImplCoreMotion.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MotionImplCoreMotion.mm; sourceTree = "<group>"; };
+		15A324931B21E922003D5C01 /* MotionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MotionManager.cpp; sourceTree = "<group>"; };
+		15A324941B21E922003D5C01 /* MotionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionManager.h; sourceTree = "<group>"; };
 		15C5E74E1B1F4ABE006DDD4C /* GridTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridTexture.h; path = ../src/GridTexture.h; sourceTree = "<group>"; };
 		15C5E74F1B1F4ABE006DDD4C /* GridTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GridTexture.cpp; path = ../src/GridTexture.cpp; sourceTree = "<group>"; };
 		15C5E7511B1F6661006DDD4C /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../src/Constants.h; sourceTree = "<group>"; };
@@ -65,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15A3248D1B21E8F0003D5C01 /* CoreMotion.framework in Frameworks */,
 				C725E001121DAC8F00FA186B /* AVFoundation.framework in Frameworks */,
 				C725DFFE121DAC7F00FA186B /* CoreMedia.framework in Frameworks */,
 				C725E001121DAC8FFFFA18FF /* ImageIO.framework in Frameworks */,
@@ -107,6 +116,7 @@
 		00692BD214FF149000D0A05E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				15A3248C1B21E8F0003D5C01 /* CoreMotion.framework */,
 				C7FB19D5124BC0D70045AFD2 /* AudioToolbox.framework */,
 				00A66A351965AC8800B17EB3 /* Accelerate.framework */,
 				C727C02B121B400300192073 /* CoreMedia.framework */,
@@ -150,6 +160,34 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		15A3248E1B21E90A003D5C01 /* MotionManager */ = {
+			isa = PBXGroup;
+			children = (
+				15A3248F1B21E922003D5C01 /* src */,
+			);
+			name = MotionManager;
+			sourceTree = "<group>";
+		};
+		15A3248F1B21E922003D5C01 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				15A324901B21E922003D5C01 /* cinder */,
+			);
+			name = src;
+			path = ../../lib/Cinder/blocks/MotionManager/src;
+			sourceTree = "<group>";
+		};
+		15A324901B21E922003D5C01 /* cinder */ = {
+			isa = PBXGroup;
+			children = (
+				15A324911B21E922003D5C01 /* MotionImplCoreMotion.h */,
+				15A324921B21E922003D5C01 /* MotionImplCoreMotion.mm */,
+				15A324931B21E922003D5C01 /* MotionManager.cpp */,
+				15A324941B21E922003D5C01 /* MotionManager.h */,
+			);
+			path = cinder;
+			sourceTree = "<group>";
+		};
 		99692BD914FF149000D0A05F /* Headers */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +200,7 @@
 		99692BD914FF149000DFFFFF /* Blocks */ = {
 			isa = PBXGroup;
 			children = (
+				15A3248E1B21E90A003D5C01 /* MotionManager */,
 			);
 			name = Blocks;
 			sourceTree = "<group>";
@@ -228,6 +267,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15A324951B21E922003D5C01 /* MotionImplCoreMotion.mm in Sources */,
+				15A324961B21E922003D5C01 /* MotionManager.cpp in Sources */,
 				15C5E7561B1F6661006DDD4C /* Landscape.cpp in Sources */,
 				15C5E7571B1F6661006DDD4C /* LandscapeGeometry.cpp in Sources */,
 				D46A70E835B24A7CA21E9B83 /* SelfieSelfieApp.cpp in Sources */,
@@ -269,7 +310,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" \"$(CINDER_PATH)/blocks/MotionManager/src\" ../include";
 			};
 			name = Debug;
 		};
@@ -299,7 +340,7 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" ../include";
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" \"$(CINDER_PATH)/blocks/MotionManager/src\" ../include";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
