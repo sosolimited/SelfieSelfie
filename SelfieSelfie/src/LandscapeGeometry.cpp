@@ -38,9 +38,11 @@ vec2 fromString<vec2>(const std::string &string)
 
 #pragma mark - Bar
 
-Bar::Bar(const ci::vec2 &begin, const ci::vec2 &end, int time, float texture_begin, float texture_end, int repeats)
+Bar::Bar(const ci::vec2 &begin, const ci::vec2 &end, const ci::vec2 &begin_normal, const ci::vec2 &end_normal, int time, float texture_begin, float texture_end, int repeats)
 : begin(begin),
 	end(end),
+  begin_normal(begin_normal),
+  end_normal(end_normal),
 	time(time),
 	texture_begin(texture_begin),
 	texture_end(texture_end),
@@ -74,6 +76,8 @@ ci::JsonTree Bar::toJson(float scale) const
 Bar::Bar(const ci::XmlTree &xml)
 : begin(fromString<vec2>(xml.getChild("begin").getValue())),
 	end(fromString<vec2>(xml.getChild("end").getValue())),
+  begin_normal(fromString<vec2>(xml.getChild("normal_begin").getValue())),
+  end_normal(fromString<vec2>(xml.getChild("normal_end").getValue())),
 	time(fromString<int>(xml.getChild("time").getValue())),
 	texture_begin(fromString<float>(xml.getChild("texture_begin").getValue())),
 	texture_end(fromString<float>(xml.getChild("texture_end").getValue())),
@@ -85,6 +89,8 @@ ci::XmlTree Bar::toXml(float scale) const
 	auto bar = XmlTree("b", "");
 	bar.push_back(XmlTree("begin", toString(begin * scale)));
 	bar.push_back(XmlTree("end", toString(end * scale)));
+  bar.push_back(XmlTree("normal_begin", toString(begin_normal)));
+  bar.push_back(XmlTree("normal_end", toString(end_normal)));
 	bar.push_back(XmlTree("time", toString(time)));
 	bar.push_back(XmlTree("texture_begin", toString(texture_begin)));
 	bar.push_back(XmlTree("texture_end", toString(texture_end)));
@@ -143,10 +149,14 @@ std::vector<Bar> Section::getBars(const Path2dCalcCache &path) const
 
 		auto c1 = path.calcNormalizedTime(mix(curve_begin, curve_end, t1), false);
 		auto c2 = path.calcNormalizedTime(mix(curve_begin, curve_end, t2), false);
+    auto tan1 = path.getPath2d().getTangent( c1 );
+    auto tan2 = path.getPath2d().getTangent( c2 );
+    auto n1 = normalize(vec2(- tan1.y, tan1.x));
+    auto n2 = normalize(vec2(- tan2.y, tan2.x));
 
 		auto a = path.getPosition(c1);
 		auto b = path.getPosition(c2);
-		bars.push_back( Bar{ a, b, time, t1, t2, spatial_repeats } );
+		bars.push_back( Bar{ a, b, n1, n2, time, t1, t2, spatial_repeats } );
 	}
 
 	return bars;

@@ -4,6 +4,8 @@
 		<b>
 			<begin>[0,0]</begin>
 			<end>[0.0858765841,0.000463450764]</end>
+			<normal_begin>[0.00154083048,0.999998868]</normal_begin>
+			<normal_end>[-0.0195552092,0.999808788]</normal_end>
 			<time>1</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
@@ -12,6 +14,8 @@
 		<b>
 			<begin>[0.0858765841,0.000463450764]</begin>
 			<end>[0.171645597,0.00454411563]</end>
+			<normal_begin>[-0.0195552092,0.999808788]</normal_begin>
+			<normal_end>[-0.0823531821,0.996603191]</normal_end>
 			<time>1</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
@@ -20,6 +24,8 @@
 		<b>
 			<begin>[0.171645597,0.00454411563]</begin>
 			<end>[0.256738842,0.0158289671]</end>
+			<normal_begin>[-0.0823531821,0.996603191]</normal_begin>
+			<normal_end>[-0.187821046,0.982203305]</normal_end>
 			<time>5</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
@@ -28,6 +34,8 @@
 		<b>
 			<begin>[0.256738842,0.0158289671]</begin>
 			<end>[0.339600116,0.0380677693]</end>
+			<normal_begin>[-0.187821046,0.982203305]</normal_begin>
+			<normal_end>[-0.336985707,0.941509724]</normal_end>
 			<time>5</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
@@ -36,6 +44,8 @@
 		<b>
 			<begin>[0.339600116,0.0380677693]</begin>
 			<end>[0.410994411,0.0709773526]</end>
+			<normal_begin>[-0.336985707,0.941509724]</normal_begin>
+			<normal_end>[-0.501687527,0.865048885]</normal_end>
 			<time>9</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
@@ -44,6 +54,8 @@
 		<b>
 			<begin>[0.410994411,0.0709773526]</begin>
 			<end>[0.474672943,0.117032968]</end>
+			<normal_begin>[-0.501687527,0.865048885]</normal_begin>
+			<normal_end>[-0.665315986,0.746561766]</normal_end>
 			<time>9</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
@@ -52,6 +64,8 @@
 		<b>
 			<begin>[0.474672943,0.117032968]</begin>
 			<end>[0.521303773,0.166397348]</end>
+			<normal_begin>[-0.665315986,0.746561766]</normal_begin>
+			<normal_end>[-0.781677008,0.623683393]</normal_end>
 			<time>13</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
@@ -60,6 +74,8 @@
 		<b>
 			<begin>[0.521303773,0.166397348]</begin>
 			<end>[0.559458375,0.222591832]</end>
+			<normal_begin>[-0.781677008,0.623683393]</normal_begin>
+			<normal_end>[-0.868328691,0.495989174]</normal_end>
 			<time>13</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
@@ -68,6 +84,8 @@
 		<b>
 			<begin>[0.559458375,0.222591832]</begin>
 			<end>[0.585757196,0.277391255]</end>
+			<normal_begin>[-0.868328691,0.495989174]</normal_begin>
+			<normal_end>[-0.928131402,0.372252673]</normal_end>
 			<time>17</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
@@ -76,6 +94,8 @@
 		<b>
 			<begin>[0.585757196,0.277391255]</begin>
 			<end>[0.605186343,0.335005134]</end>
+			<normal_begin>[-0.928131402,0.372252673]</normal_begin>
+			<normal_end>[-0.962867975,0.269972771]</normal_end>
 			<time>17</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
@@ -84,6 +104,8 @@
 		<b>
 			<begin>[0.605186343,0.335005134]</begin>
 			<end>[0.61691004,0.383699298]</end>
+			<normal_begin>[-0.962867975,0.269972771]</normal_begin>
+			<normal_end>[-0.979793131,0.20001395]</normal_end>
 			<time>21</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
@@ -92,6 +114,8 @@
 		<b>
 			<begin>[0.61691004,0.383699298]</begin>
 			<end>[0.625401735,0.43306312]</end>
+			<normal_begin>[-0.979793131,0.20001395]</normal_begin>
+			<normal_end>[-0.99007076,0.140569955]</normal_end>
 			<time>21</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
@@ -100,6 +124,8 @@
 		<b>
 			<begin>[0.625401735,0.43306312]</begin>
 			<end>[0.629754663,0.468578458]</end>
+			<normal_begin>[-0.99007076,0.140569955]</normal_begin>
+			<normal_end>[-0.99464196,0.103379942]</normal_end>
 			<time>25</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.5</texture_end>
@@ -108,6 +134,8 @@
 		<b>
 			<begin>[0.629754663,0.468578458]</begin>
 			<end>[0.632843673,0.504226267]</end>
+			<normal_begin>[-0.99464196,0.103379942]</normal_begin>
+			<normal_end>[-0.99755919,0.0698265582]</normal_end>
 			<time>25</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>1</texture_end>
@@ -116,6 +144,8 @@
 		<b>
 			<begin>[0.632843673,0.504226267]</begin>
 			<end>[0.633828938,0.519850314]</end>
+			<normal_begin>[-0.99755919,0.0698265582]</normal_begin>
+			<normal_end>[-0.998422801,0.0561421067]</normal_end>
 			<time>26</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.03125</texture_end>
@@ -124,6 +154,8 @@
 		<b>
 			<begin>[0.633828938,0.519850314]</begin>
 			<end>[0.634604335,0.535486162]</end>
+			<normal_begin>[-0.998422801,0.0561421067]</normal_begin>
+			<normal_end>[-0.999075055,0.0430014953]</normal_end>
 			<time>27</time>
 			<texture_begin>0.03125</texture_begin>
 			<texture_end>0.0625</texture_end>
@@ -132,6 +164,8 @@
 		<b>
 			<begin>[0.634604335,0.535486162]</begin>
 			<end>[0.63517797,0.551130652]</end>
+			<normal_begin>[-0.999075055,0.0430014953]</normal_begin>
+			<normal_end>[-0.999538779,0.0303647034]</normal_end>
 			<time>28</time>
 			<texture_begin>0.0625</texture_begin>
 			<texture_end>0.09375</texture_end>
@@ -140,6 +174,8 @@
 		<b>
 			<begin>[0.63517797,0.551130652]</begin>
 			<end>[0.635557473,0.566781044]</end>
+			<normal_begin>[-0.999538779,0.0303647034]</normal_begin>
+			<normal_end>[-0.999834478,0.0181943867]</normal_end>
 			<time>29</time>
 			<texture_begin>0.09375</texture_begin>
 			<texture_end>0.125</texture_end>
@@ -148,6 +184,8 @@
 		<b>
 			<begin>[0.635557473,0.566781044]</begin>
 			<end>[0.635749757,0.582434773]</end>
+			<normal_begin>[-0.999834478,0.0181943867]</normal_begin>
+			<normal_end>[-0.999979138,0.00645562727]</normal_end>
 			<time>30</time>
 			<texture_begin>0.125</texture_begin>
 			<texture_end>0.15625</texture_end>
@@ -156,6 +194,8 @@
 		<b>
 			<begin>[0.635749757,0.582434773]</begin>
 			<end>[0.635761619,0.598089755]</end>
+			<normal_begin>[-0.999979138,0.00645562727]</normal_begin>
+			<normal_end>[-0.999988079,-0.004885145]</normal_end>
 			<time>31</time>
 			<texture_begin>0.15625</texture_begin>
 			<texture_end>0.1875</texture_end>
@@ -164,6 +204,8 @@
 		<b>
 			<begin>[0.635761619,0.598089755]</begin>
 			<end>[0.635598838,0.613743782]</end>
+			<normal_begin>[-0.999988079,-0.004885145]</normal_begin>
+			<normal_end>[-0.999874234,-0.0158590171]</normal_end>
 			<time>32</time>
 			<texture_begin>0.1875</texture_begin>
 			<texture_end>0.21875</texture_end>
@@ -172,6 +214,8 @@
 		<b>
 			<begin>[0.635598838,0.613743782]</begin>
 			<end>[0.63526696,0.629395008]</end>
+			<normal_begin>[-0.999874234,-0.0158590171]</normal_begin>
+			<normal_end>[-0.999648869,-0.0264956299]</normal_end>
 			<time>33</time>
 			<texture_begin>0.21875</texture_begin>
 			<texture_end>0.25</texture_end>
@@ -180,6 +224,8 @@
 		<b>
 			<begin>[0.63526696,0.629395008]</begin>
 			<end>[0.63477087,0.645042896]</end>
+			<normal_begin>[-0.999648869,-0.0264956299]</normal_begin>
+			<normal_end>[-0.999321818,-0.0368244499]</normal_end>
 			<time>34</time>
 			<texture_begin>0.25</texture_begin>
 			<texture_end>0.28125</texture_end>
@@ -188,6 +234,8 @@
 		<b>
 			<begin>[0.63477087,0.645042896]</begin>
 			<end>[0.634115338,0.660684347]</end>
+			<normal_begin>[-0.999321818,-0.0368244499]</normal_begin>
+			<normal_end>[-0.99890089,-0.046872098]</normal_end>
 			<time>35</time>
 			<texture_begin>0.28125</texture_begin>
 			<texture_end>0.3125</texture_end>
@@ -196,6 +244,8 @@
 		<b>
 			<begin>[0.634115338,0.660684347]</begin>
 			<end>[0.633304536,0.676318407]</end>
+			<normal_begin>[-0.99890089,-0.046872098]</normal_begin>
+			<normal_end>[-0.998393297,-0.0566655844]</normal_end>
 			<time>36</time>
 			<texture_begin>0.3125</texture_begin>
 			<texture_end>0.34375</texture_end>
@@ -204,6 +254,8 @@
 		<b>
 			<begin>[0.633304536,0.676318407]</begin>
 			<end>[0.632342339,0.691943705]</end>
+			<normal_begin>[-0.998393297,-0.0566655844]</normal_begin>
+			<normal_end>[-0.997804344,-0.0662312061]</normal_end>
 			<time>37</time>
 			<texture_begin>0.34375</texture_begin>
 			<texture_end>0.375</texture_end>
@@ -212,6 +264,8 @@
 		<b>
 			<begin>[0.632342339,0.691943705]</begin>
 			<end>[0.631231964,0.707559347]</end>
+			<normal_begin>[-0.997804344,-0.0662312061]</normal_begin>
+			<normal_end>[-0.9971385,-0.075595662]</normal_end>
 			<time>38</time>
 			<texture_begin>0.375</texture_begin>
 			<texture_end>0.40625</texture_end>
@@ -220,6 +274,8 @@
 		<b>
 			<begin>[0.631231964,0.707559347]</begin>
 			<end>[0.629976332,0.723164082]</end>
+			<normal_begin>[-0.9971385,-0.075595662]</normal_begin>
+			<normal_end>[-0.996399224,-0.0847851112]</normal_end>
 			<time>39</time>
 			<texture_begin>0.40625</texture_begin>
 			<texture_end>0.4375</texture_end>
@@ -228,6 +284,8 @@
 		<b>
 			<begin>[0.629976332,0.723164082]</begin>
 			<end>[0.628578067,0.738756478]</end>
+			<normal_begin>[-0.996399224,-0.0847851112]</normal_begin>
+			<normal_end>[-0.995588481,-0.0938269496]</normal_end>
 			<time>40</time>
 			<texture_begin>0.4375</texture_begin>
 			<texture_end>0.46875</texture_end>
@@ -236,6 +294,8 @@
 		<b>
 			<begin>[0.628578067,0.738756478]</begin>
 			<end>[0.627039135,0.754335999]</end>
+			<normal_begin>[-0.995588481,-0.0938269496]</normal_begin>
+			<normal_end>[-0.994707227,-0.102749988]</normal_end>
 			<time>41</time>
 			<texture_begin>0.46875</texture_begin>
 			<texture_end>0.5</texture_end>
@@ -244,6 +304,8 @@
 		<b>
 			<begin>[0.627039135,0.754335999]</begin>
 			<end>[0.625361383,0.769900858]</end>
+			<normal_begin>[-0.994707227,-0.102749988]</normal_begin>
+			<normal_end>[-0.993754923,-0.111584477]</normal_end>
 			<time>42</time>
 			<texture_begin>0.5</texture_begin>
 			<texture_end>0.53125</texture_end>
@@ -252,6 +314,8 @@
 		<b>
 			<begin>[0.625361383,0.769900858]</begin>
 			<end>[0.623545766,0.785450161]</end>
+			<normal_begin>[-0.993754923,-0.111584477]</normal_begin>
+			<normal_end>[-0.992729783,-0.12036413]</normal_end>
 			<time>43</time>
 			<texture_begin>0.53125</texture_begin>
 			<texture_end>0.5625</texture_end>
@@ -260,6 +324,8 @@
 		<b>
 			<begin>[0.623545766,0.785450161]</begin>
 			<end>[0.62159282,0.800983012]</end>
+			<normal_begin>[-0.992729783,-0.12036413]</normal_begin>
+			<normal_end>[-0.99162811,-0.129126906]</normal_end>
 			<time>44</time>
 			<texture_begin>0.5625</texture_begin>
 			<texture_end>0.59375</texture_end>
@@ -268,6 +334,8 @@
 		<b>
 			<begin>[0.62159282,0.800983012]</begin>
 			<end>[0.619502604,0.816497862]</end>
+			<normal_begin>[-0.99162811,-0.129126906]</normal_begin>
+			<normal_end>[-0.990443885,-0.137916431]</normal_end>
 			<time>45</time>
 			<texture_begin>0.59375</texture_begin>
 			<texture_end>0.625</texture_end>
@@ -276,6 +344,8 @@
 		<b>
 			<begin>[0.619502604,0.816497862]</begin>
 			<end>[0.617274225,0.83199358]</end>
+			<normal_begin>[-0.990443885,-0.137916431]</normal_begin>
+			<normal_end>[-0.989168465,-0.146784738]</normal_end>
 			<time>46</time>
 			<texture_begin>0.625</texture_begin>
 			<texture_end>0.65625</texture_end>
@@ -284,6 +354,8 @@
 		<b>
 			<begin>[0.617274225,0.83199358]</begin>
 			<end>[0.614905953,0.847468436]</end>
+			<normal_begin>[-0.989168465,-0.146784738]</normal_begin>
+			<normal_end>[-0.987789214,-0.155796394]</normal_end>
 			<time>47</time>
 			<texture_begin>0.65625</texture_begin>
 			<texture_end>0.6875</texture_end>
@@ -292,6 +364,8 @@
 		<b>
 			<begin>[0.614905953,0.847468436]</begin>
 			<end>[0.612394989,0.862920702]</end>
+			<normal_begin>[-0.987789214,-0.155796394]</normal_begin>
+			<normal_end>[-0.986288011,-0.16503346]</normal_end>
 			<time>48</time>
 			<texture_begin>0.6875</texture_begin>
 			<texture_end>0.71875</texture_end>
@@ -300,6 +374,8 @@
 		<b>
 			<begin>[0.612394989,0.862920702]</begin>
 			<end>[0.609736979,0.878348649]</end>
+			<normal_begin>[-0.986288011,-0.16503346]</normal_begin>
+			<normal_end>[-0.984638453,-0.174605235]</normal_end>
 			<time>49</time>
 			<texture_begin>0.71875</texture_begin>
 			<texture_end>0.75</texture_end>
@@ -308,6 +384,8 @@
 		<b>
 			<begin>[0.609736979,0.878348649]</begin>
 			<end>[0.606925547,0.893749058]</end>
+			<normal_begin>[-0.984638453,-0.174605235]</normal_begin>
+			<normal_end>[-0.982801795,-0.184663266]</normal_end>
 			<time>50</time>
 			<texture_begin>0.75</texture_begin>
 			<texture_end>0.78125</texture_end>
@@ -316,6 +394,8 @@
 		<b>
 			<begin>[0.606925547,0.893749058]</begin>
 			<end>[0.603951454,0.90911895]</end>
+			<normal_begin>[-0.982801795,-0.184663266]</normal_begin>
+			<normal_end>[-0.980717838,-0.19542937]</normal_end>
 			<time>51</time>
 			<texture_begin>0.78125</texture_begin>
 			<texture_end>0.8125</texture_end>
@@ -324,6 +404,8 @@
 		<b>
 			<begin>[0.603951454,0.90911895]</begin>
 			<end>[0.60080117,0.924453795]</end>
+			<normal_begin>[-0.980717838,-0.19542937]</normal_begin>
+			<normal_end>[-0.978288114,-0.207249373]</normal_end>
 			<time>52</time>
 			<texture_begin>0.8125</texture_begin>
 			<texture_end>0.84375</texture_end>
@@ -332,6 +414,8 @@
 		<b>
 			<begin>[0.60080117,0.924453795]</begin>
 			<end>[0.597454071,0.939746737]</end>
+			<normal_begin>[-0.978288114,-0.207249373]</normal_begin>
+			<normal_end>[-0.975340366,-0.220705822]</normal_end>
 			<time>53</time>
 			<texture_begin>0.84375</texture_begin>
 			<texture_end>0.875</texture_end>
@@ -340,6 +424,8 @@
 		<b>
 			<begin>[0.597454071,0.939746737]</begin>
 			<end>[0.593876719,0.954987466]</end>
+			<normal_begin>[-0.975340366,-0.220705822]</normal_begin>
+			<normal_end>[-0.971533298,-0.23690322]</normal_end>
 			<time>54</time>
 			<texture_begin>0.875</texture_begin>
 			<texture_end>0.90625</texture_end>
@@ -348,6 +434,8 @@
 		<b>
 			<begin>[0.593876719,0.954987466]</begin>
 			<end>[0.590010047,0.970157146]</end>
+			<normal_begin>[-0.971533298,-0.23690322]</normal_begin>
+			<normal_end>[-0.966062486,-0.258308381]</normal_end>
 			<time>55</time>
 			<texture_begin>0.90625</texture_begin>
 			<texture_end>0.9375</texture_end>
@@ -356,6 +444,8 @@
 		<b>
 			<begin>[0.590010047,0.970157146]</begin>
 			<end>[0.585726321,0.985214293]</end>
+			<normal_begin>[-0.966062486,-0.258308381]</normal_begin>
+			<normal_end>[-0.956320107,-0.292321622]</normal_end>
 			<time>56</time>
 			<texture_begin>0.9375</texture_begin>
 			<texture_end>0.96875</texture_end>
@@ -364,6 +454,8 @@
 		<b>
 			<begin>[0.585726321,0.985214293]</begin>
 			<end>[0.580600023,1]</end>
+			<normal_begin>[-0.956320107,-0.292321622]</normal_begin>
+			<normal_end>[-0.922805965,-0.385265052]</normal_end>
 			<time>57</time>
 			<texture_begin>0.96875</texture_begin>
 			<texture_end>1</texture_end>

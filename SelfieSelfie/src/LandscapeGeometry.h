@@ -25,13 +25,15 @@ namespace soso {
 struct Bar
 {
 	Bar() = default;
-	Bar(const ci::vec2 &begin, const ci::vec2 &end, int time, float texture_begin, float texture_end, int repeats);
+  Bar(const ci::vec2 &begin, const ci::vec2 &end, const ci::vec2 &begin_normal, const ci::vec2 &end_normal, int time, float texture_begin, float texture_end, int repeats);
 	explicit Bar(const ci::JsonTree &json);
 	explicit Bar(const ci::XmlTree &json);
 
 	/// Physical coordinates of bar in profile
 	ci::vec2 begin;
 	ci::vec2 end;
+  ci::vec2 begin_normal;
+  ci::vec2 end_normal;
 	/// What frame time offset this bar is played at, in frames.
 	int			 time = 0;
 	/// What section of the texture this bar reads from, normalized.

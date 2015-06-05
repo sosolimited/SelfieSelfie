@@ -25,9 +25,10 @@ struct alignas(16) Vertex {
 	vec3	position;
 	vec3	normal;
 	vec2	tex_coord;
-	vec2	color_tex_coord;
+	vec2	color_tex_coord;      // shared within bands
 	float deform_scaling;
 	float frame_offset;
+  float deform_frame_offset;  // shared across seams
 	float color_weight;
 };
 
@@ -40,11 +41,15 @@ const auto kVertexLayout = ([] {
 		layout.append( geom::Attrib::CUSTOM_0, 1, sizeof(Vertex), offsetof(Vertex, deform_scaling) );
 		layout.append( geom::Attrib::CUSTOM_1, 1, sizeof(Vertex), offsetof(Vertex, frame_offset) );
 		layout.append( geom::Attrib::CUSTOM_2, 1, sizeof(Vertex), offsetof(Vertex, color_weight) );
+    layout.append( geom::Attrib::CUSTOM_3, 1, sizeof(Vertex), offsetof(Vertex, deform_frame_offset) );
 		return layout;
 	} ());
 
 const auto kVertexMapping = ([] {
-		return gl::Batch::AttributeMapping{ { geom::Attrib::CUSTOM_0, "DeformScaling" }, { geom::Attrib::CUSTOM_1, "FrameOffset" }, { geom::Attrib::CUSTOM_2, "ColorWeight" } };
+		return gl::Batch::AttributeMapping{ { geom::Attrib::CUSTOM_0, "DeformScaling" },
+                                        { geom::Attrib::CUSTOM_1, "FrameOffset" },
+                                        { geom::Attrib::CUSTOM_2, "ColorWeight" },
+                                        { geom::Attrib::CUSTOM_3, "DeformFrameOffset" } };
 	} ());
 
 // Load a shader and handle exceptions. Return nullptr on failure.
@@ -74,13 +79,13 @@ void addQuad( std::vector<Vertex> &vertices, const vec3 &a, const vec3 &b, const
 	auto deform_scaling = 0.0f;
 
 	vertices.insert( vertices.end(), {
-		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), deform_scaling, time, 0.0f },
-		Vertex{ b, normal, slice.getUpperRight(), slice.getUpperRight(), deform_scaling, time, 0.0f },
-		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), deform_scaling, time, 0.0f },
+		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), deform_scaling, time, 0.0f, 0.0f },
+		Vertex{ b, normal, slice.getUpperRight(), slice.getUpperRight(), deform_scaling, time, 0.0f, 0.0f },
+		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), deform_scaling, time, 0.0f, 0.0f },
 
-		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), deform_scaling, time, 0.0f },
-		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), deform_scaling, time, 0.0f },
-		Vertex{ d, normal, slice.getLowerLeft(), slice.getLowerLeft(), deform_scaling, time, 0.0f }
+		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), deform_scaling, time, 0.0f, 0.0f },
+		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), deform_scaling, time, 0.0f, 0.0f },
+		Vertex{ d, normal, slice.getLowerLeft(), slice.getLowerLeft(), deform_scaling, time, 0.0f, 0.0f }
 	} );
 
 }
@@ -102,8 +107,7 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, const ci::vec2 &cen
 	};
 
 	const auto calc_normal = [=] (int r, int s) {
-		auto ray = bar.end - bar.begin;
-		auto normal = normalize(vec3(- ray.y, ray.x, 0.0f));
+		auto normal = normalize( vec3(mix(bar.begin_normal, bar.end_normal, (float)r), 0.0f) );
 		auto t = (float) s / segments;
 		auto rotation = glm::rotate<float>( t * Tau, vec3(0, 1, 0) );
 		return vec3( rotation * vec4(normal, 0.0f) );
@@ -133,7 +137,7 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, const ci::vec2 &cen
 		auto tc = calc_tc(r, s);
 		auto normal = calc_normal(r, s);
 		auto color_tc = calc_tc( provoking.x, provoking.y );
-		vertices.push_back( Vertex{ pos, normal, tc, color_tc, deform_scaling, (float)bar.time, 0.0f } );
+		vertices.push_back( Vertex{ pos, normal, tc, color_tc, deform_scaling, (float)bar.time, 0.0f, 0.0f } );
 	};
 
 	// Create triangles for flat shading
@@ -182,15 +186,18 @@ void Landscape::setup()
 		v.normal = vec3( xf * vec4(v.normal, 0.0f) );
 	}
 
-	// Mirror
+//  /*
+	// Mirror (maybe just draw twice)
 	auto copy = vertices;
 	auto mirror = glm::mat4( glm::angleAxis<float>( Tau * 0.5f, vec3( 0, 1, 0 ) ) );
+
 	for( auto &v : copy ) {
 		v.position = vec3( mirror * vec4(v.position, 1.0f) );
 		v.normal = vec3( mirror * vec4(v.normal, 0.0f) );
 	}
 
 	vertices.insert( vertices.end(), copy.begin(), copy.end() );
+//  */
 
   CI_LOG_I("Uploading shape to GPU.");
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );

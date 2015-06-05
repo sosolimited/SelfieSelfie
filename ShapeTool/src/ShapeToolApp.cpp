@@ -148,7 +148,7 @@ void ShapeToolApp::saveJson() const
 	json.pushBack(sections);
 	json.pushBack(bars);
 
-	auto p = getAssetPath("") / "../../GridSpace/assets/profile.json";
+	auto p = getAssetPath("") / "../../SelfieSelfie/assets/profile.json";
 	json.write(p);
 }
 
@@ -168,7 +168,7 @@ void ShapeToolApp::saveXml() const
 	}
 	xml.push_back(bars);
 
-	auto p = getAssetPath("") / "../../GridSpace/assets/profile.xml";
+	auto p = getAssetPath("") / "../../SelfieSelfie/assets/profile.xml";
 	xml.write(DataTargetPath::createRef(p));
 }
 
@@ -230,7 +230,13 @@ void ShapeToolApp::drawSpatialFrames()
 		auto bars = s.getBars(*_path_cache);
 		gl::begin(GL_LINES);
 		for (auto &b : bars) {
-			gl::color(Color(b.texture_begin, 0.0f, 0.5f));
+      gl::color(Color(1.0f, 1.0f, 0.0f));
+      gl::vertex(b.begin + b.begin_normal * 8.0f);
+      gl::vertex(b.begin);
+      gl::vertex(b.end);
+      gl::vertex(b.end + b.end_normal * 8.0f);
+
+      gl::color(Color(b.texture_begin, 0.0f, 0.5f));
 			gl::vertex(b.begin);
 			gl::color(Color(b.texture_end, 0.0f, 0.5f));
 			gl::vertex(b.end);

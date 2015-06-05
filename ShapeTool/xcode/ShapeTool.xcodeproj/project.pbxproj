@@ -14,12 +14,12 @@
 		00B784B40FF439BC000DE1D7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B00FF439BC000DE1D7 /* AudioToolbox.framework */; };
 		00B784B50FF439BC000DE1D7 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B10FF439BC000DE1D7 /* AudioUnit.framework */; };
 		00B784B60FF439BC000DE1D7 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B784B20FF439BC000DE1D7 /* CoreAudio.framework */; };
+		15BC10AF1B222940005512DE /* LandscapeGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15BC10AE1B222940005512DE /* LandscapeGeometry.cpp */; };
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		6F75741FB036434AAA26172E /* CinderApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = A49DF9507C844006AD72BE32 /* CinderApp.icns */; };
 		80F75F4E21584C8F97973631 /* ShapeToolApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468E9734FF134500BB023E71 /* ShapeToolApp.cpp */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		9C359C361B17B69D009BCB63 /* LandscapeGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C359C341B17B69D009BCB63 /* LandscapeGeometry.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,14 +33,14 @@
 		0784DF89A02F490B95FE82EA /* Resources.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Resources.h; path = ../include/Resources.h; sourceTree = "<group>"; };
 		0A9E783DEDCF4B07B9F0CE30 /* ShapeTool_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = ShapeTool_Prefix.pch; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		15BC10AD1B222940005512DE /* LandscapeGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeGeometry.h; path = ../../SelfieSelfie/src/LandscapeGeometry.h; sourceTree = "<group>"; };
+		15BC10AE1B222940005512DE /* LandscapeGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeGeometry.cpp; path = ../../SelfieSelfie/src/LandscapeGeometry.cpp; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		468E9734FF134500BB023E71 /* ShapeToolApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.cpp; name = ShapeToolApp.cpp; path = ../src/ShapeToolApp.cpp; sourceTree = "<group>"; };
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		8D1107320486CEB800E47090 /* ShapeTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShapeTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9C359C341B17B69D009BCB63 /* LandscapeGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeGeometry.cpp; path = ../../GridSpace/src/LandscapeGeometry.cpp; sourceTree = "<group>"; };
-		9C359C351B17B69D009BCB63 /* LandscapeGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeGeometry.h; path = ../../GridSpace/src/LandscapeGeometry.h; sourceTree = "<group>"; };
 		A49DF9507C844006AD72BE32 /* CinderApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = CinderApp.icns; path = ../resources/CinderApp.icns; sourceTree = "<group>"; };
 		AC7C2930E05B4257A4478159 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,9 +76,9 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				15BC10AD1B222940005512DE /* LandscapeGeometry.h */,
+				15BC10AE1B222940005512DE /* LandscapeGeometry.cpp */,
 				468E9734FF134500BB023E71 /* ShapeToolApp.cpp */,
-				9C359C341B17B69D009BCB63 /* LandscapeGeometry.cpp */,
-				9C359C351B17B69D009BCB63 /* LandscapeGeometry.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -221,7 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80F75F4E21584C8F97973631 /* ShapeToolApp.cpp in Sources */,
-				9C359C361B17B69D009BCB63 /* LandscapeGeometry.cpp in Sources */,
+				15BC10AF1B222940005512DE /* LandscapeGeometry.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
