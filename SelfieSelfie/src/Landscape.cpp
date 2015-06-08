@@ -164,8 +164,9 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, const ci::vec2 &cen
     auto color_weight = 0.0f;
 		auto normal = calc_normal(r, s);
     auto curve_time = mix( bar.curve_begin, bar.curve_end, (float)r );
+
     auto deform_frame = (72.0f * curve_time);
-    auto deform_scaling = easeInOutQuad(curve_time);
+    auto deform_scaling = 0.0f; // easeInOutQuad(curve_time);
     auto deform_tc = calc_deform_tc(r, s);
 
     vertices.emplace_back( Vertex { pos, (float)bar.time,
