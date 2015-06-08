@@ -80,7 +80,7 @@ void ShapeToolApp::setup()
 
 	_deform_start = getLastFrame() + 1;
 	auto divisions = total_blocks - _deform_start;
-	addSection( -1.0f, 1, divisions, divisions, 2 );
+	addSection( -1.0f, 1, divisions, divisions, 3 );
 }
 
 void ShapeToolApp::nextPath()

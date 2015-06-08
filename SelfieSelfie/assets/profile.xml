@@ -369,7 +369,7 @@
 			<time>47</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.010309278</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.682863712,0.796454728]</begin>
@@ -379,7 +379,7 @@
 			<time>47</time>
 			<texture_begin>0.010309278</texture_begin>
 			<texture_end>0.0206185561</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.685001552,0.820206344]</begin>
@@ -389,7 +389,7 @@
 			<time>48</time>
 			<texture_begin>0.0206185561</texture_begin>
 			<texture_end>0.030927835</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.687030375,0.843967855]</begin>
@@ -399,7 +399,7 @@
 			<time>50</time>
 			<texture_begin>0.030927835</texture_begin>
 			<texture_end>0.0412371121</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.688956618,0.867737532]</begin>
@@ -409,7 +409,7 @@
 			<time>50</time>
 			<texture_begin>0.0412371121</texture_begin>
 			<texture_end>0.0515463911</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.690786123,0.891515613]</begin>
@@ -419,7 +419,7 @@
 			<time>52</time>
 			<texture_begin>0.0515463911</texture_begin>
 			<texture_end>0.0618556701</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.692524135,0.915299714]</begin>
@@ -429,7 +429,7 @@
 			<time>53</time>
 			<texture_begin>0.0618556701</texture_begin>
 			<texture_end>0.0721649453</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.694175422,0.939090192]</begin>
@@ -439,7 +439,7 @@
 			<time>53</time>
 			<texture_begin>0.0721649453</texture_begin>
 			<texture_end>0.0824742243</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.695744395,0.962886393]</begin>
@@ -449,7 +449,7 @@
 			<time>54</time>
 			<texture_begin>0.0824742243</texture_begin>
 			<texture_end>0.0927835032</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.697234869,0.986687303]</begin>
@@ -459,7 +459,7 @@
 			<time>56</time>
 			<texture_begin>0.0927835032</texture_begin>
 			<texture_end>0.103092782</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.698650599,1.01049316]</begin>
@@ -469,7 +469,7 @@
 			<time>57</time>
 			<texture_begin>0.103092782</texture_begin>
 			<texture_end>0.113402061</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.699994922,1.03430319]</begin>
@@ -479,7 +479,7 @@
 			<time>58</time>
 			<texture_begin>0.113402061</texture_begin>
 			<texture_end>0.12371134</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.70127064,1.05811656]</begin>
@@ -489,7 +489,7 @@
 			<time>59</time>
 			<texture_begin>0.12371134</texture_begin>
 			<texture_end>0.134020612</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.702480912,1.08193314]</begin>
@@ -499,7 +499,7 @@
 			<time>59</time>
 			<texture_begin>0.134020612</texture_begin>
 			<texture_end>0.144329891</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.703628123,1.10575402]</begin>
@@ -509,7 +509,7 @@
 			<time>60</time>
 			<texture_begin>0.144329891</texture_begin>
 			<texture_end>0.15463917</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.704714894,1.12957716]</begin>
@@ -519,7 +519,7 @@
 			<time>61</time>
 			<texture_begin>0.15463917</texture_begin>
 			<texture_end>0.164948449</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.705743134,1.15340281]</begin>
@@ -529,7 +529,7 @@
 			<time>62</time>
 			<texture_begin>0.164948449</texture_begin>
 			<texture_end>0.175257728</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.706715107,1.1772306]</begin>
@@ -539,7 +539,7 @@
 			<time>64</time>
 			<texture_begin>0.175257728</texture_begin>
 			<texture_end>0.185567006</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.70763278,1.20106089]</begin>
@@ -549,7 +549,7 @@
 			<time>65</time>
 			<texture_begin>0.185567006</texture_begin>
 			<texture_end>0.195876285</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.708497703,1.22489274]</begin>
@@ -559,7 +559,7 @@
 			<time>66</time>
 			<texture_begin>0.195876285</texture_begin>
 			<texture_end>0.206185564</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.709311903,1.24872684]</begin>
@@ -569,7 +569,7 @@
 			<time>67</time>
 			<texture_begin>0.206185564</texture_begin>
 			<texture_end>0.216494843</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.710076451,1.27256143]</begin>
@@ -579,7 +579,7 @@
 			<time>68</time>
 			<texture_begin>0.216494843</texture_begin>
 			<texture_end>0.226804122</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.710793197,1.29639888]</begin>
@@ -589,7 +589,7 @@
 			<time>69</time>
 			<texture_begin>0.226804122</texture_begin>
 			<texture_end>0.237113401</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.711463094,1.3202374]</begin>
@@ -599,7 +599,7 @@
 			<time>70</time>
 			<texture_begin>0.237113401</texture_begin>
 			<texture_end>0.24742268</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.71208781,1.34407699]</begin>
@@ -609,7 +609,7 @@
 			<time>71</time>
 			<texture_begin>0.24742268</texture_begin>
 			<texture_end>0.257731944</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.712668061,1.36791778]</begin>
@@ -619,7 +619,7 @@
 			<time>71</time>
 			<texture_begin>0.257731944</texture_begin>
 			<texture_end>0.268041223</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.713205218,1.39176035]</begin>
@@ -629,7 +629,7 @@
 			<time>72</time>
 			<texture_begin>0.268041223</texture_begin>
 			<texture_end>0.278350502</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.713700056,1.41560233]</begin>
@@ -639,7 +639,7 @@
 			<time>73</time>
 			<texture_begin>0.278350502</texture_begin>
 			<texture_end>0.288659781</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.714153469,1.43944585]</begin>
@@ -649,7 +649,7 @@
 			<time>74</time>
 			<texture_begin>0.288659781</texture_begin>
 			<texture_end>0.29896906</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.714566529,1.46329033]</begin>
@@ -659,7 +659,7 @@
 			<time>75</time>
 			<texture_begin>0.29896906</texture_begin>
 			<texture_end>0.309278339</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.714939654,1.48713458]</begin>
@@ -669,7 +669,7 @@
 			<time>76</time>
 			<texture_begin>0.309278339</texture_begin>
 			<texture_end>0.319587618</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.715273738,1.51098037]</begin>
@@ -679,7 +679,7 @@
 			<time>77</time>
 			<texture_begin>0.319587618</texture_begin>
 			<texture_end>0.329896897</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.715569317,1.53482676]</begin>
@@ -689,7 +689,7 @@
 			<time>78</time>
 			<texture_begin>0.329896897</texture_begin>
 			<texture_end>0.340206176</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.715826809,1.5586729]</begin>
@@ -699,7 +699,7 @@
 			<time>80</time>
 			<texture_begin>0.340206176</texture_begin>
 			<texture_end>0.350515455</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.71604687,1.58251965]</begin>
@@ -709,7 +709,7 @@
 			<time>81</time>
 			<texture_begin>0.350515455</texture_begin>
 			<texture_end>0.360824734</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.716229737,1.60636675]</begin>
@@ -719,7 +719,7 @@
 			<time>82</time>
 			<texture_begin>0.360824734</texture_begin>
 			<texture_end>0.371134013</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.71637553,1.63021421]</begin>
@@ -729,7 +729,7 @@
 			<time>83</time>
 			<texture_begin>0.371134013</texture_begin>
 			<texture_end>0.381443292</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.716484666,1.65406132]</begin>
@@ -739,7 +739,7 @@
 			<time>84</time>
 			<texture_begin>0.381443292</texture_begin>
 			<texture_end>0.391752571</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.716556966,1.67790854]</begin>
@@ -749,7 +749,7 @@
 			<time>85</time>
 			<texture_begin>0.391752571</texture_begin>
 			<texture_end>0.40206185</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.71659255,1.70175719]</begin>
@@ -759,7 +759,7 @@
 			<time>86</time>
 			<texture_begin>0.40206185</texture_begin>
 			<texture_end>0.412371129</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.71659112,1.72560525]</begin>
@@ -769,7 +769,7 @@
 			<time>87</time>
 			<texture_begin>0.412371129</texture_begin>
 			<texture_end>0.422680408</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.716552258,1.74945295]</begin>
@@ -779,7 +779,7 @@
 			<time>88</time>
 			<texture_begin>0.422680408</texture_begin>
 			<texture_end>0.432989687</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.716475368,1.77330089]</begin>
@@ -789,7 +789,7 @@
 			<time>89</time>
 			<texture_begin>0.432989687</texture_begin>
 			<texture_end>0.443298966</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.716359794,1.79714835]</begin>
@@ -799,7 +799,7 @@
 			<time>90</time>
 			<texture_begin>0.443298966</texture_begin>
 			<texture_end>0.453608245</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.716204822,1.82099557]</begin>
@@ -809,7 +809,7 @@
 			<time>91</time>
 			<texture_begin>0.453608245</texture_begin>
 			<texture_end>0.463917524</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.716013193,1.84484255]</begin>
@@ -819,7 +819,7 @@
 			<time>92</time>
 			<texture_begin>0.463917524</texture_begin>
 			<texture_end>0.474226803</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.715896189,1.86869013]</begin>
@@ -829,7 +829,7 @@
 			<time>93</time>
 			<texture_begin>0.474226803</texture_begin>
 			<texture_end>0.484536082</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.715845525,1.89253783]</begin>
@@ -839,7 +839,7 @@
 			<time>94</time>
 			<texture_begin>0.484536082</texture_begin>
 			<texture_end>0.494845361</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.715733647,1.9163841]</begin>
@@ -849,7 +849,7 @@
 			<time>95</time>
 			<texture_begin>0.494845361</texture_begin>
 			<texture_end>0.50515461</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.715557754,1.9402324]</begin>
@@ -859,7 +859,7 @@
 			<time>95</time>
 			<texture_begin>0.50515461</texture_begin>
 			<texture_end>0.515463889</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.715314448,1.96407878]</begin>
@@ -869,7 +869,7 @@
 			<time>96</time>
 			<texture_begin>0.515463889</texture_begin>
 			<texture_end>0.525773168</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.715000212,1.98792458]</begin>
@@ -879,7 +879,7 @@
 			<time>97</time>
 			<texture_begin>0.525773168</texture_begin>
 			<texture_end>0.536082447</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.714611411,2.01176906]</begin>
@@ -889,7 +889,7 @@
 			<time>98</time>
 			<texture_begin>0.536082447</texture_begin>
 			<texture_end>0.546391726</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.714143932,2.03561234]</begin>
@@ -899,7 +899,7 @@
 			<time>99</time>
 			<texture_begin>0.546391726</texture_begin>
 			<texture_end>0.556701005</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.713593304,2.05945396]</begin>
@@ -909,7 +909,7 @@
 			<time>100</time>
 			<texture_begin>0.556701005</texture_begin>
 			<texture_end>0.567010283</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.712954879,2.08329296]</begin>
@@ -919,7 +919,7 @@
 			<time>101</time>
 			<texture_begin>0.567010283</texture_begin>
 			<texture_end>0.577319562</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.712223411,2.10713005]</begin>
@@ -929,7 +929,7 @@
 			<time>102</time>
 			<texture_begin>0.577319562</texture_begin>
 			<texture_end>0.587628841</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.711393297,2.13096309]</begin>
@@ -939,7 +939,7 @@
 			<time>103</time>
 			<texture_begin>0.587628841</texture_begin>
 			<texture_end>0.59793812</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.710458279,2.15479231]</begin>
@@ -949,7 +949,7 @@
 			<time>104</time>
 			<texture_begin>0.59793812</texture_begin>
 			<texture_end>0.608247399</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.70941174,2.178617]</begin>
@@ -959,7 +959,7 @@
 			<time>105</time>
 			<texture_begin>0.608247399</texture_begin>
 			<texture_end>0.618556678</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.708246171,2.20243645]</begin>
@@ -969,7 +969,7 @@
 			<time>106</time>
 			<texture_begin>0.618556678</texture_begin>
 			<texture_end>0.628865957</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.706953585,2.2262485]</begin>
@@ -979,7 +979,7 @@
 			<time>107</time>
 			<texture_begin>0.628865957</texture_begin>
 			<texture_end>0.639175236</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.705524802,2.25005412]</begin>
@@ -989,7 +989,7 @@
 			<time>108</time>
 			<texture_begin>0.639175236</texture_begin>
 			<texture_end>0.649484515</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.703950047,2.27384996]</begin>
@@ -999,7 +999,7 @@
 			<time>109</time>
 			<texture_begin>0.649484515</texture_begin>
 			<texture_end>0.659793794</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.702218533,2.29763484]</begin>
@@ -1009,7 +1009,7 @@
 			<time>110</time>
 			<texture_begin>0.659793794</texture_begin>
 			<texture_end>0.670103073</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.7003178,2.32140636]</begin>
@@ -1019,7 +1019,7 @@
 			<time>112</time>
 			<texture_begin>0.670103073</texture_begin>
 			<texture_end>0.680412352</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.698234379,2.34516263]</begin>
@@ -1029,7 +1029,7 @@
 			<time>113</time>
 			<texture_begin>0.680412352</texture_begin>
 			<texture_end>0.690721631</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.69595331,2.36890149]</begin>
@@ -1039,7 +1039,7 @@
 			<time>114</time>
 			<texture_begin>0.690721631</texture_begin>
 			<texture_end>0.70103091</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.693457246,2.39261794]</begin>
@@ -1049,7 +1049,7 @@
 			<time>115</time>
 			<texture_begin>0.70103091</texture_begin>
 			<texture_end>0.711340189</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.690727293,2.41630912]</begin>
@@ -1059,7 +1059,7 @@
 			<time>116</time>
 			<texture_begin>0.711340189</texture_begin>
 			<texture_end>0.721649468</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.687741995,2.43996906]</begin>
@@ -1069,7 +1069,7 @@
 			<time>117</time>
 			<texture_begin>0.721649468</texture_begin>
 			<texture_end>0.731958747</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.684477091,2.46359181]</begin>
@@ -1079,7 +1079,7 @@
 			<time>118</time>
 			<texture_begin>0.731958747</texture_begin>
 			<texture_end>0.742268026</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.680905163,2.4871707]</begin>
@@ -1089,7 +1089,7 @@
 			<time>119</time>
 			<texture_begin>0.742268026</texture_begin>
 			<texture_end>0.752577305</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.676995277,2.5106957]</begin>
@@ -1099,7 +1099,7 @@
 			<time>120</time>
 			<texture_begin>0.752577305</texture_begin>
 			<texture_end>0.762886584</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.672712386,2.53415561]</begin>
@@ -1109,7 +1109,7 @@
 			<time>121</time>
 			<texture_begin>0.762886584</texture_begin>
 			<texture_end>0.773195863</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.668017089,2.5575366]</begin>
@@ -1119,7 +1119,7 @@
 			<time>122</time>
 			<texture_begin>0.773195863</texture_begin>
 			<texture_end>0.783505142</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.662864804,2.58082032]</begin>
@@ -1129,7 +1129,7 @@
 			<time>123</time>
 			<texture_begin>0.783505142</texture_begin>
 			<texture_end>0.793814421</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.657206237,2.60398674]</begin>
@@ -1139,7 +1139,7 @@
 			<time>124</time>
 			<texture_begin>0.793814421</texture_begin>
 			<texture_end>0.8041237</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.650986731,2.6270082]</begin>
@@ -1149,7 +1149,7 @@
 			<time>125</time>
 			<texture_begin>0.8041237</texture_begin>
 			<texture_end>0.814432979</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.644147158,2.64985394]</begin>
@@ -1159,7 +1159,7 @@
 			<time>126</time>
 			<texture_begin>0.814432979</texture_begin>
 			<texture_end>0.824742258</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.636626482,2.67248297]</begin>
@@ -1169,7 +1169,7 @@
 			<time>127</time>
 			<texture_begin>0.824742258</texture_begin>
 			<texture_end>0.835051537</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.628363311,2.69485259]</begin>
@@ -1179,7 +1179,7 @@
 			<time>128</time>
 			<texture_begin>0.835051537</texture_begin>
 			<texture_end>0.845360816</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.619302392,2.7169106]</begin>
@@ -1189,7 +1189,7 @@
 			<time>129</time>
 			<texture_begin>0.845360816</texture_begin>
 			<texture_end>0.855670094</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.609401405,2.73860407]</begin>
@@ -1199,7 +1199,7 @@
 			<time>130</time>
 			<texture_begin>0.855670094</texture_begin>
 			<texture_end>0.865979373</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.598640442,2.7598846]</begin>
@@ -1209,7 +1209,7 @@
 			<time>131</time>
 			<texture_begin>0.865979373</texture_begin>
 			<texture_end>0.876288652</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.587032676,2.78071451]</begin>
@@ -1219,7 +1219,7 @@
 			<time>132</time>
 			<texture_begin>0.876288652</texture_begin>
 			<texture_end>0.886597931</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.574631512,2.80108261]</begin>
@@ -1229,7 +1229,7 @@
 			<time>133</time>
 			<texture_begin>0.886597931</texture_begin>
 			<texture_end>0.89690721</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.561533868,2.82101083]</begin>
@@ -1239,7 +1239,7 @@
 			<time>134</time>
 			<texture_begin>0.89690721</texture_begin>
 			<texture_end>0.907216489</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.547876596,2.8405602]</begin>
@@ -1249,7 +1249,7 @@
 			<time>135</time>
 			<texture_begin>0.907216489</texture_begin>
 			<texture_end>0.917525768</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.533824444,2.85982752]</begin>
@@ -1259,7 +1259,7 @@
 			<time>136</time>
 			<texture_begin>0.917525768</texture_begin>
 			<texture_end>0.927835047</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.519553363,2.87893367]</begin>
@@ -1269,7 +1269,7 @@
 			<time>137</time>
 			<texture_begin>0.927835047</texture_begin>
 			<texture_end>0.938144326</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.505237043,2.8980062]</begin>
@@ -1279,7 +1279,7 @@
 			<time>138</time>
 			<texture_begin>0.938144326</texture_begin>
 			<texture_end>0.948453605</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.493689328,2.9187119]</begin>
@@ -1289,7 +1289,7 @@
 			<time>139</time>
 			<texture_begin>0.948453605</texture_begin>
 			<texture_end>0.958762884</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.493880689,2.94217658]</begin>
@@ -1299,7 +1299,7 @@
 			<time>140</time>
 			<texture_begin>0.958762884</texture_begin>
 			<texture_end>0.969072163</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.506397009,2.96225762]</begin>
@@ -1309,7 +1309,7 @@
 			<time>141</time>
 			<texture_begin>0.969072163</texture_begin>
 			<texture_end>0.979381442</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.524605334,2.97758317]</begin>
@@ -1319,7 +1319,7 @@
 			<time>142</time>
 			<texture_begin>0.979381442</texture_begin>
 			<texture_end>0.989690721</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 		<b>
 			<begin>[0.54513675,2.9896853]</begin>
@@ -1329,7 +1329,7 @@
 			<time>143</time>
 			<texture_begin>0.989690721</texture_begin>
 			<texture_end>1</texture_end>
-			<repeats>2</repeats>
+			<repeats>3</repeats>
 		</b>
 	</bars>
 	<deform_start>47</deform_start>
