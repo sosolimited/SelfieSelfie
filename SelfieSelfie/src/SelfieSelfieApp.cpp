@@ -20,9 +20,16 @@ using namespace std;
 using namespace soso;
 
 struct TouchInfo {
-  uint32_t  id;
-  vec2			previous;
-  vec2			position;
+	TouchInfo() = default;
+	TouchInfo( uint32_t iId, const vec2 &iStart, const vec2 &iPosition )
+	: id( iId ),
+		start( iStart ),
+		position( iPosition )
+	{}
+
+  uint32_t		id = 0;
+  vec2				start;
+  vec2				position;
 };
 
 class SelfieSelfieApp : public App {
@@ -35,7 +42,8 @@ public:
   void touchesMoved( TouchEvent event ) override;
   void touchesEnded( TouchEvent event ) override;
 
-  void pinchUpdate();
+	void updateCamera();
+
 private:
 	CameraPersp			camera;
   CaptureRef			capture;
@@ -48,6 +56,7 @@ private:
   ci::vec3					cameraOffset;
 
   bool drawDebug = false;
+
 };
 
 void SelfieSelfieApp::setup()
@@ -101,11 +110,7 @@ void SelfieSelfieApp::setup()
 void SelfieSelfieApp::touchesBegan( TouchEvent event )
 {
   for( auto &t : event.getTouches() ) {
-    touches.push_back( { t.getId(), t.getPos(), t.getPos() } );
-  }
-
-  if( touches.size() == 2 ) {
-    // pinch started.
+    touches.emplace_back( t.getId(), t.getPos(), t.getPos() );
   }
 
   if( touches.size() == 4 ) {
@@ -118,14 +123,9 @@ void SelfieSelfieApp::touchesMoved( TouchEvent event )
   for( auto &t : event.getTouches() ) {
     for( auto &s : touches ) {
       if( s.id == t.getId() ) {
-        s.previous = s.position;
         s.position = t.getPos();
       }
     }
-  }
-
-  if( touches.size() == 2 ) {
-    pinchUpdate();
   }
 }
 
@@ -141,32 +141,9 @@ void SelfieSelfieApp::touchesEnded( TouchEvent event )
   }), touches.end() );
 }
 
-void SelfieSelfieApp::pinchUpdate()
-{
-  auto base = distance(touches.at( 0 ).previous, touches.at( 1 ).previous);
-  auto current = distance(touches.at( 0 ).position, touches.at( 1 ).position);
-
-  auto delta = current - base;
-  if( isfinite( delta ) )
-  {
-    auto ray = camera.getViewDirection();
-    cameraOffset += delta * ray * 0.01f;
-  }
-}
-
 void SelfieSelfieApp::update()
 {
-  auto l = length(cameraOffset);
-  auto maximum = 3.0f;
-  if( l > maximum ) {
-    cameraOffset *= (maximum / l);
-  }
-  camera.setEyePoint( cameraOffset );
-
-  if( MotionManager::isDataAvailable() ) {
-    auto r = MotionManager::getRotation();
-    camera.setOrientation( r );
-  }
+	updateCamera();
 
   if( capture && capture->checkNewFrame() ) {
     gridTexture->update( *capture->getSurface() );
@@ -175,6 +152,38 @@ void SelfieSelfieApp::update()
     if( err ) {
       CI_LOG_E( "Texture copy gl error: " << gl::getErrorString(err) );
     }
+  }
+}
+
+void SelfieSelfieApp::updateCamera()
+{
+	if( touches.size() == 1 )
+	{
+		auto &touch = touches.front();
+		auto dt = touch.position - touch.start;
+		auto up = vec2( 0, -1 ); // normalize( vec2( MotionManager::getRotation() * vec4( 0, 1, 0, 0 ) ) );
+		auto dir = dot( normalize( dt ), up );
+		auto amount = length( dt );
+
+		if( isfinite( dir ) && isfinite( amount ) )
+		{
+			auto ray = camera.getViewDirection();
+			cameraOffset += ray * 0.001f * (amount * dir);
+
+			auto l = length(cameraOffset);
+			auto maximum = 3.0f;
+			if( l > maximum ) {
+				cameraOffset *= (maximum / l);
+			}
+			camera.setEyePoint( cameraOffset );
+		}
+
+	}
+
+
+  if( MotionManager::isDataAvailable() ) {
+    auto r = MotionManager::getRotation();
+    camera.setOrientation( r );
   }
 }
 
