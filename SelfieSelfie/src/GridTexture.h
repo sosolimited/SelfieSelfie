@@ -38,6 +38,8 @@ public:
 	const ci::ivec2& getCellDimensions() const { return cellDimensions; }
 
   ci::vec2 getGridDimensions() const { return ci::vec2( columns ); }
+	/// Returns the pixel size of the entire grid.
+	ci::vec2 getGridSize() const { return getGridDimensions() * ci::vec2( getCellDimensions() ); }
 private:
 	ci::gl::FboRef			blurredBuffer;
   ci::gl::FboRef			focusedBuffer;

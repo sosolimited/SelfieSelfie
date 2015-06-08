@@ -75,31 +75,6 @@ gl::GlslProgRef loadShader( const fs::path &iVertex, const fs::path &iFragment )
 	return nullptr;
 }
 
-///
-/// Create a quadrilateral with clockwise vertices abcd.
-/// Maps to frame at time and a slice of the video frame.
-///
-void addQuad( std::vector<Vertex> &vertices, const vec3 &a, const vec3 &b, const vec3 &c, const vec3 &d, float time, const Rectf &slice )
-{
-	auto normal = vec3( 0, 1, 0 );
-	auto deform_scaling = 0.0f;
-	auto deform_time = 0.0f;
-	auto deform_tc = vec2( 0.0f, 0.0f );
-	auto color_weight = 0.0f;
-/*
-	vertices.insert( vertices.end(), {
-		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), time, deform_tc, deform_scaling, deform_time, color_weight },
-		Vertex{ b, normal, slice.getUpperRight(), slice.getUpperRight(), time, deform_tc, deform_scaling, deform_time, color_weight },
-		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), time, deform_tc, deform_scaling, deform_time, color_weight },
-
-		Vertex{ a, normal, slice.getUpperLeft(), slice.getUpperLeft(), time, deform_tc, deform_scaling, deform_time, color_weight },
-		Vertex{ c, normal, slice.getLowerRight(), slice.getLowerRight(), time, deform_tc, deform_scaling, deform_time, color_weight },
-		Vertex{ d, normal, slice.getLowerLeft(), slice.getLowerLeft(), time, deform_tc, deform_scaling, deform_time, color_weight }
-	} );
-  */
-
-}
-
 /// Add a ring of geometry containing a given number of time bands (slitscanning effect) and repeats around the donut.
 void addRing( std::vector<Vertex> &vertices, const Bar &bar, const ci::vec2 &center_offset )
 {
@@ -208,10 +183,6 @@ void Landscape::setup()
 	}
 
 	auto center = vec3( 0, -4.0f, 0 );
-
-	// Plug center
-	auto h = vec3( offset.x * 1.5f, 0.0f, offset.x * 1.5f );
-	addQuad( vertices, (h * vec3(-1, 0, -1)), (h * vec3(1, 0, -1)), (h * vec3(1, 0, 1)), (h * vec3(-1, 0, 1)), 0.0f, Rectf( 1, 1, 0, 0 ) );
 
 	// Flip up
 	auto xf = glm::rotate<float>( Tau * 0.25f, vec3( 0, 0, 1 ) ) * glm::translate( center ) * glm::scale( vec3( 4.0f ) );
