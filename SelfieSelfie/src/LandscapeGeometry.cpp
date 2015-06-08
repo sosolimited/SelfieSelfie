@@ -36,7 +36,7 @@ vec2 fromString<vec2>(const std::string &string)
 
 #pragma mark - Bar
 
-Bar::Bar(const ci::vec2 &begin, const ci::vec2 &end, const ci::vec2 &begin_normal, const ci::vec2 &end_normal, int time, float texture_begin, float texture_end, int repeats, float curve_begin, float curve_end)
+Bar::Bar(const ci::vec2 &begin, const ci::vec2 &end, const ci::vec2 &begin_normal, const ci::vec2 &end_normal, int time, float texture_begin, float texture_end, int repeats)
 : begin(begin),
 	end(end),
   normal_begin(begin_normal),
@@ -44,9 +44,7 @@ Bar::Bar(const ci::vec2 &begin, const ci::vec2 &end, const ci::vec2 &begin_norma
 	time(time),
 	texture_begin(texture_begin),
 	texture_end(texture_end),
-	repeats(repeats),
-  curve_begin(curve_begin),
-  curve_end(curve_end)
+	repeats(repeats)
 {}
 
 Bar::Bar(const ci::XmlTree &xml)
@@ -54,8 +52,6 @@ Bar::Bar(const ci::XmlTree &xml)
 	end(fromString<vec2>(xml.getChild("end").getValue())),
   normal_begin(fromString<vec2>(xml.getChild("normal_begin").getValue())),
   normal_end(fromString<vec2>(xml.getChild("normal_end").getValue())),
-  curve_begin(fromString<float>(xml.getChild("curve_begin").getValue())),
-  curve_end(fromString<float>(xml.getChild("curve_end").getValue())),
 	time(fromString<int>(xml.getChild("time").getValue())),
 	texture_begin(fromString<float>(xml.getChild("texture_begin").getValue())),
 	texture_end(fromString<float>(xml.getChild("texture_end").getValue())),
@@ -72,8 +68,6 @@ ci::XmlTree Bar::toXml(float scale) const
 	bar.push_back(XmlTree("time", toString(time)));
 	bar.push_back(XmlTree("texture_begin", toString(texture_begin)));
 	bar.push_back(XmlTree("texture_end", toString(texture_end)));
-  bar.push_back(XmlTree("curve_begin", toString(curve_begin)));
-  bar.push_back(XmlTree("curve_end", toString(curve_end)));
 	bar.push_back(XmlTree("repeats", toString(repeats)));
 
 	return bar;
@@ -112,7 +106,7 @@ std::vector<Bar> Section::getBars(const Path2dCalcCache &path) const
 
 		auto a = path.getPosition(c1);
 		auto b = path.getPosition(c2);
-		bars.push_back( Bar{ a, b, n1, n2, time, t1, t2, spatial_repeats, mix(curve_begin, curve_end, t1), mix(curve_begin, curve_end, t2) } );
+		bars.push_back( Bar{ a, b, n1, n2, time, t1, t2, spatial_repeats } );
 	}
 
 	return bars;

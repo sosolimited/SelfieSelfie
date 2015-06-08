@@ -76,7 +76,7 @@ gl::GlslProgRef loadShader( const fs::path &iVertex, const fs::path &iFragment )
 }
 
 /// Add a ring of geometry containing a given number of time bands (slitscanning effect) and repeats around the donut.
-void addRing( std::vector<Vertex> &vertices, const Bar &bar, const ci::vec2 &center_offset )
+void addRing( std::vector<Vertex> &vertices, const Bar &bar, int next_bar_time, const ci::vec2 &center_offset )
 {
 	const auto segments = 64;
 	const auto texture_insets = vec2( 0.05, 0.0875f );
@@ -115,22 +115,6 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, const ci::vec2 &cen
 		return tc;
 	};
 
-  const auto calc_deform_tc = [=] (int r, int s) {
-    auto curve_time = mix( bar.curve_begin, bar.curve_end, (float)r );
-    auto t = (float) s / segments;
-    if( t < 1 ) {
-      t = glm::fract( t * 2 );
-    }
-    // mirror copies
-    t = std::abs( t - 0.5f ) * 2.0f;
-    auto tc = vec2(0);
-    // Repeat t with mirroring
-    // insetting the texture coordinates minimizes edge color flashing.
-    tc.y = mix( texture_insets.y, 1.0f - texture_insets.y, t );
-    tc.x = mix( 1.0f - texture_insets.x, texture_insets.x, curve_time );
-    return tc;
-  };
-
 	// Add a vertex to texture (color_tc parameter allows us to do flat shading in ES2)
 	const auto add_vert = [=,&vertices] (int r, int s, const ivec2 &provoking) {
 		auto pos = calc_pos(r, s);
@@ -138,11 +122,10 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, const ci::vec2 &cen
     auto flat_tc = calc_tc( provoking.x, provoking.y );
     auto color_weight = 0.0f;
 		auto normal = calc_normal(r, s);
-    auto curve_time = mix( bar.curve_begin, bar.curve_end, (float)r );
 
-    auto deform_frame = (72.0f * curve_time);
-    auto deform_scaling = easeInOutQuad(curve_time);
-    auto deform_tc = calc_deform_tc(r, s);
+    auto deform_scaling = easeInOutQuad(bar.time / 144.0f);
+    auto deform_tc = color_tc;
+		auto deform_frame = (float)mix( bar.time, next_bar_time, (float)r );
 
     vertices.emplace_back( Vertex { pos, (float)bar.time,
                                     color_tc, flat_tc, color_weight,
@@ -177,9 +160,19 @@ void Landscape::setup()
 
   CI_LOG_I("Loading shape profile.");
 	auto xml = XmlTree( app::loadAsset("profile.xml") );
-	for( auto &child : xml.getChild("shape").getChild("bars").getChildren() ) {
-		Bar bar( *child );
-		addRing( vertices, bar, offset );
+	auto &bars = xml.getChild("shape").getChild("bars").getChildren();
+	auto iter = bars.begin();
+	Bar bar(**iter);
+	while( iter != bars.end() ) {
+		++iter;
+		if( iter != bars.end() ) {
+			Bar next(**iter);
+			addRing( vertices, bar, next.time, offset );
+			bar = next;
+		}
+		else {
+			addRing( vertices, bar, bar.time, offset );
+		}
 	}
 
 	auto center = vec3( 0, -4.0f, 0 );
