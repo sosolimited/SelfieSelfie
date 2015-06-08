@@ -33,11 +33,11 @@ public:
 	void load(const fs::path &path);
 	void save() const;
 
-	void saveJson() const;
 	void saveXml() const;
 
 	/// Add a section taking up curve length, offset from the end of the previous section in time
 	void addSection( float length, int time_offset, int subdivisions, int temporal_steps, int repeats );
+	int getLastFrame() const;
 
 private:
 	Path2d											_path;
@@ -45,6 +45,7 @@ private:
 
 	vector<Section>							_sections;
 	int													_last_frame = 64; // for debug visualization
+	int													_deform_start = 0;
 };
 
 void ShapeToolApp::setup()
@@ -55,21 +56,11 @@ void ShapeToolApp::setup()
 	_path = shape.getContour(0);
 	_path_cache = unique_ptr<Path2dCalcCache>(new Path2dCalcCache(_path));
 
-	/*
-	auto p = getAssetPath("profile.json");
-	load(p);
-	*/
-	/*
-	_sections = {Section {0.0f, 0.5f, 0, 8, 4, 4},
-								{0.5f, 0.75f, 4, 4, 1, 4},
-								{0.75f, 1.0f, 5, 2, 1, 2} };
-	*/
-
 	// Build a decent starting curve.
-
 	const auto subdivisions = 3;
+	const auto total_blocks = 144;
 
-	addSection( 0.12f, 1, subdivisions, 1, 2 );
+	addSection( 0.12f, 4, subdivisions, 1, 2 );
 	addSection( 0.12f, 4, subdivisions, 1, 5 );
 	addSection( 0.11f, 4, subdivisions, 1, 8 );
 	addSection( 0.095f, 4, subdivisions, 1, 11 );
@@ -77,7 +68,9 @@ void ShapeToolApp::setup()
 	addSection( 0.070f, 4, subdivisions, 1, 9 );
 	addSection( 0.050f, 4, subdivisions, 1, 7 );
 
-	addSection( -1.0f, 0, 32, 32, 2 );
+	_deform_start = getLastFrame() + 1;
+	auto divisions = total_blocks - _deform_start;
+	addSection( -1.0f, 1, divisions, divisions, 2 );
 }
 
 void ShapeToolApp::addSection(float length, int time_offset, int subdivisions, int temporal_steps, int repeats)
@@ -98,6 +91,17 @@ void ShapeToolApp::addSection(float length, int time_offset, int subdivisions, i
 
 	auto curve_end = curve_begin + length;
 	_sections.push_back(Section(curve_begin, curve_end, time, subdivisions, temporal_steps, repeats));
+}
+
+int ShapeToolApp::getLastFrame() const
+{
+	if (! _sections.empty())
+	{
+		const auto &s = _sections.back();
+		return s.time_begin + s.temporal_steps;
+	}
+
+	return 0;
 }
 
 void ShapeToolApp::load(const fs::path &path)
@@ -122,38 +126,9 @@ void ShapeToolApp::load(const fs::path &path)
 
 void ShapeToolApp::save() const
 {
-//	saveJson();
 	saveXml();
 }
-/*
-void ShapeToolApp::saveJson() const
-{
-	auto json = JsonTree::makeObject();
-	auto scale = 1.0f / 1000.0f;
 
-	auto bars = JsonTree::makeArray("bars");
-	for (auto &s : _sections)
-	{
-		auto section_bars = s.getBars(*_path_cache);
-		for (auto &b : section_bars)
-		{
-			bars.pushBack(b.toJson(scale));
-		}
-	}
-
-	auto sections = JsonTree::makeArray("sections");
-	for (auto &s : _sections)
-	{
-		sections.pushBack(s.toJson());
-	}
-
-	json.pushBack(sections);
-	json.pushBack(bars);
-
-	auto p = getAssetPath("") / "../../SelfieSelfie/assets/profile.json";
-	json.write(p);
-}
-*/
 void ShapeToolApp::saveXml() const
 {
 	auto xml = XmlTree("shape", "");
@@ -169,6 +144,7 @@ void ShapeToolApp::saveXml() const
 		}
 	}
 	xml.push_back(bars);
+	xml.push_back(XmlTree("deform_start", toString(_deform_start)));
 
 	auto p = getAssetPath("") / "../../SelfieSelfie/assets/profile.xml";
 	xml.write(DataTargetPath::createRef(p));
@@ -201,6 +177,7 @@ void ShapeToolApp::draw()
 	gl::clear(Color(0, 0, 0));
 	gl::ScopedColor color(Color::white());
 	gl::ScopedMatrices matrices;
+	gl::scale(vec3(0.5f));
 
 	auto scaling = glm::translate(vec3(getWindowCenter(), 0)) * glm::scale(vec3(0.95f)) * glm::translate(vec3(- getWindowCenter(), 0));
 
@@ -232,11 +209,13 @@ void ShapeToolApp::drawSpatialFrames() const
 		auto bars = s.getBars(*_path_cache);
 		gl::begin(GL_LINES);
 		for (auto &b : bars) {
-      gl::color(Color(1.0f, 1.0f, 0.0f));
-      gl::vertex(b.begin + b.normal_begin * 8.0f);
-      gl::vertex(b.begin);
-      gl::vertex(b.end);
-      gl::vertex(b.end + b.normal_end * 8.0f);
+			if (b.time >= _deform_start) {
+				gl::color(Color(1.0f, 1.0f, 0.0f));
+				gl::vertex(b.begin + b.normal_begin * 8.0f);
+				gl::vertex(b.begin);
+				gl::vertex(b.end);
+				gl::vertex(b.end + b.normal_end * 8.0f);
+			}
 
       gl::color(Color(b.texture_begin, 0.0f, 0.5f));
 			gl::vertex(b.begin);
@@ -249,7 +228,7 @@ void ShapeToolApp::drawSpatialFrames() const
 
 void prepareSettings(ci::app::App::Settings *settings)
 {
-	settings->setWindowSize(1000, 1000);
+	settings->setWindowSize(500, 1000);
 }
 
 CINDER_APP(ShapeToolApp, RendererGl, prepareSettings)
