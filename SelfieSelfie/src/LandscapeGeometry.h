@@ -25,7 +25,7 @@ namespace soso {
 struct Bar
 {
 	Bar() = default;
-  Bar(const ci::vec2 &begin, const ci::vec2 &end, const ci::vec2 &begin_normal, const ci::vec2 &end_normal, int time, float texture_begin, float texture_end, int repeats, float curve_begin, float curve_end);
+  Bar(const ci::vec2 &begin, const ci::vec2 &end, const ci::vec2 &begin_normal, const ci::vec2 &end_normal, int time, float texture_begin, float texture_end, int repeats);
 	explicit Bar(const ci::XmlTree &json);
 
 	/// Physical coordinates of bar in profile
@@ -40,10 +40,6 @@ struct Bar
 	float		 texture_end = 1.0f;
 	/// How many horizontal repeats of the texture to do (used by main app; not meaningful in 2d).
 	int			 repeats = 1;
-
-  /// Time in smooth sweep.
-  float    curve_begin = 0.0f;
-  float    curve_end = 0.0f;
 
 	ci::XmlTree		toXml(float scale) const;
 };

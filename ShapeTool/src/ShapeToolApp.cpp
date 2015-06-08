@@ -32,52 +32,67 @@ public:
 
 	void load(const fs::path &path);
 	void save() const;
-
-	void saveJson() const;
 	void saveXml() const;
 
 	/// Add a section taking up curve length, offset from the end of the previous section in time
 	void addSection( float length, int time_offset, int subdivisions, int temporal_steps, int repeats );
+	int getLastFrame() const;
+
+	void nextPath();
+	void rescaleCurve(float scalar);
 
 private:
-	Path2d											_path;
-	unique_ptr<Path2dCalcCache> _path_cache;
-
 	vector<Section>							_sections;
 	int													_last_frame = 64; // for debug visualization
+	int													_deform_start = 0;
+
+	unique_ptr<Path2dCalcCache> _path_cache;
+	vector<Path2d>							_paths;
+	int													_current_path = -1;
 };
 
 void ShapeToolApp::setup()
 {
 	auto svg = svg::Doc::create(getAssetPath("profile.svg"));
-	auto shape = svg->findByIdContains<svg::Path>("profile")->getShape();
+	auto *group = svg->findByIdContains<svg::Group>("profiles");
 
-	_path = shape.getContour(0);
-	_path_cache = unique_ptr<Path2dCalcCache>(new Path2dCalcCache(_path));
-
-	/*
-	auto p = getAssetPath("profile.json");
-	load(p);
-	*/
-	/*
-	_sections = {Section {0.0f, 0.5f, 0, 8, 4, 4},
-								{0.5f, 0.75f, 4, 4, 1, 4},
-								{0.75f, 1.0f, 5, 2, 1, 2} };
-	*/
+	for (auto &child : group->getChildren()) {
+		auto path = child->getShape().getContour(0);
+		_paths.push_back(path);
+	}
+	nextPath();
 
 	// Build a decent starting curve.
-
 	const auto subdivisions = 3;
+	const auto basic_delay = 3;
+	const auto total_blocks = 144;
+	const auto scalar = 0.30f;
 
-	addSection( 0.12f, 1, subdivisions, 1, 2 );
-	addSection( 0.12f, 4, subdivisions, 1, 5 );
-	addSection( 0.11f, 4, subdivisions, 1, 8 );
-	addSection( 0.095f, 4, subdivisions, 1, 11 );
-	addSection( 0.085f, 4, subdivisions, 1, 12 );
-	addSection( 0.070f, 4, subdivisions, 1, 9 );
-	addSection( 0.050f, 4, subdivisions, 1, 7 );
+	addSection( scalar * 0.12f,  basic_delay, subdivisions, 1, 2 );
+	addSection( scalar * 0.12f,  basic_delay, subdivisions, 1, 5 );
+	addSection( scalar * 0.11f,  basic_delay, subdivisions, 1, 8 );
+	addSection( scalar * 0.095f, basic_delay, subdivisions, 1, 11 );
+	addSection( scalar * 0.085f, basic_delay, subdivisions, 1, 12 );
+	addSection( scalar * 0.070f, basic_delay, subdivisions, 1, 9 );
+	addSection( scalar * 0.050f, basic_delay, subdivisions, 1, 7 );
+	addSection( scalar * 0.12f, basic_delay, subdivisions + 3, 3, 6 );
+	addSection( scalar * 0.2f, basic_delay, subdivisions + 6, 9, 5 );
 
-	addSection( -1.0f, 0, 32, 32, 2 );
+	_deform_start = getLastFrame() + 1;
+	auto divisions = total_blocks - _deform_start;
+	addSection( -1.0f, 1, divisions, divisions, 3 );
+}
+
+void ShapeToolApp::nextPath()
+{
+	_current_path = (_current_path + 1) % _paths.size();
+	auto &p = _paths.at(_current_path);
+	_path_cache = unique_ptr<Path2dCalcCache>(new Path2dCalcCache(p));
+}
+
+void ShapeToolApp::rescaleCurve(float scalar)
+{
+
 }
 
 void ShapeToolApp::addSection(float length, int time_offset, int subdivisions, int temporal_steps, int repeats)
@@ -98,6 +113,17 @@ void ShapeToolApp::addSection(float length, int time_offset, int subdivisions, i
 
 	auto curve_end = curve_begin + length;
 	_sections.push_back(Section(curve_begin, curve_end, time, subdivisions, temporal_steps, repeats));
+}
+
+int ShapeToolApp::getLastFrame() const
+{
+	if (! _sections.empty())
+	{
+		const auto &s = _sections.back();
+		return s.time_begin + s.temporal_steps;
+	}
+
+	return 0;
 }
 
 void ShapeToolApp::load(const fs::path &path)
@@ -122,38 +148,9 @@ void ShapeToolApp::load(const fs::path &path)
 
 void ShapeToolApp::save() const
 {
-//	saveJson();
 	saveXml();
 }
-/*
-void ShapeToolApp::saveJson() const
-{
-	auto json = JsonTree::makeObject();
-	auto scale = 1.0f / 1000.0f;
 
-	auto bars = JsonTree::makeArray("bars");
-	for (auto &s : _sections)
-	{
-		auto section_bars = s.getBars(*_path_cache);
-		for (auto &b : section_bars)
-		{
-			bars.pushBack(b.toJson(scale));
-		}
-	}
-
-	auto sections = JsonTree::makeArray("sections");
-	for (auto &s : _sections)
-	{
-		sections.pushBack(s.toJson());
-	}
-
-	json.pushBack(sections);
-	json.pushBack(bars);
-
-	auto p = getAssetPath("") / "../../SelfieSelfie/assets/profile.json";
-	json.write(p);
-}
-*/
 void ShapeToolApp::saveXml() const
 {
 	auto xml = XmlTree("shape", "");
@@ -169,6 +166,7 @@ void ShapeToolApp::saveXml() const
 		}
 	}
 	xml.push_back(bars);
+	xml.push_back(XmlTree("deform_start", toString(_deform_start)));
 
 	auto p = getAssetPath("") / "../../SelfieSelfie/assets/profile.xml";
 	xml.write(DataTargetPath::createRef(p));
@@ -180,6 +178,12 @@ void ShapeToolApp::keyDown(KeyEvent event)
 	{
 		save();
 	}
+
+	if (event.getCode() == KeyEvent::KEY_RIGHT)
+	{
+		nextPath();
+	}
+
 }
 
 void ShapeToolApp::fileDrop(cinder::app::FileDropEvent event)
@@ -201,10 +205,11 @@ void ShapeToolApp::draw()
 	gl::clear(Color(0, 0, 0));
 	gl::ScopedColor color(Color::white());
 	gl::ScopedMatrices matrices;
+	gl::scale(vec3(0.25f));
 
 	auto scaling = glm::translate(vec3(getWindowCenter(), 0)) * glm::scale(vec3(0.95f)) * glm::translate(vec3(- getWindowCenter(), 0));
 
-	gl::draw(_path);
+	gl::draw(_paths.at(_current_path));
 
 	gl::multModelMatrix(scaling);
 	drawTemporalFrames();
@@ -232,11 +237,13 @@ void ShapeToolApp::drawSpatialFrames() const
 		auto bars = s.getBars(*_path_cache);
 		gl::begin(GL_LINES);
 		for (auto &b : bars) {
-      gl::color(Color(1.0f, 1.0f, 0.0f));
-      gl::vertex(b.begin + b.normal_begin * 8.0f);
-      gl::vertex(b.begin);
-      gl::vertex(b.end);
-      gl::vertex(b.end + b.normal_end * 8.0f);
+			if (b.time >= _deform_start) {
+				gl::color(Color(1.0f, 1.0f, 0.0f));
+				gl::vertex(b.begin + b.normal_begin * 8.0f);
+				gl::vertex(b.begin);
+				gl::vertex(b.end);
+				gl::vertex(b.end + b.normal_end * 8.0f);
+			}
 
       gl::color(Color(b.texture_begin, 0.0f, 0.5f));
 			gl::vertex(b.begin);
@@ -249,7 +256,7 @@ void ShapeToolApp::drawSpatialFrames() const
 
 void prepareSettings(ci::app::App::Settings *settings)
 {
-	settings->setWindowSize(1000, 1000);
+	settings->setWindowSize(500, 1000);
 }
 
 CINDER_APP(ShapeToolApp, RendererGl, prepareSettings)
