@@ -76,7 +76,7 @@ void SelfieSelfieApp::setup()
       return first_device;
     }());
 
-    capture = Capture::create( 320, 240, front_facing_camera );
+    capture = Capture::create( 480, 360, front_facing_camera );
     capture->start();
 
     CI_LOG_I( "Creating Grid Texture" );
