@@ -186,7 +186,7 @@ void Landscape::setup()
 		v.normal = vec3( xf * vec4(v.normal, 0.0f) );
 	}
 
-//  /*
+  /*
 	// Mirror (maybe just draw twice)
 	auto copy = vertices;
 	auto mirror = glm::mat4( glm::angleAxis<float>( Tau * 0.5f, vec3( 0, 1, 0 ) ) );

@@ -39,22 +39,28 @@ public:
 	void addSection( float length, int time_offset, int subdivisions, int temporal_steps, int repeats );
 	int getLastFrame() const;
 
-private:
-	Path2d											_path;
-	unique_ptr<Path2dCalcCache> _path_cache;
+	void nextPath();
 
+private:
 	vector<Section>							_sections;
 	int													_last_frame = 64; // for debug visualization
 	int													_deform_start = 0;
+
+	unique_ptr<Path2dCalcCache> _path_cache;
+	vector<Path2d>							_paths;
+	int													_current_path = -1;
 };
 
 void ShapeToolApp::setup()
 {
 	auto svg = svg::Doc::create(getAssetPath("profile.svg"));
-	auto shape = svg->findByIdContains<svg::Path>("profile")->getShape();
+	auto *group = svg->findByIdContains<svg::Group>("profiles");
 
-	_path = shape.getContour(0);
-	_path_cache = unique_ptr<Path2dCalcCache>(new Path2dCalcCache(_path));
+	for (auto &child : group->getChildren()) {
+		auto path = child->getShape().getContour(0);
+		_paths.push_back(path);
+	}
+	nextPath();
 
 	// Build a decent starting curve.
 	const auto subdivisions = 3;
@@ -72,6 +78,13 @@ void ShapeToolApp::setup()
 	_deform_start = getLastFrame() + 1;
 	auto divisions = total_blocks - _deform_start;
 	addSection( -1.0f, 1, divisions, divisions, 2 );
+}
+
+void ShapeToolApp::nextPath()
+{
+	_current_path = (_current_path + 1) % _paths.size();
+	auto &p = _paths.at(_current_path);
+	_path_cache = unique_ptr<Path2dCalcCache>(new Path2dCalcCache(p));
 }
 
 void ShapeToolApp::addSection(float length, int time_offset, int subdivisions, int temporal_steps, int repeats)
@@ -157,6 +170,12 @@ void ShapeToolApp::keyDown(KeyEvent event)
 	{
 		save();
 	}
+
+	if (event.getCode() == KeyEvent::KEY_RIGHT)
+	{
+		nextPath();
+	}
+	
 }
 
 void ShapeToolApp::fileDrop(cinder::app::FileDropEvent event)
@@ -182,7 +201,7 @@ void ShapeToolApp::draw()
 
 	auto scaling = glm::translate(vec3(getWindowCenter(), 0)) * glm::scale(vec3(0.95f)) * glm::translate(vec3(- getWindowCenter(), 0));
 
-	gl::draw(_path);
+	gl::draw(_paths.at(_current_path));
 
 	gl::multModelMatrix(scaling);
 	drawTemporalFrames();
