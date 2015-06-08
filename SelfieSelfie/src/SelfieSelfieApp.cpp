@@ -42,6 +42,7 @@ private:
 
   GridTextureRef  gridTexture;
   Landscape       landscape;
+	gl::BatchRef		cameraImage;
 
   vector<TouchInfo> touches;
   ci::vec3					cameraOffset;
@@ -61,7 +62,7 @@ void SelfieSelfieApp::setup()
 
   auto target = vec3( 5, 0, 0 );
   camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
-  camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 1000 );
+  camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 20.0f );
 
   try {
     CI_LOG_I( "Initializing hardware camera." );
@@ -76,7 +77,7 @@ void SelfieSelfieApp::setup()
       return first_device;
     }());
 
-    capture = Capture::create( 320, 240, front_facing_camera );
+    capture = Capture::create( 480, 360, front_facing_camera );
     capture->start();
 
     CI_LOG_I( "Creating Grid Texture" );
@@ -184,13 +185,34 @@ void SelfieSelfieApp::draw()
   {
     gl::enableDepthRead();
     gl::enableDepthWrite();
+		gl::ScopedGlslProg prog( gl::getStockShader( gl::ShaderDef().texture(gridTexture->getTexture()->getTarget()) ) );
 
     gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
     gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
     gl::ScopedMatrices matrices;
     gl::setMatrices( camera );
 
-    landscape.draw( gridTexture->getCurrentIndex() );
+		landscape.draw( gridTexture->getCurrentIndex() );
+
+		auto mat = translate( vec3( 0, -4.0f, 0 ) );
+		auto dims = vec2(gridTexture->getCellDimensions()) / gridTexture->getGridSize();
+		auto offset = vec2(gridTexture->getIndexOffset( gridTexture->getCellDimensions(), gridTexture->getCurrentIndex() )) / gridTexture->getGridSize();
+		auto rect = Rectf( -1.0f, -1.0f, 1.0f, 1.0f ).scaled( vec2( 1.333f, 1.0f ) ).scaled( 0.2f );
+		auto half_pi = (float) M_PI / 2.0f;
+		auto xf1 = translate( vec3( - 4.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
+		auto xf2 = translate( vec3( 4.0f, 0.0f, 0.0f ) ) * rotate( half_pi, vec3( 1, 0, 0 ) ) * rotate( - half_pi, vec3( 0, 1, 0 ) );
+
+		{
+			gl::ScopedModelMatrix m;
+			gl::multModelMatrix( xf1 );
+			gl::drawSolidRect( rect, offset, offset + dims );
+		}
+
+		{
+			gl::ScopedModelMatrix m;
+			gl::multModelMatrix( xf2 );
+			gl::drawSolidRect( rect, offset, offset + dims );
+		}
 
   }
 
@@ -208,9 +230,11 @@ void SelfieSelfieApp::draw()
     gl::draw( gridTexture->getBlurredTexture(), rect.getCenteredFit( window_rect_b, false ) );
   }
 
+  /*
   // For confirming version changes, draw a different colored dot.
   gl::ScopedColor color( Color( 1.0f, 0.0f, 1.0f ) );
   gl::drawSolidCircle( vec2( 20.0f ), 10.0f );
+  */
 
   auto err = gl::getError();
   if( err ) {

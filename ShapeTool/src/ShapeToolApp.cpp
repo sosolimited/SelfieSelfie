@@ -27,8 +27,8 @@ public:
 	void update() override;
 	void draw() override;
 
-	void drawTemporalFrames();
-	void drawSpatialFrames();
+	void drawTemporalFrames() const;
+	void drawSpatialFrames() const;
 
 	void load(const fs::path &path);
 	void save() const;
@@ -67,13 +67,15 @@ void ShapeToolApp::setup()
 
 	// Build a decent starting curve.
 
-	addSection( 0.12f, 1, 2, 1, 2 );
-	addSection( 0.12f, 3, 2, 1, 5 );
-	addSection( 0.11f, 3, 2, 1, 8 );
-	addSection( 0.095f, 3, 2, 1, 11 );
-	addSection( 0.085f, 3, 2, 1, 12 );
-	addSection( 0.070f, 3, 2, 1, 9 );
-	addSection( 0.050f, 3, 2, 1, 7 );
+	const auto subdivisions = 3;
+
+	addSection( 0.12f, 1, subdivisions, 1, 2 );
+	addSection( 0.12f, 4, subdivisions, 1, 5 );
+	addSection( 0.11f, 4, subdivisions, 1, 8 );
+	addSection( 0.095f, 4, subdivisions, 1, 11 );
+	addSection( 0.085f, 4, subdivisions, 1, 12 );
+	addSection( 0.070f, 4, subdivisions, 1, 9 );
+	addSection( 0.050f, 4, subdivisions, 1, 7 );
 
 	addSection( -1.0f, 0, 32, 32, 2 );
 }
@@ -123,7 +125,7 @@ void ShapeToolApp::save() const
 //	saveJson();
 	saveXml();
 }
-
+/*
 void ShapeToolApp::saveJson() const
 {
 	auto json = JsonTree::makeObject();
@@ -148,10 +150,10 @@ void ShapeToolApp::saveJson() const
 	json.pushBack(sections);
 	json.pushBack(bars);
 
-	auto p = getAssetPath("") / "../../GridSpace/assets/profile.json";
+	auto p = getAssetPath("") / "../../SelfieSelfie/assets/profile.json";
 	json.write(p);
 }
-
+*/
 void ShapeToolApp::saveXml() const
 {
 	auto xml = XmlTree("shape", "");
@@ -168,7 +170,7 @@ void ShapeToolApp::saveXml() const
 	}
 	xml.push_back(bars);
 
-	auto p = getAssetPath("") / "../../GridSpace/assets/profile.xml";
+	auto p = getAssetPath("") / "../../SelfieSelfie/assets/profile.xml";
 	xml.write(DataTargetPath::createRef(p));
 }
 
@@ -211,7 +213,7 @@ void ShapeToolApp::draw()
 	drawSpatialFrames();
 }
 
-void ShapeToolApp::drawTemporalFrames()
+void ShapeToolApp::drawTemporalFrames() const
 {
 	for (auto &s : _sections)
 	{
@@ -223,14 +225,20 @@ void ShapeToolApp::drawTemporalFrames()
 	}
 }
 
-void ShapeToolApp::drawSpatialFrames()
+void ShapeToolApp::drawSpatialFrames() const
 {
 	for (auto &s : _sections)
 	{
 		auto bars = s.getBars(*_path_cache);
 		gl::begin(GL_LINES);
 		for (auto &b : bars) {
-			gl::color(Color(b.texture_begin, 0.0f, 0.5f));
+      gl::color(Color(1.0f, 1.0f, 0.0f));
+      gl::vertex(b.begin + b.normal_begin * 8.0f);
+      gl::vertex(b.begin);
+      gl::vertex(b.end);
+      gl::vertex(b.end + b.normal_end * 8.0f);
+
+      gl::color(Color(b.texture_begin, 0.0f, 0.5f));
 			gl::vertex(b.begin);
 			gl::color(Color(b.texture_end, 0.0f, 0.5f));
 			gl::vertex(b.end);
