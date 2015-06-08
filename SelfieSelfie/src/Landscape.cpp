@@ -123,6 +123,7 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, int next_bar_time, 
 		auto deform_t = lmap( glm::clamp<float>( bar.time, deform_start_time, 144.0f ), deform_start_time, 144.0f, 0.0f, 1.0f );
     auto deform_scaling = easeInOutQuad( deform_t );
 		auto color_weight = easeInOutCubic( deform_t );
+		if( color_weight > 0.75f ) { color_weight = 1.0f; }
 		auto deform_frame = (float)mix( bar.time, next_bar_time, (float)r );
 		if (deform_scaling > 1.0f) {
 			CI_LOG_W("Deform scaling out of bounds: " << deform_scaling );
@@ -189,7 +190,7 @@ void Landscape::setup()
 //  /*
 	// Mirror (maybe just draw twice)
 	auto copy = vertices;
-	auto mirror = glm::translate( vec3( -8.0f, 0.0f, 0.0f ) ) * glm::mat4( glm::angleAxis<float>( Tau * 0.5f, vec3( 0, 1, 0 ) ) );
+	auto mirror = glm::translate( vec3( -16.0f, 0.0f, 0.0f ) ) * glm::mat4( glm::angleAxis<float>( Tau * 0.5f, vec3( 0, 1, 0 ) ) );
 
 	for( auto &v : copy ) {
 		v.position = vec3( mirror * vec4(v.position, 1.0f) );

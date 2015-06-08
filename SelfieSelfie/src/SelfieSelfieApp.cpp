@@ -72,7 +72,7 @@ void SelfieSelfieApp::setup()
 
   auto target = vec3( 5, 0, 0 );
   camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
-  camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 20.0f );
+  camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 50.0f );
 
   try {
     CI_LOG_I( "Initializing hardware camera." );
