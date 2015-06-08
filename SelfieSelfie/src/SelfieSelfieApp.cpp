@@ -226,6 +226,7 @@ void SelfieSelfieApp::draw()
 		auto xf1 = translate( vec3( - 4.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
 		auto xf2 = translate( vec3( 4.0f, 0.0f, 0.0f ) ) * rotate( half_pi, vec3( 1, 0, 0 ) ) * rotate( - half_pi, vec3( 0, 1, 0 ) );
 
+		if( false )
 		{
 			gl::ScopedModelMatrix m;
 			gl::multModelMatrix( xf1 );
