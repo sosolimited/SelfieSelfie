@@ -160,9 +160,19 @@ void SelfieSelfieApp::updateCamera()
 	if( touches.size() == 1 )
 	{
 		auto &touch = touches.front();
-		auto dt = touch.position - touch.start;
-		auto up = vec2( 0, -1 ); // normalize( vec2( MotionManager::getRotation() * vec4( 0, 1, 0, 0 ) ) );
-		auto dir = dot( normalize( dt ), up );
+		auto dt = vec3( touch.position - touch.start, 0 );
+
+		auto forward = MotionManager::getGravityDirection();
+		if( abs( forward.x ) > abs( forward.y ) ) {
+			auto x = copysign( 1.0f, forward.x );
+			forward = vec3( - x, 0, 0 );
+		}
+		else {
+			auto y = copysign( 1.0f, forward.y );
+			forward = vec3( 0, y, 0 );
+		}
+
+		auto dir = dot( normalize( dt ), forward );
 		auto amount = length( dt );
 
 		if( isfinite( dir ) && isfinite( amount ) )
