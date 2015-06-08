@@ -46,7 +46,7 @@ float wrappedIndex( float baseIndex, float offset )
 vec3 calcOffset( vec2 tex_coord )
 {
 	float t = clamp( length(texture2D(uBlurredTexture, tex_coord).rgb), 0.0, 1.0 );
-	float offset = mix( 1.2, 0.0, t );
+	float offset = mix( 0.8, 0.0, t );
 	return ciNormal * DeformScaling * offset;
 }
 

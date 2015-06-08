@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve">
-<path id="sweep" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M0,0c194.7-0.3,423.5-1.5,554.1,213.5
-	C704.6,461,605.9,939.4,580.6,1000"/>
-<path id="profile" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M0,0c51.8,157.5,21.7,590,485,297
-	c296.6-187.6,241.2,610.7,205,703"/>
+	 viewBox="0 0 1000 3000" enable-background="new 0 0 1000 3000" xml:space="preserve">
+<path id="sweep" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M0,0c155.8-0.2,338.8-1.2,443.3,170.8
+	c120.4,198,41.4,580.7,21.2,629.2"/>
+<path id="profile" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M0,0c41.4,126,17.4,472,388,237.6
+	C625.3,87.5,581,726.2,552,800"/>
+<path id="elongated" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M0,0c53.8,157.5,22.5,590,503.2,297
+	c236.9-144.4,212.7,1514,212.7,1563c0,785.9-93.4,880.9-212.9,1041c-45.4,60.9,63.6,97,63.6,99"/>
 </svg>

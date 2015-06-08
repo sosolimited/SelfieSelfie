@@ -178,7 +178,7 @@ void ShapeToolApp::draw()
 	gl::clear(Color(0, 0, 0));
 	gl::ScopedColor color(Color::white());
 	gl::ScopedMatrices matrices;
-	gl::scale(vec3(0.5f));
+	gl::scale(vec3(0.25f));
 
 	auto scaling = glm::translate(vec3(getWindowCenter(), 0)) * glm::scale(vec3(0.95f)) * glm::translate(vec3(- getWindowCenter(), 0));
 
