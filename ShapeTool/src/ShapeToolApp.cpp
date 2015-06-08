@@ -70,12 +70,12 @@ void ShapeToolApp::setup()
 	const auto subdivisions = 3;
 
 	addSection( 0.12f, 1, subdivisions, 1, 2 );
-	addSection( 0.12f, 3, subdivisions, 1, 5 );
-	addSection( 0.11f, 3, subdivisions, 1, 8 );
-	addSection( 0.095f, 3, subdivisions, 1, 11 );
-	addSection( 0.085f, 3, subdivisions, 1, 12 );
-	addSection( 0.070f, 3, subdivisions, 1, 9 );
-	addSection( 0.050f, 3, subdivisions, 1, 7 );
+	addSection( 0.12f, 4, subdivisions, 1, 5 );
+	addSection( 0.11f, 4, subdivisions, 1, 8 );
+	addSection( 0.095f, 4, subdivisions, 1, 11 );
+	addSection( 0.085f, 4, subdivisions, 1, 12 );
+	addSection( 0.070f, 4, subdivisions, 1, 9 );
+	addSection( 0.050f, 4, subdivisions, 1, 7 );
 
 	addSection( -1.0f, 0, 32, 32, 2 );
 }
