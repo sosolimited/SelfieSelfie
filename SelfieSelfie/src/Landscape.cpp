@@ -27,12 +27,11 @@ struct alignas(16) Vertex {
 	vec3	position;
   float frame_offset;
   /// Color
-	vec2	color_tex_coord;
+	vec2	color_tex_coord;		 // smooth across sections (bars in a section have shared edge values)
 	vec2	flat_tex_coord;      // shared within bands
   float color_weight;
   /// Deformation
   vec3	normal;
-  vec2  deform_tex_coord;    // shared across seams
   float deform_frame_offset; // shared across seams
   float deform_weight;
 };
@@ -43,7 +42,6 @@ const auto kVertexLayout = ([] {
 		layout.append( geom::Attrib::NORMAL, 3, sizeof(Vertex), offsetof(Vertex, normal) );
 		layout.append( geom::Attrib::TEX_COORD_0, 2, sizeof(Vertex), offsetof(Vertex, color_tex_coord) );
 		layout.append( geom::Attrib::TEX_COORD_1, 2, sizeof(Vertex), offsetof(Vertex, flat_tex_coord) );
-		layout.append( geom::Attrib::TEX_COORD_2, 2, sizeof(Vertex), offsetof(Vertex, deform_tex_coord) );
 		layout.append( geom::Attrib::CUSTOM_0, 1, sizeof(Vertex), offsetof(Vertex, deform_weight) );
 		layout.append( geom::Attrib::CUSTOM_1, 1, sizeof(Vertex), offsetof(Vertex, frame_offset) );
 		layout.append( geom::Attrib::CUSTOM_2, 1, sizeof(Vertex), offsetof(Vertex, color_weight) );
@@ -124,12 +122,11 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, int next_bar_time, 
 		auto normal = calc_normal(r, s);
 
     auto deform_scaling = easeInOutQuad(bar.time / 144.0f);
-    auto deform_tc = color_tc;
 		auto deform_frame = (float)mix( bar.time, next_bar_time, (float)r );
 
     vertices.emplace_back( Vertex { pos, (float)bar.time,
                                     color_tc, flat_tc, color_weight,
-                                    normal, deform_tc, deform_frame, deform_scaling } );
+                                    normal, deform_frame, deform_scaling } );
 	};
 
 	// Create triangles for flat shading
