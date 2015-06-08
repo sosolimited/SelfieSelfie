@@ -45,17 +45,18 @@ public:
 	void updateCamera();
 
 private:
-	CameraPersp			camera;
-  CaptureRef			capture;
+	CameraPersp				camera;
+  CaptureRef				capture;
 
-  GridTextureRef  gridTexture;
-  Landscape       landscape;
-	gl::BatchRef		cameraImage;
+  GridTextureRef		gridTexture;
+  Landscape					landscape;
+	gl::BatchRef			cameraImage;
 
   vector<TouchInfo> touches;
   ci::vec3					cameraOffset;
+	float							cameraVelocity = 0.0f;
 
-  bool drawDebug = false;
+  bool							drawDebug = false;
 
 };
 
@@ -177,19 +178,20 @@ void SelfieSelfieApp::updateCamera()
 
 		if( isfinite( dir ) && isfinite( amount ) )
 		{
-			auto ray = camera.getViewDirection();
-			cameraOffset += ray * 0.001f * (amount * dir);
-
-			auto l = length(cameraOffset);
-			auto maximum = 3.0f;
-			if( l > maximum ) {
-				cameraOffset *= (maximum / l);
-			}
-			camera.setEyePoint( cameraOffset );
+			cameraVelocity = amount * dir;
 		}
-
 	}
 
+	auto ray = camera.getViewDirection();
+	cameraOffset += ray * cameraVelocity * 0.001f;
+	cameraVelocity *= 0.84f;
+
+	auto l = length(cameraOffset);
+	auto maximum = 3.0f;
+	if( l > maximum ) {
+		cameraOffset *= (maximum / l);
+	}
+	camera.setEyePoint( cameraOffset );
 
   if( MotionManager::isDataAvailable() ) {
     auto r = MotionManager::getRotation();
