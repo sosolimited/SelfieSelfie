@@ -183,8 +183,8 @@ void SelfieSelfieApp::updateCamera()
 	}
 
 	auto ray = camera.getViewDirection();
-	cameraOffset += ray * cameraVelocity * 0.001f;
-	cameraVelocity *= 0.84f;
+	cameraOffset += ray * cameraVelocity * 0.00037f;
+	cameraVelocity *= 0.87f;
 
 	auto l = length(cameraOffset);
 	auto maximum = 2.9f;
