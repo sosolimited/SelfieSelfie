@@ -58,15 +58,16 @@ void ShapeToolApp::setup()
 
 	// Build a decent starting curve.
 	const auto subdivisions = 3;
+	const auto basic_delay = 3;
 	const auto total_blocks = 144;
 
-	addSection( 0.12f, 4, subdivisions, 1, 2 );
-	addSection( 0.12f, 4, subdivisions, 1, 5 );
-	addSection( 0.11f, 4, subdivisions, 1, 8 );
-	addSection( 0.095f, 4, subdivisions, 1, 11 );
-	addSection( 0.085f, 4, subdivisions, 1, 12 );
-	addSection( 0.070f, 4, subdivisions, 1, 9 );
-	addSection( 0.050f, 4, subdivisions, 1, 7 );
+	addSection( 0.12f,  basic_delay, subdivisions, 1, 2 );
+	addSection( 0.12f,  basic_delay, subdivisions, 1, 5 );
+	addSection( 0.11f,  basic_delay, subdivisions, 1, 8 );
+	addSection( 0.095f, basic_delay, subdivisions, 1, 11 );
+	addSection( 0.085f, basic_delay, subdivisions, 1, 12 );
+	addSection( 0.070f, basic_delay, subdivisions, 1, 9 );
+	addSection( 0.050f, basic_delay, subdivisions, 1, 7 );
 
 	_deform_start = getLastFrame() + 1;
 	auto divisions = total_blocks - _deform_start;
