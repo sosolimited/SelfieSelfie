@@ -160,24 +160,24 @@ void SelfieSelfieApp::updateCamera()
 {
 	if( touches.size() == 1 )
 	{
+		const auto forward = ([] {
+			auto gravity = MotionManager::getGravityDirection();
+			if( abs( gravity.x ) > abs( gravity.y ) ) {
+				auto x = copysign( 1.0f, gravity.x );
+				return vec3( - x, 0, 0 );
+			}
+			else {
+				auto y = copysign( 1.0f, gravity.y );
+				return vec3( 0, y, 0 );
+			}
+		}());
+
 		auto &touch = touches.front();
-		auto dt = vec3( touch.position - touch.start, 0 );
+		auto delta = vec3( touch.position - touch.start, 0 );
+		auto amount = length( delta );
+		auto dir = dot( normalize(delta), forward );
 
-		auto forward = MotionManager::getGravityDirection();
-		if( abs( forward.x ) > abs( forward.y ) ) {
-			auto x = copysign( 1.0f, forward.x );
-			forward = vec3( - x, 0, 0 );
-		}
-		else {
-			auto y = copysign( 1.0f, forward.y );
-			forward = vec3( 0, y, 0 );
-		}
-
-		auto dir = dot( normalize( dt ), forward );
-		auto amount = length( dt );
-
-		if( isfinite( dir ) && isfinite( amount ) )
-		{
+		if( isfinite( amount ) && isfinite( dir ) ) {
 			cameraVelocity = amount * dir;
 		}
 	}
@@ -187,7 +187,7 @@ void SelfieSelfieApp::updateCamera()
 	cameraVelocity *= 0.84f;
 
 	auto l = length(cameraOffset);
-	auto maximum = 3.0f;
+	auto maximum = 2.9f;
 	if( l > maximum ) {
 		cameraOffset *= (maximum / l);
 	}
