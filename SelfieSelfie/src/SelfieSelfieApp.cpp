@@ -23,12 +23,12 @@ struct TouchInfo {
 	TouchInfo() = default;
 	TouchInfo( uint32_t iId, const vec2 &iStart, const vec2 &iPosition )
 	: id( iId ),
-		start( iStart ),
+		previous( iStart ),
 		position( iPosition )
 	{}
 
   uint32_t		id = 0;
-  vec2				start;
+  vec2				previous;
   vec2				position;
 };
 
@@ -124,6 +124,7 @@ void SelfieSelfieApp::touchesMoved( TouchEvent event )
   for( auto &t : event.getTouches() ) {
     for( auto &s : touches ) {
       if( s.id == t.getId() ) {
+				s.previous = s.position;
         s.position = t.getPos();
       }
     }
@@ -164,27 +165,29 @@ void SelfieSelfieApp::updateCamera()
 			auto gravity = MotionManager::getGravityDirection();
 			if( abs( gravity.x ) > abs( gravity.y ) ) {
 				auto x = copysign( 1.0f, gravity.x );
-				return vec3( - x, 0, 0 );
+				return vec3( x, 0, 0 );
 			}
 			else {
 				auto y = copysign( 1.0f, gravity.y );
-				return vec3( 0, y, 0 );
+				return vec3( 0, - y, 0 );
 			}
 		}());
 
 		auto &touch = touches.front();
-		auto delta = vec3( touch.position - touch.start, 0 );
+		auto delta = vec3( touch.position - touch.previous, 0 );
+		touch.previous = touch.position;
+
 		auto amount = length( delta );
 		auto dir = dot( normalize(delta), forward );
 
 		if( isfinite( amount ) && isfinite( dir ) ) {
-			cameraVelocity = amount * dir;
+			cameraVelocity += amount * dir;
 		}
 	}
 
 	auto ray = camera.getViewDirection();
-	cameraOffset += ray * cameraVelocity * 0.001f;
-	cameraVelocity *= 0.84f;
+	cameraOffset += ray * cameraVelocity * 0.0025f;
+	cameraVelocity *= 0.86f;
 
 	auto l = length(cameraOffset);
 	auto maximum = 2.9f;
