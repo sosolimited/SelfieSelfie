@@ -66,7 +66,7 @@ void ShapeToolApp::setup()
 	const auto subdivisions = 3;
 	const auto basic_delay = 3;
 	const auto total_blocks = 144;
-	const auto scalar = 0.38f;
+	const auto scalar = 0.30f;
 
 	addSection( scalar * 0.12f,  basic_delay, subdivisions, 1, 2 );
 	addSection( scalar * 0.12f,  basic_delay, subdivisions, 1, 5 );

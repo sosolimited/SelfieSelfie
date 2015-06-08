@@ -118,11 +118,11 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, int next_bar_time, 
 		auto pos = calc_pos(r, s);
 		auto color_tc = calc_tc(r, s);
     auto flat_tc = calc_tc( provoking.x, provoking.y );
-    auto color_weight = 0.0f;
 		auto normal = calc_normal(r, s);
 
 		auto deform_t = lmap( glm::clamp<float>( bar.time, deform_start_time, 144.0f ), deform_start_time, 144.0f, 0.0f, 1.0f );
     auto deform_scaling = easeInOutQuad( deform_t );
+		auto color_weight = easeInOutCubic( deform_t );
 		auto deform_frame = (float)mix( bar.time, next_bar_time, (float)r );
 		if (deform_scaling > 1.0f) {
 			CI_LOG_W("Deform scaling out of bounds: " << deform_scaling );
