@@ -190,7 +190,7 @@ void SelfieSelfieApp::updateCamera()
 	cameraVelocity *= 0.86f;
 
 	auto l = length(cameraOffset);
-	auto maximum = 2.9f;
+	auto maximum = 2.7f;
 	if( l > maximum ) {
 		cameraOffset *= (maximum / l);
 	}
