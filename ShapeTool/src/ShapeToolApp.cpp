@@ -32,7 +32,6 @@ public:
 
 	void load(const fs::path &path);
 	void save() const;
-
 	void saveXml() const;
 
 	/// Add a section taking up curve length, offset from the end of the previous section in time
@@ -40,6 +39,7 @@ public:
 	int getLastFrame() const;
 
 	void nextPath();
+	void rescaleCurve(float scalar);
 
 private:
 	vector<Section>							_sections;
@@ -66,14 +66,15 @@ void ShapeToolApp::setup()
 	const auto subdivisions = 3;
 	const auto basic_delay = 3;
 	const auto total_blocks = 144;
+	const auto scalar = 0.44f;
 
-	addSection( 0.12f,  basic_delay, subdivisions, 1, 2 );
-	addSection( 0.12f,  basic_delay, subdivisions, 1, 5 );
-	addSection( 0.11f,  basic_delay, subdivisions, 1, 8 );
-	addSection( 0.095f, basic_delay, subdivisions, 1, 11 );
-	addSection( 0.085f, basic_delay, subdivisions, 1, 12 );
-	addSection( 0.070f, basic_delay, subdivisions, 1, 9 );
-	addSection( 0.050f, basic_delay, subdivisions, 1, 7 );
+	addSection( scalar * 0.12f,  basic_delay, subdivisions, 1, 2 );
+	addSection( scalar * 0.12f,  basic_delay, subdivisions, 1, 5 );
+	addSection( scalar * 0.11f,  basic_delay, subdivisions, 1, 8 );
+	addSection( scalar * 0.095f, basic_delay, subdivisions, 1, 11 );
+	addSection( scalar * 0.085f, basic_delay, subdivisions, 1, 12 );
+	addSection( scalar * 0.070f, basic_delay, subdivisions, 1, 9 );
+	addSection( scalar * 0.050f, basic_delay, subdivisions, 1, 7 );
 
 	_deform_start = getLastFrame() + 1;
 	auto divisions = total_blocks - _deform_start;
@@ -85,6 +86,11 @@ void ShapeToolApp::nextPath()
 	_current_path = (_current_path + 1) % _paths.size();
 	auto &p = _paths.at(_current_path);
 	_path_cache = unique_ptr<Path2dCalcCache>(new Path2dCalcCache(p));
+}
+
+void ShapeToolApp::rescaleCurve(float scalar)
+{
+
 }
 
 void ShapeToolApp::addSection(float length, int time_offset, int subdivisions, int temporal_steps, int repeats)
@@ -175,7 +181,7 @@ void ShapeToolApp::keyDown(KeyEvent event)
 	{
 		nextPath();
 	}
-	
+
 }
 
 void ShapeToolApp::fileDrop(cinder::app::FileDropEvent event)
