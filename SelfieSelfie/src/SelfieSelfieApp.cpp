@@ -62,7 +62,7 @@ void SelfieSelfieApp::setup()
 
   auto target = vec3( 5, 0, 0 );
   camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
-  camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 1000 );
+  camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 20.0f );
 
   try {
     CI_LOG_I( "Initializing hardware camera." );
@@ -199,8 +199,8 @@ void SelfieSelfieApp::draw()
 		auto offset = vec2(gridTexture->getIndexOffset( gridTexture->getCellDimensions(), gridTexture->getCurrentIndex() )) / gridTexture->getGridSize();
 		auto rect = Rectf( -1.0f, -1.0f, 1.0f, 1.0f ).scaled( vec2( 1.333f, 1.0f ) ).scaled( 0.2f );
 		auto half_pi = (float) M_PI / 2.0f;
-		auto xf1 = translate( vec3( - 4.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
-		auto xf2 = translate( vec3( 4.0f, 0.0f, 0.0f ) ) * rotate( half_pi, vec3( 1, 0, 0 ) ) * rotate( - half_pi, vec3( 0, 1, 0 ) );
+		auto xf1 = translate( vec3( - 4.0001f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
+		auto xf2 = translate( vec3( 4.0001f, 0.0f, 0.0f ) ) * rotate( half_pi, vec3( 1, 0, 0 ) ) * rotate( - half_pi, vec3( 0, 1, 0 ) );
 
 		{
 			gl::ScopedModelMatrix m;
