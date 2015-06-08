@@ -66,7 +66,7 @@ void ShapeToolApp::setup()
 	const auto subdivisions = 3;
 	const auto basic_delay = 3;
 	const auto total_blocks = 144;
-	const auto scalar = 0.44f;
+	const auto scalar = 0.38f;
 
 	addSection( scalar * 0.12f,  basic_delay, subdivisions, 1, 2 );
 	addSection( scalar * 0.12f,  basic_delay, subdivisions, 1, 5 );
@@ -75,6 +75,8 @@ void ShapeToolApp::setup()
 	addSection( scalar * 0.085f, basic_delay, subdivisions, 1, 12 );
 	addSection( scalar * 0.070f, basic_delay, subdivisions, 1, 9 );
 	addSection( scalar * 0.050f, basic_delay, subdivisions, 1, 7 );
+	addSection( scalar * 0.12f, basic_delay, subdivisions + 3, 3, 6 );
+	addSection( scalar * 0.2f, basic_delay, subdivisions + 6, 9, 5 );
 
 	_deform_start = getLastFrame() + 1;
 	auto divisions = total_blocks - _deform_start;

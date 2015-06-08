@@ -3,1365 +3,1335 @@
 	<bars>
 		<b>
 			<begin>[0,0]</begin>
-			<end>[0.0158355888,0.0624625161]</end>
+			<end>[0.0140474876,0.0538534261]</end>
 			<normal_begin>[-0.946314037,0.323248833]</normal_begin>
-			<normal_end>[-0.97982645,0.199850231]</normal_end>
+			<normal_end>[-0.978301346,0.207186893]</normal_end>
 			<time>3</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.333333343</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.0158355888,0.0624625161]</begin>
-			<end>[0.0280549321,0.125773996]</end>
-			<normal_begin>[-0.97982645,0.199850231]</normal_begin>
-			<normal_end>[-0.981743097,0.1902114]</normal_end>
+			<begin>[0.0140474876,0.0538534261]</begin>
+			<end>[0.0247479137,0.108502269]</end>
+			<normal_begin>[-0.978301346,0.207186893]</normal_begin>
+			<normal_end>[-0.982441723,0.18656984]</normal_end>
 			<time>3</time>
 			<texture_begin>0.333333343</texture_begin>
 			<texture_end>0.666666687</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.0280549321,0.125773996]</begin>
-			<end>[0.0415255763,0.188825414]</end>
-			<normal_begin>[-0.981743097,0.1902114]</normal_begin>
-			<normal_end>[-0.971773446,0.235916048]</normal_end>
+			<begin>[0.0247479137,0.108502269]</begin>
+			<end>[0.0356470868,0.163111106]</end>
+			<normal_begin>[-0.982441723,0.18656984]</normal_begin>
+			<normal_end>[-0.977442443,0.21120207]</normal_end>
 			<time>3</time>
 			<texture_begin>0.666666687</texture_begin>
 			<texture_end>1</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.0415255763,0.188825414]</begin>
-			<end>[0.0596312843,0.250681221]</end>
-			<normal_begin>[-0.971773446,0.235916048]</normal_begin>
-			<normal_end>[-0.941893041,0.335912824]</normal_end>
+			<begin>[0.0356470868,0.163111106]</begin>
+			<end>[0.0489670523,0.21717234]</end>
+			<normal_begin>[-0.977442443,0.21120207]</normal_begin>
+			<normal_end>[-0.961786687,0.273799986]</normal_end>
 			<time>7</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.333333343</texture_end>
 			<repeats>5</repeats>
 		</b>
 		<b>
-			<begin>[0.0596312843,0.250681221]</begin>
-			<end>[0.086427696,0.309220523]</end>
-			<normal_begin>[-0.941893041,0.335912824]</normal_begin>
-			<normal_end>[-0.860447884,0.509538531]</normal_end>
+			<begin>[0.0489670523,0.21717234]</begin>
+			<end>[0.0669820458,0.269833207]</end>
+			<normal_begin>[-0.961786687,0.273799986]</normal_begin>
+			<normal_end>[-0.924170792,0.381979644]</normal_end>
 			<time>7</time>
 			<texture_begin>0.333333343</texture_begin>
 			<texture_end>0.666666687</texture_end>
 			<repeats>5</repeats>
 		</b>
 		<b>
-			<begin>[0.086427696,0.309220523]</begin>
-			<end>[0.127097666,0.358883262]</end>
-			<normal_begin>[-0.860447884,0.509538531]</normal_begin>
-			<normal_end>[-0.650200129,0.759762943]</normal_end>
+			<begin>[0.0669820458,0.269833207]</begin>
+			<end>[0.0926395431,0.319163054]</end>
+			<normal_begin>[-0.924170792,0.381979644]</normal_begin>
+			<normal_end>[-0.834793568,0.550563097]</normal_end>
 			<time>7</time>
 			<texture_begin>0.666666687</texture_begin>
 			<texture_end>1</texture_end>
 			<repeats>5</repeats>
 		</b>
 		<b>
-			<begin>[0.127097666,0.358883262]</begin>
-			<end>[0.178221136,0.387790471]</end>
-			<normal_begin>[-0.650200129,0.759762943]</normal_begin>
-			<normal_end>[-0.313979536,0.94942975]</normal_end>
+			<begin>[0.0926395431,0.319163054]</begin>
+			<end>[0.125804543,0.357764721]</end>
+			<normal_begin>[-0.834793568,0.550563097]</normal_begin>
+			<normal_end>[-0.658200443,0.752842665]</normal_end>
 			<time>11</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.333333343</texture_end>
 			<repeats>8</repeats>
 		</b>
 		<b>
-			<begin>[0.178221136,0.387790471]</begin>
-			<end>[0.236430213,0.396430612]</end>
-			<normal_begin>[-0.313979536,0.94942975]</normal_begin>
-			<normal_end>[0.00493450556,0.999987841]</normal_end>
+			<begin>[0.125804543,0.357764721]</begin>
+			<end>[0.169048578,0.38443169]</end>
+			<normal_begin>[-0.658200443,0.752842665]</normal_begin>
+			<normal_end>[-0.373653859,0.927568197]</normal_end>
 			<time>11</time>
 			<texture_begin>0.333333343</texture_begin>
 			<texture_end>0.666666687</texture_end>
 			<repeats>8</repeats>
 		</b>
 		<b>
-			<begin>[0.236430213,0.396430612]</begin>
-			<end>[0.295015395,0.389456809]</end>
-			<normal_begin>[0.00493450556,0.999987841]</normal_begin>
-			<normal_end>[0.213964298,0.976841509]</normal_end>
+			<begin>[0.169048578,0.38443169]</begin>
+			<end>[0.218617767,0.395776868]</end>
+			<normal_begin>[-0.373653859,0.927568197]</normal_begin>
+			<normal_end>[-0.0800983012,0.996787012]</normal_end>
 			<time>11</time>
 			<texture_begin>0.666666687</texture_begin>
 			<texture_end>1</texture_end>
 			<repeats>8</repeats>
 		</b>
 		<b>
-			<begin>[0.295015395,0.389456809]</begin>
-			<end>[0.344062924,0.375418514]</end>
-			<normal_begin>[0.213964298,0.976841509]</normal_begin>
-			<normal_end>[0.328341395,0.944559097]</normal_end>
+			<begin>[0.218617767,0.395776868]</begin>
+			<end>[0.262627661,0.394865245]</end>
+			<normal_begin>[-0.0800983012,0.996787012]</normal_begin>
+			<normal_end>[0.110546038,0.993870914]</normal_end>
 			<time>15</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.333333343</texture_end>
 			<repeats>11</repeats>
 		</b>
 		<b>
-			<begin>[0.344062924,0.375418514]</begin>
-			<end>[0.391477644,0.356548548]</end>
-			<normal_begin>[0.328341395,0.944559097]</normal_begin>
-			<normal_end>[0.406344742,0.913719773]</normal_end>
+			<begin>[0.262627661,0.394865245]</begin>
+			<end>[0.305951893,0.386885583]</end>
+			<normal_begin>[0.110546038,0.993870914]</normal_begin>
+			<normal_end>[0.243300289,0.969951093]</normal_end>
 			<time>15</time>
 			<texture_begin>0.333333343</texture_begin>
 			<texture_end>0.666666687</texture_end>
 			<repeats>11</repeats>
 		</b>
 		<b>
-			<begin>[0.391477644,0.356548548]</begin>
-			<end>[0.437415361,0.334307134]</end>
-			<normal_begin>[0.406344742,0.913719773]</normal_begin>
-			<normal_end>[0.462179214,0.88678652]</normal_end>
+			<begin>[0.305951893,0.386885583]</begin>
+			<end>[0.348094255,0.373998642]</end>
+			<normal_begin>[0.243300289,0.969951093]</normal_begin>
+			<normal_end>[0.336015999,0.941856205]</normal_end>
 			<time>15</time>
 			<texture_begin>0.666666687</texture_begin>
 			<texture_end>1</texture_end>
 			<repeats>11</repeats>
 		</b>
 		<b>
-			<begin>[0.437415361,0.334307134]</begin>
-			<end>[0.477433354,0.312297732]</end>
-			<normal_begin>[0.462179214,0.88678652]</normal_begin>
-			<normal_end>[0.500029802,0.866008282]</normal_end>
+			<begin>[0.348094255,0.373998642]</begin>
+			<end>[0.384767115,0.359491229]</end>
+			<normal_begin>[0.336015999,0.941856205]</normal_begin>
+			<normal_end>[0.396760136,0.917922258]</normal_end>
 			<time>19</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.333333343</texture_end>
 			<repeats>12</repeats>
 		</b>
 		<b>
-			<begin>[0.477433354,0.312297732]</begin>
-			<end>[0.517399907,0.290376514]</end>
-			<normal_begin>[0.500029802,0.866008282]</normal_begin>
-			<normal_end>[0.30365479,0.952782154]</normal_end>
+			<begin>[0.384767115,0.359491229]</begin>
+			<end>[0.420540422,0.342881709]</end>
+			<normal_begin>[0.396760136,0.917922258]</normal_begin>
+			<normal_end>[0.443454802,0.89629674]</normal_end>
 			<time>19</time>
 			<texture_begin>0.333333343</texture_begin>
 			<texture_end>0.666666687</texture_end>
 			<repeats>12</repeats>
 		</b>
 		<b>
-			<begin>[0.517399907,0.290376514]</begin>
-			<end>[0.560332,0.298789144]</end>
-			<normal_begin>[0.30365479,0.952782154]</normal_begin>
-			<normal_end>[-0.611184716,0.791488051]</normal_end>
+			<begin>[0.420540422,0.342881709]</begin>
+			<end>[0.45550856,0.324635148]</end>
+			<normal_begin>[0.443454802,0.89629674]</normal_begin>
+			<normal_end>[0.48032999,0.877087831]</normal_end>
 			<time>19</time>
 			<texture_begin>0.666666687</texture_begin>
 			<texture_end>1</texture_end>
 			<repeats>12</repeats>
 		</b>
 		<b>
-			<begin>[0.560332,0.298789144]</begin>
-			<end>[0.584661841,0.327222705]</end>
-			<normal_begin>[-0.611184716,0.791488051]</normal_begin>
-			<normal_end>[-0.847660363,0.530539215]</normal_end>
+			<begin>[0.45550856,0.324635148]</begin>
+			<end>[0.483767122,0.308614701]</end>
+			<normal_begin>[0.48032999,0.877087831]</normal_begin>
+			<normal_end>[0.505306065,0.862940252]</normal_end>
 			<time>23</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.333333343</texture_end>
 			<repeats>9</repeats>
 		</b>
 		<b>
-			<begin>[0.584661841,0.327222705]</begin>
-			<end>[0.601826072,0.360651433]</end>
-			<normal_begin>[-0.847660363,0.530539215]</normal_begin>
-			<normal_end>[-0.918386281,0.395685047]</normal_end>
+			<begin>[0.483767122,0.308614701]</begin>
+			<end>[0.511917114,0.292442828]</end>
+			<normal_begin>[0.505306065,0.862940252]</normal_begin>
+			<normal_end>[0.398376048,0.917222142]</normal_end>
 			<time>23</time>
 			<texture_begin>0.333333343</texture_begin>
 			<texture_end>0.666666687</texture_end>
 			<repeats>9</repeats>
 		</b>
 		<b>
-			<begin>[0.601826072,0.360651433]</begin>
-			<end>[0.615111172,0.395828933]</end>
-			<normal_begin>[-0.918386281,0.395685047]</normal_begin>
-			<normal_end>[-0.948498368,0.316782176]</normal_end>
+			<begin>[0.511917114,0.292442828]</begin>
+			<end>[0.543603837,0.289894938]</end>
+			<normal_begin>[0.398376048,0.917222142]</normal_begin>
+			<normal_end>[-0.28938669,0.957212269]</normal_end>
 			<time>23</time>
 			<texture_begin>0.666666687</texture_begin>
 			<texture_end>1</texture_end>
 			<repeats>9</repeats>
 		</b>
 		<b>
-			<begin>[0.615111172,0.395828933]</begin>
-			<end>[0.623072863,0.421487123]</end>
-			<normal_begin>[-0.948498368,0.316782176]</normal_begin>
-			<normal_end>[-0.960685194,0.277640015]</normal_end>
+			<begin>[0.543603837,0.289894938]</begin>
+			<end>[0.563540518,0.30142355]</end>
+			<normal_begin>[-0.28938669,0.957212269]</normal_begin>
+			<normal_end>[-0.65654242,0.754289091]</normal_end>
 			<time>27</time>
 			<texture_begin>0</texture_begin>
 			<texture_end>0.333333343</texture_end>
 			<repeats>7</repeats>
 		</b>
 		<b>
-			<begin>[0.623072863,0.421487123]</begin>
-			<end>[0.630106688,0.447415859]</end>
-			<normal_begin>[-0.960685194,0.277640015]</normal_begin>
-			<normal_end>[-0.968982339,0.247129887]</normal_end>
+			<begin>[0.563540518,0.30142355]</begin>
+			<end>[0.578948259,0.318705708]</end>
+			<normal_begin>[-0.65654242,0.754289091]</normal_begin>
+			<normal_end>[-0.810887158,0.585202515]</normal_end>
 			<time>27</time>
 			<texture_begin>0.333333343</texture_begin>
 			<texture_end>0.666666687</texture_end>
 			<repeats>7</repeats>
 		</b>
 		<b>
-			<begin>[0.630106688,0.447415859]</begin>
-			<end>[0.636404872,0.473533273]</end>
-			<normal_begin>[-0.968982339,0.247129887]</normal_begin>
-			<normal_end>[-0.974922121,0.222546414]</normal_end>
+			<begin>[0.578948259,0.318705708]</begin>
+			<end>[0.591153622,0.338419497]</end>
+			<normal_begin>[-0.810887158,0.585202515]</normal_begin>
+			<normal_end>[-0.880230725,0.474545956]</normal_end>
 			<time>27</time>
 			<texture_begin>0.666666687</texture_begin>
 			<texture_end>1</texture_end>
 			<repeats>7</repeats>
 		</b>
 		<b>
-			<begin>[0.636404872,0.473533273]</begin>
-			<end>[0.641263664,0.49575448]</end>
-			<normal_begin>[-0.974922121,0.222546414]</normal_begin>
-			<normal_end>[-0.978739142,0.20510897]</normal_end>
-			<time>29</time>
+			<begin>[0.591153622,0.338419497]</begin>
+			<end>[0.603069365,0.363573074]</end>
+			<normal_begin>[-0.880230725,0.474545956]</normal_begin>
+			<normal_end>[-0.921883464,0.387467146]</normal_end>
+			<time>31</time>
 			<texture_begin>0</texture_begin>
-			<texture_end>0.00869565178</texture_end>
-			<repeats>2</repeats>
+			<texture_end>0.166666672</texture_end>
+			<repeats>6</repeats>
 		</b>
 		<b>
-			<begin>[0.641263664,0.49575448]</begin>
-			<end>[0.64575398,0.51805377]</end>
-			<normal_begin>[-0.978739142,0.20510897]</normal_begin>
-			<normal_end>[-0.981776893,0.19003731]</normal_end>
-			<time>29</time>
-			<texture_begin>0.00869565178</texture_begin>
-			<texture_end>0.0173913036</texture_end>
-			<repeats>2</repeats>
+			<begin>[0.603069365,0.363573074]</begin>
+			<end>[0.612984955,0.389586538]</end>
+			<normal_begin>[-0.921883464,0.387467146]</normal_begin>
+			<normal_end>[-0.944615185,0.328180313]</normal_end>
+			<time>31</time>
+			<texture_begin>0.166666672</texture_begin>
+			<texture_end>0.333333343</texture_end>
+			<repeats>6</repeats>
 		</b>
 		<b>
-			<begin>[0.64575398,0.51805377]</begin>
-			<end>[0.649923384,0.540414631]</end>
-			<normal_begin>[-0.981776893,0.19003731]</normal_begin>
-			<normal_end>[-0.984238446,0.176846743]</normal_end>
-			<time>30</time>
-			<texture_begin>0.0173913036</texture_begin>
-			<texture_end>0.0260869563</texture_end>
-			<repeats>2</repeats>
-		</b>
-		<b>
-			<begin>[0.649923384,0.540414631]</begin>
-			<end>[0.65381068,0.562826276]</end>
-			<normal_begin>[-0.984238446,0.176846743]</normal_begin>
-			<normal_end>[-0.986263752,0.165178403]</normal_end>
+			<begin>[0.612984955,0.389586538]</begin>
+			<end>[0.621492684,0.41609627]</end>
+			<normal_begin>[-0.944615185,0.328180313]</normal_begin>
+			<normal_end>[-0.958529592,0.284992993]</normal_end>
 			<time>32</time>
-			<texture_begin>0.0260869563</texture_begin>
-			<texture_end>0.0347826071</texture_end>
-			<repeats>2</repeats>
+			<texture_begin>0.333333343</texture_begin>
+			<texture_end>0.5</texture_end>
+			<repeats>6</repeats>
 		</b>
 		<b>
-			<begin>[0.65381068,0.562826276]</begin>
-			<end>[0.657447278,0.585279882]</end>
-			<normal_begin>[-0.986263752,0.165178403]</normal_begin>
-			<normal_end>[-0.987951875,0.154761747]</normal_end>
+			<begin>[0.621492684,0.41609627]</begin>
+			<end>[0.628948689,0.442921907]</end>
+			<normal_begin>[-0.958529592,0.284992993]</normal_begin>
+			<normal_end>[-0.967748702,0.25191763]</normal_end>
 			<time>32</time>
-			<texture_begin>0.0347826071</texture_begin>
-			<texture_end>0.0434782617</texture_end>
-			<repeats>2</repeats>
+			<texture_begin>0.5</texture_begin>
+			<texture_end>0.666666687</texture_end>
+			<repeats>6</repeats>
 		</b>
 		<b>
-			<begin>[0.657447278,0.585279882]</begin>
-			<end>[0.660859227,0.607769191]</end>
-			<normal_begin>[-0.987951875,0.154761747]</normal_begin>
-			<normal_end>[-0.989374816,0.145387888]</normal_end>
-			<time>34</time>
-			<texture_begin>0.0434782617</texture_begin>
-			<texture_end>0.0521739125</texture_end>
-			<repeats>2</repeats>
+			<begin>[0.628948689,0.442921907]</begin>
+			<end>[0.635583878,0.469962656]</end>
+			<normal_begin>[-0.967748702,0.25191763]</normal_begin>
+			<normal_end>[-0.974215806,0.225618333]</normal_end>
+			<time>33</time>
+			<texture_begin>0.666666687</texture_begin>
+			<texture_end>0.833333313</texture_end>
+			<repeats>6</repeats>
 		</b>
 		<b>
-			<begin>[0.660859227,0.607769191]</begin>
-			<end>[0.664068103,0.630288124]</end>
-			<normal_begin>[-0.989374816,0.145387888]</normal_begin>
-			<normal_end>[-0.990585804,0.136893854]</normal_end>
-			<time>35</time>
-			<texture_begin>0.0521739125</texture_begin>
-			<texture_end>0.0608695634</texture_end>
-			<repeats>2</repeats>
+			<begin>[0.635583878,0.469962656]</begin>
+			<end>[0.641556978,0.497157753]</end>
+			<normal_begin>[-0.974215806,0.225618333]</normal_begin>
+			<normal_end>[-0.978951037,0.20409517]</normal_end>
+			<time>33</time>
+			<texture_begin>0.833333313</texture_begin>
+			<texture_end>1</texture_end>
+			<repeats>6</repeats>
 		</b>
 		<b>
-			<begin>[0.664068103,0.630288124]</begin>
-			<end>[0.667092621,0.652832687]</end>
-			<normal_begin>[-0.990585804,0.136893854]</normal_begin>
-			<normal_end>[-0.99162519,0.129149303]</normal_end>
-			<time>36</time>
-			<texture_begin>0.0608695634</texture_begin>
-			<texture_end>0.0695652142</texture_end>
-			<repeats>2</repeats>
+			<begin>[0.641556978,0.497157753]</begin>
+			<end>[0.647554755,0.527508199]</end>
+			<normal_begin>[-0.978951037,0.20409517]</normal_begin>
+			<normal_end>[-0.98287946,0.184249818]</normal_end>
+			<time>37</time>
+			<texture_begin>0</texture_begin>
+			<texture_end>0.111111112</texture_end>
+			<repeats>5</repeats>
 		</b>
 		<b>
-			<begin>[0.667092621,0.652832687]</begin>
-			<end>[0.669948399,0.675399244]</end>
-			<normal_begin>[-0.99162519,0.129149303]</normal_begin>
-			<normal_end>[-0.992523968,0.122049406]</normal_end>
-			<time>36</time>
-			<texture_begin>0.0695652142</texture_begin>
-			<texture_end>0.0782608688</texture_end>
-			<repeats>2</repeats>
-		</b>
-		<b>
-			<begin>[0.669948399,0.675399244]</begin>
-			<end>[0.672649205,0.697984815]</end>
-			<normal_begin>[-0.992523968,0.122049406]</normal_begin>
-			<normal_end>[-0.993306518,0.115508474]</normal_end>
+			<begin>[0.647554755,0.527508199]</begin>
+			<end>[0.652990282,0.557963967]</end>
+			<normal_begin>[-0.98287946,0.184249818]</normal_begin>
+			<normal_end>[-0.985856235,0.167593434]</normal_end>
 			<time>38</time>
-			<texture_begin>0.0782608688</texture_begin>
-			<texture_end>0.0869565234</texture_end>
-			<repeats>2</repeats>
+			<texture_begin>0.111111112</texture_begin>
+			<texture_end>0.222222224</texture_end>
+			<repeats>5</repeats>
 		</b>
 		<b>
-			<begin>[0.672649205,0.697984815]</begin>
-			<end>[0.675206959,0.720587075]</end>
-			<normal_begin>[-0.993306518,0.115508474]</normal_begin>
-			<normal_end>[-0.993991673,0.109455734]</normal_end>
+			<begin>[0.652990282,0.557963967]</begin>
+			<end>[0.657949567,0.588501155]</end>
+			<normal_begin>[-0.985856235,0.167593434]</normal_begin>
+			<normal_end>[-0.988170683,0.1533584]</normal_end>
 			<time>39</time>
-			<texture_begin>0.0869565234</texture_begin>
-			<texture_end>0.0956521705</texture_end>
-			<repeats>2</repeats>
+			<texture_begin>0.222222224</texture_begin>
+			<texture_end>0.333333343</texture_end>
+			<repeats>5</repeats>
 		</b>
 		<b>
-			<begin>[0.675206959,0.720587075]</begin>
-			<end>[0.677631915,0.743203878]</end>
-			<normal_begin>[-0.993991673,0.109455734]</normal_begin>
-			<normal_end>[-0.994594812,0.103832304]</normal_end>
+			<begin>[0.657949567,0.588501155]</begin>
+			<end>[0.662498713,0.619102061]</end>
+			<normal_begin>[-0.988170683,0.1533584]</normal_begin>
+			<normal_end>[-0.990008116,0.141010746]</normal_end>
 			<time>40</time>
-			<texture_begin>0.0956521705</texture_begin>
-			<texture_end>0.104347825</texture_end>
-			<repeats>2</repeats>
+			<texture_begin>0.333333343</texture_begin>
+			<texture_end>0.444444448</texture_end>
+			<repeats>5</repeats>
 		</b>
 		<b>
-			<begin>[0.677631915,0.743203878]</begin>
-			<end>[0.679933429,0.765833855]</end>
-			<normal_begin>[-0.994594812,0.103832304]</normal_begin>
-			<normal_end>[-0.995128393,0.0985885635]</normal_end>
+			<begin>[0.662498713,0.619102061]</begin>
+			<end>[0.666690052,0.649754465]</end>
+			<normal_begin>[-0.990008116,0.141010746]</normal_begin>
+			<normal_end>[-0.991492152,0.130166143]</normal_end>
 			<time>41</time>
-			<texture_begin>0.104347825</texture_begin>
-			<texture_end>0.11304348</texture_end>
-			<repeats>2</repeats>
+			<texture_begin>0.444444448</texture_begin>
+			<texture_end>0.555555582</texture_end>
+			<repeats>5</repeats>
 		</b>
 		<b>
-			<begin>[0.679933429,0.765833855]</begin>
-			<end>[0.682119608,0.788475037]</end>
-			<normal_begin>[-0.995128393,0.0985885635]</normal_begin>
-			<normal_end>[-0.99560219,0.0936825946]</normal_end>
+			<begin>[0.666690052,0.649754465]</begin>
+			<end>[0.670565367,0.680447936]</end>
+			<normal_begin>[-0.991492152,0.130166143]</normal_begin>
+			<normal_end>[-0.992708385,0.120540984]</normal_end>
 			<time>42</time>
-			<texture_begin>0.11304348</texture_begin>
-			<texture_end>0.121739127</texture_end>
-			<repeats>2</repeats>
+			<texture_begin>0.555555582</texture_begin>
+			<texture_end>0.666666687</texture_end>
+			<repeats>5</repeats>
 		</b>
 		<b>
-			<begin>[0.682119608,0.788475037]</begin>
-			<end>[0.684197664,0.81112653]</end>
-			<normal_begin>[-0.99560219,0.0936825946]</normal_begin>
-			<normal_end>[-0.996024609,0.0890784264]</normal_end>
+			<begin>[0.670565367,0.680447936]</begin>
+			<end>[0.674158871,0.711176157]</end>
+			<normal_begin>[-0.992708385,0.120540984]</normal_begin>
+			<normal_end>[-0.993717253,0.111920074]</normal_end>
 			<time>43</time>
-			<texture_begin>0.121739127</texture_begin>
-			<texture_end>0.130434781</texture_end>
-			<repeats>2</repeats>
+			<texture_begin>0.666666687</texture_begin>
+			<texture_end>0.777777791</texture_end>
+			<repeats>5</repeats>
 		</b>
 		<b>
-			<begin>[0.684197664,0.81112653]</begin>
-			<end>[0.686174095,0.833787084]</end>
-			<normal_begin>[-0.996024609,0.0890784264]</normal_begin>
-			<normal_end>[-0.996402562,0.0847452432]</normal_end>
+			<begin>[0.674158871,0.711176157]</begin>
+			<end>[0.677499056,0.741932809]</end>
+			<normal_begin>[-0.993717253,0.111920074]</normal_begin>
+			<normal_end>[-0.994562864,0.104137771]</normal_end>
 			<time>44</time>
-			<texture_begin>0.130434781</texture_begin>
-			<texture_end>0.139130428</texture_end>
-			<repeats>2</repeats>
+			<texture_begin>0.777777791</texture_begin>
+			<texture_end>0.888888896</texture_end>
+			<repeats>5</repeats>
 		</b>
 		<b>
-			<begin>[0.686174095,0.833787084]</begin>
-			<end>[0.68805486,0.856455743]</end>
-			<normal_begin>[-0.996402562,0.0847452432]</normal_begin>
-			<normal_end>[-0.99674201,0.080656454]</normal_end>
-			<time>44</time>
-			<texture_begin>0.139130428</texture_begin>
-			<texture_end>0.14782609</texture_end>
-			<repeats>2</repeats>
+			<begin>[0.677499056,0.741932809]</begin>
+			<end>[0.680609703,0.772713602]</end>
+			<normal_begin>[-0.994562864,0.104137771]</normal_begin>
+			<normal_end>[-0.995278239,0.0970636234]</normal_end>
+			<time>45</time>
+			<texture_begin>0.888888896</texture_begin>
+			<texture_end>1</texture_end>
+			<repeats>5</repeats>
 		</b>
 		<b>
-			<begin>[0.68805486,0.856455743]</begin>
-			<end>[0.689845145,0.879132152]</end>
-			<normal_begin>[-0.99674201,0.080656454]</normal_begin>
-			<normal_end>[-0.997047424,0.0767886639]</normal_end>
-			<time>46</time>
-			<texture_begin>0.14782609</texture_begin>
-			<texture_end>0.156521738</texture_end>
-			<repeats>2</repeats>
-		</b>
-		<b>
-			<begin>[0.689845145,0.879132152]</begin>
-			<end>[0.691549778,0.901814878]</end>
-			<normal_begin>[-0.997047424,0.0767886639]</normal_begin>
-			<normal_end>[-0.997322917,0.0731217563]</normal_end>
+			<begin>[0.680609703,0.772713602]</begin>
+			<end>[0.682863712,0.796454728]</end>
+			<normal_begin>[-0.995278239,0.0970636234]</normal_begin>
+			<normal_end>[-0.995756447,0.0920276269]</normal_end>
 			<time>47</time>
-			<texture_begin>0.156521738</texture_begin>
-			<texture_end>0.165217385</texture_end>
+			<texture_begin>0</texture_begin>
+			<texture_end>0.010309278</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.691549778,0.901814878]</begin>
-			<end>[0.693172991,0.92450279]</end>
-			<normal_begin>[-0.997322917,0.0731217563]</normal_begin>
-			<normal_end>[-0.997572303,0.0696378723]</normal_end>
+			<begin>[0.682863712,0.796454728]</begin>
+			<end>[0.685001552,0.820206344]</end>
+			<normal_begin>[-0.995756447,0.0920276269]</normal_begin>
+			<normal_end>[-0.99618113,0.0873109996]</normal_end>
+			<time>47</time>
+			<texture_begin>0.010309278</texture_begin>
+			<texture_end>0.0206185561</texture_end>
+			<repeats>2</repeats>
+		</b>
+		<b>
+			<begin>[0.685001552,0.820206344]</begin>
+			<end>[0.687030375,0.843967855]</end>
+			<normal_begin>[-0.99618113,0.0873109996]</normal_begin>
+			<normal_end>[-0.996559501,0.0828799978]</normal_end>
 			<time>48</time>
-			<texture_begin>0.165217385</texture_begin>
-			<texture_end>0.173913047</texture_end>
+			<texture_begin>0.0206185561</texture_begin>
+			<texture_end>0.030927835</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.693172991,0.92450279]</begin>
-			<end>[0.694719017,0.947196603]</end>
-			<normal_begin>[-0.997572303,0.0696378723]</normal_begin>
-			<normal_end>[-0.997798324,0.0663211122]</normal_end>
-			<time>49</time>
-			<texture_begin>0.173913047</texture_begin>
-			<texture_end>0.182608694</texture_end>
-			<repeats>2</repeats>
-		</b>
-		<b>
-			<begin>[0.694719017,0.947196603]</begin>
-			<end>[0.69619137,0.96989572]</end>
-			<normal_begin>[-0.997798324,0.0663211122]</normal_begin>
-			<normal_end>[-0.998003602,0.0631574318]</normal_end>
+			<begin>[0.687030375,0.843967855]</begin>
+			<end>[0.688956618,0.867737532]</end>
+			<normal_begin>[-0.996559501,0.0828799978]</normal_begin>
+			<normal_end>[-0.996897876,0.0787056908]</normal_end>
 			<time>50</time>
-			<texture_begin>0.182608694</texture_begin>
-			<texture_end>0.191304341</texture_end>
+			<texture_begin>0.030927835</texture_begin>
+			<texture_end>0.0412371121</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.69619137,0.96989572]</begin>
-			<end>[0.697593331,0.992598712]</end>
-			<normal_begin>[-0.998003602,0.0631574318]</normal_begin>
-			<normal_end>[-0.998190224,0.0601345636]</normal_end>
-			<time>51</time>
-			<texture_begin>0.191304341</texture_begin>
-			<texture_end>0.200000003</texture_end>
+			<begin>[0.688956618,0.867737532]</begin>
+			<end>[0.690786123,0.891515613]</end>
+			<normal_begin>[-0.996897876,0.0787056908]</normal_begin>
+			<normal_end>[-0.997201324,0.0747629181]</normal_end>
+			<time>50</time>
+			<texture_begin>0.0412371121</texture_begin>
+			<texture_end>0.0515463911</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.697593331,0.992598712]</begin>
-			<end>[0.698928058,1.01530635]</end>
-			<normal_begin>[-0.998190224,0.0601345636]</normal_begin>
-			<normal_end>[-0.998360395,0.0572411008]</normal_end>
+			<begin>[0.690786123,0.891515613]</begin>
+			<end>[0.692524135,0.915299714]</end>
+			<normal_begin>[-0.997201324,0.0747629181]</normal_begin>
+			<normal_end>[-0.997474194,0.0710299462]</normal_end>
 			<time>52</time>
-			<texture_begin>0.200000003</texture_begin>
-			<texture_end>0.20869565</texture_end>
+			<texture_begin>0.0515463911</texture_begin>
+			<texture_end>0.0618556701</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.698928058,1.01530635]</begin>
-			<end>[0.700198293,1.03801715]</end>
-			<normal_begin>[-0.998360395,0.0572411008]</normal_begin>
-			<normal_end>[-0.998515546,0.0544672497]</normal_end>
+			<begin>[0.692524135,0.915299714]</begin>
+			<end>[0.694175422,0.939090192]</end>
+			<normal_begin>[-0.997474194,0.0710299462]</normal_begin>
+			<normal_end>[-0.997720063,0.0674874634]</normal_end>
 			<time>53</time>
-			<texture_begin>0.20869565</texture_begin>
-			<texture_end>0.217391297</texture_end>
+			<texture_begin>0.0618556701</texture_begin>
+			<texture_end>0.0721649453</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.700198293,1.03801715]</begin>
-			<end>[0.701406777,1.06073177]</end>
-			<normal_begin>[-0.998515546,0.0544672497]</normal_begin>
-			<normal_end>[-0.998657286,0.051803764]</normal_end>
+			<begin>[0.694175422,0.939090192]</begin>
+			<end>[0.695744395,0.962886393]</end>
+			<normal_begin>[-0.997720063,0.0674874634]</normal_begin>
+			<normal_end>[-0.997942328,0.0641187131]</normal_end>
+			<time>53</time>
+			<texture_begin>0.0721649453</texture_begin>
+			<texture_end>0.0824742243</texture_end>
+			<repeats>2</repeats>
+		</b>
+		<b>
+			<begin>[0.695744395,0.962886393]</begin>
+			<end>[0.697234869,0.986687303]</end>
+			<normal_begin>[-0.997942328,0.0641187131]</normal_begin>
+			<normal_end>[-0.998143375,0.0609086789]</normal_end>
 			<time>54</time>
-			<texture_begin>0.217391297</texture_begin>
-			<texture_end>0.226086959</texture_end>
+			<texture_begin>0.0824742243</texture_begin>
+			<texture_end>0.0927835032</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.701406777,1.06073177]</begin>
-			<end>[0.702555835,1.08344889]</end>
-			<normal_begin>[-0.998657286,0.051803764]</normal_begin>
-			<normal_end>[-0.998786867,0.0492426455]</normal_end>
-			<time>55</time>
-			<texture_begin>0.226086959</texture_begin>
-			<texture_end>0.234782606</texture_end>
-			<repeats>2</repeats>
-		</b>
-		<b>
-			<begin>[0.702555835,1.08344889]</begin>
-			<end>[0.703647673,1.10616958]</end>
-			<normal_begin>[-0.998786867,0.0492426455]</normal_begin>
-			<normal_end>[-0.99890542,0.0467763878]</normal_end>
+			<begin>[0.697234869,0.986687303]</begin>
+			<end>[0.698650599,1.01049316]</end>
+			<normal_begin>[-0.998143375,0.0609086789]</normal_begin>
+			<normal_end>[-0.998325646,0.0578440391]</normal_end>
 			<time>56</time>
-			<texture_begin>0.234782606</texture_begin>
-			<texture_end>0.243478253</texture_end>
+			<texture_begin>0.0927835032</texture_begin>
+			<texture_end>0.103092782</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.703647673,1.10616958]</begin>
-			<end>[0.704684496,1.12889254]</end>
-			<normal_begin>[-0.99890542,0.0467763878]</normal_begin>
-			<normal_end>[-0.999013841,0.0443981811]</normal_end>
+			<begin>[0.698650599,1.01049316]</begin>
+			<end>[0.699994922,1.03430319]</end>
+			<normal_begin>[-0.998325646,0.0578440391]</normal_begin>
+			<normal_end>[-0.998491108,0.054913044]</normal_end>
 			<time>57</time>
-			<texture_begin>0.243478253</texture_begin>
-			<texture_end>0.252173901</texture_end>
+			<texture_begin>0.103092782</texture_begin>
+			<texture_end>0.113402061</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.704684496,1.12889254]</begin>
-			<end>[0.705668092,1.15161788]</end>
-			<normal_begin>[-0.999013841,0.0443981811]</normal_begin>
-			<normal_end>[-0.999113262,0.0421019532]</normal_end>
-			<time>57</time>
-			<texture_begin>0.252173901</texture_begin>
-			<texture_end>0.260869563</texture_end>
+			<begin>[0.699994922,1.03430319]</begin>
+			<end>[0.70127064,1.05811656]</end>
+			<normal_begin>[-0.998491108,0.054913044]</normal_begin>
+			<normal_end>[-0.99864167,0.0521050394]</normal_end>
+			<time>58</time>
+			<texture_begin>0.113402061</texture_begin>
+			<texture_end>0.12371134</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.705668092,1.15161788]</begin>
-			<end>[0.706600428,1.17434537]</end>
-			<normal_begin>[-0.999113262,0.0421019532]</normal_begin>
-			<normal_end>[-0.999204338,0.0398819707]</normal_end>
+			<begin>[0.70127064,1.05811656]</begin>
+			<end>[0.702480912,1.08193314]</end>
+			<normal_begin>[-0.99864167,0.0521050394]</normal_begin>
+			<normal_end>[-0.998778522,0.0494104959]</normal_end>
 			<time>59</time>
-			<texture_begin>0.260869563</texture_begin>
-			<texture_end>0.269565225</texture_end>
+			<texture_begin>0.12371134</texture_begin>
+			<texture_end>0.134020612</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.706600428,1.17434537]</begin>
-			<end>[0.707482994,1.19707465]</end>
-			<normal_begin>[-0.999204338,0.0398819707]</normal_begin>
-			<normal_end>[-0.999287963,0.0377330594]</normal_end>
+			<begin>[0.702480912,1.08193314]</begin>
+			<end>[0.703628123,1.10575402]</end>
+			<normal_begin>[-0.998778522,0.0494104959]</normal_begin>
+			<normal_end>[-0.998903394,0.0468206368]</normal_end>
+			<time>59</time>
+			<texture_begin>0.134020612</texture_begin>
+			<texture_end>0.144329891</texture_end>
+			<repeats>2</repeats>
+		</b>
+		<b>
+			<begin>[0.703628123,1.10575402]</begin>
+			<end>[0.704714894,1.12957716]</end>
+			<normal_begin>[-0.998903394,0.0468206368]</normal_begin>
+			<normal_end>[-0.99901706,0.0443278514]</normal_end>
 			<time>60</time>
-			<texture_begin>0.269565225</texture_begin>
-			<texture_end>0.278260857</texture_end>
+			<texture_begin>0.144329891</texture_begin>
+			<texture_end>0.15463917</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.707482994,1.19707465]</begin>
-			<end>[0.708317518,1.21980596]</end>
-			<normal_begin>[-0.999287963,0.0377330594]</normal_begin>
-			<normal_end>[-0.999364376,0.0356502794]</normal_end>
-			<time>60</time>
-			<texture_begin>0.278260857</texture_begin>
-			<texture_end>0.286956519</texture_end>
+			<begin>[0.704714894,1.12957716]</begin>
+			<end>[0.705743134,1.15340281]</end>
+			<normal_begin>[-0.99901706,0.0443278514]</normal_begin>
+			<normal_end>[-0.999120772,0.041924946]</normal_end>
+			<time>61</time>
+			<texture_begin>0.15463917</texture_begin>
+			<texture_end>0.164948449</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.708317518,1.21980596]</begin>
-			<end>[0.709105313,1.24253893]</end>
-			<normal_begin>[-0.999364376,0.0356502794]</normal_begin>
-			<normal_end>[-0.999434412,0.0336293764]</normal_end>
+			<begin>[0.705743134,1.15340281]</begin>
+			<end>[0.706715107,1.1772306]</end>
+			<normal_begin>[-0.999120772,0.041924946]</normal_begin>
+			<normal_end>[-0.999215424,0.0396053344]</normal_end>
 			<time>62</time>
-			<texture_begin>0.286956519</texture_begin>
-			<texture_end>0.295652181</texture_end>
+			<texture_begin>0.164948449</texture_begin>
+			<texture_end>0.175257728</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.709105313,1.24253893]</begin>
-			<end>[0.709847808,1.26527321]</end>
-			<normal_begin>[-0.999434412,0.0336293764]</normal_begin>
-			<normal_end>[-0.999498487,0.0316660665]</normal_end>
-			<time>63</time>
-			<texture_begin>0.295652181</texture_begin>
-			<texture_end>0.304347813</texture_end>
-			<repeats>2</repeats>
-		</b>
-		<b>
-			<begin>[0.709847808,1.26527321]</begin>
-			<end>[0.710546255,1.28800905]</end>
-			<normal_begin>[-0.999498487,0.0316660665]</normal_begin>
-			<normal_end>[-0.999557137,0.0297564305]</normal_end>
+			<begin>[0.706715107,1.1772306]</begin>
+			<end>[0.70763278,1.20106089]</end>
+			<normal_begin>[-0.999215424,0.0396053344]</normal_begin>
+			<normal_end>[-0.999301732,0.0373631157]</normal_end>
 			<time>64</time>
-			<texture_begin>0.304347813</texture_begin>
-			<texture_end>0.313043475</texture_end>
+			<texture_begin>0.175257728</texture_begin>
+			<texture_end>0.185567006</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.710546255,1.28800905]</begin>
-			<end>[0.711201906,1.31074536]</end>
-			<normal_begin>[-0.999557137,0.0297564305]</normal_begin>
-			<normal_end>[-0.999610782,0.0278969817]</normal_end>
+			<begin>[0.70763278,1.20106089]</begin>
+			<end>[0.708497703,1.22489274]</end>
+			<normal_begin>[-0.999301732,0.0373631157]</normal_begin>
+			<normal_end>[-0.999380529,0.0351929069]</normal_end>
 			<time>65</time>
-			<texture_begin>0.313043475</texture_begin>
-			<texture_end>0.321739137</texture_end>
+			<texture_begin>0.185567006</texture_begin>
+			<texture_end>0.195876285</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.711201906,1.31074536]</begin>
-			<end>[0.711815834,1.33348465]</end>
-			<normal_begin>[-0.999610782,0.0278969817]</normal_begin>
-			<normal_end>[-0.999659657,0.0260840356]</normal_end>
+			<begin>[0.708497703,1.22489274]</begin>
+			<end>[0.709311903,1.24872684]</end>
+			<normal_begin>[-0.999380529,0.0351929069]</normal_begin>
+			<normal_end>[-0.999452472,0.0330894701]</normal_end>
 			<time>66</time>
-			<texture_begin>0.321739137</texture_begin>
-			<texture_end>0.330434769</texture_end>
+			<texture_begin>0.195876285</texture_begin>
+			<texture_end>0.206185564</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.711815834,1.33348465]</begin>
-			<end>[0.712388873,1.35622406]</end>
-			<normal_begin>[-0.999659657,0.0260840356]</normal_begin>
-			<normal_end>[-0.999704301,0.024314573]</normal_end>
+			<begin>[0.709311903,1.24872684]</begin>
+			<end>[0.710076451,1.27256143]</end>
+			<normal_begin>[-0.999452472,0.0330894701]</normal_begin>
+			<normal_end>[-0.999517858,0.031048229]</normal_end>
 			<time>67</time>
-			<texture_begin>0.330434769</texture_begin>
-			<texture_end>0.339130431</texture_end>
+			<texture_begin>0.206185564</texture_begin>
+			<texture_end>0.216494843</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.712388873,1.35622406]</begin>
-			<end>[0.712922275,1.3789643]</end>
-			<normal_begin>[-0.999704301,0.024314573]</normal_begin>
-			<normal_end>[-0.999744892,0.0225854553]</normal_end>
+			<begin>[0.710076451,1.27256143]</begin>
+			<end>[0.710793197,1.29639888]</end>
+			<normal_begin>[-0.999517858,0.031048229]</normal_begin>
+			<normal_end>[-0.999577522,0.0290646479]</normal_end>
 			<time>68</time>
-			<texture_begin>0.339130431</texture_begin>
-			<texture_end>0.347826093</texture_end>
+			<texture_begin>0.216494843</texture_begin>
+			<texture_end>0.226804122</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.712922275,1.3789643]</begin>
-			<end>[0.713416636,1.40170574]</end>
-			<normal_begin>[-0.999744892,0.0225854553]</normal_begin>
-			<normal_end>[-0.999781728,0.0208936315]</normal_end>
+			<begin>[0.710793197,1.29639888]</begin>
+			<end>[0.711463094,1.3202374]</end>
+			<normal_begin>[-0.999577522,0.0290646479]</normal_begin>
+			<normal_end>[-0.999631822,0.0271347109]</normal_end>
 			<time>69</time>
-			<texture_begin>0.347826093</texture_begin>
-			<texture_end>0.356521726</texture_end>
+			<texture_begin>0.226804122</texture_begin>
+			<texture_end>0.237113401</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.713416636,1.40170574]</begin>
-			<end>[0.713873029,1.42444742]</end>
-			<normal_begin>[-0.999781728,0.0208936315]</normal_begin>
-			<normal_end>[-0.999814928,0.0192363653]</normal_end>
+			<begin>[0.711463094,1.3202374]</begin>
+			<end>[0.71208781,1.34407699]</end>
+			<normal_begin>[-0.999631822,0.0271347109]</normal_begin>
+			<normal_end>[-0.999680996,0.0252546016]</normal_end>
 			<time>70</time>
-			<texture_begin>0.356521726</texture_begin>
-			<texture_end>0.365217388</texture_end>
+			<texture_begin>0.237113401</texture_begin>
+			<texture_end>0.24742268</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.713873029,1.42444742]</begin>
-			<end>[0.714292049,1.44719028]</end>
-			<normal_begin>[-0.999814928,0.0192363653]</normal_begin>
-			<normal_end>[-0.999844909,0.0176107064]</normal_end>
+			<begin>[0.71208781,1.34407699]</begin>
+			<end>[0.712668061,1.36791778]</end>
+			<normal_begin>[-0.999680996,0.0252546016]</normal_begin>
+			<normal_end>[-0.99972564,0.0234205537]</normal_end>
 			<time>71</time>
-			<texture_begin>0.365217388</texture_begin>
-			<texture_end>0.37391305</texture_end>
+			<texture_begin>0.24742268</texture_begin>
+			<texture_end>0.257731944</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.714292049,1.44719028]</begin>
-			<end>[0.714674413,1.46993351]</end>
-			<normal_begin>[-0.999844909,0.0176107064]</normal_begin>
-			<normal_end>[-0.99987179,0.0160140824]</normal_end>
+			<begin>[0.712668061,1.36791778]</begin>
+			<end>[0.713205218,1.39176035]</end>
+			<normal_begin>[-0.99972564,0.0234205537]</normal_begin>
+			<normal_end>[-0.999766052,0.0216291193]</normal_end>
+			<time>71</time>
+			<texture_begin>0.257731944</texture_begin>
+			<texture_end>0.268041223</texture_end>
+			<repeats>2</repeats>
+		</b>
+		<b>
+			<begin>[0.713205218,1.39176035]</begin>
+			<end>[0.713700056,1.41560233]</end>
+			<normal_begin>[-0.999766052,0.0216291193]</normal_begin>
+			<normal_end>[-0.99980247,0.0198770277]</normal_end>
 			<time>72</time>
-			<texture_begin>0.37391305</texture_begin>
-			<texture_end>0.382608682</texture_end>
+			<texture_begin>0.268041223</texture_begin>
+			<texture_end>0.278350502</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.714674413,1.46993351]</begin>
-			<end>[0.715020716,1.49267769]</end>
-			<normal_begin>[-0.99987179,0.0160140824]</normal_begin>
-			<normal_end>[-0.999895632,0.0144436695]</normal_end>
+			<begin>[0.713700056,1.41560233]</begin>
+			<end>[0.714153469,1.43944585]</end>
+			<normal_begin>[-0.99980247,0.0198770277]</normal_begin>
+			<normal_end>[-0.999835074,0.018160915]</normal_end>
 			<time>73</time>
-			<texture_begin>0.382608682</texture_begin>
-			<texture_end>0.391304344</texture_end>
+			<texture_begin>0.278350502</texture_begin>
+			<texture_end>0.288659781</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.715020716,1.49267769]</begin>
-			<end>[0.715331614,1.51542175]</end>
-			<normal_begin>[-0.999895632,0.0144436695]</normal_begin>
-			<normal_end>[-0.999916911,0.0128966887]</normal_end>
+			<begin>[0.714153469,1.43944585]</begin>
+			<end>[0.714566529,1.46329033]</end>
+			<normal_begin>[-0.999835074,0.018160915]</normal_begin>
+			<normal_end>[-0.999864221,0.0164775904]</normal_end>
 			<time>74</time>
-			<texture_begin>0.391304344</texture_begin>
-			<texture_end>0.400000006</texture_end>
+			<texture_begin>0.288659781</texture_begin>
+			<texture_end>0.29896906</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.715331614,1.51542175]</begin>
-			<end>[0.715607584,1.538167]</end>
-			<normal_begin>[-0.999916911,0.0128966887]</normal_begin>
-			<normal_end>[-0.999935389,0.0113705732]</normal_end>
+			<begin>[0.714566529,1.46329033]</begin>
+			<end>[0.714939654,1.48713458]</end>
+			<normal_begin>[-0.999864221,0.0164775904]</normal_begin>
+			<normal_end>[-0.999890089,0.0148240635]</normal_end>
 			<time>75</time>
-			<texture_begin>0.400000006</texture_begin>
-			<texture_end>0.408695638</texture_end>
+			<texture_begin>0.29896906</texture_begin>
+			<texture_end>0.309278339</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.715607584,1.538167]</begin>
-			<end>[0.715849042,1.56091213]</end>
-			<normal_begin>[-0.999935389,0.0113705732]</normal_begin>
-			<normal_end>[-0.999951303,0.00986220501]</normal_end>
+			<begin>[0.714939654,1.48713458]</begin>
+			<end>[0.715273738,1.51098037]</end>
+			<normal_begin>[-0.999890089,0.0148240635]</normal_begin>
+			<normal_end>[-0.999912858,0.0131970672]</normal_end>
 			<time>76</time>
-			<texture_begin>0.408695638</texture_begin>
-			<texture_end>0.4173913</texture_end>
+			<texture_begin>0.309278339</texture_begin>
+			<texture_end>0.319587618</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.715849042,1.56091213]</begin>
-			<end>[0.716056406,1.5836575]</end>
-			<normal_begin>[-0.999951303,0.00986220501]</normal_begin>
-			<normal_end>[-0.999965012,0.00836889166]</normal_end>
+			<begin>[0.715273738,1.51098037]</begin>
+			<end>[0.715569317,1.53482676]</end>
+			<normal_begin>[-0.999912858,0.0131970672]</normal_begin>
+			<normal_end>[-0.999932706,0.0115934825]</normal_end>
 			<time>77</time>
-			<texture_begin>0.4173913</texture_begin>
-			<texture_end>0.426086962</texture_end>
+			<texture_begin>0.319587618</texture_begin>
+			<texture_end>0.329896897</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.716056406,1.5836575]</begin>
-			<end>[0.716229916,1.60640383]</end>
-			<normal_begin>[-0.999965012,0.00836889166]</normal_begin>
-			<normal_end>[-0.999976218,0.00688710483]</normal_end>
+			<begin>[0.715569317,1.53482676]</begin>
+			<end>[0.715826809,1.5586729]</end>
+			<normal_begin>[-0.999932706,0.0115934825]</normal_begin>
+			<normal_end>[-0.999949872,0.0100100283]</normal_end>
 			<time>78</time>
-			<texture_begin>0.426086962</texture_begin>
-			<texture_end>0.434782594</texture_end>
+			<texture_begin>0.329896897</texture_begin>
+			<texture_end>0.340206176</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.716229916,1.60640383]</begin>
-			<end>[0.716369808,1.62914944]</end>
-			<normal_begin>[-0.999976218,0.00688710483]</normal_begin>
-			<normal_end>[-0.999985397,0.00541364029]</normal_end>
-			<time>79</time>
-			<texture_begin>0.434782594</texture_begin>
-			<texture_end>0.443478256</texture_end>
-			<repeats>2</repeats>
-		</b>
-		<b>
-			<begin>[0.716369808,1.62914944]</begin>
-			<end>[0.716476202,1.65189528]</end>
-			<normal_begin>[-0.999985397,0.00541364029]</normal_begin>
-			<normal_end>[-0.999992251,0.0039446787]</normal_end>
+			<begin>[0.715826809,1.5586729]</begin>
+			<end>[0.71604687,1.58251965]</end>
+			<normal_begin>[-0.999949872,0.0100100283]</normal_begin>
+			<normal_end>[-0.999964356,0.00844324566]</normal_end>
 			<time>80</time>
-			<texture_begin>0.443478256</texture_begin>
-			<texture_end>0.452173918</texture_end>
+			<texture_begin>0.340206176</texture_begin>
+			<texture_end>0.350515455</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.716476202,1.65189528]</begin>
-			<end>[0.716549218,1.67464256]</end>
-			<normal_begin>[-0.999992251,0.0039446787]</normal_begin>
-			<normal_end>[-0.999996901,0.00247571873]</normal_end>
+			<begin>[0.71604687,1.58251965]</begin>
+			<end>[0.716229737,1.60636675]</end>
+			<normal_begin>[-0.999964356,0.00844324566]</normal_begin>
+			<normal_end>[-0.999976218,0.00688951835]</normal_end>
 			<time>81</time>
-			<texture_begin>0.452173918</texture_begin>
-			<texture_end>0.460869551</texture_end>
+			<texture_begin>0.350515455</texture_begin>
+			<texture_end>0.360824734</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.716549218,1.67464256]</begin>
-			<end>[0.716588795,1.69738925]</end>
-			<normal_begin>[-0.999996901,0.00247571873]</normal_begin>
-			<normal_end>[-0.999999464,0.00100203732]</normal_end>
+			<begin>[0.716229737,1.60636675]</begin>
+			<end>[0.71637553,1.63021421]</end>
+			<normal_begin>[-0.999976218,0.00688951835]</normal_begin>
+			<normal_end>[-0.999985695,0.00534489611]</normal_end>
 			<time>82</time>
-			<texture_begin>0.460869551</texture_begin>
-			<texture_end>0.469565213</texture_end>
+			<texture_begin>0.360824734</texture_begin>
+			<texture_end>0.371134013</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.716588795,1.69738925]</begin>
-			<end>[0.716594756,1.72013593]</end>
-			<normal_begin>[-0.999999464,0.00100203732]</normal_begin>
-			<normal_end>[-0.99999994,-0.000482453499]</normal_end>
+			<begin>[0.71637553,1.63021421]</begin>
+			<end>[0.716484666,1.65406132]</end>
+			<normal_begin>[-0.999985695,0.00534489611]</normal_begin>
+			<normal_end>[-0.999992788,0.00380490581]</normal_end>
 			<time>83</time>
-			<texture_begin>0.469565213</texture_begin>
-			<texture_end>0.478260875</texture_end>
+			<texture_begin>0.371134013</texture_begin>
+			<texture_end>0.381443292</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.716594756,1.72013593]</begin>
-			<end>[0.716566741,1.74288249]</end>
-			<normal_begin>[-0.99999994,-0.000482453499]</normal_begin>
-			<normal_end>[-0.999997973,-0.00198393152]</normal_end>
+			<begin>[0.716484666,1.65406132]</begin>
+			<end>[0.716556966,1.67790854]</end>
+			<normal_begin>[-0.999992788,0.00380490581]</normal_begin>
+			<normal_end>[-0.999997377,0.00226454041]</normal_end>
 			<time>84</time>
-			<texture_begin>0.478260875</texture_begin>
-			<texture_end>0.486956507</texture_end>
+			<texture_begin>0.381443292</texture_begin>
+			<texture_end>0.391752571</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.716566741,1.74288249]</begin>
-			<end>[0.716504335,1.76562929]</end>
-			<normal_begin>[-0.999997973,-0.00198393152]</normal_begin>
-			<normal_end>[-0.999993742,-0.00350965024]</normal_end>
+			<begin>[0.716556966,1.67790854]</begin>
+			<end>[0.71659255,1.70175719]</end>
+			<normal_begin>[-0.999997377,0.00226454041]</normal_begin>
+			<normal_end>[-0.999999702,0.00071785989]</normal_end>
 			<time>85</time>
-			<texture_begin>0.486956507</texture_begin>
-			<texture_end>0.495652169</texture_end>
+			<texture_begin>0.391752571</texture_begin>
+			<texture_end>0.40206185</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.716504335,1.76562929]</begin>
-			<end>[0.716406822,1.78837538]</end>
-			<normal_begin>[-0.999993742,-0.00350965024]</normal_begin>
-			<normal_end>[-0.999987185,-0.00506512495]</normal_end>
+			<begin>[0.71659255,1.70175719]</begin>
+			<end>[0.71659112,1.72560525]</end>
+			<normal_begin>[-0.999999702,0.00071785989]</normal_begin>
+			<normal_end>[-0.999999642,-0.00084142515]</normal_end>
 			<time>86</time>
-			<texture_begin>0.495652169</texture_begin>
-			<texture_end>0.504347801</texture_end>
+			<texture_begin>0.40206185</texture_begin>
+			<texture_end>0.412371129</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.716406822,1.78837538]</begin>
-			<end>[0.716273725,1.81112146]</end>
-			<normal_begin>[-0.999987185,-0.00506512495]</normal_begin>
-			<normal_end>[-0.999977887,-0.0066416068]</normal_end>
-			<time>86</time>
-			<texture_begin>0.504347801</texture_begin>
-			<texture_end>0.513043463</texture_end>
+			<begin>[0.71659112,1.72560525]</begin>
+			<end>[0.716552258,1.74945295]</end>
+			<normal_begin>[-0.999999642,-0.00084142515]</normal_begin>
+			<normal_end>[-0.999997079,-0.00242179586]</normal_end>
+			<time>87</time>
+			<texture_begin>0.412371129</texture_begin>
+			<texture_end>0.422680408</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.716273725,1.81112146]</begin>
-			<end>[0.716105223,1.83386779]</end>
-			<normal_begin>[-0.999977887,-0.0066416068]</normal_begin>
-			<normal_end>[-0.999966919,-0.00812844094]</normal_end>
+			<begin>[0.716552258,1.74945295]</begin>
+			<end>[0.716475368,1.77330089]</end>
+			<normal_begin>[-0.999997079,-0.00242179586]</normal_begin>
+			<normal_end>[-0.999991775,-0.00403089216]</normal_end>
 			<time>88</time>
-			<texture_begin>0.513043463</texture_begin>
-			<texture_end>0.521739125</texture_end>
+			<texture_begin>0.422680408</texture_begin>
+			<texture_end>0.432989687</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.716105223,1.83386779]</begin>
-			<end>[0.715916097,1.85661256]</end>
-			<normal_begin>[-0.999966919,-0.00812844094]</normal_begin>
-			<normal_end>[-0.999976039,-0.0069266879]</normal_end>
+			<begin>[0.716475368,1.77330089]</begin>
+			<end>[0.716359794,1.79714835]</end>
+			<normal_begin>[-0.999991775,-0.00403089216]</normal_begin>
+			<normal_end>[-0.999983788,-0.00567233842]</normal_end>
 			<time>89</time>
-			<texture_begin>0.521739125</texture_begin>
-			<texture_end>0.530434787</texture_end>
+			<texture_begin>0.432989687</texture_begin>
+			<texture_end>0.443298966</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.715916097,1.85661256]</begin>
-			<end>[0.71588093,1.87935972]</end>
-			<normal_begin>[-0.999976039,-0.0069266879]</normal_begin>
-			<normal_end>[-0.999998033,-0.00198893133]</normal_end>
+			<begin>[0.716359794,1.79714835]</begin>
+			<end>[0.716204822,1.82099557]</end>
+			<normal_begin>[-0.999983788,-0.00567233842]</normal_begin>
+			<normal_end>[-0.999973297,-0.00731615676]</normal_end>
 			<time>90</time>
-			<texture_begin>0.530434787</texture_begin>
-			<texture_end>0.539130449</texture_end>
+			<texture_begin>0.443298966</texture_begin>
+			<texture_end>0.453608245</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.71588093,1.87935972]</begin>
-			<end>[0.715808213,1.90210617]</end>
-			<normal_begin>[-0.999998033,-0.00198893133]</normal_begin>
-			<normal_end>[-0.999990165,-0.00442483043]</normal_end>
+			<begin>[0.716204822,1.82099557]</begin>
+			<end>[0.716013193,1.84484255]</end>
+			<normal_begin>[-0.999973297,-0.00731615676]</normal_begin>
+			<normal_end>[-0.999963224,-0.00857649371]</normal_end>
 			<time>91</time>
-			<texture_begin>0.539130449</texture_begin>
-			<texture_end>0.547826111</texture_end>
+			<texture_begin>0.453608245</texture_begin>
+			<texture_end>0.463917524</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.715808213,1.90210617]</begin>
-			<end>[0.715678751,1.92485249]</end>
-			<normal_begin>[-0.999990165,-0.00442483043]</normal_begin>
-			<normal_end>[-0.999975741,-0.00697469013]</normal_end>
+			<begin>[0.716013193,1.84484255]</begin>
+			<end>[0.715896189,1.86869013]</end>
+			<normal_begin>[-0.999963224,-0.00857649371]</normal_begin>
+			<normal_end>[-0.999999583,-0.000883545319]</normal_end>
 			<time>92</time>
-			<texture_begin>0.547826111</texture_begin>
-			<texture_end>0.556521714</texture_end>
+			<texture_begin>0.463917524</texture_begin>
+			<texture_end>0.474226803</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.715678751,1.92485249]</begin>
-			<end>[0.715489924,1.9475981]</end>
-			<normal_begin>[-0.999975741,-0.00697469013]</normal_begin>
-			<normal_end>[-0.999953449,-0.00964673515]</normal_end>
-			<time>92</time>
-			<texture_begin>0.556521714</texture_begin>
-			<texture_end>0.565217376</texture_end>
+			<begin>[0.715896189,1.86869013]</begin>
+			<end>[0.715845525,1.89253783]</end>
+			<normal_begin>[-0.999999583,-0.000883545319]</normal_begin>
+			<normal_end>[-0.999994218,-0.003386745]</normal_end>
+			<time>93</time>
+			<texture_begin>0.474226803</texture_begin>
+			<texture_end>0.484536082</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.715489924,1.9475981]</begin>
-			<end>[0.715238929,1.97034371]</end>
-			<normal_begin>[-0.999953449,-0.00964673515]</normal_begin>
-			<normal_end>[-0.999922514,-0.0124498252]</normal_end>
+			<begin>[0.715845525,1.89253783]</begin>
+			<end>[0.715733647,1.9163841]</end>
+			<normal_begin>[-0.999994218,-0.003386745]</normal_begin>
+			<normal_end>[-0.99998194,-0.00601155683]</normal_end>
 			<time>94</time>
-			<texture_begin>0.565217376</texture_begin>
-			<texture_end>0.573913038</texture_end>
+			<texture_begin>0.484536082</texture_begin>
+			<texture_end>0.494845361</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.715238929,1.97034371]</begin>
-			<end>[0.714922547,1.99308801]</end>
-			<normal_begin>[-0.999922514,-0.0124498252]</normal_begin>
-			<normal_end>[-0.999881446,-0.0153936679]</normal_end>
+			<begin>[0.715733647,1.9163841]</begin>
+			<end>[0.715557754,1.9402324]</end>
+			<normal_begin>[-0.99998194,-0.00601155683]</normal_begin>
+			<normal_end>[-0.999961674,-0.00876751076]</normal_end>
 			<time>95</time>
-			<texture_begin>0.573913038</texture_begin>
-			<texture_end>0.5826087</texture_end>
+			<texture_begin>0.494845361</texture_begin>
+			<texture_end>0.50515461</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.714922547,1.99308801]</begin>
-			<end>[0.714537442,2.01583123]</end>
-			<normal_begin>[-0.999881446,-0.0153936679]</normal_begin>
-			<normal_end>[-0.999829054,-0.0184890255]</normal_end>
+			<begin>[0.715557754,1.9402324]</begin>
+			<end>[0.715314448,1.96407878]</end>
+			<normal_begin>[-0.999961674,-0.00876751076]</normal_begin>
+			<normal_end>[-0.999931991,-0.0116641503]</normal_end>
+			<time>95</time>
+			<texture_begin>0.50515461</texture_begin>
+			<texture_end>0.515463889</texture_end>
+			<repeats>2</repeats>
+		</b>
+		<b>
+			<begin>[0.715314448,1.96407878]</begin>
+			<end>[0.715000212,1.98792458]</end>
+			<normal_begin>[-0.999931991,-0.0116641503]</normal_begin>
+			<normal_end>[-0.999891758,-0.0147124389]</normal_end>
 			<time>96</time>
-			<texture_begin>0.5826087</texture_begin>
-			<texture_end>0.591304362</texture_end>
+			<texture_begin>0.515463889</texture_begin>
+			<texture_end>0.525773168</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.714537442,2.01583123]</begin>
-			<end>[0.714080095,2.0385735]</end>
-			<normal_begin>[-0.999829054,-0.0184890255]</normal_begin>
-			<normal_end>[-0.999763429,-0.0217477903]</normal_end>
+			<begin>[0.715000212,1.98792458]</begin>
+			<end>[0.714611411,2.01176906]</end>
+			<normal_begin>[-0.999891758,-0.0147124389]</normal_begin>
+			<normal_end>[-0.999839306,-0.0179245453]</normal_end>
 			<time>97</time>
-			<texture_begin>0.591304362</texture_begin>
-			<texture_end>0.600000024</texture_end>
+			<texture_begin>0.525773168</texture_begin>
+			<texture_end>0.536082447</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.714080095,2.0385735]</begin>
-			<end>[0.713546753,2.06131363]</end>
-			<normal_begin>[-0.999763429,-0.0217477903]</normal_begin>
-			<normal_end>[-0.999682844,-0.0251827221]</normal_end>
+			<begin>[0.714611411,2.01176906]</begin>
+			<end>[0.714143932,2.03561234]</end>
+			<normal_begin>[-0.999839306,-0.0179245453]</normal_begin>
+			<normal_end>[-0.999772787,-0.0213137884]</normal_end>
 			<time>98</time>
-			<texture_begin>0.600000024</texture_begin>
-			<texture_end>0.608695626</texture_end>
+			<texture_begin>0.536082447</texture_begin>
+			<texture_end>0.546391726</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.713546753,2.06131363]</begin>
-			<end>[0.712933064,2.08405161]</end>
-			<normal_begin>[-0.999682844,-0.0251827221]</normal_begin>
-			<normal_end>[-0.999584973,-0.0288085174]</normal_end>
+			<begin>[0.714143932,2.03561234]</begin>
+			<end>[0.713593304,2.05945396]</end>
+			<normal_begin>[-0.999772787,-0.0213137884]</normal_begin>
+			<normal_end>[-0.999689996,-0.0248949397]</normal_end>
 			<time>99</time>
-			<texture_begin>0.608695626</texture_begin>
-			<texture_end>0.617391288</texture_end>
+			<texture_begin>0.546391726</texture_begin>
+			<texture_end>0.556701005</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.712933064,2.08405161]</begin>
-			<end>[0.712234557,2.1067872]</end>
-			<normal_begin>[-0.999584973,-0.0288085174]</normal_begin>
-			<normal_end>[-0.999467194,-0.0326410085]</normal_end>
+			<begin>[0.713593304,2.05945396]</begin>
+			<end>[0.712954879,2.08329296]</end>
+			<normal_begin>[-0.999689996,-0.0248949397]</normal_begin>
+			<normal_end>[-0.999588549,-0.0286842585]</normal_end>
 			<time>100</time>
-			<texture_begin>0.617391288</texture_begin>
-			<texture_end>0.62608695</texture_end>
+			<texture_begin>0.556701005</texture_begin>
+			<texture_end>0.567010283</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.712234557,2.1067872]</begin>
-			<end>[0.711446464,2.12952042]</end>
-			<normal_begin>[-0.999467194,-0.0326410085]</normal_begin>
-			<normal_end>[-0.999326348,-0.0366980582]</normal_end>
+			<begin>[0.712954879,2.08329296]</begin>
+			<end>[0.712223411,2.10713005]</end>
+			<normal_begin>[-0.999588549,-0.0286842585]</normal_begin>
+			<normal_end>[-0.999465168,-0.0327004194]</normal_end>
 			<time>101</time>
-			<texture_begin>0.62608695</texture_begin>
-			<texture_end>0.634782612</texture_end>
+			<texture_begin>0.567010283</texture_begin>
+			<texture_end>0.577319562</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.711446464,2.12952042]</begin>
-			<end>[0.710563183,2.15224934]</end>
-			<normal_begin>[-0.999326348,-0.0366980582]</normal_begin>
-			<normal_end>[-0.999159157,-0.0409994088]</normal_end>
+			<begin>[0.712223411,2.10713005]</begin>
+			<end>[0.711393297,2.13096309]</end>
+			<normal_begin>[-0.999465168,-0.0327004194]</normal_begin>
+			<normal_end>[-0.999316692,-0.0369635932]</normal_end>
 			<time>102</time>
-			<texture_begin>0.634782612</texture_begin>
-			<texture_end>0.643478274</texture_end>
+			<texture_begin>0.577319562</texture_begin>
+			<texture_end>0.587628841</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.710563183,2.15224934]</begin>
-			<end>[0.70957917,2.17497468]</end>
-			<normal_begin>[-0.999159157,-0.0409994088]</normal_begin>
-			<normal_end>[-0.99896127,-0.0455673039]</normal_end>
+			<begin>[0.711393297,2.13096309]</begin>
+			<end>[0.710458279,2.15479231]</end>
+			<normal_begin>[-0.999316692,-0.0369635932]</normal_begin>
+			<normal_end>[-0.999138653,-0.0414969139]</normal_end>
 			<time>103</time>
-			<texture_begin>0.643478274</texture_begin>
-			<texture_end>0.652173936</texture_end>
+			<texture_begin>0.587628841</texture_begin>
+			<texture_end>0.59793812</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.70957917,2.17497468]</begin>
-			<end>[0.708488047,2.19769502]</end>
-			<normal_begin>[-0.99896127,-0.0455673039]</normal_begin>
-			<normal_end>[-0.998727739,-0.0504263379]</normal_end>
+			<begin>[0.710458279,2.15479231]</begin>
+			<end>[0.70941174,2.178617]</end>
+			<normal_begin>[-0.999138653,-0.0414969139]</normal_begin>
+			<normal_end>[-0.998926401,-0.046325922]</normal_end>
 			<time>104</time>
-			<texture_begin>0.652173936</texture_begin>
-			<texture_end>0.660869539</texture_end>
+			<texture_begin>0.59793812</texture_begin>
+			<texture_end>0.608247399</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.708488047,2.19769502]</begin>
-			<end>[0.707282722,2.22040868]</end>
-			<normal_begin>[-0.998727739,-0.0504263379]</normal_begin>
-			<normal_end>[-0.998452842,-0.0556043647]</normal_end>
+			<begin>[0.70941174,2.178617]</begin>
+			<end>[0.708246171,2.20243645]</end>
+			<normal_begin>[-0.998926401,-0.046325922]</normal_begin>
+			<normal_end>[-0.998674095,-0.0514797829]</normal_end>
 			<time>105</time>
-			<texture_begin>0.660869539</texture_begin>
-			<texture_end>0.669565201</texture_end>
+			<texture_begin>0.608247399</texture_begin>
+			<texture_end>0.618556678</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.707282722,2.22040868]</begin>
-			<end>[0.705955684,2.24311781]</end>
-			<normal_begin>[-0.998452842,-0.0556043647]</normal_begin>
-			<normal_end>[-0.998129666,-0.0611327402]</normal_end>
+			<begin>[0.708246171,2.20243645]</begin>
+			<end>[0.706953585,2.2262485]</end>
+			<normal_begin>[-0.998674095,-0.0514797829]</normal_begin>
+			<normal_end>[-0.99837476,-0.0569909438]</normal_end>
 			<time>106</time>
-			<texture_begin>0.669565201</texture_begin>
-			<texture_end>0.678260863</texture_end>
+			<texture_begin>0.618556678</texture_begin>
+			<texture_end>0.628865957</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.705955684,2.24311781]</begin>
-			<end>[0.704498649,2.26581788]</end>
-			<normal_begin>[-0.998129666,-0.0611327402]</normal_begin>
-			<normal_end>[-0.997749865,-0.0670465454]</normal_end>
+			<begin>[0.706953585,2.2262485]</begin>
+			<end>[0.705524802,2.25005412]</end>
+			<normal_begin>[-0.99837476,-0.0569909438]</normal_begin>
+			<normal_end>[-0.998020053,-0.0628969893]</normal_end>
 			<time>107</time>
-			<texture_begin>0.678260863</texture_begin>
-			<texture_end>0.686956525</texture_end>
+			<texture_begin>0.628865957</texture_begin>
+			<texture_end>0.639175236</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.704498649,2.26581788]</begin>
-			<end>[0.702902317,2.28850794]</end>
-			<normal_begin>[-0.997749865,-0.0670465454]</normal_begin>
-			<normal_end>[-0.997303724,-0.073385343]</normal_end>
+			<begin>[0.705524802,2.25005412]</begin>
+			<end>[0.703950047,2.27384996]</end>
+			<normal_begin>[-0.998020053,-0.0628969893]</normal_begin>
+			<normal_end>[-0.997600079,-0.0692392364]</normal_end>
 			<time>108</time>
-			<texture_begin>0.686956525</texture_begin>
-			<texture_end>0.695652187</texture_end>
+			<texture_begin>0.639175236</texture_begin>
+			<texture_end>0.649484515</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.702902317,2.28850794]</begin>
-			<end>[0.701156616,2.31118751]</end>
-			<normal_begin>[-0.997303724,-0.073385343]</normal_begin>
-			<normal_end>[-0.996779263,-0.0801944435]</normal_end>
+			<begin>[0.703950047,2.27384996]</begin>
+			<end>[0.702218533,2.29763484]</end>
+			<normal_begin>[-0.997600079,-0.0692392364]</normal_begin>
+			<normal_end>[-0.997102916,-0.0760658011]</normal_end>
 			<time>109</time>
-			<texture_begin>0.695652187</texture_begin>
-			<texture_end>0.704347849</texture_end>
+			<texture_begin>0.649484515</texture_begin>
+			<texture_end>0.659793794</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.701156616,2.31118751]</begin>
-			<end>[0.699250102,2.3338542]</end>
-			<normal_begin>[-0.996779263,-0.0801944435]</normal_begin>
-			<normal_end>[-0.996162355,-0.0875249133]</normal_end>
+			<begin>[0.702218533,2.29763484]</begin>
+			<end>[0.7003178,2.32140636]</end>
+			<normal_begin>[-0.997102916,-0.0760658011]</normal_begin>
+			<normal_end>[-0.996513605,-0.0834308639]</normal_end>
 			<time>110</time>
-			<texture_begin>0.704347849</texture_begin>
-			<texture_end>0.713043451</texture_end>
+			<texture_begin>0.659793794</texture_begin>
+			<texture_end>0.670103073</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.699250102,2.3338542]</begin>
-			<end>[0.697170317,2.35650516]</end>
-			<normal_begin>[-0.996162355,-0.0875249133]</normal_begin>
-			<normal_end>[-0.995435596,-0.0954349861]</normal_end>
-			<time>111</time>
-			<texture_begin>0.713043451</texture_begin>
-			<texture_end>0.721739113</texture_end>
-			<repeats>2</repeats>
-		</b>
-		<b>
-			<begin>[0.697170317,2.35650516]</begin>
-			<end>[0.694903612,2.37913823]</end>
-			<normal_begin>[-0.995435596,-0.0954349861]</normal_begin>
-			<normal_end>[-0.994578302,-0.103990793]</normal_end>
+			<begin>[0.7003178,2.32140636]</begin>
+			<end>[0.698234379,2.34516263]</end>
+			<normal_begin>[-0.996513605,-0.0834308639]</normal_begin>
+			<normal_end>[-0.995814502,-0.0913969651]</normal_end>
 			<time>112</time>
-			<texture_begin>0.721739113</texture_begin>
-			<texture_end>0.730434775</texture_end>
+			<texture_begin>0.670103073</texture_begin>
+			<texture_end>0.680412352</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.694903612,2.37913823]</begin>
-			<end>[0.692434072,2.40175056]</end>
-			<normal_begin>[-0.994578302,-0.103990793]</normal_begin>
-			<normal_end>[-0.993564427,-0.113268152]</normal_end>
+			<begin>[0.698234379,2.34516263]</begin>
+			<end>[0.69595331,2.36890149]</end>
+			<normal_begin>[-0.995814502,-0.0913969651]</normal_begin>
+			<normal_end>[-0.994983912,-0.100035504]</normal_end>
 			<time>113</time>
-			<texture_begin>0.730434775</texture_begin>
-			<texture_end>0.739130437</texture_end>
+			<texture_begin>0.680412352</texture_begin>
+			<texture_end>0.690721631</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.692434072,2.40175056]</begin>
-			<end>[0.689744473,2.42433763]</end>
-			<normal_begin>[-0.993564427,-0.113268152]</normal_begin>
-			<normal_end>[-0.992362797,-0.12335299]</normal_end>
+			<begin>[0.69595331,2.36890149]</begin>
+			<end>[0.693457246,2.39261794]</end>
+			<normal_begin>[-0.994983912,-0.100035504]</normal_begin>
+			<normal_end>[-0.993994772,-0.1094281]</normal_end>
 			<time>114</time>
-			<texture_begin>0.739130437</texture_begin>
-			<texture_end>0.747826099</texture_end>
+			<texture_begin>0.690721631</texture_begin>
+			<texture_end>0.70103091</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.689744473,2.42433763]</begin>
-			<end>[0.686815441,2.44689465]</end>
-			<normal_begin>[-0.992362797,-0.12335299]</normal_begin>
-			<normal_end>[-0.990934789,-0.134343505]</normal_end>
+			<begin>[0.693457246,2.39261794]</begin>
+			<end>[0.690727293,2.41630912]</end>
+			<normal_begin>[-0.993994772,-0.1094281]</normal_begin>
+			<normal_end>[-0.992813826,-0.119668573]</normal_end>
 			<time>115</time>
-			<texture_begin>0.747826099</texture_begin>
-			<texture_end>0.756521761</texture_end>
+			<texture_begin>0.70103091</texture_begin>
+			<texture_end>0.711340189</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.686815441,2.44689465]</begin>
-			<end>[0.683625102,2.46941614]</end>
-			<normal_begin>[-0.990934789,-0.134343505]</normal_begin>
-			<normal_end>[-0.9892326,-0.146351516]</normal_end>
+			<begin>[0.690727293,2.41630912]</begin>
+			<end>[0.687741995,2.43996906]</end>
+			<normal_begin>[-0.992813826,-0.119668573]</normal_begin>
+			<normal_end>[-0.991400242,-0.130864739]</normal_end>
 			<time>116</time>
-			<texture_begin>0.756521761</texture_begin>
-			<texture_end>0.765217364</texture_end>
+			<texture_begin>0.711340189</texture_begin>
+			<texture_end>0.721649468</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.683625102,2.46941614]</begin>
-			<end>[0.68014884,2.49189544]</end>
-			<normal_begin>[-0.9892326,-0.146351516]</normal_begin>
-			<normal_end>[-0.98719734,-0.159503654]</normal_end>
+			<begin>[0.687741995,2.43996906]</begin>
+			<end>[0.684477091,2.46359181]</end>
+			<normal_begin>[-0.991400242,-0.130864739]</normal_begin>
+			<normal_end>[-0.989702463,-0.143139809]</normal_end>
 			<time>117</time>
-			<texture_begin>0.765217364</texture_begin>
-			<texture_end>0.773913026</texture_end>
+			<texture_begin>0.721649468</texture_begin>
+			<texture_end>0.731958747</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.68014884,2.49189544]</begin>
-			<end>[0.676359057,2.51432371]</end>
-			<normal_begin>[-0.98719734,-0.159503654]</normal_begin>
-			<normal_end>[-0.984755814,-0.173942715]</normal_end>
+			<begin>[0.684477091,2.46359181]</begin>
+			<end>[0.680905163,2.4871707]</end>
+			<normal_begin>[-0.989702463,-0.143139809]</normal_begin>
+			<normal_end>[-0.987656534,-0.156635389]</normal_end>
 			<time>118</time>
-			<texture_begin>0.773913026</texture_begin>
-			<texture_end>0.782608688</texture_end>
+			<texture_begin>0.731958747</texture_begin>
+			<texture_end>0.742268026</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.676359057,2.51432371]</begin>
-			<end>[0.67222476,2.53669071]</end>
-			<normal_begin>[-0.984755814,-0.173942715]</normal_begin>
-			<normal_end>[-0.981817663,-0.189826757]</normal_end>
+			<begin>[0.680905163,2.4871707]</begin>
+			<end>[0.676995277,2.5106957]</end>
+			<normal_begin>[-0.987656534,-0.156635389]</normal_begin>
+			<normal_end>[-0.985182226,-0.171510801]</normal_end>
 			<time>119</time>
-			<texture_begin>0.782608688</texture_begin>
-			<texture_end>0.79130435</texture_end>
+			<texture_begin>0.742268026</texture_begin>
+			<texture_end>0.752577305</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.67222476,2.53669071]</begin>
-			<end>[0.667710841,2.55898523]</end>
-			<normal_begin>[-0.981817663,-0.189826757]</normal_begin>
-			<normal_end>[-0.978270948,-0.20733051]</normal_end>
+			<begin>[0.676995277,2.5106957]</begin>
+			<end>[0.672712386,2.53415561]</end>
+			<normal_begin>[-0.985182226,-0.171510801]</normal_begin>
+			<normal_end>[-0.982179284,-0.187946007]</normal_end>
 			<time>120</time>
-			<texture_begin>0.79130435</texture_begin>
-			<texture_end>0.800000012</texture_end>
+			<texture_begin>0.752577305</texture_begin>
+			<texture_end>0.762886584</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.667710841,2.55898523]</begin>
-			<end>[0.662778914,2.58119035]</end>
-			<normal_begin>[-0.978270948,-0.20733051]</normal_begin>
-			<normal_end>[-0.973979354,-0.226636812]</normal_end>
+			<begin>[0.672712386,2.53415561]</begin>
+			<end>[0.668017089,2.5575366]</end>
+			<normal_begin>[-0.982179284,-0.187946007]</normal_begin>
+			<normal_end>[-0.978522897,-0.206138149]</normal_end>
 			<time>121</time>
-			<texture_begin>0.800000012</texture_begin>
-			<texture_end>0.808695674</texture_end>
+			<texture_begin>0.762886584</texture_begin>
+			<texture_end>0.773195863</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.662778914,2.58119035]</begin>
-			<end>[0.657385409,2.6032877]</end>
-			<normal_begin>[-0.973979354,-0.226636812]</normal_begin>
-			<normal_end>[-0.968776941,-0.247934267]</normal_end>
+			<begin>[0.668017089,2.5575366]</begin>
+			<end>[0.662864804,2.58082032]</end>
+			<normal_begin>[-0.978522897,-0.206138149]</normal_begin>
+			<normal_end>[-0.974057853,-0.226299062]</normal_end>
 			<time>122</time>
-			<texture_begin>0.808695674</texture_begin>
-			<texture_end>0.817391276</texture_end>
+			<texture_begin>0.773195863</texture_begin>
+			<texture_end>0.783505142</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.657385409,2.6032877]</begin>
-			<end>[0.651483357,2.62525368]</end>
-			<normal_begin>[-0.968776941,-0.247934267]</normal_begin>
-			<normal_end>[-0.96246773,-0.27139622]</normal_end>
+			<begin>[0.662864804,2.58082032]</begin>
+			<end>[0.657206237,2.60398674]</end>
+			<normal_begin>[-0.974057853,-0.226299062]</normal_begin>
+			<normal_end>[-0.96859479,-0.248644561]</normal_end>
 			<time>123</time>
-			<texture_begin>0.817391276</texture_begin>
-			<texture_end>0.826086938</texture_end>
+			<texture_begin>0.783505142</texture_begin>
+			<texture_end>0.793814421</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.651483357,2.62525368]</begin>
-			<end>[0.645021379,2.64706254]</end>
-			<normal_begin>[-0.96246773,-0.27139622]</normal_begin>
-			<normal_end>[-0.954826951,-0.297162384]</normal_end>
+			<begin>[0.657206237,2.60398674]</begin>
+			<end>[0.650986731,2.6270082]</end>
+			<normal_begin>[-0.96859479,-0.248644561]</normal_begin>
+			<normal_end>[-0.961907506,-0.273375064]</normal_end>
 			<time>124</time>
-			<texture_begin>0.826086938</texture_begin>
-			<texture_end>0.8347826</texture_end>
+			<texture_begin>0.793814421</texture_begin>
+			<texture_end>0.8041237</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.645021379,2.64706254]</begin>
-			<end>[0.637946308,2.66868091]</end>
-			<normal_begin>[-0.954826951,-0.297162384]</normal_begin>
-			<normal_end>[-0.945613205,-0.325293213]</normal_end>
+			<begin>[0.650986731,2.6270082]</begin>
+			<end>[0.644147158,2.64985394]</end>
+			<normal_begin>[-0.961907506,-0.273375064]</normal_begin>
+			<normal_end>[-0.95373553,-0.300646901]</normal_end>
 			<time>125</time>
-			<texture_begin>0.8347826</texture_begin>
-			<texture_end>0.843478262</texture_end>
+			<texture_begin>0.8041237</texture_begin>
+			<texture_end>0.814432979</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.637946308,2.66868091]</begin>
-			<end>[0.630205214,2.69006848]</end>
-			<normal_begin>[-0.945613205,-0.325293213]</normal_begin>
-			<normal_end>[-0.934593797,-0.355716884]</normal_end>
+			<begin>[0.644147158,2.64985394]</begin>
+			<end>[0.636626482,2.67248297]</end>
+			<normal_begin>[-0.95373553,-0.300646901]</normal_begin>
+			<normal_end>[-0.943800926,-0.33051455]</normal_end>
 			<time>126</time>
-			<texture_begin>0.843478262</texture_begin>
-			<texture_end>0.852173924</texture_end>
+			<texture_begin>0.814432979</texture_begin>
+			<texture_end>0.824742258</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.630205214,2.69006848]</begin>
-			<end>[0.621748328,2.71118331]</end>
-			<normal_begin>[-0.934593797,-0.355716884]</normal_begin>
-			<normal_end>[-0.921592176,-0.388159513]</normal_end>
+			<begin>[0.636626482,2.67248297]</begin>
+			<end>[0.628363311,2.69485259]</end>
+			<normal_begin>[-0.943800926,-0.33051455]</normal_begin>
+			<normal_end>[-0.931840777,-0.362867355]</normal_end>
 			<time>127</time>
-			<texture_begin>0.852173924</texture_begin>
-			<texture_end>0.860869586</texture_end>
+			<texture_begin>0.824742258</texture_begin>
+			<texture_end>0.835051537</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.621748328,2.71118331]</begin>
-			<end>[0.612535536,2.73197865]</end>
-			<normal_begin>[-0.921592176,-0.388159513]</normal_begin>
-			<normal_end>[-0.906565607,-0.422064871]</normal_end>
+			<begin>[0.628363311,2.69485259]</begin>
+			<end>[0.619302392,2.7169106]</end>
+			<normal_begin>[-0.931840777,-0.362867355]</normal_begin>
+			<normal_end>[-0.917676449,-0.397328556]</normal_end>
 			<time>128</time>
-			<texture_begin>0.860869586</texture_begin>
-			<texture_end>0.869565189</texture_end>
+			<texture_begin>0.835051537</texture_begin>
+			<texture_end>0.845360816</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.612535536,2.73197865]</begin>
-			<end>[0.602542758,2.75241208]</end>
-			<normal_begin>[-0.906565607,-0.422064871]</normal_begin>
-			<normal_end>[-0.889704943,-0.456535995]</normal_end>
+			<begin>[0.619302392,2.7169106]</begin>
+			<end>[0.609401405,2.73860407]</end>
+			<normal_begin>[-0.917676449,-0.397328556]</normal_begin>
+			<normal_end>[-0.901315093,-0.43316403]</normal_end>
 			<time>129</time>
-			<texture_begin>0.869565189</texture_begin>
-			<texture_end>0.878260851</texture_end>
+			<texture_begin>0.845360816</texture_begin>
+			<texture_end>0.855670094</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.602542758,2.75241208]</begin>
-			<end>[0.591771245,2.77244449]</end>
-			<normal_begin>[-0.889704943,-0.456535995]</normal_begin>
-			<normal_end>[-0.871543109,-0.490318924]</normal_end>
+			<begin>[0.609401405,2.73860407]</begin>
+			<end>[0.598640442,2.7598846]</end>
+			<normal_begin>[-0.901315093,-0.43316403]</normal_begin>
+			<normal_end>[-0.883085072,-0.469212919]</normal_end>
 			<time>130</time>
-			<texture_begin>0.878260851</texture_begin>
-			<texture_end>0.886956513</texture_end>
+			<texture_begin>0.855670094</texture_begin>
+			<texture_end>0.865979373</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.591771245,2.77244449]</begin>
-			<end>[0.580253839,2.79205728]</end>
-			<normal_begin>[-0.871543109,-0.490318924]</normal_begin>
-			<normal_end>[-0.853010237,-0.521894097]</normal_end>
+			<begin>[0.598640442,2.7598846]</begin>
+			<end>[0.587032676,2.78071451]</end>
+			<normal_begin>[-0.883085072,-0.469212919]</normal_begin>
+			<normal_end>[-0.863754928,-0.503912091]</normal_end>
 			<time>131</time>
-			<texture_begin>0.886956513</texture_begin>
-			<texture_end>0.895652175</texture_end>
+			<texture_begin>0.865979373</texture_begin>
+			<texture_end>0.876288652</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.580253839,2.79205728]</begin>
-			<end>[0.568057418,2.81125736]</end>
-			<normal_begin>[-0.853010237,-0.521894097]</normal_begin>
-			<normal_end>[-0.835385919,-0.549663961]</normal_end>
+			<begin>[0.587032676,2.78071451]</begin>
+			<end>[0.574631512,2.80108261]</end>
+			<normal_begin>[-0.863754928,-0.503912091]</normal_begin>
+			<normal_end>[-0.844571054,-0.535443425]</normal_end>
 			<time>132</time>
-			<texture_begin>0.895652175</texture_begin>
-			<texture_end>0.904347837</texture_end>
+			<texture_begin>0.876288652</texture_begin>
+			<texture_end>0.886597931</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.568057418,2.81125736]</begin>
-			<end>[0.555287361,2.83008027]</end>
-			<normal_begin>[-0.835385919,-0.549663961]</normal_begin>
-			<normal_end>[-0.820120633,-0.572190642]</normal_end>
+			<begin>[0.574631512,2.80108261]</begin>
+			<end>[0.561533868,2.82101083]</end>
+			<normal_begin>[-0.844571054,-0.535443425]</normal_begin>
+			<normal_end>[-0.827126503,-0.562015831]</normal_end>
 			<time>133</time>
-			<texture_begin>0.904347837</texture_begin>
-			<texture_end>0.913043499</texture_end>
+			<texture_begin>0.886597931</texture_begin>
+			<texture_end>0.89690721</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.555287361,2.83008027]</begin>
-			<end>[0.54207468,2.84859514]</end>
-			<normal_begin>[-0.820120633,-0.572190642]</normal_begin>
-			<normal_end>[-0.808533907,-0.588449597]</normal_end>
+			<begin>[0.561533868,2.82101083]</begin>
+			<end>[0.547876596,2.8405602]</end>
+			<normal_begin>[-0.827126503,-0.562015831]</normal_begin>
+			<normal_end>[-0.81305939,-0.582180738]</normal_end>
 			<time>134</time>
-			<texture_begin>0.913043499</texture_begin>
-			<texture_end>0.921739101</texture_end>
+			<texture_begin>0.89690721</texture_begin>
+			<texture_end>0.907216489</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.54207468,2.84859514]</begin>
-			<end>[0.528568208,2.86689782]</end>
-			<normal_begin>[-0.808533907,-0.588449597]</normal_begin>
-			<normal_end>[-0.801529646,-0.597955048]</normal_end>
+			<begin>[0.547876596,2.8405602]</begin>
+			<end>[0.533824444,2.85982752]</end>
+			<normal_begin>[-0.81305939,-0.582180738]</normal_begin>
+			<normal_end>[-0.803664386,-0.5950827]</normal_end>
 			<time>135</time>
-			<texture_begin>0.921739101</texture_begin>
-			<texture_end>0.930434763</texture_end>
+			<texture_begin>0.907216489</texture_begin>
+			<texture_end>0.917525768</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.528568208,2.86689782]</begin>
-			<end>[0.51492238,2.88509703]</end>
-			<normal_begin>[-0.801529646,-0.597955048]</normal_begin>
-			<normal_end>[-0.799422383,-0.600769401]</normal_end>
+			<begin>[0.533824444,2.85982752]</begin>
+			<end>[0.519553363,2.87893367]</end>
+			<normal_begin>[-0.803664386,-0.5950827]</normal_begin>
+			<normal_end>[-0.799594402,-0.600540578]</normal_end>
 			<time>136</time>
-			<texture_begin>0.930434763</texture_begin>
-			<texture_end>0.939130425</texture_end>
+			<texture_begin>0.917525768</texture_begin>
+			<texture_end>0.927835047</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.51492238,2.88509703]</begin>
-			<end>[0.501327693,2.90333295]</end>
-			<normal_begin>[-0.799422383,-0.600769401]</normal_begin>
-			<normal_end>[-0.823723495,-0.566991627]</normal_end>
+			<begin>[0.519553363,2.87893367]</begin>
+			<end>[0.505237043,2.8980062]</end>
+			<normal_begin>[-0.799594402,-0.600540578]</normal_begin>
+			<normal_end>[-0.800761461,-0.598983407]</normal_end>
 			<time>137</time>
-			<texture_begin>0.939130425</texture_begin>
-			<texture_end>0.947826087</texture_end>
+			<texture_begin>0.927835047</texture_begin>
+			<texture_end>0.938144326</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.501327693,2.90333295]</begin>
-			<end>[0.492441326,2.92407036]</end>
-			<normal_begin>[-0.823723495,-0.566991627]</normal_begin>
-			<normal_end>[-0.986947238,-0.16104348]</normal_end>
+			<begin>[0.505237043,2.8980062]</begin>
+			<end>[0.493689328,2.9187119]</end>
+			<normal_begin>[-0.800761461,-0.598983407]</normal_begin>
+			<normal_end>[-0.957256556,-0.289240152]</normal_end>
 			<time>138</time>
-			<texture_begin>0.947826087</texture_begin>
-			<texture_end>0.956521749</texture_end>
+			<texture_begin>0.938144326</texture_begin>
+			<texture_end>0.948453605</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.492441326,2.92407036]</begin>
-			<end>[0.4954696,2.9462831]</end>
-			<normal_begin>[-0.986947238,-0.16104348]</normal_begin>
-			<normal_end>[-0.913351715,0.407171309]</normal_end>
+			<begin>[0.493689328,2.9187119]</begin>
+			<end>[0.493880689,2.94217658]</end>
+			<normal_begin>[-0.957256556,-0.289240152]</normal_begin>
+			<normal_end>[-0.950063169,0.312057495]</normal_end>
 			<time>139</time>
-			<texture_begin>0.956521749</texture_begin>
-			<texture_end>0.965217412</texture_end>
+			<texture_begin>0.948453605</texture_begin>
+			<texture_end>0.958762884</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.4954696,2.9462831]</begin>
-			<end>[0.508696079,2.96463013]</end>
-			<normal_begin>[-0.913351715,0.407171309]</normal_begin>
-			<normal_end>[-0.704410136,0.70979315]</normal_end>
+			<begin>[0.493880689,2.94217658]</begin>
+			<end>[0.506397009,2.96225762]</end>
+			<normal_begin>[-0.950063169,0.312057495]</normal_begin>
+			<normal_end>[-0.73198545,0.68132019]</normal_end>
 			<time>140</time>
-			<texture_begin>0.965217412</texture_begin>
-			<texture_end>0.973913014</texture_end>
+			<texture_begin>0.958762884</texture_begin>
+			<texture_end>0.969072163</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.508696079,2.96463013]</begin>
-			<end>[0.52643168,2.97881579]</end>
-			<normal_begin>[-0.704410136,0.70979315]</normal_begin>
-			<normal_end>[-0.553439558,0.832889378]</normal_end>
+			<begin>[0.506397009,2.96225762]</begin>
+			<end>[0.524605334,2.97758317]</end>
+			<normal_begin>[-0.73198545,0.68132019]</normal_begin>
+			<normal_end>[-0.565452456,0.824780941]</normal_end>
 			<time>141</time>
-			<texture_begin>0.973913014</texture_begin>
-			<texture_end>0.982608676</texture_end>
+			<texture_begin>0.969072163</texture_begin>
+			<texture_end>0.979381442</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.52643168,2.97881579]</begin>
-			<end>[0.546117604,2.99018621]</end>
-			<normal_begin>[-0.553439558,0.832889378]</normal_begin>
-			<normal_end>[-0.452780783,0.891621947]</normal_end>
+			<begin>[0.524605334,2.97758317]</begin>
+			<end>[0.54513675,2.9896853]</end>
+			<normal_begin>[-0.565452456,0.824780941]</normal_begin>
+			<normal_end>[-0.456801742,0.889568567]</normal_end>
 			<time>142</time>
-			<texture_begin>0.982608676</texture_begin>
-			<texture_end>0.991304338</texture_end>
+			<texture_begin>0.979381442</texture_begin>
+			<texture_end>0.989690721</texture_end>
 			<repeats>2</repeats>
 		</b>
 		<b>
-			<begin>[0.546117604,2.99018621]</begin>
+			<begin>[0.54513675,2.9896853]</begin>
 			<end>[0.566600084,3.00000024]</end>
-			<normal_begin>[-0.452780783,0.891621947]</normal_begin>
+			<normal_begin>[-0.456801742,0.889568567]</normal_begin>
 			<normal_end>[-1,0]</normal_end>
 			<time>143</time>
-			<texture_begin>0.991304338</texture_begin>
+			<texture_begin>0.989690721</texture_begin>
 			<texture_end>1</texture_end>
 			<repeats>2</repeats>
 		</b>
 	</bars>
-	<deform_start>29</deform_start>
+	<deform_start>47</deform_start>
 </shape>
 
