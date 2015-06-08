@@ -74,10 +74,10 @@ gl::GlslProgRef loadShader( const fs::path &iVertex, const fs::path &iFragment )
 }
 
 /// Add a ring of geometry containing a given number of time bands (slitscanning effect) and repeats around the donut.
-void addRing( std::vector<Vertex> &vertices, const Bar &bar, int next_bar_time, const ci::vec2 &center_offset )
+void addRing( std::vector<Vertex> &vertices, const Bar &bar, int next_bar_time, float deform_start_time, const ci::vec2 &center_offset )
 {
 	const auto segments = 64;
-	const auto texture_insets = vec2( 0.05, 0.0875f );
+	const auto texture_insets = vec2( 0.05f, 0.0875f );
 
 	// Generate cartesian position.
 	const auto calc_pos = [=] (int r, int s) {
@@ -121,8 +121,12 @@ void addRing( std::vector<Vertex> &vertices, const Bar &bar, int next_bar_time, 
     auto color_weight = 0.0f;
 		auto normal = calc_normal(r, s);
 
-    auto deform_scaling = easeInOutQuad(bar.time / 144.0f);
+		auto deform_t = lmap( glm::clamp<float>( bar.time, deform_start_time, 144.0f ), deform_start_time, 144.0f, 0.0f, 1.0f );
+    auto deform_scaling = easeInOutQuad( deform_t );
 		auto deform_frame = (float)mix( bar.time, next_bar_time, (float)r );
+		if (deform_scaling > 1.0f) {
+			CI_LOG_W("Deform scaling out of bounds: " << deform_scaling );
+		}
 
     vertices.emplace_back( Vertex { pos, (float)bar.time,
                                     color_tc, flat_tc, color_weight,
@@ -157,6 +161,7 @@ void Landscape::setup()
 
   CI_LOG_I("Loading shape profile.");
 	auto xml = XmlTree( app::loadAsset("profile.xml") );
+	auto deform_start_time = xml.getChild("shape").getChild("deform_start").getValue<float>();
 	auto &bars = xml.getChild("shape").getChild("bars").getChildren();
 	auto iter = bars.begin();
 	Bar bar(**iter);
@@ -164,11 +169,11 @@ void Landscape::setup()
 		++iter;
 		if( iter != bars.end() ) {
 			Bar next(**iter);
-			addRing( vertices, bar, next.time, offset );
+			addRing( vertices, bar, next.time, deform_start_time, offset );
 			bar = next;
 		}
 		else {
-			addRing( vertices, bar, bar.time, offset );
+			addRing( vertices, bar, bar.time, deform_start_time, offset );
 		}
 	}
 

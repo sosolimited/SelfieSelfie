@@ -190,7 +190,7 @@ void SelfieSelfieApp::updateCamera()
 	cameraVelocity *= 0.86f;
 
 	auto l = length(cameraOffset);
-	auto maximum = 2.9f;
+	auto maximum = 7.9f;
 	if( l > maximum ) {
 		cameraOffset *= (maximum / l);
 	}
@@ -204,7 +204,7 @@ void SelfieSelfieApp::updateCamera()
 
 void SelfieSelfieApp::draw()
 {
-	gl::clear( Color( 0, 0, 0 ) );
+	gl::clear( Color( 1, 0, 1 ) );
 
   {
     gl::enableDepthRead();

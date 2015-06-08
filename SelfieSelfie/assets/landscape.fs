@@ -1,6 +1,7 @@
 precision mediump float;
 
 uniform lowp sampler2D uClearTexture;
+uniform lowp sampler2D uBlurredTexture;
 
 varying vec2 vTexCoord;
 varying vec4 vColor;

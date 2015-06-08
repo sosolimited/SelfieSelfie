@@ -2,7 +2,7 @@ precision highp float;
 
 uniform mat4						ciModelViewProjection;
 uniform mat3            ciNormalMatrix;
-uniform lowp sampler2D	uBlurredTexture;
+uniform mediump sampler2D	uBlurredTexture;
 uniform float						uCurrentFrame;
 
 attribute vec3  ciPosition;
