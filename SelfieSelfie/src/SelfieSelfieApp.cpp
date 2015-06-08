@@ -165,11 +165,11 @@ void SelfieSelfieApp::updateCamera()
 			auto gravity = MotionManager::getGravityDirection();
 			if( abs( gravity.x ) > abs( gravity.y ) ) {
 				auto x = copysign( 1.0f, gravity.x );
-				return vec3( - x, 0, 0 );
+				return vec3( x, 0, 0 );
 			}
 			else {
 				auto y = copysign( 1.0f, gravity.y );
-				return vec3( 0, y, 0 );
+				return vec3( 0, - y, 0 );
 			}
 		}());
 
