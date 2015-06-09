@@ -14,7 +14,7 @@
 #include "IntroSequence.h"
 
 #include "cinder/MotionManager.h"
-#include "cinder/Signals.h"
+#include "cinder/Timeline.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -63,7 +63,8 @@ private:
 
   bool							drawDebug = false;
 
-	ci::signals::Connection	cameraUpdateConnection;
+	ci::Anim<float>		cameraWeight = 0.0f;
+	quat							startOrientation;
 };
 
 void SelfieSelfieApp::setup()
@@ -72,11 +73,6 @@ void SelfieSelfieApp::setup()
 
   MotionManager::enable();
 
-	introduction.setup( getAssetPath( "5" ) );
-	introduction.setFinishFn( [this] { showLandscape(); } );
-	cameraUpdateConnection = getSignalUpdate().connect( [this] { updateCamera(); } );
-	cameraUpdateConnection.disable();
-
   GLint size;
   glGetIntegerv( GL_MAX_TEXTURE_SIZE, &size );
   CI_LOG_I( "Max texture size: " << size );
@@ -84,6 +80,7 @@ void SelfieSelfieApp::setup()
   auto target = vec3( 5, 0, 0 );
   camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
   camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 50.0f );
+	startOrientation = camera.getOrientation();
 
   try {
     CI_LOG_I( "Initializing hardware camera." );
@@ -121,6 +118,10 @@ void SelfieSelfieApp::setup()
   if( err ) {
     CI_LOG_E( "Post-Setup gl error: " << gl::getErrorString(err) );
   }
+
+	introduction.setup( getAssetPath( "5" ) );
+	introduction.setFinishFn( [this] { showLandscape(); } );
+	showLandscape();
 }
 
 void SelfieSelfieApp::touchesBegan( TouchEvent event )
@@ -132,14 +133,6 @@ void SelfieSelfieApp::touchesBegan( TouchEvent event )
   if( touches.size() == 4 ) {
     drawDebug = ! drawDebug;
   }
-	if( touches.size() == 3 ) {
-		if( cameraUpdateConnection.isEnabled() ) {
-			cameraUpdateConnection.disable();
-		}
-		else {
-			cameraUpdateConnection.enable();
-		}
-	}
 }
 
 void SelfieSelfieApp::touchesMoved( TouchEvent event )
@@ -168,11 +161,14 @@ void SelfieSelfieApp::touchesEnded( TouchEvent event )
 
 void SelfieSelfieApp::showLandscape()
 {
-	cameraUpdateConnection.enable();
+	// Enable looking around with the gyro
+	timeline().apply( &cameraWeight, 1.0f, 1.33f ).easeFn( EaseInOutCubic() ).delay( getElapsedSeconds() + 3.0f );
 }
 
 void SelfieSelfieApp::update()
 {
+	updateCamera();
+
   if( capture && capture->checkNewFrame() ) {
     gridTexture->update( *capture->getSurface() );
 
@@ -222,15 +218,8 @@ void SelfieSelfieApp::updateCamera()
 	}
 	camera.setEyePoint( cameraOffset );
 
-	#if defined(CINDER_COCOA_TOUCH)
-  if( MotionManager::isDataAvailable() ) {
-    auto r = MotionManager::getRotation();
-    camera.setOrientation( r );
-  }
-  #else
-		auto r = MotionManager::getRotation();
-    camera.setOrientation( r );
-  #endif
+	auto r = glm::slerp( startOrientation, MotionManager::getRotation(), cameraWeight.value() );
+	camera.setOrientation( r );
 }
 
 void SelfieSelfieApp::draw()
