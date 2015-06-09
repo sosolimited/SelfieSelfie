@@ -291,6 +291,7 @@ void SelfieSelfieApp::draw()
 inline void prepareSettings( app::App::Settings *iSettings )
 {
   iSettings->setMultiTouchEnabled();
+	iSettings->setHighDensityDisplayEnabled();
 }
 
 CINDER_APP( SelfieSelfieApp, RendererGl, &prepareSettings )

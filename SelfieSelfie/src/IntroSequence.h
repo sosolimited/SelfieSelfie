@@ -19,7 +19,7 @@ struct SequenceItem
 	{}
 
 	ci::gl::TextureRef	texture;
-	ci::vec2						position;
+	ci::Rectf						placement;
 	ci::Anim<float>			alpha = 0.0f;
 };
 

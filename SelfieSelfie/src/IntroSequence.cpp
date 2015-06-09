@@ -7,6 +7,7 @@
 
 #include "IntroSequence.h"
 #include "cinder/ip/Premultiply.h"
+#include "cinder/Log.h"
 
 using namespace soso;
 using namespace cinder;
@@ -17,6 +18,7 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 	timeline->reset();
 
 	if( fs::is_directory( iImageBasePath ) ) {
+		CI_LOG_I( "Loading intro images from: " << iImageBasePath );
 		showItem( iImageBasePath / "soso-logo.png", 2.0f );
 		showItem( iImageBasePath / "selfie-logo.png", 3.0f );
 		auto cd = 0.9f;
@@ -38,9 +40,11 @@ void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
 		ip::premultiply( &surf );
 	}
 	auto item = SequenceItem( gl::Texture::create( surf ) );
-	item.position = vec2(app::getWindowSize() - item.texture->getSize()) / 2.0f;
+	auto size = app::toPoints( item.texture->getSize() );
+	auto position = vec2( app::getWindowSize() - size ) / 2.0f;
+	item.placement = Rectf( position, position + vec2( size ) );
 
-	timeline->apply( &item.alpha, 1.0f, 0.2f ).startTime( start );
+	timeline->apply( &item.alpha, 1.0f, 0.3f ).easeFn( EaseOutQuad() ).startTime( start );
 	timeline->appendTo( &item.alpha, 0.0f, 0.2f ).delay( duration );
 
 	items.push_back( item ); // copy brings the anim with it (move makes this clearer in Choreograph)
@@ -68,7 +72,7 @@ void IntroSequence::draw()
 	for( auto &item : items ) {
 		if( item.alpha > 0.0f ) {
 			gl::color( ColorA( 1.0f, 1.0f, 1.0f, 1.0f ) * item.alpha() );
-			gl::draw( item.texture, item.position );
+			gl::draw( item.texture, item.placement );
 		}
 	}
 }
