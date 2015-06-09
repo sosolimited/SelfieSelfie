@@ -44,6 +44,7 @@ public:
   void touchesEnded( TouchEvent event ) override;
 
 	void updateCamera();
+	void showLandscape();
 
 private:
 	CameraPersp				camera;
@@ -59,6 +60,7 @@ private:
 
   bool							drawDebug = false;
 
+	ci::signals::Connection	cameraUpdateConnection;
 };
 
 void SelfieSelfieApp::setup()
@@ -66,6 +68,9 @@ void SelfieSelfieApp::setup()
   CI_LOG_I("Setting up selfie_x_selfie");
 
   MotionManager::enable();
+
+	cameraUpdateConnection = getSignalUpdate().connect( [this] { updateCamera(); } );
+	cameraUpdateConnection.disable();
 
   GLint size;
   glGetIntegerv( GL_MAX_TEXTURE_SIZE, &size );
@@ -122,6 +127,14 @@ void SelfieSelfieApp::touchesBegan( TouchEvent event )
   if( touches.size() == 4 ) {
     drawDebug = ! drawDebug;
   }
+	if( touches.size() == 3 ) {
+		if( cameraUpdateConnection.isEnabled() ) {
+			cameraUpdateConnection.disable();
+		}
+		else {
+			cameraUpdateConnection.enable();
+		}
+	}
 }
 
 void SelfieSelfieApp::touchesMoved( TouchEvent event )
@@ -148,10 +161,13 @@ void SelfieSelfieApp::touchesEnded( TouchEvent event )
   }), touches.end() );
 }
 
+void SelfieSelfieApp::showLandscape()
+{
+	cameraUpdateConnection.enable();
+}
+
 void SelfieSelfieApp::update()
 {
-	updateCamera();
-
   if( capture && capture->checkNewFrame() ) {
     gridTexture->update( *capture->getSurface() );
 
