@@ -124,11 +124,13 @@ void SelfieSelfieApp::playIntroAndGetOrientation()
 {
 	CI_LOG_I( "Cueing up introduction and figuring out device orientation." );
 
+	cameraWeight = 0.0f;
+	cameraOffset = vec3( 0 );
   auto target = vec3( 5, 0, 0 );
   camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
   camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 50.0f );
 	startOrientation = camera.getOrientation();
-	cameraEyePoint = ci::vec3( 3.8f, 0.0f, 0.0f );
+	cameraEyePoint = vec3( 3.8f, 0.0f, 0.0f );
 
 	orientationUpdateConnection = getSignalUpdate().connect( [this] { updateOrientationOffset(); } );
 
