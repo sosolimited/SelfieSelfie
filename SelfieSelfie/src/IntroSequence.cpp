@@ -17,18 +17,20 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 {
 	timeline->clear();
 	timeline->reset();
+	timeline->stepTo( 0.0f );
 
 	if( fs::is_directory( iImageBasePath ) ) {
 		CI_LOG_I( "Loading intro images from: " << iImageBasePath );
 		showItem( iImageBasePath / "soso-logo.png", 2.0f );
-		showItem( iImageBasePath / "selfie-logo.png", 3.0f );
+		showItem( iImageBasePath / "selfie-logo.png", 2.25f );
+		showBlank( 0.33f );
 		auto cd = 0.9f;
 		showItem( iImageBasePath / "countdown-3.png", cd );
 		showItem( iImageBasePath / "countdown-2.png", cd );
 		showItem( iImageBasePath / "countdown-1.png", cd );
-		showFlash();
 	}
 
+	showFlash();
 	timeline->add( [this] { handleFinish(); }, timeline->getEndTime() + 2.0f );
 }
 
@@ -52,13 +54,20 @@ void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
 	items.push_back( item ); // copy brings the anim with it (move makes this clearer in Choreograph)
 }
 
+void IntroSequence::showBlank( float duration )
+{
+	auto start = endTime;
+	endTime += duration;
+	timeline->appendTo( &backgroundAlpha, 0.0f, 0.2f ).startTime( start );
+}
+
 void IntroSequence::showFlash()
 {
 	auto start = endTime;
 	endTime += 0.2f;
 
-	timeline->apply( &backgroundColor, Color::gray( 1.0f ), 0.1f ).easeFn( EaseInBack() ).startTime( start );
-	timeline->apply( &backgroundAlpha, 0.0f, 1.5f ).easeFn( EaseInOutSine() ).startTime( start + 0.075f );
+	timeline->appendTo( &backgroundColor, Color::gray( 1.0f ), 0.1f ).easeFn( EaseInBack() ).startTime( start );
+	timeline->appendTo( &backgroundAlpha, 1.0f, 0.0f, 1.5f ).easeFn( EaseInOutSine() ).startTime( start + 0.075f );
 }
 
 void IntroSequence::handleFinish()
@@ -78,10 +87,6 @@ void IntroSequence::update()
 
 void IntroSequence::draw()
 {
-	if( backgroundAlpha == 0.0f ) {
-		return;
-	}
-
 	gl::ScopedAlphaBlend blend( true );
 
 	gl::ScopedColor color( ColorA( backgroundColor() ) * backgroundAlpha );

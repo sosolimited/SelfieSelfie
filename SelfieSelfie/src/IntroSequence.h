@@ -47,6 +47,7 @@ private:
 
 	double										endTime = 0.0;
 	void showItem( const ci::fs::path &iPath, float duration );
+	void showBlank( float duration );
 	void showFlash();
 	void handleFinish();
 	ci::ColorA								overlayColor = ci::ColorA::hex( 0xffF8ED31 );
