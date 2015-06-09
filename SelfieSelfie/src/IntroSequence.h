@@ -8,6 +8,7 @@
 #pragma once
 
 #include "cinder/Timeline.h"
+#include "cinder/Filesystem.h"
 
 namespace soso {
 

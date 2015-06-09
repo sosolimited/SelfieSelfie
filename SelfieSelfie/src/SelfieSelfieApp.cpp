@@ -14,6 +14,7 @@
 #include "IntroSequence.h"
 
 #include "cinder/MotionManager.h"
+#include "cinder/Signals.h"
 
 using namespace ci;
 using namespace ci::app;
