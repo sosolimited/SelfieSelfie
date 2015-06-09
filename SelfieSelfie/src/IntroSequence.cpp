@@ -31,7 +31,8 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 	}
 
 	showFlash();
-	timeline->add( [this] { handleFinish(); }, timeline->getEndTime() + 0.4f );
+
+	timeline->add( [this] { handleFinish(); }, timeline->getEndTime() );
 }
 
 void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
@@ -64,7 +65,6 @@ void IntroSequence::showBlank( float duration )
 void IntroSequence::showFlash()
 {
 	auto start = endTime;
-	endTime += 0.2f;
 
 	timeline->appendTo( &backgroundColor, Color::gray( 1.0f ), 0.1f ).easeFn( EaseInBack() ).startTime( start );
 	timeline->appendTo( &backgroundAlpha, 1.0f, 0.0f, 1.5f ).easeFn( EaseInOutSine() ).startTime( start + 0.075f );
