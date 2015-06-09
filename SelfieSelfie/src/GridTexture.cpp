@@ -53,7 +53,12 @@ void GridTexture::update( const ci::Surface &iSurface )
 
   if( ! intermediateTexture ) {
     CI_LOG_I("Creating intermediate texture");
-    intermediateTexture = gl::Texture::create( iSurface, gl::Texture::Format().loadTopDown().wrapS( GL_CLAMP_TO_EDGE ).wrapT( GL_CLAMP_TO_EDGE ) );
+		#if defined(CINDER_ANDROID)
+			auto format = gl::Texture::Format().wrapS( GL_CLAMP_TO_EDGE ).wrapT( GL_CLAMP_TO_EDGE );
+		#else
+			auto format = gl::Texture::Format().loadTopDown().wrapS( GL_CLAMP_TO_EDGE ).wrapT( GL_CLAMP_TO_EDGE );
+		#endif
+		intermediateTexture = gl::Texture::create( iSurface, format );
   }
   else {
     intermediateTexture->update( iSurface );
