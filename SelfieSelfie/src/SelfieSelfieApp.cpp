@@ -7,6 +7,7 @@
 #include "cinder/gl/GlslProg.h"
 #include "cinder/Log.h"
 #include "cinder/gl/Fbo.h"
+#include "cinder/gl/Shader.h"
 
 #include "GridTexture.h"
 #include "Landscape.h"
