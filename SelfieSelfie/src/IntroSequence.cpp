@@ -77,6 +77,10 @@ void IntroSequence::update()
 
 void IntroSequence::draw()
 {
+	if( backgroundAlpha == 0.0f ) {
+		return;
+	}
+
 	gl::ScopedAlphaBlend blend( true );
 
 	gl::ScopedColor color( ColorA( backgroundColor() ) * backgroundAlpha );
