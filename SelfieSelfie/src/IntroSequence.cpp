@@ -31,7 +31,7 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 	}
 
 	showFlash();
-	timeline->add( [this] { handleFinish(); }, timeline->getEndTime() + 2.0f );
+	timeline->add( [this] { handleFinish(); }, timeline->getEndTime() + 0.4f );
 }
 
 void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
