@@ -57,7 +57,7 @@ void IntroSequence::showFlash()
 	endTime += 0.2f;
 
 	timeline->apply( &backgroundColor, Color::gray( 1.0f ), 0.1f ).easeFn( EaseInBack() ).startTime( start );
-	timeline->apply( &backgroundAlpha, 0.0f, 1.5f ).easeFn( EaseInOutSine() ).startTime( start + 0.05f );
+	timeline->apply( &backgroundAlpha, 0.0f, 1.5f ).easeFn( EaseInOutSine() ).startTime( start + 0.075f );
 }
 
 void IntroSequence::handleFinish()
