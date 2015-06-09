@@ -63,8 +63,9 @@ private:
 
   bool							drawDebug = false;
 
-	ci::Anim<float>		cameraWeight = 0.0f;
-	quat							startOrientation;
+	ci::Anim<float>			cameraWeight = 0.0f;
+	ci::Anim<ci::vec3>	cameraEyePoint = ci::vec3( 3.8f, 0.0f, 0.0f );
+	quat								startOrientation;
 };
 
 void SelfieSelfieApp::setup()
@@ -156,7 +157,9 @@ void SelfieSelfieApp::touchesEnded( TouchEvent event )
 void SelfieSelfieApp::showLandscape()
 {
 	// Enable looking around with the gyro
-	timeline().apply( &cameraWeight, 1.0f, 1.33f ).easeFn( EaseInOutCubic() );
+	float zoom = 4.0f;
+	timeline().apply( &cameraEyePoint, vec3( 0 ), zoom ).easeFn( EaseInOutCubic() );
+	timeline().apply( &cameraWeight, 1.0f, 1.33f ).easeFn( EaseInOutCubic() ).delay( zoom );
 }
 
 void SelfieSelfieApp::update()
@@ -198,15 +201,16 @@ void SelfieSelfieApp::updateCamera()
 	}
 
 	auto ray = camera.getViewDirection();
+	cameraVelocity *= cameraWeight.value();
 	cameraOffset += ray * cameraVelocity * 0.0025f;
 	cameraVelocity *= 0.86f;
 
 	auto l = length(cameraOffset);
-	auto maximum = 2.7f;
+	auto maximum = 2.5f;
 	if( l > maximum ) {
 		cameraOffset *= (maximum / l);
 	}
-	camera.setEyePoint( cameraOffset );
+	camera.setEyePoint( cameraEyePoint() + cameraOffset );
 
 	auto r = glm::slerp( startOrientation, MotionManager::getRotation(), cameraWeight.value() );
 	camera.setOrientation( r );
