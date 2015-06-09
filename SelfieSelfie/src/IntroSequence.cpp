@@ -18,6 +18,12 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 	timeline->clear();
 	timeline->reset();
 	timeline->stepTo( 0.0f );
+	items.clear();
+	endTime = 0.0f;
+
+	overlayColor = ColorA::hex( 0xffF8ED31 );
+	backgroundColor = Color::gray( 0.12f );
+	backgroundAlpha = 1.0f;
 
 	if( fs::is_directory( iImageBasePath ) ) {
 		CI_LOG_I( "Loading intro images from: " << iImageBasePath );
@@ -33,6 +39,7 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 	showFlash();
 
 	timeline->add( [this] { handleFinish(); }, endTime );
+	timer.start();
 }
 
 void IntroSequence::showItem( const ci::fs::path &iPath, float duration )

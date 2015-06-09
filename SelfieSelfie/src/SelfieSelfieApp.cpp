@@ -38,6 +38,7 @@ struct TouchInfo {
 class SelfieSelfieApp : public App {
 public:
 	void setup() override;
+	void playIntroAndGetOrientation();
 	void update() override;
 	void draw() override;
 
@@ -76,19 +77,11 @@ private:
 void SelfieSelfieApp::setup()
 {
   CI_LOG_I("Setting up selfie_x_selfie");
-
   MotionManager::enable();
 
   GLint size;
   glGetIntegerv( GL_MAX_TEXTURE_SIZE, &size );
   CI_LOG_I( "Max texture size: " << size );
-
-  auto target = vec3( 5, 0, 0 );
-  camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
-  camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 50.0f );
-	startOrientation = camera.getOrientation();
-
-	orientationUpdateConnection = getSignalUpdate().connect( [this] { updateOrientationOffset(); } );
 
   try {
     CI_LOG_I( "Initializing hardware camera." );
@@ -121,6 +114,23 @@ void SelfieSelfieApp::setup()
   catch( ci::Exception &exc ) {
     CI_LOG_E( "Error using device camera: " << exc.what() );
   }
+
+	playIntroAndGetOrientation();
+
+	getSignalWillEnterForeground().connect( [this] { playIntroAndGetOrientation(); } );
+}
+
+void SelfieSelfieApp::playIntroAndGetOrientation()
+{
+	CI_LOG_I( "Cueing up introduction and figuring out device orientation." );
+
+  auto target = vec3( 5, 0, 0 );
+  camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
+  camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 50.0f );
+	startOrientation = camera.getOrientation();
+	cameraEyePoint = ci::vec3( 3.8f, 0.0f, 0.0f );
+
+	orientationUpdateConnection = getSignalUpdate().connect( [this] { updateOrientationOffset(); } );
 
 	introduction.setup( getAssetPath( "intro/5" ) );
 	introduction.setFinishFn( [this] { showLandscape(); } );
