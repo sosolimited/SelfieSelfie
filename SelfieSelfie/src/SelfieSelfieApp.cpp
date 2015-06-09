@@ -157,8 +157,8 @@ void SelfieSelfieApp::touchesEnded( TouchEvent event )
 void SelfieSelfieApp::showLandscape()
 {
 	// Enable looking around with the gyro
-	float zoom = 4.0f;
-	timeline().apply( &cameraEyePoint, vec3( 0 ), zoom ).easeFn( EaseInOutCubic() );
+	float zoom = 4.2f;
+	timeline().apply( &cameraEyePoint, vec3( 0 ), zoom ).easeFn( EaseOutQuart() );
 	timeline().apply( &cameraWeight, 1.0f, 1.33f ).easeFn( EaseInOutCubic() ).delay( zoom );
 }
 

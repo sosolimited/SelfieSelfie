@@ -22,7 +22,7 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 	if( fs::is_directory( iImageBasePath ) ) {
 		CI_LOG_I( "Loading intro images from: " << iImageBasePath );
 		showItem( iImageBasePath / "soso-logo.png", 2.0f );
-		showItem( iImageBasePath / "selfie-logo.png", 2.25f );
+		showItem( iImageBasePath / "selfie-logo.png", 2.0f );
 		showBlank( 0.33f );
 		auto cd = 0.9f;
 		showItem( iImageBasePath / "countdown-3.png", cd );
@@ -32,7 +32,7 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 
 	showFlash();
 
-	timeline->add( [this] { handleFinish(); }, timeline->getEndTime() );
+	timeline->add( [this] { handleFinish(); }, endTime );
 }
 
 void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
@@ -65,6 +65,7 @@ void IntroSequence::showBlank( float duration )
 void IntroSequence::showFlash()
 {
 	auto start = endTime;
+	endTime += 0.275f;
 
 	timeline->appendTo( &backgroundColor, Color::gray( 1.0f ), 0.1f ).easeFn( EaseInBack() ).startTime( start );
 	timeline->appendTo( &backgroundAlpha, 1.0f, 0.0f, 1.5f ).easeFn( EaseInOutSine() ).startTime( start + 0.075f );
