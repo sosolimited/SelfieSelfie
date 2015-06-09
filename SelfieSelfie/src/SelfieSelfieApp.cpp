@@ -7,6 +7,7 @@
 #include "cinder/gl/GlslProg.h"
 #include "cinder/Log.h"
 #include "cinder/gl/Fbo.h"
+#include "cinder/gl/Shader.h"
 
 #include "GridTexture.h"
 #include "Landscape.h"
@@ -87,7 +88,11 @@ void SelfieSelfieApp::setup()
       return first_device;
     }());
 
-    capture = Capture::create( 480, 360, front_facing_camera );
+		#if defined(CINDER_ANDROID)
+			capture = Capture::create( 640, 480, front_facing_camera );
+		#else
+    	capture = Capture::create( 480, 360, front_facing_camera );
+    #endif
     capture->start();
 
     CI_LOG_I( "Creating Grid Texture" );
@@ -196,10 +201,15 @@ void SelfieSelfieApp::updateCamera()
 	}
 	camera.setEyePoint( cameraOffset );
 
+	#if defined(CINDER_COCOA_TOUCH)
   if( MotionManager::isDataAvailable() ) {
     auto r = MotionManager::getRotation();
     camera.setOrientation( r );
   }
+  #else
+		auto r = MotionManager::getRotation();
+    camera.setOrientation( r );
+  #endif
 }
 
 void SelfieSelfieApp::draw()
@@ -257,9 +267,9 @@ void SelfieSelfieApp::draw()
 
   /*
   // For confirming version changes, draw a different colored dot.
-  gl::ScopedColor color( Color( 1.0f, 0.0f, 1.0f ) );
+  gl::ScopedColor color( Color( 0.0f, 0.0f, 1.0f ) );
   gl::drawSolidCircle( vec2( 20.0f ), 10.0f );
-  */
+  //*/
 
   auto err = gl::getError();
   if( err ) {
