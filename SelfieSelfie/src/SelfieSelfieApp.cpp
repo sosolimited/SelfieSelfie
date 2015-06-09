@@ -119,9 +119,8 @@ void SelfieSelfieApp::setup()
     CI_LOG_E( "Post-Setup gl error: " << gl::getErrorString(err) );
   }
 
-	introduction.setup( getAssetPath( "5" ) );
+	introduction.setup( getAssetPath( "intro/5" ) );
 	introduction.setFinishFn( [this] { showLandscape(); } );
-	showLandscape();
 }
 
 void SelfieSelfieApp::touchesBegan( TouchEvent event )
@@ -162,11 +161,12 @@ void SelfieSelfieApp::touchesEnded( TouchEvent event )
 void SelfieSelfieApp::showLandscape()
 {
 	// Enable looking around with the gyro
-	timeline().apply( &cameraWeight, 1.0f, 1.33f ).easeFn( EaseInOutCubic() ).delay( getElapsedSeconds() + 3.0f );
+	timeline().apply( &cameraWeight, 1.0f, 1.33f ).easeFn( EaseInOutCubic() );
 }
 
 void SelfieSelfieApp::update()
 {
+	introduction.update();
 	updateCamera();
 
   if( capture && capture->checkNewFrame() ) {
@@ -243,10 +243,9 @@ void SelfieSelfieApp::draw()
 		auto offset = vec2(gridTexture->getIndexOffset( gridTexture->getCellDimensions(), gridTexture->getCurrentIndex() )) / gridTexture->getGridSize();
 		auto rect = Rectf( -1.0f, -1.0f, 1.0f, 1.0f ).scaled( vec2( 1.333f, 1.0f ) ).scaled( 0.2f );
 		auto half_pi = (float) M_PI / 2.0f;
-		auto xf1 = translate( vec3( - 4.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
+		auto xf1 = translate( vec3( - 12.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
 		auto xf2 = translate( vec3( 4.0f, 0.0f, 0.0f ) ) * rotate( half_pi, vec3( 1, 0, 0 ) ) * rotate( - half_pi, vec3( 0, 1, 0 ) );
 
-		if( false )
 		{
 			gl::ScopedModelMatrix m;
 			gl::multModelMatrix( xf1 );
@@ -263,10 +262,12 @@ void SelfieSelfieApp::draw()
 
   gl::disableDepthRead();
 
+	gl::ScopedMatrices matrices;
+	gl::setMatricesWindow( getWindowSize() );
+	introduction.draw();
+
   if( drawDebug && gridTexture )
   {
-    gl::setMatricesWindow( getWindowSize() );
-
     auto rect = Rectf(gridTexture->getTexture()->getBounds());
     auto window_rect = Rectf(getWindowBounds());
     auto window_rect_a = window_rect.scaled( vec2( 0.5f ) );

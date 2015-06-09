@@ -6,20 +6,69 @@
 //
 
 #include "IntroSequence.h"
+#include "cinder/ip/Premultiply.h"
 
 using namespace soso;
+using namespace cinder;
 
 void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 {
 	timeline->clear();
 	timeline->reset();
 
-//	timeline->appendTo(<#Anim<T> *target#>, <#T endValue#>, <#float duration#>);
+	if( fs::is_directory( iImageBasePath ) ) {
+		showItem( iImageBasePath / "soso-logo.png", 2.0f );
+		showItem( iImageBasePath / "selfie-logo.png", 3.0f );
+		auto cd = 0.9f;
+		showItem( iImageBasePath / "countdown-3.png", cd );
+		showItem( iImageBasePath / "countdown-2.png", cd );
+		showItem( iImageBasePath / "countdown-1.png", cd );
+	}
+
+	timeline->add( [this] { handleFinish(); }, timeline->getEndTime() + 2.0f );
+}
+
+void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
+{
+	auto start = endTime;
+	endTime += duration + 0.2f;
+
+	auto surf = Surface(loadImage( iPath ));
+	if( ! surf.isPremultiplied() ) {
+		ip::premultiply( &surf );
+	}
+	auto item = SequenceItem( gl::Texture::create( surf ) );
+	item.position = vec2(app::getWindowSize() - item.texture->getSize()) / 2.0f;
+
+	timeline->apply( &item.alpha, 1.0f, 0.2f ).startTime( start );
+	timeline->appendTo( &item.alpha, 0.0f, 0.2f ).delay( duration );
+
+	items.push_back( item ); // copy brings the anim with it (move makes this clearer in Choreograph)
 }
 
 void IntroSequence::handleFinish()
 {
 	if( finishFn ) {
 		finishFn();
+	}
+
+	items.clear();
+}
+
+void IntroSequence::update()
+{
+	timeline->step( timer.getSeconds() );
+	timer.start();
+}
+
+void IntroSequence::draw()
+{
+	gl::ScopedAlphaBlend blend( true );
+
+	for( auto &item : items ) {
+		if( item.alpha > 0.0f ) {
+			gl::color( ColorA( 1.0f, 1.0f, 1.0f, 1.0f ) * item.alpha() );
+			gl::draw( item.texture, item.position );
+		}
 	}
 }

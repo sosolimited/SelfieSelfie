@@ -12,12 +12,15 @@
 
 namespace soso {
 
-class SequenceItem
+struct SequenceItem
 {
-public:
-	virtual ~SequenceItem() = default;
-	virtual void show();
-	virtual void hide();
+	SequenceItem( const ci::gl::TextureRef &iTexture )
+	: texture( iTexture )
+	{}
+
+	ci::gl::TextureRef	texture;
+	ci::vec2						position;
+	ci::Anim<float>			alpha = 0.0f;
 };
 
 ///
@@ -28,17 +31,21 @@ class IntroSequence
 public:
 	/// Set up the sequence to load images from the given path.
 	void setup( const ci::fs::path &iImageBasePath );
-	/// Show the next item.
-	void next();
 	/// Set a function to be called when the intro animations are complete.
 	void setFinishFn( const std::function<void ()> &iFunction ) { finishFn = iFunction; }
+
+	void update();
+	void draw();
+
 private:
 	std::function<void ()>		finishFn;
 	ci::TimelineRef						timeline = ci::Timeline::create();
 	std::vector<SequenceItem>	items;
+	ci::Timer									timer;
 
+	void showItem( const ci::fs::path &iPath, float duration );
 	void handleFinish();
-
+	double										endTime = 0.0;
 };
 
 } // namespace soso
