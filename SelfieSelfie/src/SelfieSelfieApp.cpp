@@ -11,6 +11,7 @@
 
 #include "GridTexture.h"
 #include "Landscape.h"
+#include "IntroSequence.h"
 
 #include "cinder/MotionManager.h"
 
@@ -53,6 +54,7 @@ private:
   GridTextureRef		gridTexture;
   Landscape					landscape;
 	gl::BatchRef			cameraImage;
+	IntroSequence			introduction;
 
   vector<TouchInfo> touches;
   ci::vec3					cameraOffset;
@@ -69,6 +71,8 @@ void SelfieSelfieApp::setup()
 
   MotionManager::enable();
 
+	introduction.setup( getAssetPath( "5" ) );
+	introduction.setFinishFn( [this] { showLandscape(); } );
 	cameraUpdateConnection = getSignalUpdate().connect( [this] { updateCamera(); } );
 	cameraUpdateConnection.disable();
 

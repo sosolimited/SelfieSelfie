@@ -7,4 +7,19 @@
 
 #include "IntroSequence.h"
 
-using namespace SelfieSelfie;
+using namespace soso;
+
+void IntroSequence::setup( const ci::fs::path &iImageBasePath )
+{
+	timeline->clear();
+	timeline->reset();
+
+//	timeline->appendTo(<#Anim<T> *target#>, <#T endValue#>, <#float duration#>);
+}
+
+void IntroSequence::handleFinish()
+{
+	if( finishFn ) {
+		finishFn();
+	}
+}
