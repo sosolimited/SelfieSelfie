@@ -9,6 +9,8 @@
 
 #include "cinder/Timeline.h"
 #include "cinder/Filesystem.h"
+#include "cinder/gl/Texture.h"
+#include "cinder/Timer.h"
 
 namespace soso {
 
