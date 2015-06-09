@@ -44,7 +44,7 @@ void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
 	auto position = vec2( app::getWindowSize() - size ) / 2.0f;
 	item.placement = Rectf( position, position + vec2( size ) );
 
-	timeline->apply( &item.alpha, 1.0f, 0.3f ).easeFn( EaseOutQuad() ).startTime( start );
+	timeline->apply( &item.alpha, 1.0f, 0.2f ).easeFn( EaseOutQuad() ).startTime( start );
 	timeline->appendTo( &item.alpha, 0.0f, 0.2f ).delay( duration );
 
 	items.push_back( item ); // copy brings the anim with it (move makes this clearer in Choreograph)
