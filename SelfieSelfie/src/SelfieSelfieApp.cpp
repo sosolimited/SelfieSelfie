@@ -114,11 +114,6 @@ void SelfieSelfieApp::setup()
     CI_LOG_E( "Error using device camera: " << exc.what() );
   }
 
-  auto err = gl::getError();
-  if( err ) {
-    CI_LOG_E( "Post-Setup gl error: " << gl::getErrorString(err) );
-  }
-
 	introduction.setup( getAssetPath( "intro/5" ) );
 	introduction.setFinishFn( [this] { showLandscape(); } );
 }
@@ -171,11 +166,6 @@ void SelfieSelfieApp::update()
 
   if( capture && capture->checkNewFrame() ) {
     gridTexture->update( *capture->getSurface() );
-
-    auto err = gl::getError();
-    if( err ) {
-      CI_LOG_E( "Texture copy gl error: " << gl::getErrorString(err) );
-    }
   }
 }
 
