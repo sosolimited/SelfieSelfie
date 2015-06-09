@@ -46,6 +46,7 @@ public:
   void touchesEnded( TouchEvent event ) override;
 
 	void updateCamera();
+	void updateOrientationOffset();
 	void showLandscape();
 
 private:
@@ -65,7 +66,11 @@ private:
 
 	ci::Anim<float>			cameraWeight = 0.0f;
 	ci::Anim<ci::vec3>	cameraEyePoint = ci::vec3( 3.8f, 0.0f, 0.0f );
+	/// Default orientation used during intro.
 	quat								startOrientation;
+	/// Orientation correction so position held during intro
+	quat								orientationOffset;
+	signals::Connection	orientationUpdateConnection;
 };
 
 void SelfieSelfieApp::setup()
@@ -82,6 +87,8 @@ void SelfieSelfieApp::setup()
   camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
   camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 50.0f );
 	startOrientation = camera.getOrientation();
+
+	orientationUpdateConnection = getSignalUpdate().connect( [this] { updateOrientationOffset(); } );
 
   try {
     CI_LOG_I( "Initializing hardware camera." );
@@ -156,6 +163,8 @@ void SelfieSelfieApp::touchesEnded( TouchEvent event )
 
 void SelfieSelfieApp::showLandscape()
 {
+	// Stop averaging the orientation.
+	orientationUpdateConnection.disconnect();
 	// Enable looking around with the gyro
 	float zoom = 4.2f;
 	timeline().apply( &cameraEyePoint, vec3( 0 ), zoom ).easeFn( EaseOutQuart() );
@@ -212,8 +221,14 @@ void SelfieSelfieApp::updateCamera()
 	}
 	camera.setEyePoint( cameraEyePoint() + cameraOffset );
 
-	auto r = glm::slerp( startOrientation, MotionManager::getRotation(), cameraWeight.value() );
+	auto r = glm::slerp( startOrientation, (orientationOffset * MotionManager::getRotation()), cameraWeight.value() );
 	camera.setOrientation( r );
+}
+
+void SelfieSelfieApp::updateOrientationOffset()
+{
+	auto target = quat( vec3(MotionManager::getRotation() * vec4( 0, 0, -1, 0 )), vec3( 1, 0, 0 ) );
+	orientationOffset = normalize( slerp( orientationOffset, target, 0.55f ) );
 }
 
 void SelfieSelfieApp::draw()

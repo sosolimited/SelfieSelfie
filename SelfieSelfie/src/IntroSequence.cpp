@@ -65,7 +65,7 @@ void IntroSequence::showBlank( float duration )
 void IntroSequence::showFlash()
 {
 	auto start = endTime;
-	endTime += 0.275f;
+	endTime += 0.25f;
 
 	timeline->appendTo( &backgroundColor, Color::gray( 1.0f ), 0.1f ).easeFn( EaseInBack() ).startTime( start );
 	timeline->appendTo( &backgroundAlpha, 1.0f, 0.0f, 1.5f ).easeFn( EaseInOutSine() ).startTime( start + 0.075f );
