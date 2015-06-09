@@ -25,6 +25,7 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 		showItem( iImageBasePath / "countdown-3.png", cd );
 		showItem( iImageBasePath / "countdown-2.png", cd );
 		showItem( iImageBasePath / "countdown-1.png", cd );
+		showFlash();
 	}
 
 	timeline->add( [this] { handleFinish(); }, timeline->getEndTime() + 2.0f );
@@ -50,6 +51,15 @@ void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
 	items.push_back( item ); // copy brings the anim with it (move makes this clearer in Choreograph)
 }
 
+void IntroSequence::showFlash()
+{
+	auto start = endTime;
+	endTime += 0.2f;
+
+	timeline->apply( &backgroundColor, Color::gray( 1.0f ), 0.1f ).easeFn( EaseInBack() ).startTime( start );
+	timeline->apply( &backgroundAlpha, 0.0f, 1.5f ).easeFn( EaseInOutSine() ).startTime( start + 0.05f );
+}
+
 void IntroSequence::handleFinish()
 {
 	if( finishFn ) {
@@ -69,9 +79,12 @@ void IntroSequence::draw()
 {
 	gl::ScopedAlphaBlend blend( true );
 
+	gl::ScopedColor color( ColorA( backgroundColor() ) * backgroundAlpha );
+	gl::drawSolidRect( app::getWindowBounds() );
+
 	for( auto &item : items ) {
 		if( item.alpha > 0.0f ) {
-			gl::color( ColorA( 1.0f, 1.0f, 1.0f, 1.0f ) * item.alpha() );
+			gl::color( overlayColor * item.alpha() );
 			gl::draw( item.texture, item.placement );
 		}
 	}

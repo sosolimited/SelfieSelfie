@@ -43,9 +43,13 @@ private:
 	std::vector<SequenceItem>	items;
 	ci::Timer									timer;
 
-	void showItem( const ci::fs::path &iPath, float duration );
-	void handleFinish();
 	double										endTime = 0.0;
+	void showItem( const ci::fs::path &iPath, float duration );
+	void showFlash();
+	void handleFinish();
+	ci::ColorA								overlayColor = ci::ColorA::hex( 0xffF8ED31 );
+	ci::Anim<ci::Color>				backgroundColor = ci::Color::gray( 0.12f );
+	ci::Anim<float>						backgroundAlpha = 1.0f;
 };
 
 } // namespace soso
