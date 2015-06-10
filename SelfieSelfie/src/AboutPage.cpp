@@ -32,7 +32,7 @@ void AboutPage::setup( const fs::path &iDirectory )
 	icon->setTint( Color::gray( 1.0f ) );
 
 	openButton = TouchArea::create( icon->getPlacement().scaled( 1.05f ), [this] { showAbout(); } );
-	closeButton = TouchArea::create( description->getPlacement().scaled( vec2( 1.0f, 0.5f ) ) + (description->getSize() * vec2(0.0f, 0.5f)), [this] { hideAbout(); } );
+	closeButton = TouchArea::create( description->getPlacement().scaled( vec2( 1.0f, 0.5f ) ) + (description->getSize() * vec2(0.0f, 0.5f)), [this] { showIcon(); } );
 	linkButton = TouchArea::create( description->getPlacement().scaled( vec2( 1.0f, 0.25f ) ), [this] { openLink(); } );
 
 	closeButton->setEnabled( false );
@@ -45,12 +45,27 @@ void AboutPage::update()
 	timer.start();
 }
 
+void AboutPage::show()
+{
+	visible = true;
+	showIcon();
+}
+
+void AboutPage::hide()
+{
+	visible = false;
+	showIcon();
+}
+
 void AboutPage::draw()
 {
-	gl::ScopedAlphaBlend blend( true );
+	if( visible )
+	{
+		gl::ScopedAlphaBlend blend( true );
 
-	icon->draw();
-	description->draw();
+		icon->draw();
+		description->draw();
+	}
 }
 
 void AboutPage::showAbout()
@@ -63,7 +78,7 @@ void AboutPage::showAbout()
 	description->setAlpha( 1.0f );
 }
 
-void AboutPage::hideAbout()
+void AboutPage::showIcon()
 {
 	openButton->setEnabled( true );
 	linkButton->setEnabled( false );

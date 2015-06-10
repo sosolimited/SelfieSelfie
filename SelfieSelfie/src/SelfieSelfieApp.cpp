@@ -117,8 +117,8 @@ void SelfieSelfieApp::setup()
 
 	MotionManager::enable();
 	determineSizeIndicator();
-	playIntroAndGetOrientation();
 	aboutPage.setup( fs::path("about") / sizeIndicator );
+	playIntroAndGetOrientation();
 
 	#if defined(CINDER_COCOA_TOUCH)
 		getSignalWillEnterForeground().connect( [this] { playIntroAndGetOrientation(); } );
@@ -159,6 +159,7 @@ void SelfieSelfieApp::playIntroAndGetOrientation()
 
 	introduction.setup( fs::path("intro") / sizeIndicator );
 	introduction.setFinishFn( [this] { showLandscape(); } );
+	aboutPage.hide();
 }
 
 void SelfieSelfieApp::touchesBegan( TouchEvent event )
@@ -200,6 +201,7 @@ void SelfieSelfieApp::showLandscape()
 	float zoom = 4.2f;
 	timeline().apply( &cameraEyePoint, vec3( 0 ), zoom ).easeFn( EaseOutQuart() );
 	timeline().apply( &cameraWeight, 1.0f, 1.33f ).easeFn( EaseInOutCubic() ).delay( zoom );
+	timeline().add( [this] { aboutPage.show(); }, timeline().getEndTime() );
 }
 
 void SelfieSelfieApp::update()

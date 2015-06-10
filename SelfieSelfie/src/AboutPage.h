@@ -17,6 +17,10 @@ public:
 	void setup( const ci::fs::path &iDirectory );
 	void update();
 	void draw();
+
+	void show();
+	void hide();
+
 private:
 	ci::TimelineRef	timeline = ci::Timeline::create();
 	std::unique_ptr<Image>			description;
@@ -27,8 +31,10 @@ private:
 	ci::Timer										timer;
 
 	void showAbout();
-	void hideAbout();
+	void showIcon();
 	void openLink();
+
+	bool visible = false;
 };
 
 } // namespace soso
