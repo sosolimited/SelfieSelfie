@@ -25,7 +25,7 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 	backgroundColor = Color::gray( 0.12f );
 	backgroundAlpha = 1.0f;
 
-	if( fs::is_directory( iImageBasePath ) ) {
+	if( ! iImageBasePath.empty() ) {
 		CI_LOG_I( "Loading intro images from: " << iImageBasePath );
 		showItem( iImageBasePath / "soso-logo.png", 2.0f );
 		showItem( iImageBasePath / "selfie-logo.png", 2.0f );
@@ -34,6 +34,9 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 		showItem( iImageBasePath / "countdown-3.png", cd );
 		showItem( iImageBasePath / "countdown-2.png", cd );
 		showItem( iImageBasePath / "countdown-1.png", cd );
+	}
+	else {
+		CI_LOG_W( "Provided image directory is empty." );
 	}
 
 	showFlash();
@@ -47,7 +50,7 @@ void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
 	auto start = endTime;
 	endTime += duration + 0.2f;
 
-	auto surf = Surface(loadImage( iPath ));
+	auto surf = Surface( loadImage( app::loadAsset( iPath ) ) );
 	if( ! surf.isPremultiplied() ) {
 		ip::premultiply( &surf );
 	}
