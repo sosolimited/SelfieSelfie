@@ -8,9 +8,19 @@
 #include "Image.h"
 #include "cinder/app/App.h"
 #include "cinder/Log.h"
+#include "cinder/ip/Premultiply.h"
 
 using namespace soso;
 using namespace cinder;
+
+Image::Image( Surface &&surface )
+: size( app::toPoints( surface.getSize() ) )
+{
+	if( ! surface.isPremultiplied() ) {
+		ip::premultiply( &surface );
+	}
+	texture = gl::Texture::create( surface );
+}
 
 Image::Image( const gl::TextureRef &iTexture )
 : texture( iTexture ),

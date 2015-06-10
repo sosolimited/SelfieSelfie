@@ -17,6 +17,7 @@ namespace soso {
 class Image
 {
 public:
+	explicit Image( ci::Surface &&iSurface );
 	explicit Image( const ci::gl::TextureRef &iTexture );
 
 	void draw();
