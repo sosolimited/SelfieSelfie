@@ -39,6 +39,7 @@ class SelfieSelfieApp : public App {
 public:
 	void setup() override;
 	void playIntroAndGetOrientation();
+	void determineSizeIndicator();
 	void update() override;
 	void draw() override;
 
@@ -67,6 +68,7 @@ private:
 
 	ci::Anim<float>			cameraWeight = 0.0f;
 	ci::Anim<ci::vec3>	cameraEyePoint = ci::vec3( 3.8f, 0.0f, 0.0f );
+	std::string					sizeIndicator = "xhdpi";
 	/// Default orientation used during intro.
 	quat								startOrientation;
 	/// Orientation correction so position held during intro
@@ -117,11 +119,29 @@ void SelfieSelfieApp::setup()
     CI_LOG_E( "Error using device camera: " << exc.what() );
   }
 
+	determineSizeIndicator();
 	playIntroAndGetOrientation();
 
 	#if defined(CINDER_COCOA_TOUCH)
 		getSignalWillEnterForeground().connect( [this] { playIntroAndGetOrientation(); } );
 	#endif
+}
+
+void SelfieSelfieApp::determineSizeIndicator()
+{
+	auto large_side = toPixels( max( getWindowWidth(), getWindowHeight() ) );
+
+	if( large_side <= 1280 ) {
+		sizeIndicator = "xhdpi";
+	}
+	else if( large_side <= 1920 ) {
+		sizeIndicator = "xxhdpi";
+	}
+	else {
+		sizeIndicator = "xxxhdpi";
+	}
+
+	CI_LOG_I( "Device size: " << large_side << " using images for: " << sizeIndicator );
 }
 
 void SelfieSelfieApp::playIntroAndGetOrientation()
@@ -139,7 +159,7 @@ void SelfieSelfieApp::playIntroAndGetOrientation()
 	orientationUpdateConnection.disconnect();
 	orientationUpdateConnection = getSignalUpdate().connect( [this] { updateOrientationOffset(); } );
 
-	introduction.setup( "intro/5" );
+	introduction.setup( fs::path("intro") / sizeIndicator );
 	introduction.setFinishFn( [this] { showLandscape(); } );
 }
 
@@ -306,7 +326,7 @@ void SelfieSelfieApp::draw()
   ///*
 	#if defined(CINDER_ANDROID)
 		// For confirming version changes, draw a different colored dot.
-		gl::ScopedColor color( Color( 1.0f, 0.0f, 1.0f ) );
+		gl::ScopedColor color( Color( 1.0f, 0.0f, 0.0f ) );
 		gl::drawSolidCircle( vec2( 20.0f ), 10.0f );
 	#endif
   //*/
