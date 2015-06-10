@@ -305,7 +305,7 @@ void SelfieSelfieApp::draw()
 
   ///*
   // For confirming version changes, draw a different colored dot.
-  gl::ScopedColor color( Color( 0.0f, 1.0f, 1.0f ) );
+  gl::ScopedColor color( Color( 1.0f, 0.0f, 1.0f ) );
   gl::drawSolidCircle( vec2( 20.0f ), 10.0f );
   //*/
 
