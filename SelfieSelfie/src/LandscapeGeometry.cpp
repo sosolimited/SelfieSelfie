@@ -11,6 +11,12 @@
 #include "cinder/Xml.h"
 #include "cinder/Log.h"
 
+#if defined(CINDER_ANDROID)
+	const int kTimeDivisor = 2;
+#else
+	const int kTimeDivisor = 1;
+#endif
+
 using namespace std;
 using namespace cinder;
 using namespace soso;
@@ -52,7 +58,7 @@ Bar::Bar(const ci::XmlTree &xml)
 	end(fromString<vec2>(xml.getChild("end").getValue())),
   normal_begin(fromString<vec2>(xml.getChild("normal_begin").getValue())),
   normal_end(fromString<vec2>(xml.getChild("normal_end").getValue())),
-	time(fromString<int>(xml.getChild("time").getValue())),
+	time(fromString<int>(xml.getChild("time").getValue())  / kTimeDivisor),
 	texture_begin(fromString<float>(xml.getChild("texture_begin").getValue())),
 	texture_end(fromString<float>(xml.getChild("texture_end").getValue())),
 	repeats(fromString<int>(xml.getChild("repeats").getValue()))
