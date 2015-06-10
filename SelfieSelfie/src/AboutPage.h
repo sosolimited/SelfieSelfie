@@ -16,8 +16,9 @@ public:
 	void setup( const ci::fs::path &iDirectory );
 	void draw();
 private:
-	std::vector<Image>	images;
-	ci::TimelineRef			timeline = ci::Timeline::create();
+	ci::TimelineRef	timeline = ci::Timeline::create();
+	std::unique_ptr<Image>	description;
+	std::unique_ptr<Image>	icon;
 };
 
 } // namespace soso
