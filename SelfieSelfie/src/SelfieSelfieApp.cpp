@@ -12,6 +12,7 @@
 #include "GridTexture.h"
 #include "Landscape.h"
 #include "IntroSequence.h"
+#include "AboutPage.h"
 
 #include "cinder/MotionManager.h"
 #include "cinder/Timeline.h"
@@ -42,6 +43,7 @@ public:
 	void determineSizeIndicator();
 	void update() override;
 	void draw() override;
+	void drawEndCaps() const;
 
   void touchesBegan( TouchEvent event ) override;
   void touchesMoved( TouchEvent event ) override;
@@ -59,12 +61,11 @@ private:
   Landscape					landscape;
 	gl::BatchRef			cameraImage;
 	IntroSequence			introduction;
+	AboutPage					aboutPage;
 
   vector<TouchInfo> touches;
   ci::vec3					cameraOffset;
 	float							cameraVelocity = 0.0f;
-
-  bool							drawDebug = false;
 
 	ci::Anim<float>			cameraWeight = 0.0f;
 	ci::Anim<ci::vec3>	cameraEyePoint = ci::vec3( 3.8f, 0.0f, 0.0f );
@@ -81,11 +82,6 @@ private:
 void SelfieSelfieApp::setup()
 {
   CI_LOG_I("Setting up selfie_x_selfie");
-  MotionManager::enable();
-
-  GLint size;
-  glGetIntegerv( GL_MAX_TEXTURE_SIZE, &size );
-  CI_LOG_I( "Max texture size: " << size );
 
   try {
     CI_LOG_I( "Initializing hardware camera." );
@@ -119,8 +115,10 @@ void SelfieSelfieApp::setup()
     CI_LOG_E( "Error using device camera: " << exc.what() );
   }
 
+	MotionManager::enable();
 	determineSizeIndicator();
 	playIntroAndGetOrientation();
+	aboutPage.setup();
 
 	#if defined(CINDER_COCOA_TOUCH)
 		getSignalWillEnterForeground().connect( [this] { playIntroAndGetOrientation(); } );
@@ -167,10 +165,6 @@ void SelfieSelfieApp::touchesBegan( TouchEvent event )
 {
   for( auto &t : event.getTouches() ) {
     touches.emplace_back( t.getId(), t.getPos(), t.getPos() );
-  }
-
-  if( touches.size() == 4 ) {
-    drawDebug = ! drawDebug;
   }
 }
 
@@ -269,67 +263,57 @@ void SelfieSelfieApp::updateOrientationOffset()
 	orientationOffset = normalize( slerp( orientationOffset, target, 0.55f ) );
 }
 
+void SelfieSelfieApp::drawEndCaps() const
+{
+	gl::ScopedGlslProg prog( gl::getStockShader( gl::ShaderDef().texture(gridTexture->getTexture()->getTarget()) ) );
+	gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
+
+	auto mat = translate( vec3( 0, -4.0f, 0 ) );
+	auto dims = vec2(gridTexture->getCellDimensions()) / gridTexture->getGridSize();
+	auto offset = vec2(gridTexture->getIndexOffset( gridTexture->getCellDimensions(), gridTexture->getCurrentIndex() )) / gridTexture->getGridSize();
+	auto rect = Rectf( -1.0f, -1.0f, 1.0f, 1.0f ).scaled( vec2( 1.333f, 1.0f ) ).scaled( 0.2f );
+	auto half_pi = (float) M_PI / 2.0f;
+	auto xf1 = translate( vec3( - 20.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
+	auto xf2 = translate( vec3( 4.0f, 0.0f, 0.0f ) ) * rotate( half_pi, vec3( 1, 0, 0 ) ) * rotate( - half_pi, vec3( 0, 1, 0 ) );
+
+	{
+		gl::ScopedModelMatrix m;
+		gl::multModelMatrix( xf1 );
+		gl::drawSolidRect( rect, offset, offset + dims );
+	}
+
+	{
+		gl::ScopedModelMatrix m;
+		gl::multModelMatrix( xf2 );
+		gl::drawSolidRect( rect, offset, offset + dims );
+	}
+}
+
 void SelfieSelfieApp::draw()
 {
 	gl::clear( Color( 0, 0, 0 ) );
 
-  {
-    gl::enableDepthRead();
-    gl::enableDepthWrite();
-		gl::ScopedGlslProg prog( gl::getStockShader( gl::ShaderDef().texture(gridTexture->getTexture()->getTarget()) ) );
+	gl::enableDepthRead();
+	gl::enableDepthWrite();
+	gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
+	gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
+	gl::ScopedMatrices matrices;
+	gl::setMatrices( camera );
 
-    gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
-    gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
-    gl::ScopedMatrices matrices;
-    gl::setMatrices( camera );
-
-		landscape.draw( gridTexture->getCurrentIndex() );
-
-		auto mat = translate( vec3( 0, -4.0f, 0 ) );
-		auto dims = vec2(gridTexture->getCellDimensions()) / gridTexture->getGridSize();
-		auto offset = vec2(gridTexture->getIndexOffset( gridTexture->getCellDimensions(), gridTexture->getCurrentIndex() )) / gridTexture->getGridSize();
-		auto rect = Rectf( -1.0f, -1.0f, 1.0f, 1.0f ).scaled( vec2( 1.333f, 1.0f ) ).scaled( 0.2f );
-		auto half_pi = (float) M_PI / 2.0f;
-		auto xf1 = translate( vec3( - 20.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
-		auto xf2 = translate( vec3( 4.0f, 0.0f, 0.0f ) ) * rotate( half_pi, vec3( 1, 0, 0 ) ) * rotate( - half_pi, vec3( 0, 1, 0 ) );
-
-		{
-			gl::ScopedModelMatrix m;
-			gl::multModelMatrix( xf1 );
-			gl::drawSolidRect( rect, offset, offset + dims );
-		}
-
-		{
-			gl::ScopedModelMatrix m;
-			gl::multModelMatrix( xf2 );
-			gl::drawSolidRect( rect, offset, offset + dims );
-		}
-
-  }
+	landscape.draw( gridTexture->getCurrentIndex() );
+	drawEndCaps();
 
   gl::disableDepthRead();
-
-	gl::ScopedMatrices matrices;
 	gl::setMatricesWindow( getWindowSize() );
+
 	introduction.draw();
+	aboutPage.draw();
 
-  if( drawDebug && gridTexture )
-  {
-    auto rect = Rectf(gridTexture->getTexture()->getBounds());
-    auto window_rect = Rectf(getWindowBounds());
-    auto window_rect_a = window_rect.scaled( vec2( 0.5f ) );
-    auto window_rect_b = window_rect_a + vec2( window_rect_a.getWidth(), 0 );
-    gl::draw( gridTexture->getTexture(), rect.getCenteredFit( window_rect_a, false ) );
-    gl::draw( gridTexture->getBlurredTexture(), rect.getCenteredFit( window_rect_b, false ) );
-  }
-
-  ///*
 	#if defined(CINDER_ANDROID)
 		// For confirming version changes, draw a different colored dot.
 		gl::ScopedColor color( Color( 1.0f, 0.0f, 0.0f ) );
 		gl::drawSolidCircle( vec2( 20.0f ), 10.0f );
 	#endif
-  //*/
 
   auto err = gl::getError();
   if( err ) {
