@@ -71,6 +71,8 @@ private:
 	quat								startOrientation;
 	/// Orientation correction so position held during intro
 	quat								orientationOffset;
+	/// Interpolated motion orientation to avoid jitter on devices with noisy sensors.
+	quat								cameraOrientation;
 	signals::Connection	orientationUpdateConnection;
 };
 
@@ -134,6 +136,7 @@ void SelfieSelfieApp::playIntroAndGetOrientation()
 	startOrientation = camera.getOrientation();
 	cameraEyePoint = vec3( 3.8f, 0.0f, 0.0f );
 
+	orientationUpdateConnection.disconnect();
 	orientationUpdateConnection = getSignalUpdate().connect( [this] { updateOrientationOffset(); } );
 
 	introduction.setup( getAssetPath( "intro/5" ) );
@@ -236,7 +239,8 @@ void SelfieSelfieApp::updateCamera()
 	camera.setEyePoint( cameraEyePoint() + cameraOffset );
 
 	auto r = glm::slerp( startOrientation, (orientationOffset * MotionManager::getRotation()), cameraWeight.value() );
-	camera.setOrientation( r );
+	cameraOrientation = glm::slerp( cameraOrientation, r, 0.5f );
+	camera.setOrientation( cameraOrientation );
 }
 
 void SelfieSelfieApp::updateOrientationOffset()
@@ -299,7 +303,7 @@ void SelfieSelfieApp::draw()
     gl::draw( gridTexture->getBlurredTexture(), rect.getCenteredFit( window_rect_b, false ) );
   }
 
-  /*
+  ///*
   // For confirming version changes, draw a different colored dot.
   gl::ScopedColor color( Color( 0.0f, 0.0f, 1.0f ) );
   gl::drawSolidCircle( vec2( 20.0f ), 10.0f );
