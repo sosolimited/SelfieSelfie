@@ -117,7 +117,9 @@ void SelfieSelfieApp::setup()
 
 	playIntroAndGetOrientation();
 
-	getSignalWillEnterForeground().connect( [this] { playIntroAndGetOrientation(); } );
+	#if defined(CINDER_COCOA_TOUCH)
+		getSignalWillEnterForeground().connect( [this] { playIntroAndGetOrientation(); } );
+	#endif
 }
 
 void SelfieSelfieApp::playIntroAndGetOrientation()
