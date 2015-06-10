@@ -7,6 +7,10 @@
 
 #pragma once
 
+#include "cinder/Signals.h"
+#include "cinder/app/TouchEvent.h"
+#include "cinder/Rect.h"
+
 namespace soso {
 
 ///

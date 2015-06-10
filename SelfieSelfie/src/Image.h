@@ -7,6 +7,7 @@
 
 #pragma once
 #include "cinder/Timeline.h"
+#include "cinder/gl/Texture.h"
 
 namespace soso {
 

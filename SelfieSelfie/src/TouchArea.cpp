@@ -6,6 +6,8 @@
 //
 
 #include "TouchArea.h"
+#include "cinder/app/Window.h"
+#include "cinder/app/App.h"
 
 using namespace soso;
 

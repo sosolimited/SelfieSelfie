@@ -6,8 +6,8 @@
 //
 
 #include "AboutPage.h"
-#include "cinder/System.h"
 #include "cinder/Utilities.h"
+#include "cinder/app/App.h"
 
 using namespace soso;
 using namespace cinder;

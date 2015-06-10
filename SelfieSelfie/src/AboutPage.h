@@ -8,6 +8,7 @@
 #pragma once
 #include "Image.h"
 #include "TouchArea.h"
+#include "cinder/Timer.h"
 
 namespace soso {
 
