@@ -28,14 +28,14 @@ void AboutPage::setup( const fs::path &iDirectory )
 	description->setAlpha( 0.0f );
 	description->setFullBleedBackground( true );
 
-	auto bl = (vec2( 0.0f, 1.0f ) * window_size) - (vec2( 0.0f, 1.0f ) * icon->getSize());
-	icon->setPosition( bl );
+	auto tr = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 1.0f, 0.0f ) * icon->getSize());
+	icon->setPosition( tr );
 	icon->setTint( Color::white() );
 
-	iconBacking->setPosition( bl );
+	iconBacking->setPosition( tr );
 	iconBacking->setTint( yellow );
 
-	openButton = TouchArea::create( icon->getPlacement().scaledCentered( 5.5f ), [this] { showAbout(); } );
+	openButton = TouchArea::create( icon->getPlacement().scaledCentered( 1.5f ), [this] { showAbout(); } );
 	closeButton = TouchArea::create( description->getPlacement(), [this] { showIcon(); } );
 
 	closeButton->setEnabled( false );
