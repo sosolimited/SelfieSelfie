@@ -77,6 +77,15 @@ ivec2 GridTexture::getIndexOffset( const ci::ivec2 &iCellDimensions, int iIndex 
 	return ivec2( column, row ) * iCellDimensions;
 }
 
+inline void drawFullTextureRect()
+{
+#if defined(CINDER_COCOA_TOUCH)
+	gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) );
+#else
+	gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 1, 0 ), vec2( 0, 1 ) );
+#endif
+}
+
 void GridTexture::renderClearTexture()
 {
   gl::ScopedFramebuffer buffer( focusedBuffer );
@@ -85,7 +94,7 @@ void GridTexture::renderClearTexture()
 
   passthroughProg->uniform( "uSampler", 0 );
 
-  gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) );
+	drawFullTextureRect();
 }
 
 void GridTexture::renderBlurredTexture()
@@ -97,7 +106,7 @@ void GridTexture::renderBlurredTexture()
     gl::ScopedViewport    view( vec2(0), blurredCellDimensions );
 
     blurProg->uniform( "uTexelSize", vec2(1, 0) / vec2(blurredCellDimensions) );
-    gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) );
+    drawFullTextureRect();
   }
 
   // Second blur pass.
@@ -107,5 +116,5 @@ void GridTexture::renderBlurredTexture()
 
   blurProg->uniform( "uTexelSize", vec2(0, 1) / vec2(blurredCellDimensions) );
 
-	gl::drawSolidRect( Rectf( -1, -1, 1, 1 ), vec2( 0, 0 ), vec2( 1, 1 ) );
+	drawFullTextureRect();
 }
