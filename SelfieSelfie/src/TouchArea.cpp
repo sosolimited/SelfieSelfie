@@ -18,12 +18,13 @@ void TouchArea::connect()
 {
 	auto window = ci::app::getWindow();
 	touchBeginConnection = window->getSignalTouchesBegan().connect( std::bind( &TouchArea::touchBegin, this, std::placeholders::_1 ) );
-	touchEndConnection = window->getSignalTouchesBegan().connect( std::bind( &TouchArea::touchEnd, this, std::placeholders::_1 ) );
+	touchEndConnection = window->getSignalTouchesEnded().connect( std::bind( &TouchArea::touchEnd, this, std::placeholders::_1 ) );
 }
 
 void TouchArea::disconnect()
 {
-
+	touchBeginConnection.disconnect();
+	touchEndConnection.disconnect();
 }
 
 void TouchArea::touchBegin( const ci::app::TouchEvent &iEvent )
@@ -31,7 +32,7 @@ void TouchArea::touchBegin( const ci::app::TouchEvent &iEvent )
 	if( ! wasInside ) {
 		for( auto &touch : iEvent.getTouches() ) {
 			if( bounds.contains( touch.getPos() ) ) {
-				wasInside = true;
+				wasInside = true && isEnabled();
 				trackedTouch = touch.getId();
 				break;
 			}
@@ -53,8 +54,9 @@ void TouchArea::touchEnd( const ci::app::TouchEvent &iEvent )
 		}
 	}
 
+	should_call = should_call && isEnabled() && callback;
 	// call last, in case callback destroys this object.
-	if( should_call && callback ) {
+	if( should_call ) {
 		callback();
 	}
 }
