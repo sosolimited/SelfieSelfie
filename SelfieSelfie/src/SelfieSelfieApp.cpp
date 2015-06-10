@@ -311,12 +311,6 @@ void SelfieSelfieApp::draw()
 	introduction.draw();
 	aboutPage.draw();
 
-	#if defined(CINDER_ANDROID)
-		// For confirming version changes, draw a different colored dot.
-		gl::ScopedColor color( Color( 1.0f, 0.0f, 0.0f ) );
-		gl::drawSolidCircle( vec2( 20.0f ), 10.0f );
-	#endif
-
   auto err = gl::getError();
   if( err ) {
     CI_LOG_E( "Draw gl error: " << gl::getErrorString(err) );

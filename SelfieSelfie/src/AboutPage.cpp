@@ -16,6 +16,7 @@ void AboutPage::setup( const fs::path &iDirectory )
 {
 	description = std::unique_ptr<Image>( new Image( gl::Texture::create( loadImage( app::loadAsset( iDirectory / "about-content.png" ) ) ) ) );
 	icon = std::unique_ptr<Image>( new Image( gl::Texture::create( loadImage( app::loadAsset( iDirectory / "about-tab.png" ) ) ) ) );
+	iconBacking = std::unique_ptr<Image>( new Image( gl::Texture::create( loadImage( app::loadAsset( iDirectory / "about-tab.png" ) ) ) ) );
 
 	auto yellow = ColorA::hex( 0xffF8ED31 );
 
@@ -27,16 +28,17 @@ void AboutPage::setup( const fs::path &iDirectory )
 	description->setAlpha( 0.0f );
 	description->setFullBleedBackground( true );
 
-	auto bl = (vec2( 0.0f, 1.0f ) * window_size) - (vec2( 0.0f, 1.5f ) * icon->getSize());
+	auto bl = (vec2( 0.0f, 1.0f ) * window_size) - (vec2( 0.0f, 1.0f ) * icon->getSize());
 	icon->setPosition( bl );
-	icon->setTint( yellow );
+	icon->setTint( Color::white() );
 
-	openButton = TouchArea::create( icon->getPlacement().scaled( 1.05f ), [this] { showAbout(); } );
-	closeButton = TouchArea::create( description->getPlacement().scaled( vec2( 1.0f, 0.5f ) ) + (description->getSize() * vec2(0.0f, 0.5f)), [this] { showIcon(); } );
-	linkButton = TouchArea::create( description->getPlacement().scaled( vec2( 1.0f, 0.25f ) ), [this] { openLink(); } );
+	iconBacking->setPosition( bl );
+	iconBacking->setTint( yellow );
+
+	openButton = TouchArea::create( icon->getPlacement().scaledCentered( 5.5f ), [this] { showAbout(); } );
+	closeButton = TouchArea::create( description->getPlacement(), [this] { showIcon(); } );
 
 	closeButton->setEnabled( false );
-	linkButton->setEnabled( false );
 }
 
 void AboutPage::update()
@@ -54,7 +56,7 @@ void AboutPage::show()
 void AboutPage::hide()
 {
 	visible = false;
-	showIcon();
+	description->setAlpha( 0.0f );
 }
 
 void AboutPage::draw()
@@ -63,6 +65,7 @@ void AboutPage::draw()
 	{
 		gl::ScopedAlphaBlend blend( true );
 
+		iconBacking->draw();
 		icon->draw();
 		description->draw();
 	}
@@ -71,9 +74,9 @@ void AboutPage::draw()
 void AboutPage::showAbout()
 {
 	openButton->setEnabled( false );
-	linkButton->setEnabled( true );
 	closeButton->setEnabled( true );
 
+	iconBacking->setAlpha( 0.0f );
 	icon->setAlpha( 0.0f );
 	description->setAlpha( 1.0f );
 }
@@ -81,14 +84,9 @@ void AboutPage::showAbout()
 void AboutPage::showIcon()
 {
 	openButton->setEnabled( true );
-	linkButton->setEnabled( false );
 	closeButton->setEnabled( false );
 
+	iconBacking->setAlpha( 1.0f );
 	icon->setAlpha( 1.0f );
 	description->setAlpha( 0.0f );
-}
-
-void AboutPage::openLink()
-{
-	ci::launchWebBrowser( ci::Url( "http://sosolimited.com/?referrer=selfieselfie" ) );
 }

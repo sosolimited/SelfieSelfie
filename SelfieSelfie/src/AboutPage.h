@@ -26,14 +26,13 @@ private:
 	ci::TimelineRef	timeline = ci::Timeline::create();
 	std::unique_ptr<Image>			description;
 	std::unique_ptr<Image>			icon;
+	std::unique_ptr<Image>			iconBacking;
 	std::shared_ptr<TouchArea>	openButton;
 	std::shared_ptr<TouchArea>	closeButton;
-	std::shared_ptr<TouchArea>	linkButton;
 	ci::Timer										timer;
 
 	void showAbout();
 	void showIcon();
-	void openLink();
 
 	bool visible = false;
 };
