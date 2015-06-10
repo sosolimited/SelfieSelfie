@@ -118,7 +118,7 @@ void SelfieSelfieApp::setup()
 	MotionManager::enable();
 	determineSizeIndicator();
 	playIntroAndGetOrientation();
-	aboutPage.setup();
+	aboutPage.setup( fs::path("about") / sizeIndicator );
 
 	#if defined(CINDER_COCOA_TOUCH)
 		getSignalWillEnterForeground().connect( [this] { playIntroAndGetOrientation(); } );

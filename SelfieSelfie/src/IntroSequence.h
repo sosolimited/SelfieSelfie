@@ -7,23 +7,11 @@
 
 #pragma once
 
-#include "cinder/Timeline.h"
+#include "Image.h"
 #include "cinder/Filesystem.h"
-#include "cinder/gl/Texture.h"
 #include "cinder/Timer.h"
 
 namespace soso {
-
-struct SequenceItem
-{
-	SequenceItem( const ci::gl::TextureRef &iTexture )
-	: texture( iTexture )
-	{}
-
-	ci::gl::TextureRef	texture;
-	ci::Rectf						placement;
-	ci::Anim<float>			alpha = 0.0f;
-};
 
 ///
 /// IntroSequence is a series of images that play out on the timeline.
@@ -42,7 +30,7 @@ public:
 private:
 	std::function<void ()>		finishFn;
 	ci::TimelineRef						timeline = ci::Timeline::create();
-	std::vector<SequenceItem>	items;
+	std::vector<Image>				items;
 	ci::Timer									timer;
 
 	double										endTime = 0.0;

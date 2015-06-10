@@ -54,13 +54,15 @@ void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
 	if( ! surf.isPremultiplied() ) {
 		ip::premultiply( &surf );
 	}
-	auto item = SequenceItem( gl::Texture::create( surf ) );
-	auto size = app::toPoints( item.texture->getSize() );
+	auto item = Image( gl::Texture::create( surf ) );
+	auto size = ivec2( item.getSize() );
 	auto position = vec2( app::getWindowSize() - size ) / 2.0f;
-	item.placement = Rectf( position, position + vec2( size ) );
+	item.setPosition( position );
+	item.setAlpha( 0.0f );
+	item.setTint( overlayColor );
 
-	timeline->apply( &item.alpha, 1.0f, 0.2f ).easeFn( EaseOutQuad() ).startTime( start );
-	timeline->appendTo( &item.alpha, 0.0f, 0.2f ).delay( duration );
+	timeline->apply( item.getAlphaAnim(), 1.0f, 0.2f ).easeFn( EaseOutQuad() ).startTime( start );
+	timeline->appendTo( item.getAlphaAnim(), 0.0f, 0.2f ).delay( duration );
 
 	items.push_back( item ); // copy brings the anim with it (move makes this clearer in Choreograph)
 }
@@ -100,13 +102,12 @@ void IntroSequence::draw()
 {
 	gl::ScopedAlphaBlend blend( true );
 
-	gl::ScopedColor color( ColorA( backgroundColor() ) * backgroundAlpha );
-	gl::drawSolidRect( app::getWindowBounds() );
+	if( backgroundAlpha > 0.0f ) {
+		gl::ScopedColor color( ColorA( backgroundColor() ) * backgroundAlpha );
+		gl::drawSolidRect( app::getWindowBounds() );
+	}
 
 	for( auto &item : items ) {
-		if( item.alpha > 0.0f ) {
-			gl::color( overlayColor * item.alpha() );
-			gl::draw( item.texture, item.placement );
-		}
+		item.draw();
 	}
 }

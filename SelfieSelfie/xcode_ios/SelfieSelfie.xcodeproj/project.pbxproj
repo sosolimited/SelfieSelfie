@@ -25,6 +25,7 @@
 		5A08A047CCFD4076AC741865 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 596B3B8B6EB34FEB964C6A3E /* Images.xcassets */; };
 		9C4355481B274F0700F5FECF /* IntroSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C4355461B274F0700F5FECF /* IntroSequence.cpp */; };
 		9C63E5BF1B28BA25003617E1 /* AboutPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C63E5BD1B28BA25003617E1 /* AboutPage.cpp */; };
+		9C63E5C21B28C097003617E1 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C63E5C01B28C097003617E1 /* Image.cpp */; };
 		C725DFFE121DAC7F00FA186B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C727C02B121B400300192073 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C725E001121DAC8F00FA186B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C725E000121DAC8F00FA186B /* AVFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C725E001121DAC8FFFFA18FF /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CFDF6A1138442D0091FFFF /* ImageIO.framework */; };
@@ -64,6 +65,8 @@
 		9C4355471B274F0700F5FECF /* IntroSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntroSequence.h; path = ../src/IntroSequence.h; sourceTree = "<group>"; };
 		9C63E5BD1B28BA25003617E1 /* AboutPage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AboutPage.cpp; path = ../src/AboutPage.cpp; sourceTree = "<group>"; };
 		9C63E5BE1B28BA25003617E1 /* AboutPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AboutPage.h; path = ../src/AboutPage.h; sourceTree = "<group>"; };
+		9C63E5C01B28C097003617E1 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = ../src/Image.cpp; sourceTree = "<group>"; };
+		9C63E5C11B28C097003617E1 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = ../src/Image.h; sourceTree = "<group>"; };
 		C725E000121DAC8F00FA186B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C727C02B121B400300192073 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		C727C02D121B400300192073 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -155,6 +158,8 @@
 				9C4355471B274F0700F5FECF /* IntroSequence.h */,
 				9C63E5BD1B28BA25003617E1 /* AboutPage.cpp */,
 				9C63E5BE1B28BA25003617E1 /* AboutPage.h */,
+				9C63E5C01B28C097003617E1 /* Image.cpp */,
+				9C63E5C11B28C097003617E1 /* Image.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 				15C5E7561B1F6661006DDD4C /* Landscape.cpp in Sources */,
 				D46A70E835B24A7CA21E9B83 /* SelfieSelfieApp.cpp in Sources */,
 				15C5E7501B1F4ABE006DDD4C /* GridTexture.cpp in Sources */,
+				9C63E5C21B28C097003617E1 /* Image.cpp in Sources */,
 				9C63E5BF1B28BA25003617E1 /* AboutPage.cpp in Sources */,
 				9C4355481B274F0700F5FECF /* IntroSequence.cpp in Sources */,
 			);
