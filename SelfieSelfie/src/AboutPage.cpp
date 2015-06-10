@@ -15,7 +15,7 @@ using namespace cinder;
 void AboutPage::setup( const fs::path &iDirectory )
 {
 	description = std::unique_ptr<Image>( new Image( Surface( loadImage( app::loadAsset( iDirectory / "about-content.png" ) ) ) ) );
-	icon = std::unique_ptr<Image>( new Image( Surface( loadImage( app::loadAsset( iDirectory / "about-tab.png" ) ) ) ) );
+	icon = std::unique_ptr<Image>( new Image( Surface( loadImage( app::loadAsset( iDirectory / "about-icon.png" ) ) ) ) );
 	iconBacking = std::unique_ptr<Image>( new Image( Surface( loadImage( app::loadAsset( iDirectory / "about-tab.png" ) ) ) ) );
 
 	auto yellow = ColorA::hex( 0xffF8ED31 );
