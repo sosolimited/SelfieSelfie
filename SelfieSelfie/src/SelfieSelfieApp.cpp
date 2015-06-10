@@ -117,7 +117,7 @@ void SelfieSelfieApp::setup()
 
 	MotionManager::enable();
 	determineSizeIndicator();
-	aboutPage.setup( fs::path("about") / sizeIndicator );
+	aboutPage.setup( fs::path("img") / sizeIndicator );
 	playIntroAndGetOrientation();
 
 	#if defined(CINDER_COCOA_TOUCH)
@@ -157,7 +157,7 @@ void SelfieSelfieApp::playIntroAndGetOrientation()
 	orientationUpdateConnection.disconnect();
 	orientationUpdateConnection = getSignalUpdate().connect( [this] { updateOrientationOffset(); } );
 
-	introduction.setup( fs::path("intro") / sizeIndicator );
+	introduction.setup( fs::path("img") / sizeIndicator );
 	introduction.setFinishFn( [this] { showLandscape(); } );
 	aboutPage.hide();
 }

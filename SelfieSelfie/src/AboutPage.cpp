@@ -14,22 +14,21 @@ using namespace cinder;
 
 void AboutPage::setup( const fs::path &iDirectory )
 {
-	description = std::unique_ptr<Image>( new Image( gl::Texture::create( loadImage( app::loadAsset( iDirectory / "about-tray.png" ) ) ) ) );
-	icon = std::unique_ptr<Image>( new Image( gl::Texture::create( loadImage( app::loadAsset( iDirectory / "about-icon.png" ) ) ) ) );
+	description = std::unique_ptr<Image>( new Image( gl::Texture::create( loadImage( app::loadAsset( iDirectory / "about-content.png" ) ) ) ) );
+	icon = std::unique_ptr<Image>( new Image( gl::Texture::create( loadImage( app::loadAsset( iDirectory / "about-tab.png" ) ) ) ) );
 
 	auto yellow = ColorA::hex( 0xffF8ED31 );
 
 	auto window_size = vec2(app::getWindowSize());
 	auto centered = (vec2( 0.5f ) * window_size) - (vec2( 0.5f ) * description->getSize());
 	description->setPosition( centered );
-	description->setBackingColor( Color::gray( 0.12f ) );
+	description->setBackingColor( ColorA::gray( 0.12f ) * 0.9f );
 	description->setTint( yellow );
 	description->setAlpha( 0.0f );
 
 	auto bl = (vec2( 0.0f, 1.0f ) * window_size) - (vec2( 0.0f, 1.5f ) * icon->getSize());
 	icon->setPosition( bl );
-	icon->setBackingColor( yellow );
-	icon->setTint( Color::gray( 1.0f ) );
+	icon->setTint( yellow );
 
 	openButton = TouchArea::create( icon->getPlacement().scaled( 1.05f ), [this] { showAbout(); } );
 	closeButton = TouchArea::create( description->getPlacement().scaled( vec2( 1.0f, 0.5f ) ) + (description->getSize() * vec2(0.0f, 0.5f)), [this] { showIcon(); } );
