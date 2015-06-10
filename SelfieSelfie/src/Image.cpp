@@ -23,7 +23,7 @@ void Image::draw()
 {
 	gl::ScopedAlphaBlend blend( true );
 
-	auto placement = Rectf( position(), position() + size );
+	const auto placement = getPlacement();
 
 	if( alpha > 0.0f ) {
 

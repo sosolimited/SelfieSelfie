@@ -24,6 +24,7 @@ public:
 	void setAlpha( float iAlpha ) { alpha = iAlpha; }
 
 	const ci::vec2&			getSize() const { return size; }
+	ci::Rectf						getPlacement() const { return ci::Rectf( position(), position() + size ); }
 
 	ci::Anim<float>*		getAlphaAnim() { return &alpha; }
 	ci::Anim<ci::vec2>* getPositionAnim() { return &position; }
