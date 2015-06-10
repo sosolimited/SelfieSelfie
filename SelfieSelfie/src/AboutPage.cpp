@@ -21,12 +21,11 @@ void AboutPage::setup( const fs::path &iDirectory )
 	auto yellow = ColorA::hex( 0xffF8ED31 );
 
 	auto window_size = vec2(app::getWindowSize());
-	auto centered = (vec2( 0.5f ) * window_size) - (vec2( 0.5f ) * description->getSize());
-	description->setPosition( centered );
+	auto desc_pos = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 1.0f, 0.0f ) * description->getSize());
+	description->setPosition( desc_pos );
 	description->setBackingColor( ColorA::gray( 0.12f ) * 0.9f );
 	description->setTint( yellow );
 	description->setAlpha( 0.0f );
-	description->setFullBleedBackground( true );
 
 	auto tr = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 1.0f, 0.0f ) * icon->getSize());
 	icon->setPosition( tr );
