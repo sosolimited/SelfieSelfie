@@ -270,7 +270,7 @@ void SelfieSelfieApp::draw()
 		auto offset = vec2(gridTexture->getIndexOffset( gridTexture->getCellDimensions(), gridTexture->getCurrentIndex() )) / gridTexture->getGridSize();
 		auto rect = Rectf( -1.0f, -1.0f, 1.0f, 1.0f ).scaled( vec2( 1.333f, 1.0f ) ).scaled( 0.2f );
 		auto half_pi = (float) M_PI / 2.0f;
-		auto xf1 = translate( vec3( - 12.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
+		auto xf1 = translate( vec3( - 20.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
 		auto xf2 = translate( vec3( 4.0f, 0.0f, 0.0f ) ) * rotate( half_pi, vec3( 1, 0, 0 ) ) * rotate( - half_pi, vec3( 0, 1, 0 ) );
 
 		{
@@ -304,9 +304,11 @@ void SelfieSelfieApp::draw()
   }
 
   ///*
-  // For confirming version changes, draw a different colored dot.
-  gl::ScopedColor color( Color( 1.0f, 0.0f, 1.0f ) );
-  gl::drawSolidCircle( vec2( 20.0f ), 10.0f );
+	#if defined(CINDER_ANDROID)
+		// For confirming version changes, draw a different colored dot.
+		gl::ScopedColor color( Color( 1.0f, 0.0f, 1.0f ) );
+		gl::drawSolidCircle( vec2( 20.0f ), 10.0f );
+	#endif
   //*/
 
   auto err = gl::getError();
