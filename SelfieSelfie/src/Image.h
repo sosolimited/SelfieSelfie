@@ -22,6 +22,7 @@ public:
 
 	void setPosition( const ci::vec2 &iPos ) { position = iPos; }
 	void setAlpha( float iAlpha ) { alpha = iAlpha; }
+	void setFullBleedBackground( bool iBleed ) { fullBleedBackground = iBleed; }
 
 	const ci::vec2&			getSize() const { return size; }
 	ci::Rectf						getPlacement() const { return ci::Rectf( position(), position() + size ); }
@@ -39,6 +40,7 @@ private:
 	ci::Anim<float>			alpha = 1.0f;
 	ci::Color						tint = ci::Color::white();
 	ci::ColorA					backing = ci::ColorA( 0, 0, 0, 0 );
+	bool								fullBleedBackground = false;
 };
 
 } // namespace SelfieSelfie
