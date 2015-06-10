@@ -1,16 +1,20 @@
-# FrameTime
-That Android+KeyGrip thing. On iOS.
+# SelfieSelfie
+
+An Android Experiment by Sosolimited.
 
 ## Building the project:
-Android NDK should be extracted alongside the folder where you checked out this repository:
+
+The main project files live in the `SelfieSelfie` directory. Work from there.
+
+In addition to this repo, you will need to install the Android NDK. The Android NDK should be extracted alongside this directory:
 
 ```
-parent/
+parent-directory/
 	android-ndk-r10d/
 	FrameTime/
 ```
 
-Once you have cloned everything, you will need to build Cinder for Android:
+Once you have cloned and extracted everything, you will need to build Cinder for Android:
 
 ```bash
 cd lib/Cinder-Android/android/

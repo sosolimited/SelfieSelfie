@@ -11,8 +11,10 @@
 
 #include "GridTexture.h"
 #include "Landscape.h"
+#include "IntroSequence.h"
 
 #include "cinder/MotionManager.h"
+#include "cinder/Timeline.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -36,6 +38,7 @@ struct TouchInfo {
 class SelfieSelfieApp : public App {
 public:
 	void setup() override;
+	void playIntroAndGetOrientation();
 	void update() override;
 	void draw() override;
 
@@ -44,6 +47,8 @@ public:
   void touchesEnded( TouchEvent event ) override;
 
 	void updateCamera();
+	void updateOrientationOffset();
+	void showLandscape();
 
 private:
 	CameraPersp				camera;
@@ -52,6 +57,7 @@ private:
   GridTextureRef		gridTexture;
   Landscape					landscape;
 	gl::BatchRef			cameraImage;
+	IntroSequence			introduction;
 
   vector<TouchInfo> touches;
   ci::vec3					cameraOffset;
@@ -59,21 +65,23 @@ private:
 
   bool							drawDebug = false;
 
+	ci::Anim<float>			cameraWeight = 0.0f;
+	ci::Anim<ci::vec3>	cameraEyePoint = ci::vec3( 3.8f, 0.0f, 0.0f );
+	/// Default orientation used during intro.
+	quat								startOrientation;
+	/// Orientation correction so position held during intro
+	quat								orientationOffset;
+	signals::Connection	orientationUpdateConnection;
 };
 
 void SelfieSelfieApp::setup()
 {
   CI_LOG_I("Setting up selfie_x_selfie");
-
   MotionManager::enable();
 
   GLint size;
   glGetIntegerv( GL_MAX_TEXTURE_SIZE, &size );
   CI_LOG_I( "Max texture size: " << size );
-
-  auto target = vec3( 5, 0, 0 );
-  camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
-  camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 50.0f );
 
   try {
     CI_LOG_I( "Initializing hardware camera." );
@@ -107,10 +115,29 @@ void SelfieSelfieApp::setup()
     CI_LOG_E( "Error using device camera: " << exc.what() );
   }
 
-  auto err = gl::getError();
-  if( err ) {
-    CI_LOG_E( "Post-Setup gl error: " << gl::getErrorString(err) );
-  }
+	playIntroAndGetOrientation();
+
+	#if defined(CINDER_COCOA_TOUCH)
+		getSignalWillEnterForeground().connect( [this] { playIntroAndGetOrientation(); } );
+	#endif
+}
+
+void SelfieSelfieApp::playIntroAndGetOrientation()
+{
+	CI_LOG_I( "Cueing up introduction and figuring out device orientation." );
+
+	cameraWeight = 0.0f;
+	cameraOffset = vec3( 0 );
+  auto target = vec3( 5, 0, 0 );
+  camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
+  camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 50.0f );
+	startOrientation = camera.getOrientation();
+	cameraEyePoint = vec3( 3.8f, 0.0f, 0.0f );
+
+	orientationUpdateConnection = getSignalUpdate().connect( [this] { updateOrientationOffset(); } );
+
+	introduction.setup( getAssetPath( "intro/5" ) );
+	introduction.setFinishFn( [this] { showLandscape(); } );
 }
 
 void SelfieSelfieApp::touchesBegan( TouchEvent event )
@@ -148,17 +175,23 @@ void SelfieSelfieApp::touchesEnded( TouchEvent event )
   }), touches.end() );
 }
 
+void SelfieSelfieApp::showLandscape()
+{
+	// Stop averaging the orientation.
+	orientationUpdateConnection.disconnect();
+	// Enable looking around with the gyro
+	float zoom = 4.2f;
+	timeline().apply( &cameraEyePoint, vec3( 0 ), zoom ).easeFn( EaseOutQuart() );
+	timeline().apply( &cameraWeight, 1.0f, 1.33f ).easeFn( EaseInOutCubic() ).delay( zoom );
+}
+
 void SelfieSelfieApp::update()
 {
+	introduction.update();
 	updateCamera();
 
   if( capture && capture->checkNewFrame() ) {
     gridTexture->update( *capture->getSurface() );
-
-    auto err = gl::getError();
-    if( err ) {
-      CI_LOG_E( "Texture copy gl error: " << gl::getErrorString(err) );
-    }
   }
 }
 
@@ -191,25 +224,25 @@ void SelfieSelfieApp::updateCamera()
 	}
 
 	auto ray = camera.getViewDirection();
+	cameraVelocity *= cameraWeight.value();
 	cameraOffset += ray * cameraVelocity * 0.0025f;
 	cameraVelocity *= 0.86f;
 
 	auto l = length(cameraOffset);
-	auto maximum = 2.7f;
+	auto maximum = 2.5f;
 	if( l > maximum ) {
 		cameraOffset *= (maximum / l);
 	}
-	camera.setEyePoint( cameraOffset );
+	camera.setEyePoint( cameraEyePoint() + cameraOffset );
 
-	#if defined(CINDER_COCOA_TOUCH)
-  if( MotionManager::isDataAvailable() ) {
-    auto r = MotionManager::getRotation();
-    camera.setOrientation( r );
-  }
-  #else
-		auto r = MotionManager::getRotation();
-    camera.setOrientation( r );
-  #endif
+	auto r = glm::slerp( startOrientation, (orientationOffset * MotionManager::getRotation()), cameraWeight.value() );
+	camera.setOrientation( r );
+}
+
+void SelfieSelfieApp::updateOrientationOffset()
+{
+	auto target = quat( vec3(MotionManager::getRotation() * vec4( 0, 0, -1, 0 )), vec3( 1, 0, 0 ) );
+	orientationOffset = normalize( slerp( orientationOffset, target, 0.55f ) );
 }
 
 void SelfieSelfieApp::draw()
@@ -233,10 +266,9 @@ void SelfieSelfieApp::draw()
 		auto offset = vec2(gridTexture->getIndexOffset( gridTexture->getCellDimensions(), gridTexture->getCurrentIndex() )) / gridTexture->getGridSize();
 		auto rect = Rectf( -1.0f, -1.0f, 1.0f, 1.0f ).scaled( vec2( 1.333f, 1.0f ) ).scaled( 0.2f );
 		auto half_pi = (float) M_PI / 2.0f;
-		auto xf1 = translate( vec3( - 4.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
+		auto xf1 = translate( vec3( - 12.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
 		auto xf2 = translate( vec3( 4.0f, 0.0f, 0.0f ) ) * rotate( half_pi, vec3( 1, 0, 0 ) ) * rotate( - half_pi, vec3( 0, 1, 0 ) );
 
-		if( false )
 		{
 			gl::ScopedModelMatrix m;
 			gl::multModelMatrix( xf1 );
@@ -253,10 +285,12 @@ void SelfieSelfieApp::draw()
 
   gl::disableDepthRead();
 
+	gl::ScopedMatrices matrices;
+	gl::setMatricesWindow( getWindowSize() );
+	introduction.draw();
+
   if( drawDebug && gridTexture )
   {
-    gl::setMatricesWindow( getWindowSize() );
-
     auto rect = Rectf(gridTexture->getTexture()->getBounds());
     auto window_rect = Rectf(getWindowBounds());
     auto window_rect_a = window_rect.scaled( vec2( 0.5f ) );
@@ -280,6 +314,7 @@ void SelfieSelfieApp::draw()
 inline void prepareSettings( app::App::Settings *iSettings )
 {
   iSettings->setMultiTouchEnabled();
+	iSettings->setHighDensityDisplayEnabled();
 }
 
 CINDER_APP( SelfieSelfieApp, RendererGl, &prepareSettings )
