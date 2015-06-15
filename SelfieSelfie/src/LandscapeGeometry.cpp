@@ -12,7 +12,7 @@
 #include "cinder/Log.h"
 
 #if defined(CINDER_ANDROID)
-	const int kTimeDivisor = 2;
+	const int kTimeDivisor = 1;
 #else
 	const int kTimeDivisor = 1;
 #endif

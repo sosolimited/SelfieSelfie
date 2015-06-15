@@ -39,32 +39,46 @@ GridTexture::GridTexture( const ci::ivec2 &iCellSize, int iRows )
 
 	try {
     CI_LOG_I("Loading Downsampling Shaders");
-		blurProg = gl::GlslProg::create( app::loadAsset( "blur.vs" ), app::loadAsset( "blur.fs" ) );
-    passthroughProg = gl::GlslProg::create( app::loadAsset( "passthrough.vs" ), app::loadAsset( "passthrough.fs" ) );
+		#if defined(CINDER_ANDROID)
+			auto frag_ext = std::string("-oes.fs");
+		#else
+			auto frag_ext = std::string(".fs");
+		#endif
+
+		auto blur = gl::GlslProg::Format().vertex( app::loadAsset( "blur.vs" ) ).fragment( app::loadAsset( "blur" + frag_ext ) );
+		blurProg = gl::GlslProg::create( blur );
+
+		auto passthrough = gl::GlslProg::Format().vertex( app::loadAsset( "passthrough.vs" ) ).fragment( app::loadAsset( "passthrough" + frag_ext ) );
+    passthroughProg = gl::GlslProg::create( passthrough );
 	}
 	catch( ci::Exception &exc ) {
 		CI_LOG_E( "Error compiling downsample shader: " << exc.what() );
 	}
 }
 
-void GridTexture::update( const ci::Surface &iSurface )
+void GridTexture::addCameraImage( const ci::Capture &iCapture )
+{
+	#if defined(CINDER_ANDROID)
+		intermediateTexture = iCapture.getTexture();
+	#else
+	  if( ! intermediateTexture ) {
+			CI_LOG_I("Creating intermediate texture");
+			auto format = gl::Texture::Format().loadTopDown().wrapS( GL_CLAMP_TO_EDGE ).wrapT( GL_CLAMP_TO_EDGE );
+			intermediateTexture = gl::Texture::create( *iCapture.getSurface(), format );
+		}
+		else {
+			intermediateTexture->update( *iCapture.getSurface() );
+		}
+	#endif
+
+	update();
+}
+
+void GridTexture::update()
 {
 	index = (index + 1) % cells;
 
-  if( ! intermediateTexture ) {
-    CI_LOG_I("Creating intermediate texture");
-		#if defined(CINDER_ANDROID)
-			auto format = gl::Texture::Format().wrapS( GL_CLAMP_TO_EDGE ).wrapT( GL_CLAMP_TO_EDGE );
-		#else
-			auto format = gl::Texture::Format().loadTopDown().wrapS( GL_CLAMP_TO_EDGE ).wrapT( GL_CLAMP_TO_EDGE );
-		#endif
-		intermediateTexture = gl::Texture::create( iSurface, format );
-  }
-  else {
-    intermediateTexture->update( iSurface );
-  }
-
-  gl::ScopedTextureBind tex0( intermediateTexture, 0 );
+	gl::ScopedTextureBind tex0( intermediateTexture, 0 );
   renderClearTexture();
   renderBlurredTexture();
 }

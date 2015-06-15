@@ -1,13 +1,9 @@
 #version 100
+#extension GL_OES_EGL_image_external : require
 
 precision lowp float;
 
-#ifdef ANDROID_CAMERA_TEXTURE
-#extension GL_OES_EGL_image_external : require
 uniform samplerExternalOES uSampler;
-#else
-uniform sampler2D	uSampler;
-#endif
 
 varying vec2 vTexCoord;
 

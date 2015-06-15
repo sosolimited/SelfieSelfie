@@ -97,7 +97,7 @@ void SelfieSelfieApp::setup()
     }());
 
 		#if defined(CINDER_ANDROID)
-			capture = Capture::create( 640, 480, front_facing_camera );
+			capture = Capture::create( 1280, 960, front_facing_camera );
 		#else
     	capture = Capture::create( 480, 360, front_facing_camera );
     #endif
@@ -210,7 +210,7 @@ void SelfieSelfieApp::update()
 	updateCamera();
 
   if( capture && capture->checkNewFrame() ) {
-    gridTexture->update( *capture->getSurface() );
+    gridTexture->addCameraImage( *capture );
   }
 }
 
