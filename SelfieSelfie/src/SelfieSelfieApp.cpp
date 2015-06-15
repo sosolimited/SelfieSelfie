@@ -97,7 +97,7 @@ void SelfieSelfieApp::setup()
     }());
 
 		#if defined(CINDER_ANDROID)
-			capture = Capture::create( 640, 480, front_facing_camera );
+			capture = Capture::create( 1280, 960, front_facing_camera );
 		#else
     	capture = Capture::create( 480, 360, front_facing_camera );
     #endif
@@ -310,8 +310,6 @@ void SelfieSelfieApp::draw()
 
 	introduction.draw();
 	aboutPage.draw();
-
-	gl::drawSolidCircle( vec2( 10.0f ), 10.0f );
 
   auto err = gl::getError();
   if( err ) {
