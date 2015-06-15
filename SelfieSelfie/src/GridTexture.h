@@ -8,6 +8,7 @@
 #pragma once
 
 #include "cinder/gl/Fbo.h"
+#include "cinder/Capture.h"
 
 namespace soso {
 
@@ -25,7 +26,7 @@ public:
   GridTexture( const ci::ivec2 &iCellSize, int iRows );
 
 	/// Add a surface to the grid. The surface should be cellSize.
-	void update( const ci::Surface &iSurface );
+	void addCameraImage( const ci::Capture &iCapture );
 	/// Returns the underlying texture.
 	ci::gl::TextureRef getTexture() const { return focusedBuffer->getColorTexture(); }
 	/// Returns a blurred version of the underlying texture.
@@ -57,6 +58,8 @@ private:
 
   void renderClearTexture();
   void renderBlurredTexture();
+
+	void update();
 };
 
 } // namespace soso

@@ -210,7 +210,7 @@ void SelfieSelfieApp::update()
 	updateCamera();
 
   if( capture && capture->checkNewFrame() ) {
-    gridTexture->update( *capture->getSurface() );
+    gridTexture->addCameraImage( *capture );
   }
 }
 
@@ -310,6 +310,8 @@ void SelfieSelfieApp::draw()
 
 	introduction.draw();
 	aboutPage.draw();
+
+	gl::drawSolidCircle( vec2( 10.0f ), 10.0f );
 
   auto err = gl::getError();
   if( err ) {
