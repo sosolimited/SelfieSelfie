@@ -39,17 +39,16 @@ GridTexture::GridTexture( const ci::ivec2 &iCellSize, int iRows )
 
 	try {
     CI_LOG_I("Loading Downsampling Shaders");
-		auto base_format = gl::GlslProg::Format();
 		#if defined(CINDER_ANDROID)
-			base_format.define( "ANDROID_CAMERA_TEXTURE" );
+			auto frag_ext = std::string("-oes.fs");
+		#else
+			auto frag_ext = std::string(".fs");
 		#endif
 
-		auto blur = base_format;
-		blur.vertex( app::loadAsset( "blur.vs" ) ).fragment( app::loadAsset( "blur.fs" ) );
+		auto blur = gl::GlslProg::Format().vertex( app::loadAsset( "blur.vs" ) ).fragment( app::loadAsset( "blur" + frag_ext ) );
 		blurProg = gl::GlslProg::create( blur );
 
-		auto passthrough = base_format;
-		passthrough.vertex( app::loadAsset( "passthrough.vs" ) ).fragment( app::loadAsset( "passthrough.fs" ) );
+		auto passthrough = gl::GlslProg::Format().vertex( app::loadAsset( "passthrough.vs" ) ).fragment( app::loadAsset( "passthrough" + frag_ext ) );
     passthroughProg = gl::GlslProg::create( passthrough );
 	}
 	catch( ci::Exception &exc ) {
