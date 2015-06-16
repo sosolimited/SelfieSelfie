@@ -12,6 +12,28 @@
 
 namespace soso {
 
+class NestingButton
+{
+public:
+	NestingButton( const ci::DataSourceRef &iIcon, const ci::DataSourceRef &iBacking, const std::function<void ()> &iCallback );
+
+	void draw() const;
+	void show( ci::Timeline &iTimeline );
+	void hide( ci::Timeline &iTimeline );
+
+	void setEnabled( bool iEnabled ) { openButton->setEnabled( iEnabled ); }
+	bool isHidden() const { return hidden; }
+private:
+	std::unique_ptr<Image>			icon;
+	std::unique_ptr<Image>			iconBacking;
+	std::unique_ptr<TouchArea>	openButton;
+	ci::Anim<ci::vec2>					position;
+	ci::vec2										openPosition;
+	ci::vec2										closedPosition;
+
+	bool hidden = false;
+};
+
 class AboutPage
 {
 public:
@@ -24,14 +46,15 @@ public:
 
 private:
 	ci::TimelineRef	timeline = ci::Timeline::create();
-	std::unique_ptr<Image>			description;
-	std::unique_ptr<Image>			icon;
-	std::unique_ptr<Image>			iconBacking;
-	std::shared_ptr<TouchArea>	openButton;
-	std::shared_ptr<TouchArea>	closeButton;
-	ci::Timer										timer;
+	std::unique_ptr<Image>					description;
+	std::unique_ptr<TouchArea>			closeButton;
+	std::unique_ptr<NestingButton>	nestingButton;
+	ci::Timer												timer;
+	ci::CueRef											hideCue = nullptr;
 
+	void handleIconClick();
 	void showAbout();
+	void hideAbout();
 	void showIcon();
 
 	bool visible = false;

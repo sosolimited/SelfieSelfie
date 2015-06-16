@@ -11,9 +11,9 @@
 
 using namespace soso;
 
-std::shared_ptr<TouchArea> TouchArea::create( const ci::Rectf &iBounds, const std::function<void ()> &iCallback )
+std::unique_ptr<TouchArea> TouchArea::create( const ci::Rectf &iBounds, const std::function<void ()> &iCallback )
 {
-	return std::shared_ptr<TouchArea>( new TouchArea( iBounds, iCallback ) );
+	return std::unique_ptr<TouchArea>( new TouchArea( iBounds, iCallback ) );
 }
 
 void TouchArea::connect()

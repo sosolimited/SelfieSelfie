@@ -25,9 +25,7 @@ Image::Image( Surface &&surface )
 Image::Image( const gl::TextureRef &iTexture )
 : texture( iTexture ),
 	size( app::toPoints( texture->getSize() ) )
-{
-	CI_LOG_I( "Image size: " << size );
-}
+{}
 
 void Image::draw()
 {

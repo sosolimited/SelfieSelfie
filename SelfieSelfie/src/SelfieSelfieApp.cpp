@@ -207,6 +207,7 @@ void SelfieSelfieApp::showLandscape()
 void SelfieSelfieApp::update()
 {
 	introduction.update();
+	aboutPage.update();
 	updateCamera();
 
   if( capture && capture->checkNewFrame() ) {
