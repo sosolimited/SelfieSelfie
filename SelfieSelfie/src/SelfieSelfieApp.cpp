@@ -207,6 +207,7 @@ void SelfieSelfieApp::showLandscape()
 void SelfieSelfieApp::update()
 {
 	introduction.update();
+	aboutPage.update();
 	updateCamera();
 
   if( capture && capture->checkNewFrame() ) {
@@ -278,17 +279,18 @@ void SelfieSelfieApp::drawEndCaps() const
 	auto xf1 = translate( vec3( - 20.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
 	auto xf2 = translate( vec3( 4.0f, 0.0f, 0.0f ) ) * rotate( half_pi, vec3( 1, 0, 0 ) ) * rotate( - half_pi, vec3( 0, 1, 0 ) );
 
-	{
+	auto draw_rect = [rect, dims, offset] (const mat4 &xf) {
 		gl::ScopedModelMatrix m;
-		gl::multModelMatrix( xf1 );
-		gl::drawSolidRect( rect, offset, offset + dims );
-	}
+		gl::multModelMatrix( xf );
+		#if defined(CINDER_ANDROID)
+			gl::drawSolidRect( rect, offset + vec2( 0, 1 ) * dims, offset + vec2( 1, 0 ) * dims );
+		#else
+			gl::drawSolidRect( rect, offset, offset + dims );
+		#endif
+	};
 
-	{
-		gl::ScopedModelMatrix m;
-		gl::multModelMatrix( xf2 );
-		gl::drawSolidRect( rect, offset, offset + dims );
-	}
+	draw_rect(xf1);
+	draw_rect(xf2);
 }
 
 void SelfieSelfieApp::draw()

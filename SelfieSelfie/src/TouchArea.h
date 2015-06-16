@@ -25,7 +25,7 @@ public:
 		disconnect();
 	}
 
-	static std::shared_ptr<TouchArea> create( const ci::Rectf &iBounds, const std::function<void ()> &iCallback );
+	static std::unique_ptr<TouchArea> create( const ci::Rectf &iBounds, const std::function<void ()> &iCallback );
 
 	void setEnabled( bool iEnabled ) { enabled = iEnabled; }
 	bool isEnabled() const { return enabled; }
