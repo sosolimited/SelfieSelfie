@@ -43,7 +43,7 @@ void NestingButton::draw() const
 void NestingButton::show( ci::Timeline &iTimeline  )
 {
 	hidden = false;
-	iTimeline.apply( &position, openPosition, 0.5f, EaseInOutQuad() )
+	iTimeline.apply( &position, openPosition, 0.32f, EaseInOutQuad() )
 		.updateFn( [this] {
 			icon->setPosition( position );
 			iconBacking->setPosition( position );
@@ -53,7 +53,7 @@ void NestingButton::show( ci::Timeline &iTimeline  )
 void NestingButton::hide( ci::Timeline &iTimeline  )
 {
 	hidden = true;
-	iTimeline.apply( &position, closedPosition, 0.5f, EaseInOutQuad() )
+	iTimeline.apply( &position, closedPosition, 0.4f, EaseInOutQuad() )
 		.updateFn( [this] {
 			icon->setPosition( position );
 			iconBacking->setPosition( position );
