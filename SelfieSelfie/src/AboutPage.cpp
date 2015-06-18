@@ -26,7 +26,7 @@ NestingButton::NestingButton( const DataSourceRef &iIcon, const DataSourceRef &i
 	closedPosition = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 0.2f, 0.0f ) * icon->getSize());
 
 	icon->setPosition( openPosition );
-	icon->setTint( Color::white() );
+	icon->setTint( Color::black() );
 
 	iconBacking->setPosition( openPosition );
 	iconBacking->setTint( yellow );
