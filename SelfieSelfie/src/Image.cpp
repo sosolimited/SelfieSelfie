@@ -9,6 +9,7 @@
 #include "cinder/app/App.h"
 #include "cinder/Log.h"
 #include "cinder/ip/Premultiply.h"
+#include "cinder/gl/gl.h"
 
 using namespace soso;
 using namespace cinder;
@@ -29,7 +30,7 @@ Image::Image( const gl::TextureRef &iTexture )
 
 void Image::draw()
 {
-	gl::ScopedAlphaBlend blend( true );
+	gl::ScopedBlendPremult blend;
 
 	const auto placement = getPlacement();
 
