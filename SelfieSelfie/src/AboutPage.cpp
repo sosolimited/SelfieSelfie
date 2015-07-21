@@ -8,6 +8,7 @@
 #include "AboutPage.h"
 #include "cinder/Utilities.h"
 #include "cinder/app/App.h"
+#include "cinder/gl/Scoped.h"
 
 using namespace soso;
 using namespace cinder;
@@ -109,7 +110,7 @@ void AboutPage::draw()
 {
 	if( visible )
 	{
-		gl::ScopedAlphaBlend blend( true );
+		gl::ScopedBlendPremult blend;
 
 		nestingButton->draw();
 		description->draw();

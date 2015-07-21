@@ -323,7 +323,7 @@ inline void prepareSettings( app::App::Settings *iSettings )
 {
   iSettings->setMultiTouchEnabled();
 	iSettings->setHighDensityDisplayEnabled();
-//	iSettings->setFullScreen();
+	iSettings->setKeepScreenOn(true);
 }
 
 CINDER_APP( SelfieSelfieApp, RendererGl, &prepareSettings )

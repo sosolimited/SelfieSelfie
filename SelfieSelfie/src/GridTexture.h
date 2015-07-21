@@ -8,6 +8,7 @@
 #pragma once
 
 #include "cinder/gl/Fbo.h"
+#include "cinder/gl/gl.h"
 #include "cinder/Capture.h"
 
 namespace soso {

@@ -7,6 +7,7 @@
 
 #include "IntroSequence.h"
 #include "cinder/ip/Premultiply.h"
+#include "cinder/gl/gl.h"
 #include "cinder/app/App.h"
 #include "cinder/Log.h"
 
@@ -100,7 +101,7 @@ void IntroSequence::update()
 
 void IntroSequence::draw()
 {
-	gl::ScopedAlphaBlend blend( true );
+	gl::ScopedBlendPremult blend;
 
 	if( backgroundAlpha > 0.0f ) {
 		gl::ScopedColor color( ColorA( backgroundColor() ) * backgroundAlpha );

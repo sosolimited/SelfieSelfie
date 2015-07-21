@@ -17,9 +17,13 @@ parent-directory/
 Once you have cloned and extracted everything, you will need to build Cinder for Android:
 
 ```bash
+# NDK_ROOT must be an absolute path.
+export NDK_ROOT=/Users/soso/Code/android-ndk-r10d/
 cd lib/Cinder-Android/android/
-export NDK_ROOT=../../../../android-ndk-r10d/ # Make this path absolute or it won't work.
+rm -Rf build/
 sh cbuilder.sh -j 8 -p 19 -a armeabi-v7a -b Debug -v -r
+sh cbuilder.sh -j 8 -p 19 -a armeabi-v7a -b Release -v -r
+
 ```
 
 The main android project is being developed in the `SelfieSelfie/` directory. You can open it in Android Studio or XCode. Other Cinder projects were created along the way to test ideas on iOS. The `ShapeTool` project outputs the xml file describing the profile of the swept geometry.
