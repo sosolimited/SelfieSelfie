@@ -16,6 +16,7 @@
 
 #include "cinder/MotionManager.h"
 #include "cinder/Timeline.h"
+#include "cinder/android/CinderAndroid.h"
 
 using namespace ci;
 using namespace ci::app;
@@ -38,6 +39,8 @@ struct TouchInfo {
 
 class SelfieSelfieApp : public App {
 public:
+	SelfieSelfieApp();
+
 	void setup() override;
 	void playIntroAndGetOrientation();
 	void determineSizeIndicator();
@@ -48,6 +51,10 @@ public:
   void touchesBegan( TouchEvent event ) override;
   void touchesMoved( TouchEvent event ) override;
   void touchesEnded( TouchEvent event ) override;
+
+  void focusGained();
+  void focusLost();
+  void startCapture();
 
 	void updateCamera();
 	void updateOrientationOffset();
@@ -79,42 +86,51 @@ private:
 	signals::Connection	orientationUpdateConnection;
 };
 
+SelfieSelfieApp::SelfieSelfieApp()
+{
+	ci::android::setActivityGainedFocusCallback( [this] { focusGained(); } );
+  ci::android::setActivityLostFocusCallback( [this] { focusLost(); } );
+}
+
+void SelfieSelfieApp::startCapture()
+{
+	CI_LOG_I("Starting Capture");
+	if (! capture) {
+	try {
+      CI_LOG_I( "Initializing hardware camera." );
+      auto front_facing_camera = ([] {
+        auto &devices = Capture::getDevices();
+        auto first_device = devices.front();
+        for( auto device : devices ) {
+          if( device->isFrontFacing() ) {
+            return device;
+          }
+        }
+        return first_device;
+      }());
+
+      capture = Capture::create( 1280, 960, front_facing_camera );
+      capture->start();
+    }
+    catch( ci::Exception &exc ) {
+      CI_LOG_E( "Error using device camera: " << exc.what() );
+    }
+	}
+}
+
 void SelfieSelfieApp::setup()
 {
   CI_LOG_I("Setting up selfie_x_selfie");
 
-  try {
-    CI_LOG_I( "Initializing hardware camera." );
-    auto front_facing_camera = ([] {
-      auto &devices = Capture::getDevices();
-      auto first_device = devices.front();
-      for( auto device : devices ) {
-        if( device->isFrontFacing() ) {
-          return device;
-        }
-      }
-      return first_device;
-    }());
+	CI_LOG_I( "Creating Grid Texture" );
+	gridTexture = make_shared<GridTexture>( ivec2( 320, 240 ), 12 );
 
-		#if defined(CINDER_ANDROID)
-			capture = Capture::create( 1280, 960, front_facing_camera );
-		#else
-    	capture = Capture::create( 480, 360, front_facing_camera );
-    #endif
-    capture->start();
+	CI_LOG_I( "Setting up landscape geometry." );
+	landscape.setup();
+	landscape.setTextureUnits( 0, 1 );
+	landscape.setGridSize( gridTexture->getGridDimensions() );
 
-    CI_LOG_I( "Creating Grid Texture" );
-    gridTexture = make_shared<GridTexture>( ivec2( 320, 240 ), 12 );
-
-    CI_LOG_I( "Setting up landscape geometry." );
-    landscape.setup();
-    landscape.setTextureUnits( 0, 1 );
-    landscape.setGridSize( gridTexture->getGridDimensions() );
-  }
-  catch( ci::Exception &exc ) {
-    CI_LOG_E( "Error using device camera: " << exc.what() );
-  }
-
+	startCapture();
 	MotionManager::enable();
 	determineSizeIndicator();
 	aboutPage.setup( fs::path("img") / sizeIndicator );
@@ -123,6 +139,21 @@ void SelfieSelfieApp::setup()
 	#if defined(CINDER_COCOA_TOUCH)
 		getSignalWillEnterForeground().connect( [this] { playIntroAndGetOrientation(); } );
 	#endif
+}
+
+void SelfieSelfieApp::focusGained()
+{
+	startCapture();
+	MotionManager::enable();
+}
+
+void SelfieSelfieApp::focusLost()
+{
+	if (capture) {
+		capture->stop();
+		capture.reset();
+	}
+	MotionManager::disable();
 }
 
 void SelfieSelfieApp::determineSizeIndicator()
