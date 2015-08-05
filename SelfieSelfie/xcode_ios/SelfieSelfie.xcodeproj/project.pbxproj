@@ -23,6 +23,7 @@
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
 		39466A7302D74F5AA4370328 /* CinderApp_ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B76AEAECC3E42FF8F471BE3 /* CinderApp_ios.png */; };
 		5A08A047CCFD4076AC741865 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 596B3B8B6EB34FEB964C6A3E /* Images.xcassets */; };
+		9C2C99F71B726B7800AC9EEB /* SelfieExperience.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2C99F51B726B7800AC9EEB /* SelfieExperience.cpp */; };
 		9C4355481B274F0700F5FECF /* IntroSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C4355461B274F0700F5FECF /* IntroSequence.cpp */; };
 		9C63E5BF1B28BA25003617E1 /* AboutPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C63E5BD1B28BA25003617E1 /* AboutPage.cpp */; };
 		9C63E5C21B28C097003617E1 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C63E5C01B28C097003617E1 /* Image.cpp */; };
@@ -62,6 +63,8 @@
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		596B3B8B6EB34FEB964C6A3E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = Images.xcassets; sourceTree = "<group>"; };
 		9B76AEAECC3E42FF8F471BE3 /* CinderApp_ios.png */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = CinderApp_ios.png; path = ../resources/CinderApp_ios.png; sourceTree = "<group>"; };
+		9C2C99F51B726B7800AC9EEB /* SelfieExperience.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SelfieExperience.cpp; path = ../src/SelfieExperience.cpp; sourceTree = "<group>"; };
+		9C2C99F61B726B7800AC9EEB /* SelfieExperience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelfieExperience.h; path = ../src/SelfieExperience.h; sourceTree = "<group>"; };
 		9C4355461B274F0700F5FECF /* IntroSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IntroSequence.cpp; path = ../src/IntroSequence.cpp; sourceTree = "<group>"; };
 		9C4355471B274F0700F5FECF /* IntroSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntroSequence.h; path = ../src/IntroSequence.h; sourceTree = "<group>"; };
 		9C63E5BD1B28BA25003617E1 /* AboutPage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AboutPage.cpp; path = ../src/AboutPage.cpp; sourceTree = "<group>"; };
@@ -165,6 +168,8 @@
 				9C63E5C11B28C097003617E1 /* Image.h */,
 				9C63E5C31B28CEB9003617E1 /* TouchArea.cpp */,
 				9C63E5C41B28CEB9003617E1 /* TouchArea.h */,
+				9C2C99F51B726B7800AC9EEB /* SelfieExperience.cpp */,
+				9C2C99F61B726B7800AC9EEB /* SelfieExperience.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 				15A324951B21E922003D5C01 /* MotionImplCoreMotion.mm in Sources */,
 				15BC10B21B222953005512DE /* LandscapeGeometry.cpp in Sources */,
 				15A324961B21E922003D5C01 /* MotionManager.cpp in Sources */,
+				9C2C99F71B726B7800AC9EEB /* SelfieExperience.cpp in Sources */,
 				15C5E7561B1F6661006DDD4C /* Landscape.cpp in Sources */,
 				D46A70E835B24A7CA21E9B83 /* SelfieSelfieApp.cpp in Sources */,
 				15C5E7501B1F4ABE006DDD4C /* GridTexture.cpp in Sources */,

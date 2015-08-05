@@ -13,6 +13,7 @@
 #include "Landscape.h"
 #include "IntroSequence.h"
 #include "AboutPage.h"
+#include "SelfieExperience.h"
 
 #include "cinder/MotionManager.h"
 #include "cinder/Timeline.h"
@@ -69,9 +70,10 @@ private:
 
   GridTextureRef		gridTexture;
   Landscape					landscape;
-	gl::BatchRef			cameraImage;
 	IntroSequence			introduction;
 	AboutPage					aboutPage;
+
+	std::unique_ptr<SelfieExperience> selfieExperience;
 
   vector<TouchInfo> touches;
   ci::vec3					cameraOffset;
