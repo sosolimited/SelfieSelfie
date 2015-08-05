@@ -28,7 +28,7 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 
 	if( ! iImageBasePath.empty() ) {
 		CI_LOG_I( "Loading intro images from: " << iImageBasePath );
-		showItem( iImageBasePath / "soso-logo.png", 2.0f );
+		showItem( iImageBasePath / "soso-logo.png", 1.0f );
 		showItem( iImageBasePath / "selfie-logo.png", 2.0f );
 		showBlank( 0.33f );
 		auto cd = 0.9f;
