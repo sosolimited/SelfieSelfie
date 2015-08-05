@@ -9,6 +9,7 @@
 
 #include "Image.h"
 #include "cinder/Filesystem.h"
+#include "cinder/Signals.h"
 #include "cinder/Timer.h"
 
 namespace soso {
@@ -21,13 +22,17 @@ class IntroSequence
 public:
 	/// Set up the sequence to load images from the given path.
 	void setup( const ci::fs::path &iImageBasePath );
+
 	/// Set a function to be called when the intro animations are complete.
 	void setFinishFn( const std::function<void ()> &iFunction ) { finishFn = iFunction; }
 
-	void update();
+	void start();
+	void stop();
+
 	void draw();
 
 private:
+	void update();
 	std::function<void ()>		finishFn;
 	ci::TimelineRef						timeline = ci::Timeline::create();
 	std::vector<Image>				items;
@@ -41,6 +46,7 @@ private:
 	ci::ColorA								overlayColor = ci::ColorA::hex( 0xffF8ED31 );
 	ci::Anim<ci::Color>				backgroundColor = ci::Color::gray( 0.12f );
 	ci::Anim<float>						backgroundAlpha = 1.0f;
+	ci::signals::ScopedConnection updateConnection;
 };
 
 } // namespace soso

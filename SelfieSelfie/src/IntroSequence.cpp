@@ -28,7 +28,7 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 
 	if( ! iImageBasePath.empty() ) {
 		CI_LOG_I( "Loading intro images from: " << iImageBasePath );
-		showItem( iImageBasePath / "soso-logo.png", 2.0f );
+		showItem( iImageBasePath / "soso-logo.png", 1.0f );
 		showItem( iImageBasePath / "selfie-logo.png", 2.0f );
 		showBlank( 0.33f );
 		auto cd = 0.9f;
@@ -66,6 +66,7 @@ void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
 	timeline->appendTo( item.getAlphaAnim(), 0.0f, 0.2f ).delay( duration );
 
 	items.push_back( item ); // copy brings the anim with it (move makes this clearer in Choreograph)
+	timeline->stepTo(0.2f);
 }
 
 void IntroSequence::showBlank( float duration )
@@ -91,6 +92,18 @@ void IntroSequence::handleFinish()
 	}
 
 	items.clear();
+}
+
+void IntroSequence::start()
+{
+	CI_LOG_I("Starting Intro Sequence");
+	updateConnection = app::App::get()->getSignalUpdate().connect([this] { update(); });
+	timer.start();
+}
+
+void IntroSequence::stop()
+{
+	updateConnection.disconnect();
 }
 
 void IntroSequence::update()
