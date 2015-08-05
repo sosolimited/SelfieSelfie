@@ -98,10 +98,6 @@ void SelfieExperience::setupCamera()
 			CI_LOG_E( "Error using device camera: " << exc.what() );
 		}
 	}
-	else
-	{
-		capture->start();
-	}
 }
 
 void SelfieExperience::update()
