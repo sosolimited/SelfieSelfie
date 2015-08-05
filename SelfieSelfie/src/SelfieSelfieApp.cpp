@@ -2,21 +2,18 @@
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 
-#include "cinder/Capture.h"
 #include "cinder/gl/Texture.h"
 #include "cinder/gl/GlslProg.h"
 #include "cinder/Log.h"
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Shader.h"
 
-#include "GridTexture.h"
-#include "Landscape.h"
 #include "IntroSequence.h"
-#include "AboutPage.h"
 #include "SelfieExperience.h"
 
 #include "cinder/MotionManager.h"
 #include "cinder/Timeline.h"
+#include "asio/asio.hpp"
 
 #ifdef CINDER_ANDROID
 	#include "cinder/android/CinderAndroid.h"
@@ -28,19 +25,6 @@ using namespace std;
 
 using namespace soso;
 
-struct TouchInfo {
-	TouchInfo() = default;
-	TouchInfo( uint32_t iId, const vec2 &iStart, const vec2 &iPosition )
-	: id( iId ),
-		previous( iStart ),
-		position( iPosition )
-	{}
-
-  uint32_t		id = 0;
-  vec2				previous;
-  vec2				position;
-};
-
 class SelfieSelfieApp : public App {
 public:
 	SelfieSelfieApp();
@@ -50,45 +34,18 @@ public:
 	void determineSizeIndicator();
 	void update() override;
 	void draw() override;
-	void drawEndCaps() const;
-
-  void touchesBegan( TouchEvent event ) override;
-  void touchesMoved( TouchEvent event ) override;
-  void touchesEnded( TouchEvent event ) override;
 
   void focusGained();
   void focusLost();
-  void startCapture();
 
 	void updateCamera();
 	void updateOrientationOffset();
 	void showLandscape();
 
 private:
-	CameraPersp				camera;
-  CaptureRef				capture;
-
-  GridTextureRef		gridTexture;
-  Landscape					landscape;
-	IntroSequence			introduction;
-	AboutPage					aboutPage;
-
+	IntroSequence											introduction;
 	std::unique_ptr<SelfieExperience> selfieExperience;
-
-  vector<TouchInfo> touches;
-  ci::vec3					cameraOffset;
-	float							cameraVelocity = 0.0f;
-
-	ci::Anim<float>			cameraWeight = 0.0f;
-	ci::Anim<ci::vec3>	cameraEyePoint = ci::vec3( 3.8f, 0.0f, 0.0f );
-	std::string					sizeIndicator = "xhdpi";
-	/// Default orientation used during intro.
-	quat								startOrientation;
-	/// Orientation correction so position held during intro
-	quat								orientationOffset;
-	/// Interpolated motion orientation to avoid jitter on devices with noisy sensors.
-	quat								cameraOrientation;
-	signals::Connection	orientationUpdateConnection;
+	std::string												sizeIndicator = "xhdpi";
 };
 
 SelfieSelfieApp::SelfieSelfieApp()
@@ -99,68 +56,30 @@ SelfieSelfieApp::SelfieSelfieApp()
 	#endif
 }
 
-void SelfieSelfieApp::startCapture()
-{
-	CI_LOG_I("Starting Capture");
-	if (! capture) {
-	try {
-      CI_LOG_I( "Initializing hardware camera." );
-      auto front_facing_camera = ([] {
-        auto &devices = Capture::getDevices();
-        auto first_device = devices.front();
-        for( auto device : devices ) {
-          if( device->isFrontFacing() ) {
-            return device;
-          }
-        }
-        return first_device;
-      }());
-
-      capture = Capture::create( 1280, 960, front_facing_camera );
-      capture->start();
-    }
-    catch( ci::Exception &exc ) {
-      CI_LOG_E( "Error using device camera: " << exc.what() );
-    }
-	}
-}
-
 void SelfieSelfieApp::setup()
 {
   CI_LOG_I("Setting up selfie_x_selfie");
 
-	CI_LOG_I( "Creating Grid Texture" );
-	gridTexture = make_shared<GridTexture>( ivec2( 320, 240 ), 12 );
-
-	CI_LOG_I( "Setting up landscape geometry." );
-	landscape.setup();
-	landscape.setTextureUnits( 0, 1 );
-	landscape.setGridSize( gridTexture->getGridDimensions() );
-
-	startCapture();
-	MotionManager::enable();
 	determineSizeIndicator();
-	aboutPage.setup( fs::path("img") / sizeIndicator );
-	playIntroAndGetOrientation();
-
-	#if defined(CINDER_COCOA_TOUCH)
-		getSignalWillEnterForeground().connect( [this] { playIntroAndGetOrientation(); } );
-	#endif
+	auto image_path = fs::path("img") / sizeIndicator;
+	introduction.setup( image_path );
+	introduction.setFinishFn( [this] { showLandscape(); } );
 }
 
 void SelfieSelfieApp::focusGained()
 {
-	startCapture();
-	MotionManager::enable();
+	CI_LOG_I("Focus Gained");
+	if( selfieExperience ) {
+		selfieExperience->resume();
+	}
 }
 
 void SelfieSelfieApp::focusLost()
 {
-	if (capture) {
-		capture->stop();
-		capture.reset();
+	CI_LOG_I("Focus Lost");
+	if( selfieExperience ) {
+		selfieExperience->pause();
 	}
-	MotionManager::disable();
 }
 
 void SelfieSelfieApp::determineSizeIndicator()
@@ -180,181 +99,48 @@ void SelfieSelfieApp::determineSizeIndicator()
 	CI_LOG_I( "Device size: " << large_side << " using images for: " << sizeIndicator );
 }
 
-void SelfieSelfieApp::playIntroAndGetOrientation()
-{
-	CI_LOG_I( "Cueing up introduction and figuring out device orientation." );
-
-	cameraWeight = 0.0f;
-	cameraOffset = vec3( 0 );
-  auto target = vec3( 5, 0, 0 );
-  camera.lookAt( vec3( 0 ), target, vec3( 0, 1, 0 ) );
-  camera.setPerspective( 80, getWindowAspectRatio(), 0.1f, 50.0f );
-	startOrientation = camera.getOrientation();
-	cameraEyePoint = vec3( 3.8f, 0.0f, 0.0f );
-
-	orientationUpdateConnection.disconnect();
-	orientationUpdateConnection = getSignalUpdate().connect( [this] { updateOrientationOffset(); } );
-
-	introduction.setup( fs::path("img") / sizeIndicator );
-	introduction.setFinishFn( [this] { showLandscape(); } );
-	aboutPage.hide();
-}
-
-void SelfieSelfieApp::touchesBegan( TouchEvent event )
-{
-  for( auto &t : event.getTouches() ) {
-    touches.emplace_back( t.getId(), t.getPos(), t.getPos() );
-  }
-}
-
-void SelfieSelfieApp::touchesMoved( TouchEvent event )
-{
-  for( auto &t : event.getTouches() ) {
-    for( auto &s : touches ) {
-      if( s.id == t.getId() ) {
-				s.previous = s.position;
-        s.position = t.getPos();
-      }
-    }
-  }
-}
-
-void SelfieSelfieApp::touchesEnded( TouchEvent event )
-{
-  touches.erase( std::remove_if( touches.begin(), touches.end(), [&event] (const TouchInfo &s) {
-    for( auto &t : event.getTouches() ) {
-      if (t.getId() == s.id) {
-        return true;
-      }
-    }
-    return false;
-  }), touches.end() );
-}
-
-void SelfieSelfieApp::showLandscape()
-{
-	// Stop averaging the orientation.
-	orientationUpdateConnection.disconnect();
-	// Enable looking around with the gyro
-	float zoom = 4.2f;
-	timeline().apply( &cameraEyePoint, vec3( 0 ), zoom ).easeFn( EaseOutQuart() );
-	timeline().apply( &cameraWeight, 1.0f, 1.33f ).easeFn( EaseInOutCubic() ).delay( zoom );
-	timeline().add( [this] { aboutPage.show(); }, timeline().getEndTime() );
-}
-
 void SelfieSelfieApp::update()
 {
-	introduction.update();
-	aboutPage.update();
-	updateCamera();
-
-  if( capture && capture->checkNewFrame() ) {
-    gridTexture->addCameraImage( *capture );
-  }
-}
-
-void SelfieSelfieApp::updateCamera()
-{
-	if( touches.size() == 1 )
+	if( selfieExperience )
 	{
-		const auto forward = ([] {
-			auto gravity = MotionManager::getGravityDirection();
-			if( abs( gravity.x ) > abs( gravity.y ) ) {
-				auto x = copysign( 1.0f, gravity.x );
-				return vec3( x, 0, 0 );
-			}
-			else {
-				auto y = copysign( 1.0f, gravity.y );
-				return vec3( 0, - y, 0 );
-			}
-		}());
-
-		auto &touch = touches.front();
-		auto delta = vec3( touch.position - touch.previous, 0 );
-		touch.previous = touch.position;
-
-		auto amount = length( delta );
-		auto dir = dot( normalize(delta), forward );
-
-		if( isfinite( amount ) && isfinite( dir ) ) {
-			cameraVelocity += amount * dir;
-		}
+		selfieExperience->update();
 	}
-
-	auto ray = camera.getViewDirection();
-	cameraVelocity *= cameraWeight.value();
-	cameraOffset += ray * cameraVelocity * 0.0025f;
-	cameraVelocity *= 0.86f;
-
-	auto l = length(cameraOffset);
-	auto maximum = 2.5f;
-	if( l > maximum ) {
-		cameraOffset *= (maximum / l);
+	else
+	{
+		io_service().post( [this] {
+			auto image_path = fs::path("img") / sizeIndicator;
+			selfieExperience = unique_ptr<SelfieExperience>( new SelfieExperience( image_path ) );
+			introduction.start();
+		} );
 	}
-	camera.setEyePoint( cameraEyePoint() + cameraOffset );
-
-	auto r = glm::slerp( startOrientation, (orientationOffset * MotionManager::getRotation()), cameraWeight.value() );
-	cameraOrientation = glm::slerp( cameraOrientation, r, 0.5f );
-	camera.setOrientation( cameraOrientation );
-}
-
-void SelfieSelfieApp::updateOrientationOffset()
-{
-	auto target = quat( vec3(MotionManager::getRotation() * vec4( 0, 0, -1, 0 )), vec3( 1, 0, 0 ) );
-	orientationOffset = normalize( slerp( orientationOffset, target, 0.55f ) );
-}
-
-void SelfieSelfieApp::drawEndCaps() const
-{
-	gl::ScopedGlslProg prog( gl::getStockShader( gl::ShaderDef().texture(gridTexture->getTexture()->getTarget()) ) );
-	gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
-
-	auto mat = translate( vec3( 0, -4.0f, 0 ) );
-	auto dims = vec2(gridTexture->getCellDimensions()) / gridTexture->getGridSize();
-	auto offset = vec2(gridTexture->getIndexOffset( gridTexture->getCellDimensions(), gridTexture->getCurrentIndex() )) / gridTexture->getGridSize();
-	auto rect = Rectf( -1.0f, -1.0f, 1.0f, 1.0f ).scaled( vec2( 1.333f, 1.0f ) ).scaled( 0.2f );
-	auto half_pi = (float) M_PI / 2.0f;
-	auto xf1 = translate( vec3( - 20.0f, 0.0f, 0.0f ) ) * rotate( - half_pi, vec3( 1, 0, 0 ) ) * rotate( half_pi, vec3( 0, 1, 0 ) );
-	auto xf2 = translate( vec3( 4.0f, 0.0f, 0.0f ) ) * rotate( half_pi, vec3( 1, 0, 0 ) ) * rotate( - half_pi, vec3( 0, 1, 0 ) );
-
-	auto draw_rect = [rect, dims, offset] (const mat4 &xf) {
-		gl::ScopedModelMatrix m;
-		gl::multModelMatrix( xf );
-		#if defined(CINDER_ANDROID)
-			gl::drawSolidRect( rect, offset + vec2( 0, 1 ) * dims, offset + vec2( 1, 0 ) * dims );
-		#else
-			gl::drawSolidRect( rect, offset, offset + dims );
-		#endif
-	};
-
-	draw_rect(xf1);
-	draw_rect(xf2);
 }
 
 void SelfieSelfieApp::draw()
 {
 	gl::clear( Color( 0, 0, 0 ) );
 
-	gl::enableDepthRead();
-	gl::enableDepthWrite();
-	gl::ScopedTextureBind tex0( gridTexture->getTexture(), 0 );
-	gl::ScopedTextureBind tex1( gridTexture->getBlurredTexture(), 1 );
-	gl::ScopedMatrices matrices;
-	gl::setMatrices( camera );
-
-	landscape.draw( gridTexture->getCurrentIndex() );
-	drawEndCaps();
-
-  gl::disableDepthRead();
-	gl::setMatricesWindow( getWindowSize() );
+	if( selfieExperience )
+	{
+		selfieExperience->draw();
+	}
 
 	introduction.draw();
-	aboutPage.draw();
 
-  auto err = gl::getError();
-  if( err ) {
-    CI_LOG_E( "Draw gl error: " << gl::getErrorString(err) );
-  }
+	#if DEBUG
+		auto err = gl::getError();
+		if( err ) {
+			CI_LOG_E( "Draw gl error: " << gl::getErrorString(err) );
+		}
+	#endif
+}
+
+void SelfieSelfieApp::showLandscape()
+{
+	if( ! selfieExperience ) {
+		auto image_path = fs::path("img") / sizeIndicator;
+		selfieExperience = unique_ptr<SelfieExperience>( new SelfieExperience( image_path ) );
+	}
+	selfieExperience->showLandscape();
 }
 
 inline void prepareSettings( app::App::Settings *iSettings )

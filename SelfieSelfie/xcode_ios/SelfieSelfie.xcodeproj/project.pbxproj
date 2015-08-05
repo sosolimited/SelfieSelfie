@@ -401,7 +401,7 @@
 		00692BF614FF149000D0A05E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = ../../lib/Cinder;
+				CINDER_PATH = "../../lib/Cinder-Android";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SelfieSelfie_Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\"";
@@ -422,7 +422,7 @@
 		00692BF714FF149000D0A05E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CINDER_PATH = ../../lib/Cinder;
+				CINDER_PATH = "../../lib/Cinder-Android";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SelfieSelfie_Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\"";
