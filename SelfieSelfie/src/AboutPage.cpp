@@ -25,11 +25,12 @@ NestingButton::NestingButton( const DataSourceRef &iIcon, const DataSourceRef &i
 
 	openPosition = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 1.0f, 0.0f ) * icon->getSize());
 	closedPosition = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 0.2f, 0.0f ) * icon->getSize());
+	position = closedPosition;
 
-	icon->setPosition( openPosition );
+	icon->setPosition( position );
 	icon->setTint( Color::black() );
 
-	iconBacking->setPosition( openPosition );
+	iconBacking->setPosition( position );
 	iconBacking->setTint( yellow );
 
 	openButton = TouchArea::create( icon->getPlacement().scaledCentered( 1.5f ), iCallback );
