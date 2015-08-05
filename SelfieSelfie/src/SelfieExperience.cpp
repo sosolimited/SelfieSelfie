@@ -58,7 +58,8 @@ SelfieExperience::~SelfieExperience()
 void SelfieExperience::pause()
 {
 	if (capture) {
-    capture->stop();
+		capture->stop();
+		capture.reset();
 	}
 
 	MotionManager::disable();
