@@ -68,8 +68,10 @@ private:
 	ci::quat									orientationOffset;
 	/// Interpolated motion orientation to avoid jitter on devices with noisy sensors.
 	ci::quat									cameraOrientation;
-	ci::signals::ScopedConnection								orientationUpdateConnection;
-	std::vector<ci::signals::ScopedConnection>	touchConnections;
+	ci::signals::ScopedConnection	orientationUpdateConnection;
+	ci::signals::ScopedConnection	touchesBeganConnection;
+	ci::signals::ScopedConnection touchesMovedConnection;
+	ci::signals::ScopedConnection touchesEndedConnection;
 };
 
 } // namespace soso

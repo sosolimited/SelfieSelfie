@@ -43,9 +43,9 @@ SelfieExperience::SelfieExperience( const fs::path &imagePath )
 	} );
 
 	auto window = app::getWindow();
-	touchConnections.push_back(window->getSignalTouchesBegan().connect([this] (const app::TouchEvent &event) { touchesBegan( event ); }));
-	touchConnections.push_back(window->getSignalTouchesMoved().connect([this] (const app::TouchEvent &event) { touchesMoved( event ); }));
-	touchConnections.push_back(window->getSignalTouchesEnded().connect([this] (const app::TouchEvent &event) { touchesEnded( event ); }));
+	touchesBeganConnection = window->getSignalTouchesBegan().connect([this] (const app::TouchEvent &event) { touchesBegan( event ); });
+	touchesMovedConnection = window->getSignalTouchesMoved().connect([this] (const app::TouchEvent &event) { touchesMoved( event ); });
+	touchesEndedConnection = window->getSignalTouchesEnded().connect([this] (const app::TouchEvent &event) { touchesEnded( event ); });
 }
 
 SelfieExperience::~SelfieExperience()
@@ -53,14 +53,12 @@ SelfieExperience::~SelfieExperience()
 	if (capture) {
     capture->stop();
 	}
-	orientationUpdateConnection.disconnect();
 }
 
 void SelfieExperience::pause()
 {
 	if (capture) {
     capture->stop();
-		capture.reset();
 	}
 
 	MotionManager::disable();
@@ -99,6 +97,10 @@ void SelfieExperience::setupCamera()
 			CI_LOG_E( "Error using device camera: " << exc.what() );
 		}
 	}
+	else
+	{
+		capture->start();
+	}
 }
 
 void SelfieExperience::update()
@@ -113,6 +115,7 @@ void SelfieExperience::update()
 
 void SelfieExperience::touchesBegan( const ci::app::TouchEvent &event )
 {
+	CI_LOG_I("Touches Began");
   for( auto &t : event.getTouches() ) {
     touches.emplace_back( t.getId(), t.getPos(), t.getPos() );
   }
@@ -120,6 +123,7 @@ void SelfieExperience::touchesBegan( const ci::app::TouchEvent &event )
 
 void SelfieExperience::touchesMoved( const ci::app::TouchEvent &event )
 {
+	CI_LOG_I("Touches Moved");
   for( auto &t : event.getTouches() ) {
     for( auto &s : touches ) {
       if( s.id == t.getId() ) {
@@ -132,6 +136,7 @@ void SelfieExperience::touchesMoved( const ci::app::TouchEvent &event )
 
 void SelfieExperience::touchesEnded( const ci::app::TouchEvent &event )
 {
+	CI_LOG_I("Touches Ended");
   touches.erase( std::remove_if( touches.begin(), touches.end(), [&event] (const TouchInfo &s) {
     for( auto &t : event.getTouches() ) {
       if (t.getId() == s.id) {
