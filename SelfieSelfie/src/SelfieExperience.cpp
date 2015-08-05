@@ -112,7 +112,6 @@ void SelfieExperience::update()
 
 void SelfieExperience::touchesBegan( const ci::app::TouchEvent &event )
 {
-	CI_LOG_I("Touches Began");
   for( auto &t : event.getTouches() ) {
     touches.emplace_back( t.getId(), t.getPos(), t.getPos() );
   }
@@ -120,7 +119,6 @@ void SelfieExperience::touchesBegan( const ci::app::TouchEvent &event )
 
 void SelfieExperience::touchesMoved( const ci::app::TouchEvent &event )
 {
-	CI_LOG_I("Touches Moved");
   for( auto &t : event.getTouches() ) {
     for( auto &s : touches ) {
       if( s.id == t.getId() ) {
@@ -133,7 +131,6 @@ void SelfieExperience::touchesMoved( const ci::app::TouchEvent &event )
 
 void SelfieExperience::touchesEnded( const ci::app::TouchEvent &event )
 {
-	CI_LOG_I("Touches Ended");
   touches.erase( std::remove_if( touches.begin(), touches.end(), [&event] (const TouchInfo &s) {
     for( auto &t : event.getTouches() ) {
       if (t.getId() == s.id) {
