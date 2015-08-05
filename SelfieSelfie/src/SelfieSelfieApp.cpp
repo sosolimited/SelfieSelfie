@@ -16,7 +16,10 @@
 
 #include "cinder/MotionManager.h"
 #include "cinder/Timeline.h"
-#include "cinder/android/CinderAndroid.h"
+
+#ifdef CINDER_ANDROID
+	#include "cinder/android/CinderAndroid.h"
+#endif
 
 using namespace ci;
 using namespace ci::app;
@@ -88,8 +91,10 @@ private:
 
 SelfieSelfieApp::SelfieSelfieApp()
 {
-	ci::android::setActivityGainedFocusCallback( [this] { focusGained(); } );
-  ci::android::setActivityLostFocusCallback( [this] { focusLost(); } );
+	#ifdef CINDER_ANDROID
+		ci::android::setActivityGainedFocusCallback( [this] { focusGained(); } );
+		ci::android::setActivityLostFocusCallback( [this] { focusLost(); } );
+	#endif
 }
 
 void SelfieSelfieApp::startCapture()
@@ -354,7 +359,9 @@ inline void prepareSettings( app::App::Settings *iSettings )
 {
   iSettings->setMultiTouchEnabled();
 	iSettings->setHighDensityDisplayEnabled();
-	iSettings->setKeepScreenOn(true);
+	#ifdef CINDER_ANDROID
+		iSettings->setKeepScreenOn(true);
+	#endif
 }
 
 CINDER_APP( SelfieSelfieApp, RendererGl, &prepareSettings )
