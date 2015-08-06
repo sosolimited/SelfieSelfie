@@ -33,7 +33,7 @@ NestingButton::NestingButton( const DataSourceRef &iIcon, const DataSourceRef &i
 	iconBacking->setPosition( position );
 	iconBacking->setTint( yellow );
 
-	openButton = TouchArea::create( icon->getPlacement().scaledCentered( 1.5f ), iCallback );
+	openButton = TouchArea::create( Rectf( openPosition, openPosition + icon->getSize() ).scaledCentered( 1.5f ), iCallback );
 }
 
 void NestingButton::draw() const
