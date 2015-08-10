@@ -3,7 +3,7 @@
     package="com.sosolimited.selfieselfie.selfieselfie" >
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <!-- For all devices except Nexus 6, which flips the camera texture -->
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
