@@ -13,7 +13,7 @@
 #include "cinder/gl/GlslProg.h"
 
 #include "cinder/app/App.h"
-#define ANDROID_FLIPPED_TEXTURE 0
+#include "DeviceSettings.h"
 
 using namespace soso;
 using namespace cinder;

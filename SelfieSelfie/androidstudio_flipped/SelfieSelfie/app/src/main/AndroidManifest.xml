@@ -3,7 +3,11 @@
     package="com.sosolimited.selfieselfie.selfieselfie" >
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <!-- For all devices except Nexus 6, which flips the camera texture -->
+    <!-- For Nexus 6, which flips the camera texture -->
+    <compatible-screens>
+        <screen android:screenDensity="560"
+                android:screenSize="normal"/>
+    </compatible-screens>
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
