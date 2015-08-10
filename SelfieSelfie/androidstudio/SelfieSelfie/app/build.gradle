@@ -12,7 +12,8 @@ android {
         applicationId "com.sosolimited.selfieselfie.selfieselfie"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 1
+//        version code must end in 0 for normal texture build
+        versionCode 100
         versionName "1.0"
     }
 

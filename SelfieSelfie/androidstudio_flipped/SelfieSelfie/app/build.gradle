@@ -12,7 +12,8 @@ android {
         applicationId "com.sosolimited.selfieselfie.selfieselfie"
         minSdkVersion 19
         targetSdkVersion 21
-        versionCode 1
+//        version code must end in 1 for flipped texture build
+        versionCode 101
         versionName "1.0"
     }
 
