@@ -19,6 +19,11 @@ parent-directory/
 Once you have cloned and extracted everything, you will need to build Cinder for Android (which lives as a submodule of this repository):
 
 ```bash
+# Make sure you have the Cinder submodule pulled down.
+git submodule update --init --recursive
+```
+
+```bash
 # NDK_ROOT must be an absolute path.
 export NDK_ROOT=/Users/soso/Code/android-ndk-r10d/
 cd lib/Cinder-Android/android/
