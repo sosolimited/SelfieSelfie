@@ -13,7 +13,9 @@
 #include "cinder/gl/GlslProg.h"
 
 #include "cinder/app/App.h"
+#ifdef CINDER_ANDROID
 #include "DeviceSettings.h"
+#endif
 
 using namespace soso;
 using namespace cinder;
