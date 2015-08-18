@@ -7,6 +7,7 @@
 #include "cinder/Log.h"
 #include "cinder/gl/Fbo.h"
 #include "cinder/gl/Shader.h"
+#include "cinder/Timer.h"
 
 #include "IntroSequence.h"
 #include "SelfieExperience.h"
@@ -15,8 +16,10 @@
 #include "cinder/Timeline.h"
 #include "asio/asio.hpp"
 
-#ifdef CINDER_ANDROID
+#if defined(CINDER_ANDROID)
 	#include "cinder/android/CinderAndroid.h"
+#elsif defined(CINDER_COCOA_TOUCH)
+	#include "cinder/cocoa/CinderCocoaTouch.h"
 #endif
 
 using namespace ci;
@@ -42,9 +45,15 @@ public:
 	void updateOrientationOffset();
 	void showLandscape();
 
+	void touchesBegan(TouchEvent event) override;
+	void touchesEnded(TouchEvent event) override;
+
 private:
 	IntroSequence											introduction;
 	std::unique_ptr<SelfieExperience> selfieExperience;
+	bool															doSaveImage = false;
+	ci::Timer													touchTimer;
+	uint32_t													touchId = 0;
 	std::string												sizeIndicator = "xhdpi";
 };
 
@@ -54,6 +63,23 @@ SelfieSelfieApp::SelfieSelfieApp()
 		ci::android::setActivityGainedFocusCallback( [this] { focusGained(); } );
 		ci::android::setActivityLostFocusCallback( [this] { focusLost(); } );
 	#endif
+}
+
+void SelfieSelfieApp::touchesBegan(cinder::app::TouchEvent event)
+{
+	touchId = event.getTouches().back().getId();
+	touchTimer.start();
+}
+
+void SelfieSelfieApp::touchesEnded(cinder::app::TouchEvent event)
+{
+	if (touchId == event.getTouches().back().getId())
+	{
+		touchTimer.stop();
+		if (touchTimer.getSeconds() < 0.1f) {
+			doSaveImage = true;
+		}
+	}
 }
 
 void SelfieSelfieApp::setup()
@@ -124,6 +150,11 @@ void SelfieSelfieApp::draw()
 		selfieExperience->draw();
 	}
 
+	if( doSaveImage )
+	{
+		cocoa::writeToSavedPhotosAlbum(copyWindowSurface());
+		doSaveImage = false;
+	}
 	introduction.draw();
 
 	#if DEBUG
@@ -132,6 +163,7 @@ void SelfieSelfieApp::draw()
 			CI_LOG_E( "Draw gl error: " << gl::getErrorString(err) );
 		}
 	#endif
+
 }
 
 void SelfieSelfieApp::showLandscape()
