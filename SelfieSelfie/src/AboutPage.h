@@ -21,11 +21,11 @@ public:
 	void show( ci::Timeline &iTimeline );
 	void hide( ci::Timeline &iTimeline );
 
-	void setEnabled( bool iEnabled ) { openButton->setEnabled( iEnabled ); }
+	void setEnabled( bool iEnabled ) { touchArea->setEnabled( iEnabled ); }
 	bool isHidden() const { return hidden; }
 private:
 	std::unique_ptr<Image>			icon;
-	std::unique_ptr<TouchArea>	openButton;
+	std::unique_ptr<TouchArea>	touchArea;
 	ci::Anim<ci::vec2>					position;
 	ci::vec2										openPosition;
 	ci::vec2										closedPosition;
