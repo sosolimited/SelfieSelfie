@@ -76,7 +76,7 @@ void SelfieSelfieApp::touchesEnded(cinder::app::TouchEvent event)
 	if (touchId == event.getTouches().back().getId())
 	{
 		touchTimer.stop();
-		if (touchTimer.getSeconds() < 0.1f) {
+		if (touchTimer.getSeconds() < 0.16f) {
 			doSaveImage = true;
 		}
 	}

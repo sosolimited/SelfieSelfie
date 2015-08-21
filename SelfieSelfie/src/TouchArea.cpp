@@ -29,7 +29,7 @@ void TouchArea::disconnect()
 	touchEndConnection.disconnect();
 }
 
-void TouchArea::touchBegin( const ci::app::TouchEvent &iEvent )
+void TouchArea::touchBegin( ci::app::TouchEvent &iEvent )
 {
 	if( ! wasInside ) {
 		for( auto &touch : iEvent.getTouches() ) {
@@ -39,10 +39,14 @@ void TouchArea::touchBegin( const ci::app::TouchEvent &iEvent )
 				break;
 			}
 		}
+
+		if( wasInside ) {
+			iEvent.setHandled();
+		}
 	}
 }
 
-void TouchArea::touchEnd( const ci::app::TouchEvent &iEvent )
+void TouchArea::touchEnd( ci::app::TouchEvent &iEvent )
 {
 	bool should_call = false;
 	if( wasInside ) {
@@ -60,5 +64,6 @@ void TouchArea::touchEnd( const ci::app::TouchEvent &iEvent )
 	// call last, in case callback destroys this object.
 	if( should_call ) {
 		callback();
+		iEvent.setHandled();
 	}
 }

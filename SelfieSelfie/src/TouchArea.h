@@ -38,8 +38,8 @@ private:
 	bool										enabled = true;
 	ci::signals::Connection	touchBeginConnection, touchEndConnection;
 
-	void touchBegin( const ci::app::TouchEvent &iEvent );
-	void touchEnd( const ci::app::TouchEvent &iEvent );
+	void touchBegin( ci::app::TouchEvent &iEvent );
+	void touchEnd( ci::app::TouchEvent &iEvent );
 	void connect();
 	void disconnect();
 
