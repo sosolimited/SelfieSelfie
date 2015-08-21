@@ -117,6 +117,7 @@ void AboutPage::draw()
 		gl::ScopedBlendPremult blend;
 
 		nestingButton->draw();
+		screenshotInstructions->draw();
 		description->draw();
 	}
 }

@@ -30,14 +30,15 @@ Image::Image( const gl::TextureRef &iTexture )
 
 void Image::draw()
 {
-	gl::ScopedBlendPremult blend;
-
-	const auto placement = getPlacement();
-
 	if( alpha > 0.0f ) {
+		gl::ScopedBlendPremult blend;
+		gl::ScopedColor color( ColorA( tint ) * alpha );
+
+		const auto placement = getPlacement();
 
 		if( backing.a > 0.0f ) {
 			gl::ScopedColor color( backing * alpha );
+
 			if( fullBleedBackground ) {
 				gl::drawSolidRect( app::getWindowBounds() );
 			}
@@ -46,7 +47,6 @@ void Image::draw()
 			}
 		}
 
-		gl::color( ColorA( tint ) * alpha );
 		gl::draw( texture, placement );
 	}
 }
