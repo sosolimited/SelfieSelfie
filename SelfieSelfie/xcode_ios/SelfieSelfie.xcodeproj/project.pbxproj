@@ -29,6 +29,7 @@
 		9C63E5C21B28C097003617E1 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C63E5C01B28C097003617E1 /* Image.cpp */; };
 		9C63E5C51B28CEB9003617E1 /* TouchArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C63E5C31B28CEB9003617E1 /* TouchArea.cpp */; };
 		9CCA5F751B87A5F2003E1BB5 /* Flash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCA5F731B87A5F2003E1BB5 /* Flash.cpp */; };
+		9CCA5F781B87AA71003E1BB5 /* TapHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCA5F761B87AA71003E1BB5 /* TapHandler.cpp */; };
 		C725DFFE121DAC7F00FA186B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C727C02B121B400300192073 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C725E001121DAC8F00FA186B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C725E000121DAC8F00FA186B /* AVFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C725E001121DAC8FFFFA18FF /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CFDF6A1138442D0091FFFF /* ImageIO.framework */; };
@@ -76,6 +77,8 @@
 		9C63E5C41B28CEB9003617E1 /* TouchArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchArea.h; path = ../src/TouchArea.h; sourceTree = "<group>"; };
 		9CCA5F731B87A5F2003E1BB5 /* Flash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Flash.cpp; path = ../src/Flash.cpp; sourceTree = "<group>"; };
 		9CCA5F741B87A5F2003E1BB5 /* Flash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flash.h; path = ../src/Flash.h; sourceTree = "<group>"; };
+		9CCA5F761B87AA71003E1BB5 /* TapHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TapHandler.cpp; path = ../src/TapHandler.cpp; sourceTree = "<group>"; };
+		9CCA5F771B87AA71003E1BB5 /* TapHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapHandler.h; path = ../src/TapHandler.h; sourceTree = "<group>"; };
 		C725E000121DAC8F00FA186B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C727C02B121B400300192073 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		C727C02D121B400300192073 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -175,6 +178,8 @@
 				9C2C99F61B726B7800AC9EEB /* SelfieExperience.h */,
 				9CCA5F731B87A5F2003E1BB5 /* Flash.cpp */,
 				9CCA5F741B87A5F2003E1BB5 /* Flash.h */,
+				9CCA5F761B87AA71003E1BB5 /* TapHandler.cpp */,
+				9CCA5F771B87AA71003E1BB5 /* TapHandler.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 				9C63E5C21B28C097003617E1 /* Image.cpp in Sources */,
 				9C63E5BF1B28BA25003617E1 /* AboutPage.cpp in Sources */,
 				9C4355481B274F0700F5FECF /* IntroSequence.cpp in Sources */,
+				9CCA5F781B87AA71003E1BB5 /* TapHandler.cpp in Sources */,
 				9CCA5F751B87A5F2003E1BB5 /* Flash.cpp in Sources */,
 				9C63E5C51B28CEB9003617E1 /* TouchArea.cpp in Sources */,
 			);

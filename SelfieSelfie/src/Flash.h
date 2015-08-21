@@ -18,7 +18,7 @@ public:
 	void draw();
 	void flash(float duration);
 private:
-	ci::Anim<float>	alpha = 1.0f;
+	ci::Anim<float>	alpha = 0.0f;
 	ci::vec2				size;
 };
 

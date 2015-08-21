@@ -12,6 +12,7 @@
 #include "IntroSequence.h"
 #include "SelfieExperience.h"
 #include "Flash.h"
+#include "TapHandler.h"
 
 #include "cinder/MotionManager.h"
 #include "cinder/Timeline.h"
@@ -46,21 +47,17 @@ public:
 	void updateOrientationOffset();
 	void showLandscape();
 
-	void touchesBegan(TouchEvent event) override;
-	void touchesEnded(TouchEvent event) override;
-
 private:
 	IntroSequence											introduction;
 	Flash															flash;
 	std::unique_ptr<SelfieExperience> selfieExperience;
 	std::string												sizeIndicator = "xhdpi";
-	ci::Timer													touchTimer;
-	uint32_t													touchId = 0;
-	bool															doSaveImage = false;
 	std::vector<std::future<void>>		saveActions;
 	gl::FboRef												readbackFbo;
+	TapHandler												tapHandler;
+	signals::Connection								tapConnection;
 
-	void saveComplete();
+	void saveImage();
 };
 
 SelfieSelfieApp::SelfieSelfieApp()
@@ -70,23 +67,6 @@ SelfieSelfieApp::SelfieSelfieApp()
 		ci::android::setActivityGainedFocusCallback( [this] { focusGained(); } );
 		ci::android::setActivityLostFocusCallback( [this] { focusLost(); } );
 	#endif
-}
-
-void SelfieSelfieApp::touchesBegan(cinder::app::TouchEvent event)
-{
-	touchId = event.getTouches().back().getId();
-	touchTimer.start();
-}
-
-void SelfieSelfieApp::touchesEnded(cinder::app::TouchEvent event)
-{
-	if (touchId == event.getTouches().back().getId())
-	{
-		touchTimer.stop();
-		if (touchTimer.getSeconds() < 0.16f) {
-			doSaveImage = true;
-		}
-	}
 }
 
 void SelfieSelfieApp::setup()
@@ -99,6 +79,12 @@ void SelfieSelfieApp::setup()
 
 	readbackFbo = gl::Fbo::create(toPixels(getWindowWidth()), toPixels(getWindowHeight()));
 	flash = Flash(getWindowSize());
+	tapConnection = tapHandler.getSignalTapped().connect([this] {
+		flash.flash( 1.5f );
+		saveImage();
+	});
+
+	tapConnection.disable();
 }
 
 void SelfieSelfieApp::focusGained()
@@ -159,26 +145,6 @@ void SelfieSelfieApp::draw()
 		selfieExperience->draw();
 	}
 
-	if( doSaveImage && saveActions.empty() )
-	{
-		flash.flash( 1.5f );
-		doSaveImage = false;
-		ci::Timer timer(true);
-		{
-			gl::ScopedFramebuffer fbo( readbackFbo );
-			gl::clear( Color( 0, 0, 0 ) );
-			selfieExperience->drawScene();
-		}
-
-		saveActions.emplace_back( std::async(launch::async, [this, source=readbackFbo->getColorTexture()->createSource()] {
-			cocoa::writeToSavedPhotosAlbum(source);
-			dispatchAsync( [this] { saveComplete(); } );
-		}));
-		timer.stop();
-		CI_LOG_I( "Save time on main thread: " << timer.getSeconds() * 1000 << "ms" );
-
-	}
-
 	introduction.draw();
 	flash.draw();
 
@@ -190,18 +156,28 @@ void SelfieSelfieApp::draw()
 	#endif
 }
 
-void SelfieSelfieApp::saveComplete()
+void SelfieSelfieApp::saveImage()
 {
-	saveActions.clear();
+	if( saveActions.empty() )
+	{
+		{
+			gl::ScopedFramebuffer fbo( readbackFbo );
+			gl::clear( Color( 0, 0, 0 ) );
+			selfieExperience->drawScene();
+		}
+
+		saveActions.emplace_back( std::async(launch::async, [this, source=readbackFbo->getColorTexture()->createSource()] {
+			cocoa::writeToSavedPhotosAlbum(source);
+			dispatchAsync( [this] { saveActions.clear(); } );
+		}));
+	}
 }
 
 void SelfieSelfieApp::showLandscape()
 {
-	if( ! selfieExperience ) {
-		auto image_path = fs::path("img") / sizeIndicator;
-		selfieExperience = unique_ptr<SelfieExperience>( new SelfieExperience( image_path ) );
+	if( selfieExperience ) {
+		selfieExperience->showLandscape();
 	}
-	selfieExperience->showLandscape();
 }
 
 inline void prepareSettings( app::App::Settings *iSettings )
