@@ -155,6 +155,7 @@ void SelfieSelfieApp::draw()
 
 	if( doSaveImage )
 	{
+		ci::Timer timer(true);
 		doSaveImage = false;
 
 		auto future = std::async(std::launch::async, [this] (const Surface &s) {
@@ -172,6 +173,9 @@ void SelfieSelfieApp::draw()
 		}, copyWindowSurface());
 
 		saveActions.emplace_back(std::move(future));
+
+		timer.stop();
+		CI_LOG_I( "Save time on main thread: " << timer.getSeconds() * 1000 << "ms" );
 	}
 
 	introduction.draw();
