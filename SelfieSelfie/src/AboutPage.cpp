@@ -77,6 +77,7 @@ void AboutPage::setup( const fs::path &iDirectory )
 	description->setBackingColor( transparent_gray );
 	description->setTint( yellow );
 	description->setAlpha( 0.0f );
+	screenshotInstructions->setTint( yellow );
 	screenshotInstructions->setBackingColor( transparent_gray );
 
 	closeButton = TouchArea::create( description->getPlacement(), [this] { hideAbout(); } );
@@ -99,7 +100,15 @@ void AboutPage::show()
 {
 	visible = true;
 	nestingButton->setEnabled( true );
+
 	showIcon();
+
+	auto offscreen = vec2(0, - screenshotInstructions->getSize().y);
+	app::timeline().apply( screenshotInstructions->getPositionAnim(), offscreen, vec2(0), 0.5f, EaseOutQuad() )
+		.startFn( [this] { screenshotInstructions->setAlpha( 1.0f ); } );
+	app::timeline().appendTo( screenshotInstructions->getPositionAnim(), offscreen, 0.5f, EaseInOutQuad() )
+		.delay( 3.0f )
+		.finishFn( [this] { screenshotInstructions->setAlpha( 0.0f ); } );
 }
 
 void AboutPage::hide()
@@ -108,6 +117,11 @@ void AboutPage::hide()
 	description->setAlpha( 0.0f );
 	nestingButton->setEnabled( false );
 	nestingButton->hide( *timeline );
+
+	auto offscreen = vec2(0, - screenshotInstructions->getSize().y);
+	app::timeline().appendTo( screenshotInstructions->getPositionAnim(), offscreen, 0.5f, EaseInOutQuad() )
+		.delay( 3.0f )
+		.finishFn( [this] { screenshotInstructions->setAlpha( 0.0f ); } );
 }
 
 void AboutPage::draw()
