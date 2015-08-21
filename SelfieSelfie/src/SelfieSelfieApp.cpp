@@ -51,10 +51,13 @@ public:
 private:
 	IntroSequence											introduction;
 	std::unique_ptr<SelfieExperience> selfieExperience;
-	bool															doSaveImage = false;
+	std::string												sizeIndicator = "xhdpi";
 	ci::Timer													touchTimer;
 	uint32_t													touchId = 0;
-	std::string												sizeIndicator = "xhdpi";
+	bool															doSaveImage = false;
+	std::vector<std::future<void>>		saveActions;
+
+	void saveComplete(bool success);
 };
 
 SelfieSelfieApp::SelfieSelfieApp()
@@ -152,9 +155,25 @@ void SelfieSelfieApp::draw()
 
 	if( doSaveImage )
 	{
-		cocoa::writeToSavedPhotosAlbum(copyWindowSurface());
 		doSaveImage = false;
+
+		auto future = std::async(std::launch::async, [this] (const Surface &s) {
+			bool success = false;
+			try {
+				cocoa::writeToSavedPhotosAlbum(s);
+				success = true;
+			} catch (std::exception &exc) {
+				CI_LOG_W("Exception saving image: " << exc.what());
+			}
+
+			io_service().post([this, success] {
+				saveComplete(success);
+			});
+		}, copyWindowSurface());
+
+		saveActions.emplace_back(std::move(future));
 	}
+
 	introduction.draw();
 
 	#if DEBUG
@@ -163,7 +182,14 @@ void SelfieSelfieApp::draw()
 			CI_LOG_E( "Draw gl error: " << gl::getErrorString(err) );
 		}
 	#endif
+}
 
+void SelfieSelfieApp::saveComplete(bool success)
+{
+	saveActions.erase(std::remove_if(saveActions.begin(), saveActions.end(), [] (const std::future<void> &fut) {
+		return ! fut.valid();
+	}), saveActions.end());
+	CI_LOG_I( (success ? "Saved Screenshot" : "Failed to save image") );
 }
 
 void SelfieSelfieApp::showLandscape()

@@ -11,16 +11,16 @@
 
 using namespace soso;
 
-std::unique_ptr<TouchArea> TouchArea::create( const ci::Rectf &iBounds, const std::function<void ()> &iCallback )
+std::unique_ptr<TouchArea> TouchArea::create( const ci::Rectf &iBounds, const std::function<void ()> &iCallback, int iPriority )
 {
-	return std::unique_ptr<TouchArea>( new TouchArea( iBounds, iCallback ) );
+	return std::unique_ptr<TouchArea>( new TouchArea( iBounds, iCallback, iPriority ) );
 }
 
-void TouchArea::connect()
+void TouchArea::connect( int iPriority )
 {
 	auto window = ci::app::getWindow();
-	touchBeginConnection = window->getSignalTouchesBegan().connect( std::bind( &TouchArea::touchBegin, this, std::placeholders::_1 ) );
-	touchEndConnection = window->getSignalTouchesEnded().connect( std::bind( &TouchArea::touchEnd, this, std::placeholders::_1 ) );
+	touchBeginConnection = window->getSignalTouchesBegan().connect( iPriority, std::bind( &TouchArea::touchBegin, this, std::placeholders::_1 ) );
+	touchEndConnection = window->getSignalTouchesEnded().connect( iPriority, std::bind( &TouchArea::touchEnd, this, std::placeholders::_1 ) );
 }
 
 void TouchArea::disconnect()
