@@ -11,6 +11,7 @@
 
 #include "IntroSequence.h"
 #include "SelfieExperience.h"
+#include "Flash.h"
 
 #include "cinder/MotionManager.h"
 #include "cinder/Timeline.h"
@@ -50,6 +51,7 @@ public:
 
 private:
 	IntroSequence											introduction;
+	Flash															flash;
 	std::unique_ptr<SelfieExperience> selfieExperience;
 	std::string												sizeIndicator = "xhdpi";
 	ci::Timer													touchTimer;
@@ -63,6 +65,7 @@ private:
 
 SelfieSelfieApp::SelfieSelfieApp()
 {
+	getWindowSize();
 	#ifdef CINDER_ANDROID
 		ci::android::setActivityGainedFocusCallback( [this] { focusGained(); } );
 		ci::android::setActivityLostFocusCallback( [this] { focusLost(); } );
@@ -89,13 +92,13 @@ void SelfieSelfieApp::touchesEnded(cinder::app::TouchEvent event)
 void SelfieSelfieApp::setup()
 {
   CI_LOG_I("Setting up selfie_x_selfie");
-
 	determineSizeIndicator();
 	auto image_path = fs::path("img") / sizeIndicator;
 	introduction.setup( image_path );
 	introduction.setFinishFn( [this] { showLandscape(); } );
 
 	readbackFbo = gl::Fbo::create(toPixels(getWindowWidth()), toPixels(getWindowHeight()));
+	flash = Flash(getWindowSize());
 }
 
 void SelfieSelfieApp::focusGained()
@@ -158,6 +161,7 @@ void SelfieSelfieApp::draw()
 
 	if( doSaveImage && saveActions.empty() )
 	{
+		flash.flash( 1.5f );
 		doSaveImage = false;
 		ci::Timer timer(true);
 		{
@@ -176,6 +180,7 @@ void SelfieSelfieApp::draw()
 	}
 
 	introduction.draw();
+	flash.draw();
 
 	#if DEBUG
 		auto err = gl::getError();
