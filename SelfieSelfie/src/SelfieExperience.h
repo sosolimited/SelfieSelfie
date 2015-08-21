@@ -35,6 +35,7 @@ public:
 
 	void update();
 	void draw();
+	void drawScene();
 
 	void drawEndCaps() const;
 	void updateCamera();

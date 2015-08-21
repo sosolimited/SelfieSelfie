@@ -213,7 +213,7 @@ void SelfieExperience::drawEndCaps() const
 	draw_rect(xf2);
 }
 
-void SelfieExperience::draw()
+void SelfieExperience::drawScene()
 {
 	gl::enableDepthRead();
 	gl::enableDepthWrite();
@@ -224,6 +224,11 @@ void SelfieExperience::draw()
 
 	landscape.draw( gridTexture->getCurrentIndex() );
 	drawEndCaps();
+}
+
+void SelfieExperience::draw()
+{
+	drawScene();
 
   gl::disableDepthRead();
 	gl::setMatricesWindow( app::getWindowSize() );

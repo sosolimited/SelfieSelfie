@@ -56,8 +56,9 @@ private:
 	uint32_t													touchId = 0;
 	bool															doSaveImage = false;
 	std::vector<std::future<void>>		saveActions;
+	gl::FboRef												readbackFbo;
 
-	void saveComplete(bool success);
+	void saveComplete();
 };
 
 SelfieSelfieApp::SelfieSelfieApp()
@@ -93,6 +94,8 @@ void SelfieSelfieApp::setup()
 	auto image_path = fs::path("img") / sizeIndicator;
 	introduction.setup( image_path );
 	introduction.setFinishFn( [this] { showLandscape(); } );
+
+	readbackFbo = gl::Fbo::create(toPixels(getWindowWidth()), toPixels(getWindowHeight()));
 }
 
 void SelfieSelfieApp::focusGained()
@@ -153,29 +156,22 @@ void SelfieSelfieApp::draw()
 		selfieExperience->draw();
 	}
 
-	if( doSaveImage )
+	if( doSaveImage && saveActions.empty() )
 	{
-		ci::Timer timer(true);
 		doSaveImage = false;
-
-		auto future = std::async(std::launch::async, [this] (const Surface &s) {
-			bool success = false;
-			try {
-				cocoa::writeToSavedPhotosAlbum(s);
-				success = true;
-			} catch (std::exception &exc) {
-				CI_LOG_W("Exception saving image: " << exc.what());
-			}
-
-			io_service().post([this, success] {
-				saveComplete(success);
-			});
-		}, copyWindowSurface());
-
-		saveActions.emplace_back(std::move(future));
-
+		ci::Timer timer(true);
+		{
+			gl::ScopedFramebuffer fbo( readbackFbo );
+			gl::clear( Color( 0, 0, 0 ) );
+			selfieExperience->drawScene();
+		}
+		saveActions.push_back( std::async(launch::async, [this, source=readbackFbo->getColorTexture()->createSource()] {
+			cocoa::writeToSavedPhotosAlbum(source);
+			dispatchAsync( [this] { saveComplete(); } );
+		}));
 		timer.stop();
 		CI_LOG_I( "Save time on main thread: " << timer.getSeconds() * 1000 << "ms" );
+
 	}
 
 	introduction.draw();
@@ -188,12 +184,9 @@ void SelfieSelfieApp::draw()
 	#endif
 }
 
-void SelfieSelfieApp::saveComplete(bool success)
+void SelfieSelfieApp::saveComplete()
 {
-	saveActions.erase(std::remove_if(saveActions.begin(), saveActions.end(), [] (const std::future<void> &fut) {
-		return ! fut.valid();
-	}), saveActions.end());
-	CI_LOG_I( (success ? "Saved Screenshot" : "Failed to save image") );
+	saveActions.clear();
 }
 
 void SelfieSelfieApp::showLandscape()
