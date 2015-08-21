@@ -47,6 +47,7 @@ public:
 private:
 	ci::TimelineRef	timeline = ci::Timeline::create();
 	std::unique_ptr<Image>					description;
+	std::unique_ptr<Image>					screenshotInstructions;
 	std::unique_ptr<TouchArea>			closeButton;
 	std::unique_ptr<NestingButton>	nestingButton;
 	ci::Timer												timer;
