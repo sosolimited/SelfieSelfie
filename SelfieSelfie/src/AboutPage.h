@@ -15,7 +15,7 @@ namespace soso {
 class NestingButton
 {
 public:
-	NestingButton( const ci::DataSourceRef &iIcon, const std::function<void ()> &iCallback );
+	NestingButton( std::unique_ptr<Image> &&iIcon, const std::function<void ()> &iCallback, const ci::vec2 &iOpenPosition );
 
 	void draw() const;
 	void show( ci::Timeline &iTimeline );
@@ -23,6 +23,7 @@ public:
 
 	void setEnabled( bool iEnabled ) { touchArea->setEnabled( iEnabled ); }
 	bool isHidden() const { return hidden; }
+
 private:
 	std::unique_ptr<Image>			icon;
 	std::unique_ptr<TouchArea>	touchArea;
@@ -47,6 +48,7 @@ private:
 	ci::TimelineRef	timeline = ci::Timeline::create();
 	std::unique_ptr<Image>					description;
 	std::unique_ptr<Image>					screenshotInstructions;
+	ci::vec2												instructionsPosition;
 	std::unique_ptr<TouchArea>			closeButton;
 	std::unique_ptr<NestingButton>	nestingButton;
 	ci::Timer												timer;

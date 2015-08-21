@@ -12,21 +12,20 @@
 
 using namespace soso;
 using namespace cinder;
+using namespace std;
 
 const auto yellow = ColorA::hex( 0xffF8ED31 );
 
 #pragma mark - NestingButton
 
-NestingButton::NestingButton( const DataSourceRef &iIcon, const std::function<void ()> &iCallback )
-: icon( new Image( Surface( loadImage( iIcon ) ) ) )
+NestingButton::NestingButton( unique_ptr<Image> &&iIcon, const std::function<void ()> &iCallback, const vec2 &iOpenPosition )
+: icon( std::move(iIcon) ),
+	openPosition( iOpenPosition )
 {
-	auto window_size = vec2(app::getWindowSize());
-
-	openPosition = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 1.0f, 0.0f ) * icon->getSize());
-	closedPosition = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 0.2f, 0.0f ) * icon->getSize());
+	closedPosition = vec2(app::getWindowWidth() - icon->getSize().x * 0.1f, openPosition.y);
 	position = closedPosition;
 
-	icon->setPosition( position );
+	icon->setPosition( closedPosition );
 	icon->setBackingColor( yellow );
 	icon->setTint( Color::black() );
 
@@ -60,11 +59,20 @@ void NestingButton::hide( ci::Timeline &iTimeline  )
 
 void AboutPage::setup( const fs::path &iDirectory )
 {
-	description = std::unique_ptr<Image>( new Image( Surface( loadImage( app::loadAsset( iDirectory / "about-content.png" ) ) ) ) );
-	nestingButton = std::unique_ptr<NestingButton>( new NestingButton( app::loadAsset( iDirectory / "about-button.png" ), [this] { handleIconClick(); } ) );
-	screenshotInstructions = std::make_unique<Image>( Surface( loadImage( app::loadAsset( iDirectory / "instructions-popup.png" ) ) ) );
-
 	auto window_size = vec2(app::getWindowSize());
+	auto button_image = make_unique<Image>( Surface( loadImage( app::loadAsset( iDirectory / "about-button.png" ) ) ) );
+	auto baseline = app::getWindowHeight() * 0.1f;
+	auto padding = std::max( app::getWindowWidth() * 0.05f, 10.0f );
+	auto right = app::getWindowWidth() - padding;
+
+	description = std::unique_ptr<Image>( new Image( Surface( loadImage( app::loadAsset( iDirectory / "about-content.png" ) ) ) ) );
+
+	auto button_pos = vec2(right - button_image->getSize().x, baseline - button_image->getSize().y);
+	nestingButton = std::make_unique<NestingButton>( std::move(button_image), [this] { handleIconClick(); }, button_pos );
+	screenshotInstructions = std::make_unique<Image>( Surface( loadImage( app::loadAsset( iDirectory / "instructions-popup.png" ) ) ) );
+	instructionsPosition = vec2((window_size.x - screenshotInstructions->getSize().x) / 2.0, baseline - screenshotInstructions->getSize().y);
+	screenshotInstructions->setPosition( instructionsPosition );
+
 	auto transparent_gray = ColorA::gray( 0.12f ) * 0.9f;
 	auto desc_pos = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 1.0f, 0.0f ) * description->getSize());
 	description->setPosition( desc_pos );
@@ -97,8 +105,8 @@ void AboutPage::show()
 
 	showIcon();
 
-	auto offscreen = vec2(0, - screenshotInstructions->getSize().y);
-	app::timeline().apply( screenshotInstructions->getPositionAnim(), offscreen, vec2(0), 0.5f, EaseOutQuad() )
+	auto offscreen = vec2(instructionsPosition.x, - screenshotInstructions->getSize().y);
+	app::timeline().apply( screenshotInstructions->getPositionAnim(), offscreen, instructionsPosition, 0.5f, EaseOutQuad() )
 		.startFn( [this] { screenshotInstructions->setAlpha( 1.0f ); } );
 	app::timeline().appendTo( screenshotInstructions->getPositionAnim(), offscreen, 0.5f, EaseInOutQuad() )
 		.delay( 3.0f )
@@ -112,7 +120,7 @@ void AboutPage::hide()
 	nestingButton->setEnabled( false );
 	nestingButton->hide( *timeline );
 
-	auto offscreen = vec2(0, - screenshotInstructions->getSize().y);
+	auto offscreen = vec2(instructionsPosition.x, - screenshotInstructions->getSize().y);
 	app::timeline().appendTo( screenshotInstructions->getPositionAnim(), offscreen, 0.5f, EaseInOutQuad() )
 		.delay( 3.0f )
 		.finishFn( [this] { screenshotInstructions->setAlpha( 0.0f ); } );
