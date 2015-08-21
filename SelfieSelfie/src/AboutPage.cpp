@@ -68,13 +68,16 @@ void AboutPage::setup( const fs::path &iDirectory )
 {
 	description = std::unique_ptr<Image>( new Image( Surface( loadImage( app::loadAsset( iDirectory / "about-content.png" ) ) ) ) );
 	nestingButton = std::unique_ptr<NestingButton>( new NestingButton( app::loadAsset( iDirectory / "about-icon.png" ), app::loadAsset( iDirectory / "about-tab.png" ), [this] { handleIconClick(); } ) );
+	screenshotInstructions = std::make_unique<Image>( Surface( loadImage( app::loadAsset( iDirectory / "instructions-popup.png" ) ) ) );
 
 	auto window_size = vec2(app::getWindowSize());
+	auto transparent_gray = ColorA::gray( 0.12f ) * 0.9f;
 	auto desc_pos = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 1.0f, 0.0f ) * description->getSize());
 	description->setPosition( desc_pos );
-	description->setBackingColor( ColorA::gray( 0.12f ) * 0.9f );
+	description->setBackingColor( transparent_gray );
 	description->setTint( yellow );
 	description->setAlpha( 0.0f );
+	screenshotInstructions->setBackingColor( transparent_gray );
 
 	closeButton = TouchArea::create( description->getPlacement(), [this] { hideAbout(); } );
 
