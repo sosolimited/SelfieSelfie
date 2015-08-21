@@ -11,16 +11,16 @@
 
 using namespace soso;
 
-std::unique_ptr<TouchArea> TouchArea::create( const ci::Rectf &iBounds, const std::function<void ()> &iCallback )
+std::unique_ptr<TouchArea> TouchArea::create( const ci::Rectf &iBounds, const std::function<void ()> &iCallback, int iPriority )
 {
-	return std::unique_ptr<TouchArea>( new TouchArea( iBounds, iCallback ) );
+	return std::unique_ptr<TouchArea>( new TouchArea( iBounds, iCallback, iPriority ) );
 }
 
-void TouchArea::connect()
+void TouchArea::connect( int iPriority )
 {
 	auto window = ci::app::getWindow();
-	touchBeginConnection = window->getSignalTouchesBegan().connect( std::bind( &TouchArea::touchBegin, this, std::placeholders::_1 ) );
-	touchEndConnection = window->getSignalTouchesEnded().connect( std::bind( &TouchArea::touchEnd, this, std::placeholders::_1 ) );
+	touchBeginConnection = window->getSignalTouchesBegan().connect( iPriority, std::bind( &TouchArea::touchBegin, this, std::placeholders::_1 ) );
+	touchEndConnection = window->getSignalTouchesEnded().connect( iPriority, std::bind( &TouchArea::touchEnd, this, std::placeholders::_1 ) );
 }
 
 void TouchArea::disconnect()
@@ -29,7 +29,7 @@ void TouchArea::disconnect()
 	touchEndConnection.disconnect();
 }
 
-void TouchArea::touchBegin( const ci::app::TouchEvent &iEvent )
+void TouchArea::touchBegin( ci::app::TouchEvent &iEvent )
 {
 	if( ! wasInside ) {
 		for( auto &touch : iEvent.getTouches() ) {
@@ -39,10 +39,14 @@ void TouchArea::touchBegin( const ci::app::TouchEvent &iEvent )
 				break;
 			}
 		}
+
+		if( wasInside ) {
+			iEvent.setHandled();
+		}
 	}
 }
 
-void TouchArea::touchEnd( const ci::app::TouchEvent &iEvent )
+void TouchArea::touchEnd( ci::app::TouchEvent &iEvent )
 {
 	bool should_call = false;
 	if( wasInside ) {
@@ -60,5 +64,6 @@ void TouchArea::touchEnd( const ci::app::TouchEvent &iEvent )
 	// call last, in case callback destroys this object.
 	if( should_call ) {
 		callback();
+		iEvent.setHandled();
 	}
 }

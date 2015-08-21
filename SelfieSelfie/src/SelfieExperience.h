@@ -11,6 +11,7 @@
 #include "Landscape.h"
 #include "AboutPage.h"
 #include "cinder/Capture.h"
+#include "TapHandler.h"
 
 namespace soso {
 
@@ -35,6 +36,7 @@ public:
 
 	void update();
 	void draw();
+	void drawScene();
 
 	void drawEndCaps() const;
 	void updateCamera();

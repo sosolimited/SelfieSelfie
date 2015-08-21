@@ -25,7 +25,7 @@ public:
 		disconnect();
 	}
 
-	static std::unique_ptr<TouchArea> create( const ci::Rectf &iBounds, const std::function<void ()> &iCallback );
+	static std::unique_ptr<TouchArea> create( const ci::Rectf &iBounds, const std::function<void ()> &iCallback, int iPriority = 10 );
 
 	void setEnabled( bool iEnabled ) { enabled = iEnabled; }
 	bool isEnabled() const { return enabled; }
@@ -38,16 +38,16 @@ private:
 	bool										enabled = true;
 	ci::signals::Connection	touchBeginConnection, touchEndConnection;
 
-	void touchBegin( const ci::app::TouchEvent &iEvent );
-	void touchEnd( const ci::app::TouchEvent &iEvent );
-	void connect();
+	void touchBegin( ci::app::TouchEvent &iEvent );
+	void touchEnd( ci::app::TouchEvent &iEvent );
+	void connect( int iPriority );
 	void disconnect();
 
-	TouchArea( const ci::Rectf &iBounds, const std::function<void ()> &iCallback )
+	TouchArea( const ci::Rectf &iBounds, const std::function<void ()> &iCallback, int iPriority )
 	: bounds( iBounds ),
 		callback( iCallback )
 	{
-		connect();
+		connect( iPriority );
 	}
 };
 
