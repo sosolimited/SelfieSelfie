@@ -202,7 +202,7 @@ void Landscape::setup()
 
   CI_LOG_I("Uploading shape to GPU.");
 	auto vbo = gl::Vbo::create( GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW );
-	auto mesh = gl::VboMesh::create( vertices.size(), GL_TRIANGLES, {{ kVertexLayout, vbo }} );
+	auto mesh = gl::VboMesh::create( (int)vertices.size(), GL_TRIANGLES, {{ kVertexLayout, vbo }} );
 	batch = gl::Batch::create( mesh, shader, kVertexMapping );
 }
 
