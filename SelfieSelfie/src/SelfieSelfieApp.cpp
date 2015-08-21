@@ -177,6 +177,7 @@ void SelfieSelfieApp::showLandscape()
 {
 	if( selfieExperience ) {
 		selfieExperience->showLandscape();
+		timeline().add( [this] { tapConnection.enable(); }, timeline().getEndTime());
 	}
 }
 

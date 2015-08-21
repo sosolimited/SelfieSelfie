@@ -11,6 +11,7 @@
 #include "Landscape.h"
 #include "AboutPage.h"
 #include "cinder/Capture.h"
+#include "TapHandler.h"
 
 namespace soso {
 
