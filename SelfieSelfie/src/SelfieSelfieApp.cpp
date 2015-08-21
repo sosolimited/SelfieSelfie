@@ -165,7 +165,8 @@ void SelfieSelfieApp::draw()
 			gl::clear( Color( 0, 0, 0 ) );
 			selfieExperience->drawScene();
 		}
-		saveActions.push_back( std::async(launch::async, [this, source=readbackFbo->getColorTexture()->createSource()] {
+
+		saveActions.emplace_back( std::async(launch::async, [this, source=readbackFbo->getColorTexture()->createSource()] {
 			cocoa::writeToSavedPhotosAlbum(source);
 			dispatchAsync( [this] { saveComplete(); } );
 		}));
