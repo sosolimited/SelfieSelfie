@@ -9,68 +9,71 @@
 #include "cinder/Utilities.h"
 #include "cinder/app/App.h"
 #include "cinder/gl/Scoped.h"
+#include "SharedTimeline.h"
 
 using namespace soso;
 using namespace cinder;
+using namespace std;
+using namespace choreograph;
 
 const auto yellow = ColorA::hex( 0xffF8ED31 );
 
 #pragma mark - NestingButton
 
-NestingButton::NestingButton( const DataSourceRef &iIcon, const DataSourceRef &iBacking, const std::function<void ()> &iCallback )
-: icon( new Image( Surface( loadImage( iIcon ) ) ) ),
-	iconBacking( new Image( Surface( loadImage( iBacking ) ) ) )
+NestingButton::NestingButton( unique_ptr<Image> &&iIcon, const std::function<void ()> &iCallback, const vec2 &iOpenPosition )
+: icon( std::move(iIcon) ),
+	openPosition( iOpenPosition )
 {
-	auto window_size = vec2(app::getWindowSize());
+	closedPosition = vec2(app::getWindowWidth() - icon->getSize().x * 0.1f, openPosition.y);
 
-	openPosition = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 1.0f, 0.0f ) * icon->getSize());
-	closedPosition = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 0.2f, 0.0f ) * icon->getSize());
-	position = closedPosition;
-
-	icon->setPosition( position );
+	icon->setPosition( closedPosition );
+	icon->setBackingColor( yellow );
 	icon->setTint( Color::black() );
 
-	iconBacking->setPosition( position );
-	iconBacking->setTint( yellow );
-
-	openButton = TouchArea::create( Rectf( openPosition, openPosition + icon->getSize() ).scaledCentered( 1.5f ), iCallback );
+	touchArea = TouchArea::create( Rectf( openPosition, openPosition + icon->getSize() ).scaledCentered( 2.0f ), iCallback );
 }
 
 void NestingButton::draw() const
 {
-	iconBacking->draw();
 	icon->draw();
+
+	gl::ScopedColor color( Color(1.0f, 1.0f, 0.0f) );
+	gl::drawStrokedRect( touchArea->getBounds() );
 }
 
-void NestingButton::show( ci::Timeline &iTimeline  )
+void NestingButton::show( ch::Timeline &iTimeline  )
 {
 	hidden = false;
-	iTimeline.apply( &position, openPosition, 0.32f, EaseInOutQuad() )
-		.updateFn( [this] {
-			icon->setPosition( position );
-			iconBacking->setPosition( position );
-		} );
+
+	iTimeline.apply( icon->getPositionAnim() )
+		.then<RampTo>( openPosition, 0.32f, ch::EaseInOutQuad() );
 }
 
-void NestingButton::hide( ci::Timeline &iTimeline  )
+void NestingButton::hide( ch::Timeline &iTimeline  )
 {
 	hidden = true;
-	iTimeline.apply( &position, closedPosition, 0.4f, EaseInOutQuad() )
-		.updateFn( [this] {
-			icon->setPosition( position );
-			iconBacking->setPosition( position );
-		} );
+	iTimeline.apply( icon->getPositionAnim() )
+		.then<RampTo>( closedPosition, 0.4f, ch::EaseInQuad() );
 }
 
 #pragma mark - AboutPage
 
 void AboutPage::setup( const fs::path &iDirectory )
 {
-	description = std::unique_ptr<Image>( new Image( Surface( loadImage( app::loadAsset( iDirectory / "about-content.png" ) ) ) ) );
-	nestingButton = std::unique_ptr<NestingButton>( new NestingButton( app::loadAsset( iDirectory / "about-icon.png" ), app::loadAsset( iDirectory / "about-tab.png" ), [this] { handleIconClick(); } ) );
-	screenshotInstructions = std::make_unique<Image>( Surface( loadImage( app::loadAsset( iDirectory / "instructions-popup.png" ) ) ) );
-
 	auto window_size = vec2(app::getWindowSize());
+	auto button_image = make_unique<Image>( Surface( loadImage( app::loadAsset( iDirectory / "about-button.png" ) ) ) );
+	auto baseline = app::getWindowHeight() * 0.1f;
+	auto padding = std::max( app::getWindowWidth() * 0.05f, 10.0f );
+	auto right = app::getWindowWidth() - padding;
+
+	description = std::unique_ptr<Image>( new Image( Surface( loadImage( app::loadAsset( iDirectory / "about-content.png" ) ) ) ) );
+
+	auto button_pos = vec2(right - button_image->getSize().x, baseline - button_image->getSize().y);
+	nestingButton = std::make_unique<NestingButton>( std::move(button_image), [this] { handleIconClick(); }, button_pos );
+	screenshotInstructions = std::make_unique<Image>( Surface( loadImage( app::loadAsset( iDirectory / "instructions-popup.png" ) ) ) );
+	instructionsPosition = vec2((window_size.x - screenshotInstructions->getSize().x) / 2.0, baseline - screenshotInstructions->getSize().y);
+	screenshotInstructions->setPosition( instructionsPosition );
+
 	auto transparent_gray = ColorA::gray( 0.12f ) * 0.9f;
 	auto desc_pos = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 1.0f, 0.0f ) * description->getSize());
 	description->setPosition( desc_pos );
@@ -88,12 +91,8 @@ void AboutPage::setup( const fs::path &iDirectory )
 
 void AboutPage::update()
 {
-	timeline->step( timer.getSeconds() );
+	timeline.step( timer.getSeconds() );
 	timer.start();
-
-	if( timeline->empty() ) {
-		timeline->stepTo( 0.0 );
-	}
 }
 
 void AboutPage::show()
@@ -101,14 +100,18 @@ void AboutPage::show()
 	visible = true;
 	nestingButton->setEnabled( true );
 
-	showIcon();
+	auto info = showIcon();
+	auto instructions_start = info.getItem().getEndTime() + 0.4f;
 
-	auto offscreen = vec2(0, - screenshotInstructions->getSize().y);
-	app::timeline().apply( screenshotInstructions->getPositionAnim(), offscreen, vec2(0), 0.5f, EaseOutQuad() )
-		.startFn( [this] { screenshotInstructions->setAlpha( 1.0f ); } );
-	app::timeline().appendTo( screenshotInstructions->getPositionAnim(), offscreen, 0.5f, EaseInOutQuad() )
-		.delay( 3.0f )
-		.finishFn( [this] { screenshotInstructions->setAlpha( 0.0f ); } );
+	auto offscreen = vec2(instructionsPosition.x, - screenshotInstructions->getSize().y);
+	sharedTimeline().apply( screenshotInstructions->getPositionAnim() )
+		.startFn( [this] (Motion<vec2> &m) { screenshotInstructions->setAlpha( 1.0f ); } )
+		.finishFn( [this] (Motion<vec2> &m) { screenshotInstructions->setAlpha( 0.0f ); } )
+		.set( offscreen )
+		.holdUntil( instructions_start )
+		.then<RampTo>( instructionsPosition, 0.5f, ch::EaseOutQuad() )
+		.hold( 3.0f )
+		.then<RampTo>( offscreen, 0.5f, ch::EaseInQuad() );
 }
 
 void AboutPage::hide()
@@ -116,12 +119,13 @@ void AboutPage::hide()
 	visible = false;
 	description->setAlpha( 0.0f );
 	nestingButton->setEnabled( false );
-	nestingButton->hide( *timeline );
+	nestingButton->hide( timeline );
 
-	auto offscreen = vec2(0, - screenshotInstructions->getSize().y);
-	app::timeline().appendTo( screenshotInstructions->getPositionAnim(), offscreen, 0.5f, EaseInOutQuad() )
-		.delay( 3.0f )
-		.finishFn( [this] { screenshotInstructions->setAlpha( 0.0f ); } );
+	auto offscreen = vec2(instructionsPosition.x, - screenshotInstructions->getSize().y);
+	sharedTimeline().append( screenshotInstructions->getPositionAnim() )
+		.hold( 3.0f )
+		.then<RampTo>( offscreen, 0.5f, ch::EaseInQuad() )
+		.finishFn( [this] (Motion<vec2> &m) { screenshotInstructions->setAlpha( 0.0f ); } );
 }
 
 void AboutPage::draw()
@@ -149,7 +153,7 @@ void AboutPage::handleIconClick()
 void AboutPage::showAbout()
 {
 	nestingButton->setEnabled( false );
-	nestingButton->hide( *timeline );
+	nestingButton->hide( timeline );
 	closeButton->setEnabled( true );
 
 	description->setAlpha( 1.0f );
@@ -162,13 +166,13 @@ void AboutPage::hideAbout()
 	nestingButton->setEnabled( true );
 }
 
-void AboutPage::showIcon()
+ch::TimelineOptions AboutPage::showIcon()
 {
-	nestingButton->show( *timeline );
+	nestingButton->show( timeline );
 
-	if( hideCue ) {
-		hideCue->removeSelf();
-	}
+	// Scoped control cancels previous call automatically, ensuring this cue is only fired once.
+	auto opt = timeline.cue( [this] { nestingButton->hide( timeline ); }, 3.0f );
+	hideCue = opt.getScopedControl();
 
-	hideCue = timeline->add( [this] { nestingButton->hide( *timeline ); }, 15.0f );
+	return opt;
 }

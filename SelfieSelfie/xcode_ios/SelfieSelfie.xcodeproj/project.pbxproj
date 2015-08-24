@@ -12,8 +12,6 @@
 		00A66A361965AC8800B17EB3 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00A66A351965AC8800B17EB3 /* Accelerate.framework */; };
 		00CFDF6B1138442D0091E310 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CFDF6A1138442D0091E310 /* CoreGraphics.framework */; };
 		15A3248D1B21E8F0003D5C01 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A3248C1B21E8F0003D5C01 /* CoreMotion.framework */; };
-		15A324951B21E922003D5C01 /* MotionImplCoreMotion.mm in Sources */ = {isa = PBXBuildFile; fileRef = 15A324921B21E922003D5C01 /* MotionImplCoreMotion.mm */; };
-		15A324961B21E922003D5C01 /* MotionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A324931B21E922003D5C01 /* MotionManager.cpp */; };
 		15BC10B21B222953005512DE /* LandscapeGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15BC10B11B222953005512DE /* LandscapeGeometry.cpp */; };
 		15C5E7501B1F4ABE006DDD4C /* GridTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C5E74F1B1F4ABE006DDD4C /* GridTexture.cpp */; };
 		15C5E7561B1F6661006DDD4C /* Landscape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C5E7541B1F6661006DDD4C /* Landscape.cpp */; };
@@ -28,6 +26,13 @@
 		9C63E5BF1B28BA25003617E1 /* AboutPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C63E5BD1B28BA25003617E1 /* AboutPage.cpp */; };
 		9C63E5C21B28C097003617E1 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C63E5C01B28C097003617E1 /* Image.cpp */; };
 		9C63E5C51B28CEB9003617E1 /* TouchArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C63E5C31B28CEB9003617E1 /* TouchArea.cpp */; };
+		9C9E93991B8B57B600390404 /* Cue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E937E1B8B57B600390404 /* Cue.cpp */; };
+		9C9E939A1B8B57B600390404 /* MotionGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E93851B8B57B600390404 /* MotionGroup.cpp */; };
+		9C9E939B1B8B57B600390404 /* Timeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E93931B8B57B600390404 /* Timeline.cpp */; };
+		9C9E939C1B8B57B600390404 /* TimelineItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E93951B8B57B600390404 /* TimelineItem.cpp */; };
+		9C9E93A61B8B585000390404 /* MotionImplCoreMotion.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E93A21B8B585000390404 /* MotionImplCoreMotion.mm */; };
+		9C9E93A71B8B585000390404 /* MotionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E93A31B8B585000390404 /* MotionManager.cpp */; };
+		9C9E93AA1B8B59BE00390404 /* SharedTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E93A81B8B59BE00390404 /* SharedTimeline.cpp */; };
 		9CCA5F751B87A5F2003E1BB5 /* Flash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCA5F731B87A5F2003E1BB5 /* Flash.cpp */; };
 		9CCA5F781B87AA71003E1BB5 /* TapHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCA5F761B87AA71003E1BB5 /* TapHandler.cpp */; };
 		C725DFFE121DAC7F00FA186B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C727C02B121B400300192073 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -48,10 +53,6 @@
 		00CFDF6A1138442D0091FFFF /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		116D4117D7BB4DF187954F09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15A3248C1B21E8F0003D5C01 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		15A324911B21E922003D5C01 /* MotionImplCoreMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionImplCoreMotion.h; sourceTree = "<group>"; };
-		15A324921B21E922003D5C01 /* MotionImplCoreMotion.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MotionImplCoreMotion.mm; sourceTree = "<group>"; };
-		15A324931B21E922003D5C01 /* MotionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MotionManager.cpp; sourceTree = "<group>"; };
-		15A324941B21E922003D5C01 /* MotionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionManager.h; sourceTree = "<group>"; };
 		15BC10B01B222953005512DE /* LandscapeGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LandscapeGeometry.h; path = ../src/LandscapeGeometry.h; sourceTree = "<group>"; };
 		15BC10B11B222953005512DE /* LandscapeGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LandscapeGeometry.cpp; path = ../src/LandscapeGeometry.cpp; sourceTree = "<group>"; };
 		15C5E74E1B1F4ABE006DDD4C /* GridTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GridTexture.h; path = ../src/GridTexture.h; sourceTree = "<group>"; };
@@ -75,6 +76,37 @@
 		9C63E5C11B28C097003617E1 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = ../src/Image.h; sourceTree = "<group>"; };
 		9C63E5C31B28CEB9003617E1 /* TouchArea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TouchArea.cpp; path = ../src/TouchArea.cpp; sourceTree = "<group>"; };
 		9C63E5C41B28CEB9003617E1 /* TouchArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchArea.h; path = ../src/TouchArea.h; sourceTree = "<group>"; };
+		9C9E937D1B8B57B600390404 /* Choreograph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Choreograph.h; sourceTree = "<group>"; };
+		9C9E937E1B8B57B600390404 /* Cue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cue.cpp; sourceTree = "<group>"; };
+		9C9E937F1B8B57B600390404 /* Cue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cue.h; sourceTree = "<group>"; };
+		9C9E93811B8B57B600390404 /* MakeUnique.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MakeUnique.hpp; sourceTree = "<group>"; };
+		9C9E93821B8B57B600390404 /* VectorManipulation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VectorManipulation.hpp; sourceTree = "<group>"; };
+		9C9E93831B8B57B600390404 /* Easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Easing.h; sourceTree = "<group>"; };
+		9C9E93841B8B57B600390404 /* Motion.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Motion.hpp; sourceTree = "<group>"; };
+		9C9E93851B8B57B600390404 /* MotionGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MotionGroup.cpp; sourceTree = "<group>"; };
+		9C9E93861B8B57B600390404 /* MotionGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionGroup.h; sourceTree = "<group>"; };
+		9C9E93871B8B57B600390404 /* Output.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Output.hpp; sourceTree = "<group>"; };
+		9C9E93891B8B57B600390404 /* Combine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Combine.hpp; sourceTree = "<group>"; };
+		9C9E938A1B8B57B600390404 /* Hold.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Hold.hpp; sourceTree = "<group>"; };
+		9C9E938B1B8B57B600390404 /* Procedural.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Procedural.hpp; sourceTree = "<group>"; };
+		9C9E938C1B8B57B600390404 /* Ramp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ramp.hpp; sourceTree = "<group>"; };
+		9C9E938D1B8B57B600390404 /* Retime.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Retime.hpp; sourceTree = "<group>"; };
+		9C9E938E1B8B57B600390404 /* Sugar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Sugar.hpp; sourceTree = "<group>"; };
+		9C9E938F1B8B57B600390404 /* Phrase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Phrase.hpp; sourceTree = "<group>"; };
+		9C9E93901B8B57B600390404 /* Sequence.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Sequence.hpp; sourceTree = "<group>"; };
+		9C9E93921B8B57B600390404 /* CinderSpecialization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CinderSpecialization.hpp; sourceTree = "<group>"; };
+		9C9E93931B8B57B600390404 /* Timeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timeline.cpp; sourceTree = "<group>"; };
+		9C9E93941B8B57B600390404 /* Timeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timeline.h; sourceTree = "<group>"; };
+		9C9E93951B8B57B600390404 /* TimelineItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TimelineItem.cpp; sourceTree = "<group>"; };
+		9C9E93961B8B57B600390404 /* TimelineItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimelineItem.h; sourceTree = "<group>"; };
+		9C9E93971B8B57B600390404 /* TimelineOptions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TimelineOptions.hpp; sourceTree = "<group>"; };
+		9C9E93981B8B57B600390404 /* TimeType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeType.h; sourceTree = "<group>"; };
+		9C9E93A11B8B585000390404 /* MotionImplCoreMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionImplCoreMotion.h; sourceTree = "<group>"; };
+		9C9E93A21B8B585000390404 /* MotionImplCoreMotion.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MotionImplCoreMotion.mm; sourceTree = "<group>"; };
+		9C9E93A31B8B585000390404 /* MotionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MotionManager.cpp; sourceTree = "<group>"; };
+		9C9E93A41B8B585000390404 /* MotionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionManager.h; sourceTree = "<group>"; };
+		9C9E93A81B8B59BE00390404 /* SharedTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SharedTimeline.cpp; path = ../src/SharedTimeline.cpp; sourceTree = "<group>"; };
+		9C9E93A91B8B59BE00390404 /* SharedTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedTimeline.h; path = ../src/SharedTimeline.h; sourceTree = "<group>"; };
 		9CCA5F731B87A5F2003E1BB5 /* Flash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Flash.cpp; path = ../src/Flash.cpp; sourceTree = "<group>"; };
 		9CCA5F741B87A5F2003E1BB5 /* Flash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flash.h; path = ../src/Flash.h; sourceTree = "<group>"; };
 		9CCA5F761B87AA71003E1BB5 /* TapHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TapHandler.cpp; path = ../src/TapHandler.cpp; sourceTree = "<group>"; };
@@ -180,6 +212,8 @@
 				9CCA5F741B87A5F2003E1BB5 /* Flash.h */,
 				9CCA5F761B87AA71003E1BB5 /* TapHandler.cpp */,
 				9CCA5F771B87AA71003E1BB5 /* TapHandler.h */,
+				9C9E93A81B8B59BE00390404 /* SharedTimeline.cpp */,
+				9C9E93A91B8B59BE00390404 /* SharedTimeline.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -198,29 +232,9 @@
 		15A3248E1B21E90A003D5C01 /* MotionManager */ = {
 			isa = PBXGroup;
 			children = (
-				15A3248F1B21E922003D5C01 /* src */,
+				9C9E939D1B8B585000390404 /* src */,
 			);
 			name = MotionManager;
-			sourceTree = "<group>";
-		};
-		15A3248F1B21E922003D5C01 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				15A324901B21E922003D5C01 /* cinder */,
-			);
-			name = src;
-			path = ../../lib/Cinder/blocks/MotionManager/src;
-			sourceTree = "<group>";
-		};
-		15A324901B21E922003D5C01 /* cinder */ = {
-			isa = PBXGroup;
-			children = (
-				15A324911B21E922003D5C01 /* MotionImplCoreMotion.h */,
-				15A324921B21E922003D5C01 /* MotionImplCoreMotion.mm */,
-				15A324931B21E922003D5C01 /* MotionManager.cpp */,
-				15A324941B21E922003D5C01 /* MotionManager.h */,
-			);
-			path = cinder;
 			sourceTree = "<group>";
 		};
 		99692BD914FF149000D0A05F /* Headers */ = {
@@ -235,9 +249,103 @@
 		99692BD914FF149000DFFFFF /* Blocks */ = {
 			isa = PBXGroup;
 			children = (
+				9C9E937A1B8B57AE00390404 /* Choreograph */,
 				15A3248E1B21E90A003D5C01 /* MotionManager */,
 			);
 			name = Blocks;
+			sourceTree = "<group>";
+		};
+		9C9E937A1B8B57AE00390404 /* Choreograph */ = {
+			isa = PBXGroup;
+			children = (
+				9C9E937B1B8B57B600390404 /* src */,
+			);
+			name = Choreograph;
+			sourceTree = "<group>";
+		};
+		9C9E937B1B8B57B600390404 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				9C9E937C1B8B57B600390404 /* choreograph */,
+			);
+			name = src;
+			path = ../../lib/Choreograph/src;
+			sourceTree = "<group>";
+		};
+		9C9E937C1B8B57B600390404 /* choreograph */ = {
+			isa = PBXGroup;
+			children = (
+				9C9E937D1B8B57B600390404 /* Choreograph.h */,
+				9C9E937E1B8B57B600390404 /* Cue.cpp */,
+				9C9E937F1B8B57B600390404 /* Cue.h */,
+				9C9E93801B8B57B600390404 /* detail */,
+				9C9E93831B8B57B600390404 /* Easing.h */,
+				9C9E93841B8B57B600390404 /* Motion.hpp */,
+				9C9E93851B8B57B600390404 /* MotionGroup.cpp */,
+				9C9E93861B8B57B600390404 /* MotionGroup.h */,
+				9C9E93871B8B57B600390404 /* Output.hpp */,
+				9C9E93881B8B57B600390404 /* phrase */,
+				9C9E938F1B8B57B600390404 /* Phrase.hpp */,
+				9C9E93901B8B57B600390404 /* Sequence.hpp */,
+				9C9E93911B8B57B600390404 /* specialization */,
+				9C9E93931B8B57B600390404 /* Timeline.cpp */,
+				9C9E93941B8B57B600390404 /* Timeline.h */,
+				9C9E93951B8B57B600390404 /* TimelineItem.cpp */,
+				9C9E93961B8B57B600390404 /* TimelineItem.h */,
+				9C9E93971B8B57B600390404 /* TimelineOptions.hpp */,
+				9C9E93981B8B57B600390404 /* TimeType.h */,
+			);
+			path = choreograph;
+			sourceTree = "<group>";
+		};
+		9C9E93801B8B57B600390404 /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				9C9E93811B8B57B600390404 /* MakeUnique.hpp */,
+				9C9E93821B8B57B600390404 /* VectorManipulation.hpp */,
+			);
+			path = detail;
+			sourceTree = "<group>";
+		};
+		9C9E93881B8B57B600390404 /* phrase */ = {
+			isa = PBXGroup;
+			children = (
+				9C9E93891B8B57B600390404 /* Combine.hpp */,
+				9C9E938A1B8B57B600390404 /* Hold.hpp */,
+				9C9E938B1B8B57B600390404 /* Procedural.hpp */,
+				9C9E938C1B8B57B600390404 /* Ramp.hpp */,
+				9C9E938D1B8B57B600390404 /* Retime.hpp */,
+				9C9E938E1B8B57B600390404 /* Sugar.hpp */,
+			);
+			path = phrase;
+			sourceTree = "<group>";
+		};
+		9C9E93911B8B57B600390404 /* specialization */ = {
+			isa = PBXGroup;
+			children = (
+				9C9E93921B8B57B600390404 /* CinderSpecialization.hpp */,
+			);
+			path = specialization;
+			sourceTree = "<group>";
+		};
+		9C9E939D1B8B585000390404 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				9C9E939E1B8B585000390404 /* cinder */,
+			);
+			name = src;
+			path = "../../lib/Cinder-Android/blocks/MotionManager/src";
+			sourceTree = "<group>";
+		};
+		9C9E939E1B8B585000390404 /* cinder */ = {
+			isa = PBXGroup;
+			children = (
+				9C9E93A11B8B585000390404 /* MotionImplCoreMotion.h */,
+				9C9E93A21B8B585000390404 /* MotionImplCoreMotion.mm */,
+				9C9E93A31B8B585000390404 /* MotionManager.cpp */,
+				9C9E93A41B8B585000390404 /* MotionManager.h */,
+			);
+			path = cinder;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -303,19 +411,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15A324951B21E922003D5C01 /* MotionImplCoreMotion.mm in Sources */,
 				15BC10B21B222953005512DE /* LandscapeGeometry.cpp in Sources */,
-				15A324961B21E922003D5C01 /* MotionManager.cpp in Sources */,
 				9C2C99F71B726B7800AC9EEB /* SelfieExperience.cpp in Sources */,
 				15C5E7561B1F6661006DDD4C /* Landscape.cpp in Sources */,
+				9C9E93991B8B57B600390404 /* Cue.cpp in Sources */,
+				9C9E939B1B8B57B600390404 /* Timeline.cpp in Sources */,
 				D46A70E835B24A7CA21E9B83 /* SelfieSelfieApp.cpp in Sources */,
 				15C5E7501B1F4ABE006DDD4C /* GridTexture.cpp in Sources */,
 				9C63E5C21B28C097003617E1 /* Image.cpp in Sources */,
 				9C63E5BF1B28BA25003617E1 /* AboutPage.cpp in Sources */,
+				9C9E939C1B8B57B600390404 /* TimelineItem.cpp in Sources */,
 				9C4355481B274F0700F5FECF /* IntroSequence.cpp in Sources */,
+				9C9E93AA1B8B59BE00390404 /* SharedTimeline.cpp in Sources */,
+				9C9E939A1B8B57B600390404 /* MotionGroup.cpp in Sources */,
 				9CCA5F781B87AA71003E1BB5 /* TapHandler.cpp in Sources */,
+				9C9E93A71B8B585000390404 /* MotionManager.cpp in Sources */,
 				9CCA5F751B87A5F2003E1BB5 /* Flash.cpp in Sources */,
 				9C63E5C51B28CEB9003617E1 /* TouchArea.cpp in Sources */,
+				9C9E93A61B8B585000390404 /* MotionImplCoreMotion.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,7 +476,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" \"$(CINDER_PATH)/blocks/MotionManager/src\" ../include";
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" \"$(CINDER_PATH)/blocks/MotionManager/src\" ../include \"$(CINDER_PATH)/../Choreograph/src\"";
 			};
 			name = Debug;
 		};
@@ -405,7 +518,7 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" \"$(CINDER_PATH)/blocks/MotionManager/src\" ../include";
+				USER_HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\" \"$(CINDER_PATH)/blocks/MotionManager/src\" ../include \"$(CINDER_PATH)/../Choreograph/src\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

@@ -17,6 +17,7 @@
 #include "cinder/MotionManager.h"
 #include "cinder/Timeline.h"
 #include "asio/asio.hpp"
+#include "SharedTimeline.h"
 
 #if defined(CINDER_ANDROID)
 	#include "cinder/android/CinderAndroid.h"
@@ -56,6 +57,7 @@ private:
 	gl::FboRef												readbackFbo;
 	TapHandler												tapHandler;
 	signals::Connection								tapConnection;
+	Timer															frameTimer;
 
 	void saveImage();
 };
@@ -85,6 +87,7 @@ void SelfieSelfieApp::setup()
 	});
 
 	tapConnection.disable();
+	frameTimer.start();
 }
 
 void SelfieSelfieApp::focusGained()
@@ -122,6 +125,10 @@ void SelfieSelfieApp::determineSizeIndicator()
 
 void SelfieSelfieApp::update()
 {
+	auto dt = frameTimer.getSeconds();
+	frameTimer.start();
+	sharedTimeline().step( dt );
+
 	if( selfieExperience )
 	{
 		selfieExperience->update();
@@ -177,7 +184,11 @@ void SelfieSelfieApp::showLandscape()
 {
 	if( selfieExperience ) {
 		selfieExperience->showLandscape();
-		timeline().add( [this] { tapConnection.enable(); }, timeline().getEndTime());
+		// TODO: make this callback less fragile/state dependent.
+		sharedTimeline().cue( [this] {
+			tapConnection.enable();
+			CI_LOG_I("Enabling tap to save screenshot.");
+		}, sharedTimeline().getDuration());
 	}
 }
 

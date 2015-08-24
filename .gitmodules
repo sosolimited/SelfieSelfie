@@ -8,3 +8,6 @@
 [submodule "AndroidCinder"]
 	path = lib/Cinder-Android
 	url = git@github.com:chaoticbob/Cinder.git
+[submodule "Choreograph"]
+	path = lib/Choreograph
+	url = git@github.com:sansumbrella/Choreograph.git
