@@ -36,9 +36,6 @@ NestingButton::NestingButton( unique_ptr<Image> &&iIcon, const std::function<voi
 void NestingButton::draw() const
 {
 	icon->draw();
-
-	gl::ScopedColor color( Color(1.0f, 1.0f, 0.0f) );
-	gl::drawStrokedRect( touchArea->getBounds() );
 }
 
 void NestingButton::show( ch::Timeline &iTimeline  )
