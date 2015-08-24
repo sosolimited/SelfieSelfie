@@ -71,7 +71,7 @@ android {
         cinderDir = "${projectDir}/../../../../lib/Cinder-Android"
         verbose = true
         moduleName = "SelfieSelfie"
-        srcDirs = ["../../../src"]
+        srcDirs = ["../../../src", "../../../../lib/Choreograph/src/choreograph"]
         cFlags {
             "all_archs" {
                 debug = "-g"
