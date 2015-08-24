@@ -22,6 +22,7 @@
 		39466A7302D74F5AA4370328 /* CinderApp_ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B76AEAECC3E42FF8F471BE3 /* CinderApp_ios.png */; };
 		5A08A047CCFD4076AC741865 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 596B3B8B6EB34FEB964C6A3E /* Images.xcassets */; };
 		9C2C99F71B726B7800AC9EEB /* SelfieExperience.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C2C99F51B726B7800AC9EEB /* SelfieExperience.cpp */; };
+		9C3EEFB71B8B8A77001FEC7F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C3EEFB61B8B8A77001FEC7F /* Images.xcassets */; };
 		9C4355481B274F0700F5FECF /* IntroSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C4355461B274F0700F5FECF /* IntroSequence.cpp */; };
 		9C63E5BF1B28BA25003617E1 /* AboutPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C63E5BD1B28BA25003617E1 /* AboutPage.cpp */; };
 		9C63E5C21B28C097003617E1 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C63E5C01B28C097003617E1 /* Image.cpp */; };
@@ -68,6 +69,7 @@
 		9B76AEAECC3E42FF8F471BE3 /* CinderApp_ios.png */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; name = CinderApp_ios.png; path = ../resources/CinderApp_ios.png; sourceTree = "<group>"; };
 		9C2C99F51B726B7800AC9EEB /* SelfieExperience.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SelfieExperience.cpp; path = ../src/SelfieExperience.cpp; sourceTree = "<group>"; };
 		9C2C99F61B726B7800AC9EEB /* SelfieExperience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelfieExperience.h; path = ../src/SelfieExperience.h; sourceTree = "<group>"; };
+		9C3EEFB61B8B8A77001FEC7F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SelfieSelfie/Images.xcassets; sourceTree = "<group>"; };
 		9C4355461B274F0700F5FECF /* IntroSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IntroSequence.cpp; path = ../src/IntroSequence.cpp; sourceTree = "<group>"; };
 		9C4355471B274F0700F5FECF /* IntroSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IntroSequence.h; path = ../src/IntroSequence.h; sourceTree = "<group>"; };
 		9C63E5BD1B28BA25003617E1 /* AboutPage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AboutPage.cpp; path = ../src/AboutPage.cpp; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 		00692BD914FF149000D0FFFF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9C3EEFB61B8B8A77001FEC7F /* Images.xcassets */,
 				00748057165D41390024B57A /* assets */,
 				9B76AEAECC3E42FF8F471BE3 /* CinderApp_ios.png */,
 				596B3B8B6EB34FEB964C6A3E /* Images.xcassets */,
@@ -399,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00748058165D41390024B57A /* assets in Resources */,
+				9C3EEFB71B8B8A77001FEC7F /* Images.xcassets in Resources */,
 				39466A7302D74F5AA4370328 /* CinderApp_ios.png in Resources */,
 				5A08A047CCFD4076AC741865 /* Images.xcassets in Resources */,
 			);
@@ -526,6 +530,7 @@
 		00692BF614FF149000D0A05E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CINDER_PATH = ../../lib/Cinder;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SelfieSelfie_Prefix.pch;
@@ -547,6 +552,7 @@
 		00692BF714FF149000D0A05E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CINDER_PATH = ../../lib/Cinder;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SelfieSelfie_Prefix.pch;
