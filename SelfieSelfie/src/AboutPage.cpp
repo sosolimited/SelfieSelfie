@@ -13,14 +13,15 @@
 
 using namespace soso;
 using namespace cinder;
-using namespace std;
 using namespace choreograph;
+
+using ch::detail::make_unique;
 
 const auto yellow = ColorA::hex( 0xffF8ED31 );
 
 #pragma mark - NestingButton
 
-NestingButton::NestingButton( unique_ptr<Image> &&iIcon, const std::function<void ()> &iCallback, const vec2 &iOpenPosition )
+NestingButton::NestingButton( std::unique_ptr<Image> &&iIcon, const std::function<void ()> &iCallback, const vec2 &iOpenPosition )
 : icon( std::move(iIcon) ),
 	openPosition( iOpenPosition )
 {
@@ -58,7 +59,9 @@ void NestingButton::hide( ch::Timeline &iTimeline  )
 void AboutPage::setup( const fs::path &iDirectory )
 {
 	auto window_size = vec2(app::getWindowSize());
-	auto button_image = make_unique<Image>( Surface( loadImage( app::loadAsset( iDirectory / "about-button.png" ) ) ) );
+	auto button_image = make_unique<Image>( Surface( loadImage( app::loadAsset(
+	iDirectory /
+	"about-button.png" ) ) ) );
 	auto baseline = app::getWindowHeight() * 0.1f;
 	auto padding = std::max( app::getWindowWidth() * 0.05f, 10.0f );
 	auto right = app::getWindowWidth() - padding;
@@ -66,8 +69,8 @@ void AboutPage::setup( const fs::path &iDirectory )
 	description = std::unique_ptr<Image>( new Image( Surface( loadImage( app::loadAsset( iDirectory / "about-content.png" ) ) ) ) );
 
 	auto button_pos = vec2(right - button_image->getSize().x, baseline - button_image->getSize().y);
-	nestingButton = std::make_unique<NestingButton>( std::move(button_image), [this] { handleIconClick(); }, button_pos );
-	screenshotInstructions = std::make_unique<Image>( Surface( loadImage( app::loadAsset( iDirectory / "instructions-popup.png" ) ) ) );
+	nestingButton = ch::detail::make_unique<NestingButton>( std::move(button_image), [this] { handleIconClick(); }, button_pos );
+	screenshotInstructions = make_unique<Image>( Surface( loadImage( app::loadAsset( iDirectory / "instructions-popup.png" ) ) ) );
 	instructionsPosition = vec2((window_size.x - screenshotInstructions->getSize().x) / 2.0, baseline - screenshotInstructions->getSize().y);
 	screenshotInstructions->setPosition( instructionsPosition );
 
