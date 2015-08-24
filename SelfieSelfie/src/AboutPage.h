@@ -56,7 +56,7 @@ private:
 	void handleIconClick();
 	void showAbout();
 	void hideAbout();
-	void showIcon();
+	ch::TimelineOptions showIcon();
 
 	bool visible = false;
 };

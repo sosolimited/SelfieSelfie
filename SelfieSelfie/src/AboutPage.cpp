@@ -100,13 +100,15 @@ void AboutPage::show()
 	visible = true;
 	nestingButton->setEnabled( true );
 
-	showIcon();
+	auto info = showIcon();
+	auto instructions_start = info.getItem().getEndTime() + 0.4f;
 
 	auto offscreen = vec2(instructionsPosition.x, - screenshotInstructions->getSize().y);
 	sharedTimeline().apply( screenshotInstructions->getPositionAnim() )
 		.startFn( [this] (Motion<vec2> &m) { screenshotInstructions->setAlpha( 1.0f ); } )
 		.finishFn( [this] (Motion<vec2> &m) { screenshotInstructions->setAlpha( 0.0f ); } )
 		.set( offscreen )
+		.holdUntil( instructions_start )
 		.then<RampTo>( instructionsPosition, 0.5f, ch::EaseOutQuad() )
 		.hold( 3.0f )
 		.then<RampTo>( offscreen, 0.5f, ch::EaseInQuad() );
@@ -122,7 +124,7 @@ void AboutPage::hide()
 	auto offscreen = vec2(instructionsPosition.x, - screenshotInstructions->getSize().y);
 	sharedTimeline().append( screenshotInstructions->getPositionAnim() )
 		.hold( 3.0f )
-		.then<RampTo>( offscreen, 0.5f, ch::EaseInOutQuad() )
+		.then<RampTo>( offscreen, 0.5f, ch::EaseInQuad() )
 		.finishFn( [this] (Motion<vec2> &m) { screenshotInstructions->setAlpha( 0.0f ); } );
 }
 
@@ -164,10 +166,13 @@ void AboutPage::hideAbout()
 	nestingButton->setEnabled( true );
 }
 
-void AboutPage::showIcon()
+ch::TimelineOptions AboutPage::showIcon()
 {
 	nestingButton->show( timeline );
 
-	// Scoped control cancels previous call automatically, show this cue is only fired once.
-	hideCue = timeline.cue( [this] { nestingButton->hide( timeline ); }, 5.0f ).getScopedControl();
+	// Scoped control cancels previous call automatically, ensuring this cue is only fired once.
+	auto opt = timeline.cue( [this] { nestingButton->hide( timeline ); }, 3.0f );
+	hideCue = opt.getScopedControl();
+
+	return opt;
 }
