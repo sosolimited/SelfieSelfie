@@ -6,9 +6,12 @@
 //
 
 #include "Flash.h"
+#include "cinder/gl/draw.h"
+#include "cinder/gl/scoped.h"
 
 using namespace soso;
 using namespace cinder;
+using namespace choreograph;
 
 Flash::Flash( const vec2 &size )
 : size( size )
@@ -16,7 +19,9 @@ Flash::Flash( const vec2 &size )
 
 void Flash::flash( float duration )
 {
-	app::timeline().apply( &alpha, 1.0f, 0.0f, duration ).easeFn( EaseInOutSine() );
+	sharedTimeline().apply( &alpha )
+		.set( 1.0f )
+		.then<RampTo>( 0.0f, duration, EaseInOutSine() );
 }
 
 void Flash::draw()

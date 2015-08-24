@@ -6,6 +6,8 @@
 //
 
 #pragma once
+#include "cinder/Timer.h"
+#include "cinder/Signals.h"
 
 namespace soso {
 

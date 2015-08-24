@@ -8,6 +8,7 @@
 #include "IntroSequence.h"
 #include "cinder/ip/Premultiply.h"
 #include "cinder/gl/gl.h"
+#include "cinder/app/App.h"
 #include "cinder/Log.h"
 
 using namespace soso;
