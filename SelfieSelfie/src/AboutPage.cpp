@@ -9,10 +9,12 @@
 #include "cinder/Utilities.h"
 #include "cinder/app/App.h"
 #include "cinder/gl/Scoped.h"
+#include "SharedTimeline.h"
 
 using namespace soso;
 using namespace cinder;
 using namespace std;
+using namespace choreograph;
 
 const auto yellow = ColorA::hex( 0xffF8ED31 );
 
@@ -23,36 +25,35 @@ NestingButton::NestingButton( unique_ptr<Image> &&iIcon, const std::function<voi
 	openPosition( iOpenPosition )
 {
 	closedPosition = vec2(app::getWindowWidth() - icon->getSize().x * 0.1f, openPosition.y);
-	position = closedPosition;
 
 	icon->setPosition( closedPosition );
 	icon->setBackingColor( yellow );
 	icon->setTint( Color::black() );
 
-	touchArea = TouchArea::create( Rectf( openPosition, openPosition + icon->getSize() ).scaledCentered( 1.5f ), iCallback );
+	touchArea = TouchArea::create( Rectf( openPosition, openPosition + icon->getSize() ).scaledCentered( 2.0f ), iCallback );
 }
 
 void NestingButton::draw() const
 {
 	icon->draw();
+
+	gl::ScopedColor color( Color(1.0f, 1.0f, 0.0f) );
+	gl::drawStrokedRect( touchArea->getBounds() );
 }
 
-void NestingButton::show( ci::Timeline &iTimeline  )
+void NestingButton::show( ch::Timeline &iTimeline  )
 {
 	hidden = false;
-	iTimeline.apply( &position, openPosition, 0.32f, EaseInOutQuad() )
-		.updateFn( [this] {
-			icon->setPosition( position );
-		} );
+
+	iTimeline.apply( icon->getPositionAnim() )
+		.then<RampTo>( openPosition, 0.32f, ch::EaseInOutQuad() );
 }
 
-void NestingButton::hide( ci::Timeline &iTimeline  )
+void NestingButton::hide( ch::Timeline &iTimeline  )
 {
 	hidden = true;
-	iTimeline.apply( &position, closedPosition, 0.4f, EaseInOutQuad() )
-		.updateFn( [this] {
-			icon->setPosition( position );
-		} );
+	iTimeline.apply( icon->getPositionAnim() )
+		.then<RampTo>( closedPosition, 0.4f, ch::EaseInQuad() );
 }
 
 #pragma mark - AboutPage
@@ -90,12 +91,8 @@ void AboutPage::setup( const fs::path &iDirectory )
 
 void AboutPage::update()
 {
-	timeline->step( timer.getSeconds() );
+	timeline.step( timer.getSeconds() );
 	timer.start();
-
-	if( timeline->empty() ) {
-		timeline->stepTo( 0.0 );
-	}
 }
 
 void AboutPage::show()
@@ -106,11 +103,13 @@ void AboutPage::show()
 	showIcon();
 
 	auto offscreen = vec2(instructionsPosition.x, - screenshotInstructions->getSize().y);
-	app::timeline().apply( screenshotInstructions->getPositionAnim(), offscreen, instructionsPosition, 0.5f, EaseOutQuad() )
-		.startFn( [this] { screenshotInstructions->setAlpha( 1.0f ); } );
-	app::timeline().appendTo( screenshotInstructions->getPositionAnim(), offscreen, 0.5f, EaseInOutQuad() )
-		.delay( 3.0f )
-		.finishFn( [this] { screenshotInstructions->setAlpha( 0.0f ); } );
+	sharedTimeline().apply( screenshotInstructions->getPositionAnim() )
+		.startFn( [this] (Motion<vec2> &m) { screenshotInstructions->setAlpha( 1.0f ); } )
+		.finishFn( [this] (Motion<vec2> &m) { screenshotInstructions->setAlpha( 0.0f ); } )
+		.set( offscreen )
+		.then<RampTo>( instructionsPosition, 0.5f, ch::EaseOutQuad() )
+		.hold( 3.0f )
+		.then<RampTo>( offscreen, 0.5f, ch::EaseInQuad() );
 }
 
 void AboutPage::hide()
@@ -118,12 +117,13 @@ void AboutPage::hide()
 	visible = false;
 	description->setAlpha( 0.0f );
 	nestingButton->setEnabled( false );
-	nestingButton->hide( *timeline );
+	nestingButton->hide( timeline );
 
 	auto offscreen = vec2(instructionsPosition.x, - screenshotInstructions->getSize().y);
-	app::timeline().appendTo( screenshotInstructions->getPositionAnim(), offscreen, 0.5f, EaseInOutQuad() )
-		.delay( 3.0f )
-		.finishFn( [this] { screenshotInstructions->setAlpha( 0.0f ); } );
+	sharedTimeline().append( screenshotInstructions->getPositionAnim() )
+		.hold( 3.0f )
+		.then<RampTo>( offscreen, 0.5f, ch::EaseInOutQuad() )
+		.finishFn( [this] (Motion<vec2> &m) { screenshotInstructions->setAlpha( 0.0f ); } );
 }
 
 void AboutPage::draw()
@@ -151,7 +151,7 @@ void AboutPage::handleIconClick()
 void AboutPage::showAbout()
 {
 	nestingButton->setEnabled( false );
-	nestingButton->hide( *timeline );
+	nestingButton->hide( timeline );
 	closeButton->setEnabled( true );
 
 	description->setAlpha( 1.0f );
@@ -166,11 +166,8 @@ void AboutPage::hideAbout()
 
 void AboutPage::showIcon()
 {
-	nestingButton->show( *timeline );
+	nestingButton->show( timeline );
 
-	if( hideCue ) {
-		hideCue->removeSelf();
-	}
-
-	hideCue = timeline->add( [this] { nestingButton->hide( *timeline ); }, 15.0f );
+	// Scoped control cancels previous call automatically, show this cue is only fired once.
+	hideCue = timeline.cue( [this] { nestingButton->hide( timeline ); }, 5.0f ).getScopedControl();
 }

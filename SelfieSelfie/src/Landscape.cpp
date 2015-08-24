@@ -15,10 +15,11 @@
 
 #include "cinder/gl/GlslProg.h"
 #include "cinder/app/App.h"
-#include "cinder/Easing.h"
+#include "choreograph/Easing.h"
 
 using namespace soso;
 using namespace cinder;
+using namespace choreograph;
 
 namespace {
 

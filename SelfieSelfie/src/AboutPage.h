@@ -18,8 +18,8 @@ public:
 	NestingButton( std::unique_ptr<Image> &&iIcon, const std::function<void ()> &iCallback, const ci::vec2 &iOpenPosition );
 
 	void draw() const;
-	void show( ci::Timeline &iTimeline );
-	void hide( ci::Timeline &iTimeline );
+	void show( ch::Timeline &iTimeline );
+	void hide( ch::Timeline &iTimeline );
 
 	void setEnabled( bool iEnabled ) { touchArea->setEnabled( iEnabled ); }
 	bool isHidden() const { return hidden; }
@@ -27,7 +27,6 @@ public:
 private:
 	std::unique_ptr<Image>			icon;
 	std::unique_ptr<TouchArea>	touchArea;
-	ci::Anim<ci::vec2>					position;
 	ci::vec2										openPosition;
 	ci::vec2										closedPosition;
 
@@ -45,14 +44,14 @@ public:
 	void hide();
 
 private:
-	ci::TimelineRef	timeline = ci::Timeline::create();
+	ch::Timeline										timeline;
 	std::unique_ptr<Image>					description;
 	std::unique_ptr<Image>					screenshotInstructions;
 	ci::vec2												instructionsPosition;
 	std::unique_ptr<TouchArea>			closeButton;
 	std::unique_ptr<NestingButton>	nestingButton;
 	ci::Timer												timer;
-	ci::CueRef											hideCue = nullptr;
+	ch::ScopedCancelRef							hideCue;
 
 	void handleIconClick();
 	void showAbout();

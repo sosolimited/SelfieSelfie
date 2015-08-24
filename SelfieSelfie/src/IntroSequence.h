@@ -11,6 +11,7 @@
 #include "cinder/Filesystem.h"
 #include "cinder/Signals.h"
 #include "cinder/Timer.h"
+#include "choreograph/Choreograph.h"
 
 namespace soso {
 
@@ -34,7 +35,7 @@ public:
 private:
 	void update();
 	std::function<void ()>		finishFn;
-	ci::TimelineRef						timeline = ci::Timeline::create();
+	ch::Timeline							timeline;
 	std::vector<Image>				items;
 	ci::Timer									timer;
 
@@ -44,8 +45,8 @@ private:
 	void showFlash();
 	void handleFinish();
 	ci::ColorA								overlayColor = ci::ColorA::hex( 0xffF8ED31 );
-	ci::Anim<ci::Color>				backgroundColor = ci::Color::gray( 0.12f );
-	ci::Anim<float>						backgroundAlpha = 1.0f;
+	ch::Output<ci::Color>				backgroundColor = ci::Color::gray( 0.12f );
+	ch::Output<float>						backgroundAlpha = 1.0f;
 	ci::signals::ScopedConnection updateConnection;
 };
 

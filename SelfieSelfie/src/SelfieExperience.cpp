@@ -13,6 +13,7 @@
 using namespace soso;
 using namespace cinder;
 using namespace std;
+using namespace choreograph;
 
 SelfieExperience::SelfieExperience( const fs::path &imagePath )
 {
@@ -241,7 +242,10 @@ void SelfieExperience::showLandscape()
 	orientationUpdateConnection.disconnect();
 	// Enable looking around with the gyro
 	float zoom = 4.2f;
-	app::timeline().apply( &cameraEyePoint, vec3( 0 ), zoom ).easeFn( EaseOutQuart() );
-	app::timeline().apply( &cameraWeight, 1.0f, 1.33f ).easeFn( EaseInOutCubic() ).delay( zoom );
-	app::timeline().add( [this] { aboutPage.show(); }, app::timeline().getEndTime() );
+	sharedTimeline().apply( &cameraEyePoint )
+		.then<RampTo>( vec3( 0 ), zoom, ch::EaseOutQuart() );
+	sharedTimeline().apply( &cameraWeight )
+		.hold( zoom )
+		.then<RampTo>( 1.0f, 1.33f, ch::EaseInOutCubic() )
+		.finishFn( [this] (Motion<float> &m) { aboutPage.show(); } );
 }

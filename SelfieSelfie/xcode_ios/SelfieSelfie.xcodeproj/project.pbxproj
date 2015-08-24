@@ -32,6 +32,7 @@
 		9C9E939C1B8B57B600390404 /* TimelineItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E93951B8B57B600390404 /* TimelineItem.cpp */; };
 		9C9E93A61B8B585000390404 /* MotionImplCoreMotion.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E93A21B8B585000390404 /* MotionImplCoreMotion.mm */; };
 		9C9E93A71B8B585000390404 /* MotionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E93A31B8B585000390404 /* MotionManager.cpp */; };
+		9C9E93AA1B8B59BE00390404 /* SharedTimeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C9E93A81B8B59BE00390404 /* SharedTimeline.cpp */; };
 		9CCA5F751B87A5F2003E1BB5 /* Flash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCA5F731B87A5F2003E1BB5 /* Flash.cpp */; };
 		9CCA5F781B87AA71003E1BB5 /* TapHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CCA5F761B87AA71003E1BB5 /* TapHandler.cpp */; };
 		C725DFFE121DAC7F00FA186B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C727C02B121B400300192073 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -104,6 +105,8 @@
 		9C9E93A21B8B585000390404 /* MotionImplCoreMotion.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MotionImplCoreMotion.mm; sourceTree = "<group>"; };
 		9C9E93A31B8B585000390404 /* MotionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MotionManager.cpp; sourceTree = "<group>"; };
 		9C9E93A41B8B585000390404 /* MotionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionManager.h; sourceTree = "<group>"; };
+		9C9E93A81B8B59BE00390404 /* SharedTimeline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SharedTimeline.cpp; path = ../src/SharedTimeline.cpp; sourceTree = "<group>"; };
+		9C9E93A91B8B59BE00390404 /* SharedTimeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharedTimeline.h; path = ../src/SharedTimeline.h; sourceTree = "<group>"; };
 		9CCA5F731B87A5F2003E1BB5 /* Flash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Flash.cpp; path = ../src/Flash.cpp; sourceTree = "<group>"; };
 		9CCA5F741B87A5F2003E1BB5 /* Flash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Flash.h; path = ../src/Flash.h; sourceTree = "<group>"; };
 		9CCA5F761B87AA71003E1BB5 /* TapHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TapHandler.cpp; path = ../src/TapHandler.cpp; sourceTree = "<group>"; };
@@ -209,6 +212,8 @@
 				9CCA5F741B87A5F2003E1BB5 /* Flash.h */,
 				9CCA5F761B87AA71003E1BB5 /* TapHandler.cpp */,
 				9CCA5F771B87AA71003E1BB5 /* TapHandler.h */,
+				9C9E93A81B8B59BE00390404 /* SharedTimeline.cpp */,
+				9C9E93A91B8B59BE00390404 /* SharedTimeline.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -417,6 +422,7 @@
 				9C63E5BF1B28BA25003617E1 /* AboutPage.cpp in Sources */,
 				9C9E939C1B8B57B600390404 /* TimelineItem.cpp in Sources */,
 				9C4355481B274F0700F5FECF /* IntroSequence.cpp in Sources */,
+				9C9E93AA1B8B59BE00390404 /* SharedTimeline.cpp in Sources */,
 				9C9E939A1B8B57B600390404 /* MotionGroup.cpp in Sources */,
 				9CCA5F781B87AA71003E1BB5 /* TapHandler.cpp in Sources */,
 				9C9E93A71B8B585000390404 /* MotionManager.cpp in Sources */,

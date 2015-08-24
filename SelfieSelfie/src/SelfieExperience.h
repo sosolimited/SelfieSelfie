@@ -12,6 +12,7 @@
 #include "AboutPage.h"
 #include "cinder/Capture.h"
 #include "TapHandler.h"
+#include "SharedTimeline.h"
 
 namespace soso {
 
@@ -60,8 +61,8 @@ private:
 	AboutPage									aboutPage;
 	std::vector<TouchInfo>		touches;
 
-	ci::Anim<float>						cameraWeight = 0.0f;
-	ci::Anim<ci::vec3>				cameraEyePoint = ci::vec3( 3.8f, 0.0f, 0.0f );
+	ch::Output<float>					cameraWeight = 0.0f;
+	ch::Output<ci::vec3>			cameraEyePoint = ci::vec3( 3.8f, 0.0f, 0.0f );
 	ci::vec3									cameraOffset;
 	float											cameraVelocity = 0.0f;
 	/// Default orientation used during intro.

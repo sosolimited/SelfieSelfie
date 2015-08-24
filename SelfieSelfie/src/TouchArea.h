@@ -30,6 +30,8 @@ public:
 	void setEnabled( bool iEnabled ) { enabled = iEnabled; }
 	bool isEnabled() const { return enabled; }
 
+	const ci::Rectf& getBounds() const { return bounds; }
+
 private:
 	ci::Rectf								bounds;
 	std::function<void ()>	callback;

@@ -8,17 +8,15 @@
 #include "IntroSequence.h"
 #include "cinder/ip/Premultiply.h"
 #include "cinder/gl/gl.h"
-#include "cinder/app/App.h"
 #include "cinder/Log.h"
 
 using namespace soso;
 using namespace cinder;
+using namespace choreograph;
 
 void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 {
-	timeline->clear();
-	timeline->reset();
-	timeline->stepTo( 0.0f );
+	timeline.clear();
 	items.clear();
 	endTime = 0.0f;
 
@@ -42,8 +40,9 @@ void IntroSequence::setup( const ci::fs::path &iImageBasePath )
 
 	showFlash();
 
-	timeline->add( [this] { handleFinish(); }, endTime );
-	timer.start();
+	timeline.cue( [this] { handleFinish(); }, endTime );
+	// Jump to where the logo is visible to avoid long blank screen.
+	timeline.step( 0.2f );
 }
 
 void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
@@ -59,21 +58,26 @@ void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
 	auto size = ivec2( item.getSize() );
 	auto position = vec2( app::getWindowSize() - size ) / 2.0f;
 	item.setPosition( position );
-	item.setAlpha( 0.0f );
 	item.setTint( overlayColor );
 
-	timeline->apply( item.getAlphaAnim(), 1.0f, 0.2f ).easeFn( EaseOutQuad() ).startTime( start );
-	timeline->appendTo( item.getAlphaAnim(), 0.0f, 0.2f ).delay( duration );
+	timeline.apply( item.getAlphaAnim() )
+		.set( 0.0f )
+		.hold( start )
+		.then<RampTo>( 1.0f, 0.2f, ch::EaseOutQuad() )
+		.hold( duration )
+		.then<RampTo>( 0.0f, 0.2f );
 
-	items.push_back( item ); // copy brings the anim with it (move makes this clearer in Choreograph)
-	timeline->stepTo(0.2f);
+	// move brings the ch::Output with it.
+	items.emplace_back( std::move(item) );
 }
 
 void IntroSequence::showBlank( float duration )
 {
 	auto start = endTime;
 	endTime += duration;
-	timeline->appendTo( &backgroundAlpha, 0.0f, 0.2f ).startTime( start );
+	timeline.append( &backgroundAlpha )
+		.holdUntil( start )
+		.then<RampTo>( 0.0f, 0.2f );
 }
 
 void IntroSequence::showFlash()
@@ -81,8 +85,14 @@ void IntroSequence::showFlash()
 	auto start = endTime;
 	endTime += 0.25f;
 
-	timeline->appendTo( &backgroundColor, Color::gray( 1.0f ), 0.1f ).easeFn( EaseInBack() ).startTime( start );
-	timeline->appendTo( &backgroundAlpha, 1.0f, 0.0f, 1.5f ).easeFn( EaseInOutSine() ).startTime( start + 0.075f );
+	timeline.append( &backgroundColor )
+		.holdUntil( start )
+		.then<RampTo>( Color::gray( 1.0f ), 0.1f, ch::EaseInBack() );
+
+	timeline.append( &backgroundAlpha )
+		.holdUntil( start + 0.075f )
+		.set( 1.0f )
+		.then<RampTo>( 0.0f, 1.5f, ch::EaseInOutSine() );
 }
 
 void IntroSequence::handleFinish()
@@ -108,7 +118,7 @@ void IntroSequence::stop()
 
 void IntroSequence::update()
 {
-	timeline->step( timer.getSeconds() );
+	timeline.step( timer.getSeconds() );
 	timer.start();
 }
 
