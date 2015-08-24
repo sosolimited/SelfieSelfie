@@ -179,6 +179,7 @@ void SelfieSelfieApp::saveImage()
 				cocoa::writeToSavedPhotosAlbum(source);
 			#elif defined(CINDER_ANDROID)
 				CI_LOG_I("Save an image?");
+//				writeImage(android::getPicturesDirectory(), source);
 			#endif
 			dispatchAsync( [this] { saveActions.clear(); } );
 		}));
