@@ -75,7 +75,7 @@ void AboutPage::setup( const fs::path &iDirectory )
 	screenshotInstructions->setPosition( instructionsPosition );
 
 	auto transparent_gray = ColorA::gray( 0.12f ) * 0.9f;
-	auto desc_pos = (vec2( 1.0f, 0.0f ) * window_size) - (vec2( 1.0f, 0.0f ) * description->getSize());
+	auto desc_pos = (window_size - description->getSize()) * 0.5f;
 	description->setPosition( desc_pos );
 	description->setBackingColor( transparent_gray );
 	description->setTint( yellow );
