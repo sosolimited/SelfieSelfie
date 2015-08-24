@@ -102,6 +102,7 @@ void AboutPage::show()
 
 	auto info = showIcon();
 	auto instructions_start = info.getItem().getEndTime() + 0.4f;
+	screenshotInstructions->setAlpha( 0.0f );
 
 	auto offscreen = vec2(instructionsPosition.x, - screenshotInstructions->getSize().y);
 	sharedTimeline().apply( screenshotInstructions->getPositionAnim() )
