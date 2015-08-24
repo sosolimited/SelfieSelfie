@@ -30,8 +30,8 @@ public:
 	const ci::vec2&			getSize() const { return size; }
 	ci::Rectf						getPlacement() const { return ci::Rectf( position(), position() + size ); }
 
-	auto*		getAlphaAnim() { return &alpha; }
-	auto*		getPositionAnim() { return &position; }
+	ch::Output<float>*			getAlphaAnim() { return &alpha; }
+	ch::Output<ci::vec2>*		getPositionAnim() { return &position; }
 
 	void setBackingColor( const ci::ColorA &iColor ) { backing = iColor; }
 	void setTint( const ci::Color &iColor ) { tint = iColor; }

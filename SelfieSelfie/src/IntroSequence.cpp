@@ -8,6 +8,7 @@
 #include "IntroSequence.h"
 #include "cinder/ip/Premultiply.h"
 #include "cinder/gl/gl.h"
+#include "cinder/app/App.h"
 #include "cinder/Log.h"
 
 using namespace soso;
@@ -57,6 +58,7 @@ void IntroSequence::showItem( const ci::fs::path &iPath, float duration )
 	auto item = Image( gl::Texture::create( surf ) );
 	auto size = ivec2( item.getSize() );
 	auto position = vec2( app::getWindowSize() - size ) / 2.0f;
+	item.setAlpha( 0.0f );
 	item.setPosition( position );
 	item.setTint( overlayColor );
 

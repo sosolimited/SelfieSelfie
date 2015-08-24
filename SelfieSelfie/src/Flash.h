@@ -6,7 +6,8 @@
 //
 
 #pragma once
-#include "cinder/Timeline.h"
+#include "SharedTimeline.h"
+#include "cinder/Vector.h"
 
 namespace soso {
 
@@ -18,8 +19,8 @@ public:
 	void draw();
 	void flash(float duration);
 private:
-	ci::Anim<float>	alpha = 0.0f;
-	ci::vec2				size;
+	ch::Output<float>	alpha = 0.0f;
+	ci::vec2					size;
 };
 
 } // namespace soso

@@ -21,7 +21,7 @@
 
 #if defined(CINDER_ANDROID)
 	#include "cinder/android/CinderAndroid.h"
-#elsif defined(CINDER_COCOA_TOUCH)
+#elif defined(CINDER_COCOA_TOUCH)
 	#include "cinder/cocoa/CinderCocoaTouch.h"
 #endif
 
@@ -173,8 +173,14 @@ void SelfieSelfieApp::saveImage()
 			selfieExperience->drawScene();
 		}
 
-		saveActions.emplace_back( std::async(launch::async, [this, source=readbackFbo->getColorTexture()->createSource()] {
-			cocoa::writeToSavedPhotosAlbum(source);
+		auto source = readbackFbo->getColorTexture()->createSource();
+		saveActions.emplace_back( std::async(std::launch::async, [this, source] {
+			#if defined(CINDER_COCOA_TOUCH)
+				cocoa::writeToSavedPhotosAlbum(source);
+			#elif defined(CINDER_ANDROID)
+				CI_LOG_I("Save an image?");
+//				writeImage(android::getPicturesDirectory(), source);
+			#endif
 			dispatchAsync( [this] { saveActions.clear(); } );
 		}));
 	}
