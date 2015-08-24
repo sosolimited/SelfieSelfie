@@ -174,7 +174,11 @@ void SelfieSelfieApp::saveImage()
 		}
 
 		saveActions.emplace_back( std::async(launch::async, [this, source=readbackFbo->getColorTexture()->createSource()] {
-			cocoa::writeToSavedPhotosAlbum(source);
+			#if defined(CINDER_COCOA_TOUCH)
+				cocoa::writeToSavedPhotosAlbum(source);
+			#elif defined(CINDER_ANDROID)
+				CI_LOG_I("Save an image?");
+			#endif
 			dispatchAsync( [this] { saveActions.clear(); } );
 		}));
 	}
