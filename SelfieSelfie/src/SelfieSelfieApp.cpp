@@ -178,8 +178,7 @@ void SelfieSelfieApp::saveImage()
 			#if defined(CINDER_COCOA_TOUCH)
 				cocoa::writeToSavedPhotosAlbum(source);
 			#elif defined(CINDER_ANDROID)
-				CI_LOG_I("Save an image?");
-//				writeImage(android::getPicturesDirectory(), source);
+				writeImage(android::getPicturesDirectory() / "SelfieSelfie.png", source);
 			#endif
 			dispatchAsync( [this] { saveActions.clear(); } );
 		}));
