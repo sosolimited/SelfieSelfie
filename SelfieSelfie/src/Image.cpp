@@ -38,13 +38,7 @@ void Image::draw()
 
 		if( backing.a > 0.0f ) {
 			gl::ScopedColor color( backing * alpha );
-
-			if( fullBleedBackground ) {
-				gl::drawSolidRect( app::getWindowBounds() );
-			}
-			else {
-				gl::drawSolidRect( placement );
-			}
+			gl::drawSolidRect( placement );
 		}
 
 		gl::draw( texture, placement );
