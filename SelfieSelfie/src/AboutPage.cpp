@@ -111,7 +111,7 @@ void AboutPage::show()
 		.set( offscreen )
 		.holdUntil( instructions_start )
 		.then<RampTo>( instructionsPosition, 0.5f, ch::EaseOutQuad() )
-		.hold( 3.0f )
+		.hold( 5.0f )
 		.then<RampTo>( offscreen, 0.5f, ch::EaseInQuad() );
 }
 
