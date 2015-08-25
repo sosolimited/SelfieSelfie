@@ -15,6 +15,35 @@ using namespace cinder;
 using namespace std;
 using namespace choreograph;
 
+namespace {
+
+void enableMotionManager()
+{
+	try
+	{
+		MotionManager::enable();
+	}
+	catch( std::exception &exc )
+	{
+		CI_LOG_W("Unable to start MotionManager: " << exc.what());
+	}
+}
+
+void disableMotionManager()
+{
+	try
+	{
+		MotionManager::disable();
+	}
+	catch( std::exception &exc )
+	{
+		CI_LOG_W("Exception Disabling MotionManager: " << exc.what());
+	}
+}
+
+
+} // namespace
+
 SelfieExperience::SelfieExperience( const fs::path &imagePath )
 {
 	aboutPage.setup( imagePath );
@@ -37,7 +66,8 @@ SelfieExperience::SelfieExperience( const fs::path &imagePath )
 	startOrientation = camera.getOrientation();
 	cameraEyePoint = vec3( 3.8f, 0.0f, 0.0f );
 
-	MotionManager::enable();
+	enableMotionManager();
+
 	orientationUpdateConnection = app::App::get()->getSignalUpdate().connect( [this] {
 		auto target = quat( vec3(MotionManager::getRotation() * vec4( 0, 0, -1, 0 )), vec3( 1, 0, 0 ) );
 		orientationOffset = normalize( slerp( orientationOffset, target, 0.55f ) );
@@ -63,12 +93,12 @@ void SelfieExperience::pause()
 		capture.reset();
 	}
 
-	MotionManager::disable();
+	disableMotionManager();
 }
 
 void SelfieExperience::resume()
 {
-	MotionManager::enable();
+	enableMotionManager();
 	setupCamera();
 }
 

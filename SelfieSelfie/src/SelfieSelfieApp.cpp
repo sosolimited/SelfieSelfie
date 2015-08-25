@@ -14,7 +14,6 @@
 #include "Flash.h"
 #include "TapHandler.h"
 
-#include "cinder/MotionManager.h"
 #include "cinder/Timeline.h"
 #include "asio/asio.hpp"
 #include "SharedTimeline.h"
