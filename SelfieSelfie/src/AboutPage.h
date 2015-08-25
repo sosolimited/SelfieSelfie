@@ -33,6 +33,21 @@ private:
 	bool hidden = false;
 };
 
+class AboutDescription
+{
+public:
+	AboutDescription( const ci::fs::path &iBasePath );
+	void draw();
+	void setVisible( bool iVisible ) { visible = iVisible; }
+	void setBackingColor( const ci::ColorA &iColor ) { backingColor = iColor; }
+	void setTint( const ci::Color &iColor ) { top->setTint( iColor ); bottom->setTint( iColor ); }
+private:
+	std::unique_ptr<Image>	top;
+	std::unique_ptr<Image>	bottom;
+	bool										visible = false;
+	ci::ColorA							backingColor;
+};
+
 class AboutPage
 {
 public:
@@ -44,14 +59,14 @@ public:
 	void hide();
 
 private:
-	ch::Timeline										timeline;
-	std::unique_ptr<Image>					description;
-	std::unique_ptr<Image>					screenshotInstructions;
-	ci::vec2												instructionsPosition;
-	std::unique_ptr<TouchArea>			closeButton;
-	std::unique_ptr<NestingButton>	nestingButton;
-	ci::Timer												timer;
-	ch::ScopedCancelRef							hideCue;
+	ch::Timeline											timeline;
+	std::unique_ptr<Image>						screenshotInstructions;
+	std::unique_ptr<AboutDescription>	description;
+	ci::vec2													instructionsPosition;
+	std::unique_ptr<TouchArea>				closeButton;
+	std::unique_ptr<NestingButton>		nestingButton;
+	ci::Timer													timer;
+	ch::ScopedCancelRef								hideCue;
 
 	void handleIconClick();
 	void showAbout();

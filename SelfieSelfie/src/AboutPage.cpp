@@ -54,6 +54,34 @@ void NestingButton::hide( ch::Timeline &iTimeline  )
 		.then<RampTo>( closedPosition, 0.4f, ch::EaseInQuad() );
 }
 
+#pragma mark - AboutDescription
+
+AboutDescription::AboutDescription( const ci::fs::path &iBasePath )
+{
+	top = ch::detail::make_unique<Image>( Surface( loadImage( app::loadAsset( iBasePath / "about-content-top.png" ) ) ) );
+	bottom = ch::detail::make_unique<Image>( Surface( loadImage( app::loadAsset( iBasePath / "about-content-bottom.png" ) ) ) );
+
+	auto size = vec2(app::getWindowBounds().getSize());
+
+	auto tp = size * vec2( 0.5f, 0.0f ) + top->getSize() * vec2( - 0.5f, 0.0f );
+	top->setPosition( tp );
+
+	auto bp = size * vec2( 0.5f, 1.0f ) + bottom->getSize() * vec2( -0.5f, -1.0f );
+	bottom->setPosition( bp );
+}
+
+void AboutDescription::draw()
+{
+	if( visible )
+	{
+		gl::ScopedColor color(backingColor);
+		gl::drawSolidRect( app::getWindowBounds() );
+
+		top->draw();
+		bottom->draw();
+	}
+}
+
 #pragma mark - AboutPage
 
 void AboutPage::setup( const fs::path &iDirectory )
@@ -66,7 +94,7 @@ void AboutPage::setup( const fs::path &iDirectory )
 	auto padding = std::max( app::getWindowWidth() * 0.05f, 10.0f );
 	auto right = app::getWindowWidth() - padding;
 
-	description = std::unique_ptr<Image>( new Image( Surface( loadImage( app::loadAsset( iDirectory / "about-content.png" ) ) ) ) );
+	description = ch::detail::make_unique<AboutDescription>( iDirectory );
 
 	auto button_pos = vec2(right - button_image->getSize().x, baseline - button_image->getSize().y);
 	nestingButton = ch::detail::make_unique<NestingButton>( std::move(button_image), [this] { handleIconClick(); }, button_pos );
@@ -75,15 +103,13 @@ void AboutPage::setup( const fs::path &iDirectory )
 	screenshotInstructions->setPosition( instructionsPosition );
 
 	auto transparent_gray = ColorA::gray( 0.12f ) * 0.9f;
-	auto desc_pos = (window_size - description->getSize()) * 0.5f;
-	description->setPosition( desc_pos );
 	description->setBackingColor( transparent_gray );
 	description->setTint( yellow );
-	description->setAlpha( 0.0f );
+	description->setVisible( false );
 	screenshotInstructions->setTint( yellow );
 	screenshotInstructions->setBackingColor( transparent_gray );
 
-	closeButton = TouchArea::create( description->getPlacement(), [this] { hideAbout(); } );
+	closeButton = TouchArea::create( app::getWindowBounds(), [this] { hideAbout(); } );
 
 	closeButton->setEnabled( false );
 	nestingButton->setEnabled( false );
@@ -118,7 +144,7 @@ void AboutPage::show()
 void AboutPage::hide()
 {
 	visible = false;
-	description->setAlpha( 0.0f );
+	description->setVisible( false );
 	nestingButton->setEnabled( false );
 	nestingButton->hide( timeline );
 
@@ -157,12 +183,12 @@ void AboutPage::showAbout()
 	nestingButton->hide( timeline );
 	closeButton->setEnabled( true );
 
-	description->setAlpha( 1.0f );
+	description->setVisible( true );
 }
 
 void AboutPage::hideAbout()
 {
-	description->setAlpha( 0.0f );
+	description->setVisible( false );
 	closeButton->setEnabled( false );
 	nestingButton->setEnabled( true );
 }
