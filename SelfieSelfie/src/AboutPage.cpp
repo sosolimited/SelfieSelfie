@@ -60,6 +60,14 @@ AboutDescription::AboutDescription( const ci::fs::path &iBasePath )
 {
 	top = ch::detail::make_unique<Image>( Surface( loadImage( app::loadAsset( iBasePath / "about-content-top.png" ) ) ) );
 	bottom = ch::detail::make_unique<Image>( Surface( loadImage( app::loadAsset( iBasePath / "about-content-bottom.png" ) ) ) );
+
+	auto size = vec2(app::getWindowBounds().getSize());
+
+	auto tp = size * vec2( 0.5f, 0.0f ) + top->getSize() * vec2( - 0.5f, 0.0f );
+	top->setPosition( tp );
+
+	auto bp = size * vec2( 0.5f, 1.0f ) + bottom->getSize() * vec2( -0.5f, -1.0f );
+	bottom->setPosition( bp );
 }
 
 void AboutDescription::draw()
