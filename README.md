@@ -24,9 +24,9 @@ git submodule update --init --recursive
 ```
 
 ```bash
+cd lib/Cinder-Android/android/
 # NDK_ROOT must be an absolute path.
 export NDK_ROOT=/Users/soso/Code/android-ndk-r10d/
-cd lib/Cinder-Android/android/
 rm -Rf build/
 sh cbuilder.sh -j 8 -p 19 -a armeabi-v7a -b Debug -v -r
 sh cbuilder.sh -j 8 -p 19 -a armeabi-v7a -b Release -v -r
