@@ -1,6 +1,7 @@
 # SelfieSelfie
 
-An Android Experiment by Sosolimited.
+An [Android Experiment](www.androidexperiments) by Sosolimited,  
+made with some friends at Google
 
 ## Project Structure:
 
@@ -35,4 +36,12 @@ sh cbuilder.sh -j 8 -p 19 -a armeabi-v7a -b Release -v -r
 
 ## Getting set up to build Android (on OSX):
 
-We kept track of the major steps we needed to follow to get Cinder-Android up and running in [Hai's Cinder wiki](https://github.com/chaoticbob/Cinder/wiki/Detailed-Dependency-Installation-Process).
+We kept track of the major steps we needed to follow to get Cinder-Android up and running in [Hai's Cinder wiki](https://github.com/chaoticbob/Cinder/wiki/Detailed-Dependency-Installation-Process). 
+
+
+ 
+  
+   
+   
+
+## Selfie x Selfie is an [Android Experiment](www.androidexperiments.com). 
