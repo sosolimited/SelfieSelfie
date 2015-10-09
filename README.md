@@ -1,6 +1,6 @@
 # SelfieSelfie
 
-An [Android Experiment](www.androidexperiments) by Sosolimited,  
+An [Android Experiment](https://www.androidexperiments.com/) by Sosolimited,  
 made with some friends at Google
 
 ## Project Structure:
@@ -44,4 +44,4 @@ We kept track of the major steps we needed to follow to get Cinder-Android up an
    
    
 
-## Selfie x Selfie is an [Android Experiment](www.androidexperiments.com). 
+## Selfie x Selfie is an [Android Experiment](https://www.androidexperiments.com/). 
