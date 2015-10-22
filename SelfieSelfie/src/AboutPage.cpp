@@ -9,6 +9,7 @@
 #include "cinder/Utilities.h"
 #include "cinder/app/App.h"
 #include "cinder/gl/Scoped.h"
+#include "cinder/gl/Draw.h"
 #include "SharedTimeline.h"
 
 using namespace soso;
