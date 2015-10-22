@@ -377,7 +377,7 @@
 		00692BC614FF149000D0A05E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastUpgradeCheck = 0710;
 				TargetAttributes = {
 					00692BCE14FF149000D0A05E = {
 						DevelopmentTeam = DATFA672RV;
@@ -463,6 +463,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -538,6 +539,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CINDER_PATH = ../../lib/Cinder;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SelfieSelfie_Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\"";
@@ -550,6 +552,7 @@
 					"\"$(CINDER_PATH)/lib/libcinder-iphone-sim_d.a\"",
 					"-lz",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sosolimited.selfieselfie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -561,6 +564,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CINDER_PATH = ../../lib/Cinder;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SelfieSelfie_Prefix.pch;
 				HEADER_SEARCH_PATHS = "\"$(CINDER_PATH)/include\"";
@@ -573,6 +577,7 @@
 					"\"$(CINDER_PATH)/lib/libcinder-iphone-sim.a\"",
 					"-lz",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sosolimited.selfieselfie;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

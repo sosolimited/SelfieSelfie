@@ -144,29 +144,15 @@ void SelfieExperience::touchesEnded( const ci::app::TouchEvent &event )
 
 void SelfieExperience::updateCamera()
 {
-	if( touches.size() == 1 )
+	if( touches.size() == 2 )
 	{
-		const auto forward = ([] {
-			auto gravity = MotionManager::getGravityDirection();
-			if( abs( gravity.x ) > abs( gravity.y ) ) {
-				auto x = copysign( 1.0f, gravity.x );
-				return vec3( x, 0, 0 );
-			}
-			else {
-				auto y = copysign( 1.0f, gravity.y );
-				return vec3( 0, - y, 0 );
-			}
-		}());
+		auto base = distance(touches.at(0).previous, touches.at(1).previous);
+		auto current = distance(touches.at(0).position, touches.at(1).position);
 
-		auto &touch = touches.front();
-		auto delta = vec3( touch.position - touch.previous, 0 );
-		touch.previous = touch.position;
-
-		auto amount = length( delta );
-		auto dir = dot( normalize(delta), forward );
-
-		if( isfinite( amount ) && isfinite( dir ) ) {
-			cameraVelocity += amount * dir;
+		auto delta = current - base;
+		if( isfinite( delta ) )
+		{
+			cameraVelocity += delta * 0.4f;
 		}
 	}
 
