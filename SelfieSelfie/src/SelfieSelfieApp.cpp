@@ -44,8 +44,6 @@ public:
   void focusGained();
   void focusLost();
 
-	void updateCamera();
-	void updateOrientationOffset();
 	void showLandscape();
 
 private:
