@@ -152,7 +152,7 @@ void SelfieExperience::updateCamera()
 		auto delta = current - base;
 		if( isfinite( delta ) )
 		{
-			cameraVelocity += delta;
+			cameraVelocity += delta * 0.4f;
 		}
 	}
 
